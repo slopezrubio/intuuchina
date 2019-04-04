@@ -16,7 +16,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" doNotAsk="true">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
@@ -133,7 +133,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="67" />
     <option name="y" value="25" />
     <option name="width" value="1206" />
@@ -148,8 +148,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="intuparti" type="b2602c69:ProjectViewProjectNode" />
-              <item name="intuparti" type="462c0819:PsiDirectoryNode" />
+              <item name="intuuchina" type="b2602c69:ProjectViewProjectNode" />
+              <item name="intuuchina" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -190,16 +190,17 @@
       <workItem from="1554370712416" duration="3014000" />
       <workItem from="1554373800436" duration="761000" />
       <workItem from="1554391718715" duration="299000" />
+      <workItem from="1554392148826" duration="431000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6853000" />
+    <option name="totallyTimeSpent" value="7284000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49751243" visible="true" weight="0.17877094" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49751243" visible="true" weight="0.1819633" />
       <window_info id="Structure" order="1" sideWeight="0.50248754" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50248754" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -213,7 +214,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5007837" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4992163" visible="true" weight="0.3306189" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.4992163" visible="true" weight="0.3306189" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
