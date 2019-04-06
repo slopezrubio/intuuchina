@@ -1,0 +1,31 @@
+$montse: Montserrat;
+$black: black;
+$red1: #B71C1C;
+$red2:#F44336;
+$red3:#E57373;
+$red4:#C80B0B;
+$white: white;
+$black2:#2D2B2E;
+$black3:#161414;
+@import 'nav';
+@import 'why-intuuchina';
+@import 'motifs';
+@import 'footer';
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: $montse;
+  background: $white;
+}
+
+header {
+  padding-bottom: 0;
+  .img {
+    background-image: url(why2.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 34.5rem;
+  }
+}

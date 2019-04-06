@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@extends('layouts.master')
+
 <header>
     {{--Elemento NAV--}}
     @include('partials._nav')
@@ -8,8 +10,9 @@
     @include('partials._slider')
 </header>
 
-{{--Elemento Medios de TV--}}
-@include('partials._news')
+{{--Apartado de prensa--}}
+
+{{--Características--}}
 
 {{--Elemento de los testiomonios que han sido asesorados por Intuuchina--}}
 @include('partials._testimonials')

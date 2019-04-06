@@ -1,0 +1,43 @@
+$montse: Montserrat;
+$black: black;
+$red1: #B71C1C;
+$red2:#F44336;
+$red3:#E57373;
+$red4:#C80B0B;
+$white: white;
+$black2:#2D2B2E;
+//llamada del scss de nav,slider,funcion,testimonials,footer
+@import 'nav';
+@import 'offers';
+@import 'footer';
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: $montse;
+  background: $white;
+}
+
+header {
+  .img {
+    background-image: url(practicass.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-bottom: 50px;
+  }
+  .box {
+    width: 600px;
+    height: 150px;
+    border: 3px solid white;
+    border-radius: 18px;
+    padding: 20px 40px;
+    margin: 60px;
+    background-color: #00000050;
+    h1 {
+      color: $white;
+      font-family: 40px;
+      font-weight: 500;
+    }
+  }
+}

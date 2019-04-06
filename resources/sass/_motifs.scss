@@ -1,0 +1,70 @@
+@function get-color($color) {
+  @return map-get($colors, $color);
+}
+
+$black: black;
+$red1: #B71C1C;
+$red2:#F44336;
+$red3:#E57373;
+$red4:rgb(59, 53, 53);
+$white: white;
+$black2:#2D2B2E;
+$black3:#161414;
+$colors:( 'red1': #C80B0B, 'black':black, 'white':white, 'gris':#A9A7A7, );
+.container1 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 300px;
+  .red {
+    background-color: get-color('red1');
+  }
+  .black {
+    background-color: get-color('black');
+  }
+  .white {
+    background-color: get-color('white');
+  }
+  .gris {
+    background-color: get-color('gris');
+  }
+  .redlet {
+    color: get-color('red1');
+  }
+  .blacklet {
+    color: get-color('black');
+  }
+  .whitelet {
+    color: get-color('white');
+  }
+  .grislet {
+    color: get-color('gris');
+  }
+  .item {
+    width: 28.2rem;
+    height: 18.8rem;
+    h2 {
+      margin-left: 25px;
+      padding-top: 20px;
+      font-size: 30px;
+      font-weight: 600;
+    }
+    p {
+      font-family: 'Raleway', sans-serif;
+      // font-family: 'Merriweather', serif;
+      margin-left: 25px;
+      margin-right: 25px;
+      padding-top: 8px;
+      text-align: justify;
+      font-size: 14px;
+    }
+    img {
+      width: 28.2rem;
+      height: 18.8rem;
+      object-fit: cover;
+      filter: grayscale(100%)
+    }
+  }
+  .padding-box {
+    padding: 1rem;
+  }
+}
