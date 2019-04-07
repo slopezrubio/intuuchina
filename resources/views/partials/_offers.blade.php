@@ -20,7 +20,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -36,7 +36,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -52,7 +52,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -68,7 +68,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -84,7 +84,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -100,7 +100,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -116,7 +116,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>
@@ -132,7 +132,7 @@
                     <h4>Sector</h4>
                 </div>
                 <div class="card-images">
-                    <img src="assets/image.png" alt="">
+                    <img src="{{asset('storage/images/image.png')}}" alt="">
                 </div>
                 <div class="card-description">
                     <h5>Digital Marketing internship</h5>

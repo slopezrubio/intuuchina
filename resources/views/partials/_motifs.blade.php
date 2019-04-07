@@ -5,7 +5,7 @@
     </div>
     <!-- img -->
     <div class="item">
-        <img src="assets/why3.jpeg" alt="foto-company">
+        <img src="{{asset('storage/images/why3.jpeg')}}" alt="foto-company">
     </div>
     <div class="item gris padding-box">
         <h2 class="whitelet">Valores</h2>
@@ -13,7 +13,7 @@
     </div>
     <!-- img -->
     <div class="item ">
-        <img src="assets/why1.jpg" alt="foto-company">
+        <img src="{{asset('storage/images/why1.jpg')}}" alt="foto-company">
     </div>
     <div class="item white padding-box">
         <h2 class="redlet">Reconocimientos</h2>
@@ -40,7 +40,7 @@
     </div>
     <!-- img -->
     <div class="item">
-        <img src="assets/why4.jpg" alt="foto-company">
+        <img src="{{asset('storage/images/why4.jpg')}}" alt="foto-company">
     </div>
     <div class="item black padding-box">
         <h2 class="redlet">Testimonio</h2>
@@ -48,7 +48,7 @@
     </div>
     <!-- img -->
     <div class="item">
-        <img src="assets/why5.jpg" alt="">
+        <img src="{{asset('storage/images/why5.jpg')}}" alt="">
     </div>
     <div class="item white padding-box">
         <h2 class="redlet">Testimonio</h2>

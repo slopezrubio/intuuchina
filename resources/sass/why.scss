@@ -7,10 +7,8 @@ $red4:#C80B0B;
 $white: white;
 $black2:#2D2B2E;
 $black3:#161414;
-@import 'nav';
 @import 'why-intuuchina';
 @import 'motifs';
-@import 'footer';
 body {
   margin: 0;
   padding: 0;
@@ -22,7 +20,7 @@ body {
 header {
   padding-bottom: 0;
   .img {
-    background-image: url(why2.jpg);
+    background-image: url(/../../why2.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

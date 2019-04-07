@@ -1,5 +1,5 @@
 <nav>
-    <a  class="logo" href="/home"><img src="assets/logowhite.png" alt="" class="logo navbar-brand"></a>
+    <a  class="logo" href="/home"><img src="{{asset('storage/images/logowhite.png')}}" alt="" class="logo navbar-brand"></a>
     <div class="btn                                                                                                                                                                                                                -menu">
         <div class="line"></div>
         <div class="line"></div>

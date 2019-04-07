@@ -1,0 +1,921 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(45, 43, 46, 0.671);
+}
+
+nav .logo {
+  margin: 12px;
+  padding: 0;
+  width: 32%;
+  height: 32%;
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  font-size: 16px;
+  color: white;
+  font-weight: 600;
+  margin: 1px 15px;
+  padding: 5px;
+  text-align: center;
+  display: inline-block;
+}
+
+nav ul li a i {
+  font-size: 14px;
+}
+
+nav ul li a:hover {
+  font-family: Montserrat;
+  font-size: 16px;
+  color: #C80B0B;
+  margin: 1px 15px;
+  padding: 5px;
+  text-align: center;
+  box-sizing: border-box;
+  width: 24px 0;
+  text-align: left;
+  text-decoration: none;
+}
+
+nav ul li a:hover i {
+  font-size: 14px;
+}
+
+section .box-testi {
+  text-align: center;
+  width: 100%;
+  height: 440px;
+  background-color: #C80B0B;
+}
+
+section .box-testi h2 {
+  margin: 25px;
+  font-size: 20px;
+  text-align: left;
+  position: absolute;
+  color: white;
+}
+
+section .box-testi .testim {
+  width: 15rem;
+  height: 18rem;
+  min-width: 300px;
+  text-align: center;
+  display: inline-block;
+  margin-top: 6rem;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+section .box-testi .testim .linkedinpic {
+  width: 6rem;
+  border: solid 2px #2D2B2E;
+  border-radius: 50%;
+  margin: 1rem;
+}
+
+section .box-testi .testim h3 {
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+section .box-testi .testim h4 {
+  color: white;
+  font-size: 13px;
+  text-align: center;
+}
+
+section .box-testi .testim h5 {
+  color: white;
+  font-size: 10px;
+  text-align: center;
+}
+
+section .box-testi .testim i {
+  font-size: 25px;
+  color: white;
+}
+
+section .box-testi .testim p {
+  color: white;
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+}
+
+.quote1 {
+  opacity: 0.5;
+  width: 202px;
+  height: 202px;
+  position: absolute;
+  right: 15px;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.quote2 {
+  opacity: 0.5;
+  width: 202px;
+  height: 202px;
+  position: absolute;
+  margin-top: 250px;
+  left: 15px;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+main .triangulo {
+  position: absolute;
+  color: #C4C4C4;
+  width: 0;
+  height: 0;
+  border-right: 200px solid transparent;
+  border-left: 200px solid #C4C4C4;
+  border-top: 200px solid #C4C4C4;
+  border-bottom: 200px solid transparent;
+}
+
+main .news {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+  background-color: #C80B0B;
+  height: 500px;
+  z-index: 10;
+  position: relative;
+}
+
+main .news h2 {
+  margin-top: 10px;
+  padding-left: 40px;
+  font-size: 20px;
+  text-align: left;
+  position: absolute;
+  color: white;
+}
+
+main .news .note {
+  position: absolute;
+  top: 7px;
+  left: 80px;
+}
+
+main .news .note a {
+  display: inline-block;
+  margin-top: 80px;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+main .news .note .cosita p {
+  height: auto;
+  margin: 10px;
+  font-size: 13px;
+  font-style: italic;
+  color: white;
+  display: inline-block;
+}
+
+main .news .note .cosita .autor {
+  display: block;
+}
+
+main .news .tv {
+  margin-top: 30px;
+  width: 494px;
+  height: 385px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  right: 0;
+  position: absolute;
+}
+
+main .oferts {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 321px;
+}
+
+main .oferts .item {
+  width: 100%;
+  height: 100%;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
+main .oferts .rect {
+  text-align: center;
+  position: relative;
+  bottom: 23rem;
+  color: white;
+  background-color: #00000050;
+  width: 300px;
+  height: 350px;
+  margin-left: 70px;
+  border: 5px solid white;
+  border-radius: 20px;
+}
+
+main .oferts .rect h3 {
+  text-align: center;
+  padding-top: 20px;
+}
+
+main .oferts .rect hr {
+  border: 3px solid white;
+}
+
+main .oferts .rect p {
+  text-align: center;
+  margin-top: 50px;
+}
+
+main .oferts .rect button {
+  width: 100px;
+  height: 40px;
+  border: 3px solid white;
+  border-radius: 24px;
+  background: white;
+}
+
+main .oferts .rect button a {
+  text-align: center;
+  color: #2D2B2E;
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+main .oferts .rect a:hover {
+  color: #C80B0B;
+  cursor: pointer;
+}
+
+main .border {
+  height: 8px;
+  background-color: #FF0000;
+  border: #FF0000;
+}
+
+main #id2 {
+  position: relative;
+}
+
+main #id2 h2 {
+  position: absolute;
+  right: 10px;
+  width: 453px;
+  top: 18px;
+  z-index: 100;
+  font-size: 30px;
+}
+
+main #id2 h4 {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+main #id2 h4 a {
+  text-decoration: none;
+  color: #2D2B2E;
+}
+
+main #id2 h4 a:hover {
+  color: #B71C1C;
+  text-decoration: none;
+}
+
+main #id2 .service-1 {
+  position: absolute;
+  left: 169px;
+  width: 230px;
+  top: 400px;
+}
+
+main #id2 .service-2 {
+  position: absolute;
+  left: 372px;
+  width: 246px;
+  top: 200px;
+}
+
+main #id2 .service-3 {
+  position: absolute;
+  right: 440px;
+  width: 328px;
+  top: 430px;
+}
+
+main #id2 .service-4 {
+  position: absolute;
+  left: 990px;
+  width: 620px;
+  top: 120px;
+}
+
+main #id2 img {
+  z-index: -100;
+}
+
+section .box {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border: 3px solid white;
+  border-radius: 18px;
+  padding: 20px 40px;
+  background-color: #00000050;
+  margin: auto;
+  margin-top: 6rem;
+}
+
+section .box h3 {
+  color: white;
+  text-align: left;
+}
+
+section .box p {
+  text-align: left;
+  color: white;
+}
+
+section .box .space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+section .box .space-between h4 {
+  color: white;
+  margin: 6px;
+  cursor: pointer;
+}
+
+section .box .space-between h4 span {
+  font-size: 65px;
+}
+
+section .box .space-between .media {
+  text-align: left;
+  padding-top: 20px;
+}
+
+section .box .space-between .media .fa-linkedin-in {
+  font-size: 30px;
+  color: white;
+  margin: 10px;
+  vertical-align: text-bottom;
+}
+
+section .box .space-between .media .fa-facebook-f {
+  font-size: 30px;
+  color: white;
+  margin: 10px;
+}
+
+section .box .space-between .media .fa-twitter {
+  font-size: 30px;
+  color: white;
+  margin: 10px;
+}
+
+.grid {
+  display: grid;
+  margin: 12px;
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Montserrat;
+  background: white;
+}
+
+header {
+  background-image: url(/../../storage/images/practicas-1-1.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-bottom: 50px;
+  height: 35rem;
+}
+
+.grid h2 {
+  font-weight: 500;
+  font-size: 28px;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section article {
+  margin: 40px;
+}
+
+section article h3 {
+  color: white;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+section article .circle {
+  width: 100px;
+  height: 100px;
+  border: 3px solid white;
+  border-radius: 3px solid white;
+  background-color: #00000080;
+}
+
+section article .circle h4 {
+  color: white;
+  font-weight: 600;
+  padding-top: 35px;
+}
+
+.container1 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 300px;
+}
+
+.container1 .red {
+  background-color: #C80B0B;
+}
+
+.container1 .black {
+  background-color: black;
+}
+
+.container1 .white {
+  background-color: white;
+}
+
+.container1 .gris {
+  background-color: #A9A7A7;
+}
+
+.container1 .redlet {
+  color: #C80B0B;
+}
+
+.container1 .blacklet {
+  color: black;
+}
+
+.container1 .whitelet {
+  color: white;
+}
+
+.container1 .grislet {
+  color: #A9A7A7;
+}
+
+.container1 .item {
+  width: 28.2rem;
+  height: 18.8rem;
+}
+
+.container1 .item h2 {
+  margin-left: 25px;
+  padding-top: 20px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.container1 .item p {
+  font-family: "Raleway", sans-serif;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-top: 8px;
+  text-align: justify;
+  font-size: 14px;
+}
+
+.container1 .item img {
+  width: 28.2rem;
+  height: 18.8rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
+.container1 .padding-box {
+  padding: 1rem;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Montserrat;
+  background: white;
+}
+
+header {
+  padding-bottom: 0;
+}
+
+header .img {
+  background-image: url(/../../why2.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 34.5rem;
+}
+
+#course-information .course-second-box,
+#course-information .course-first-box {
+  box-sizing: border-box;
+  padding: 2rem;
+  background-color: #00000070;
+  border: 10px solid #ffffff;
+  border-radius: 30px;
+  box-shadow: 3px 3px 20px #00000080;
+}
+
+.course-descriptions {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+}
+
+.course-descriptions .description-base {
+  box-sizing: border-box;
+  height: 100%;
+  width: 75%;
+  padding: 5rem 5rem;
+  color: #ffffff;
+}
+
+.course-descriptions .description-base .description-header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.course-descriptions .description-base .description-header h2 {
+  margin: 0 0 7rem 0;
+}
+
+.course-descriptions .description-base .description-header h2 span {
+  color: #ffffff;
+}
+
+.course-descriptions .description-base .description-header a {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0.7rem 2rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  transition-duration: 0.3s;
+}
+
+.course-descriptions .description-base .description-header a:active {
+  text-decoration: none;
+}
+
+.course-descriptions .description-base .description-header a:visited {
+  text-decoration: none;
+}
+
+.course-descriptions .description-base .description-header a:hover {
+  opacity: 0.9;
+}
+
+.course-descriptions .description-base p {
+  text-align: justify;
+  font-family: "Raleway", sans-serif;
+}
+
+.course-descriptions .classroom-description {
+  background-color: #000000;
+}
+
+.course-descriptions .classroom-description .description-header h2 {
+  color: #C80B0B;
+}
+
+.course-descriptions .classroom-description .description-header a {
+  background-color: #C80B0B;
+  color: #ffffff;
+}
+
+.course-descriptions .classroom-description .description-header a:active {
+  color: #ffffff;
+}
+
+.course-descriptions .classroom-description .description-header a:visited {
+  color: #ffffff;
+}
+
+.course-descriptions .online-description {
+  background-color: #C80B0B;
+}
+
+.course-descriptions .online-description .description-header h2 {
+  color: #000000;
+}
+
+.course-descriptions .online-description .description-header a {
+  background-color: #ffffff;
+  color: #C80B0B;
+}
+
+.course-descriptions .online-description .description-header a:active {
+  color: #C80B0B;
+}
+
+.course-descriptions .online-description .description-header a:visited {
+  color: #C80B0B;
+}
+
+.course-descriptions .description-disabled {
+  width: 25% !important;
+  transition: all 0.9s ease;
+}
+
+.course-descriptions .description-disabled .description-header h2 {
+  cursor: pointer;
+}
+
+.course-descriptions .description-disabled .description-header a {
+  width: 0;
+  padding: 0;
+  font-size: 0;
+}
+
+.course-descriptions .description-disabled p {
+  font-size: 0;
+}
+
+#course-information {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #ffffff;
+}
+
+#course-information .course-first-box {
+  width: 30%;
+  height: 80%;
+}
+
+#course-information .course-second-box {
+  width: 50%;
+  height: 80%;
+}
+
+.bg-online-course {
+  background-image: url("https://s3-alpha.figma.com/img/d553/6263/72e53597dc1fe926e95f230dcaca0dd9");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: right;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  transition: all 0.8s ease;
+}
+
+.bg-classroom-course {
+  background-image: url("https://s3-alpha.figma.com/img/94fb/a246/ea10f9a694ed0627bfe00b706991d788");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: 30%;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  transition: all 0.8s ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Montserrat;
+  background: #ffffff;
+}
+
+header {
+  border-bottom: 10px solid #ffffff;
+}
+
+header .img {
+  background-image: url(/../storage/images/learn1.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-bottom: 50px;
+}
+
+header .box {
+  width: 600px;
+  height: 150px;
+  border: 3px solid #ffffff;
+  border-radius: 18px;
+  padding: 20px 40px;
+  margin: 60px;
+  background-color: #00000050;
+  color: #ffffff;
+}
+
+header .box h1 {
+  font-family: 40px;
+}
+
+header .box p {
+  text-align: justify;
+  font-family: "Raleway", sans-serif;
+}
+
+.grid {
+  display: grid;
+  margin: 12px;
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Montserrat;
+  background: white;
+}
+
+header {
+  background-color: #161414;
+  padding-bottom: 50px;
+}
+
+.grid h2 {
+  font-weight: 500;
+  font-size: 28px;
+}
+
+footer {
+  background-color: #161414;
+  color: white;
+}
+
+footer .container-all {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+}
+
+footer .container-all .container-footer {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 25px;
+}
+
+footer .container-all .container-footer .column1 {
+  max-width: 400px;
+}
+
+footer .container-all .container-footer .column1 h4 {
+  color: #C80B0B;
+  font-size: 18px;
+}
+
+footer .container-all .container-footer .column1 .row1 {
+  margin-top: 20px;
+}
+
+footer .container-all .container-footer .column1 .row1 i {
+  font-size: 20px;
+}
+
+footer .container-all .container-footer .column1 .row1 label {
+  margin-top: 10px;
+  margin-left: 20px;
+  max-width: 140px;
+  font-size: 15px;
+}
+
+footer .container-all .container-footer .column1 .row1 label a {
+  text-decoration: none;
+  color: white;
+}
+
+footer .container-all .container-footer .column1 .row1 label a:hover {
+  color: #C80B0B;
+  transition: 0.2s;
+}
+
+footer .container-all .container-footer .column1 .row1:hover {
+  color: #C80B0B;
+  transition: 0.2s;
+}
+
+footer .container-all .container-footer .column2 {
+  max-width: 400px;
+}
+
+footer .container-all .container-footer .column2 h4 {
+  font-size: 18px;
+  color: #C80B0B;
+}
+
+footer .container-all .container-footer .column2 .row2 {
+  margin-top: 5px;
+  display: flex;
+  padding: 4.5px;
+}
+
+footer .container-all .container-footer .column2 .row2 i {
+  font-size: 20px;
+}
+
+footer .container-all .container-footer .column2 .row2 label a {
+  margin-top: 10px;
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+footer .container-all .container-footer .column2 .row2 label a:hover {
+  color: #C80B0B;
+  transition: 0.2s;
+}
+
+footer .container-all .container-footer .column2 .row2:hover {
+  color: #C80B0B;
+  transition: 0.2s;
+}
+
+footer .container-all .footer {
+  max-width: 1100px;
+  margin-left: 50px;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+footer .container-all .footer .copyright {
+  color: white;
+}
+
+footer .container-all .footer .copyright p {
+  font-size: 15px;
+}
+
+footer .container-all .footer .copyright p a {
+  text-decoration: none;
+  color: #c24c15;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+footer .container-all .footer .copyright p a:hover {
+  color: #C80B0B;
+}
+
+footer .container-all .footer .info a {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+}
+
+footer .container-all .footer .info a:hover {
+  color: #C80B0B;
+}
+
+@media screen and (max-width: 1100px) {
+  footer .container-all .container-footer {
+    flex: wrap;
+  }
+
+  footer .container-all .container-footer .column2 {
+    margin-top: 40px;
+  }
+}
+

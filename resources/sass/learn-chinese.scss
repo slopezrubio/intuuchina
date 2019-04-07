@@ -7,9 +7,7 @@ $red4:#C80B0B;
 $white: #ffffff;
 $black2:#2D2B2E;
 $black3:#161414;
-@import 'nav';
 @import 'chinese-courses';
-@import 'footer';
 body {
   margin: 0;
   padding: 0;
@@ -21,7 +19,7 @@ body {
 header {
   border-bottom: 10px solid $white;
   .img {
-    background-image: url(learn1.jpg);
+    background-image: url(/../storage/images/learn1.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
