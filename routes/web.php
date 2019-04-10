@@ -14,3 +14,23 @@
 Route::get('/', function () {
     return view('pages/home');
 });
+
+Route::get('/internship', function() {
+    return view('pages/internship');
+});
+
+Route::get('/learn', function() {
+    return view('pages/learn-chinese');
+});
+
+Route::get('/university', function() {
+    return view('pages/university');
+});
+
+Route::get('/why', function() {
+    return view('pages/why-intuuchina');
+});
+
+Route::get('/internship', function() {
+    return view('pages/about');
+});

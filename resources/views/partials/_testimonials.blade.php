@@ -92,8 +92,8 @@
     <div class="box-testi">
         <h2>Ellos ya lo han probado. <br>
             <strong>No esperes a que te lo cuenten.</strong></h2>
-        <img src="/assets/quotes.png" class="quote1" alt="quote">
-        <img src="/assets/quotes.png" class="quote2" alt="quote">
+        <img src="{{asset('storage/images/quotes.png')}}" class="quote1" alt="quote">
+        <img src="{{asset('storage/images/quotes.png')}}" class="quote2" alt="quote">
         <div class="testim">
             <img class="linkedinpic"src="https://media.licdn.com/dms/image/C5603AQHsu9hQJueHrA/profile-displayphoto-shrink_800_800/0?e=1541635200&v=beta&t=ytKgfsWkDSe9Eiqy-AA4yPCduz7Pr5Ce2Ebeu7fNymU" alt="profilepic">
             <h3>Santiago Barba Bullón de Mendoza</h3>
