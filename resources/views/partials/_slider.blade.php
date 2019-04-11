@@ -57,8 +57,3 @@
         </ul>
     </div>
 </section>
-<script src="//code.jquery.com/jquery-latest.min.js"></script>
-
-<script src="unslider.com/unslider.js"></script>
-<script src="{{asset('js/lib/js_components/slider.js')}}"></script>
-<script src="{{asset('js/lib/js_components/unslider.js')}}"></script>

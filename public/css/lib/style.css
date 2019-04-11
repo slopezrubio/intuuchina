@@ -1,56 +1,10 @@
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(45, 43, 46, 0.671);
+.navbar {
+  background: rgba(0, 0, 0, 0.3);
 }
 
-nav .logo {
-  margin: 12px;
-  padding: 0;
-  width: 32%;
-  height: 32%;
-}
-
-nav ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-nav ul li {
+.navbar .-menu ul li {
+  float: left;
   display: inline;
-}
-
-nav ul li a {
-  font-size: 16px;
-  color: white;
-  font-weight: 600;
-  margin: 1px 15px;
-  padding: 5px;
-  text-align: center;
-  display: inline-block;
-}
-
-nav ul li a i {
-  font-size: 14px;
-}
-
-nav ul li a:hover {
-  font-family: Montserrat;
-  font-size: 16px;
-  color: #C80B0B;
-  margin: 1px 15px;
-  padding: 5px;
-  text-align: center;
-  box-sizing: border-box;
-  width: 24px 0;
-  text-align: left;
-  text-decoration: none;
-}
-
-nav ul li a:hover i {
-  font-size: 14px;
 }
 
 section {

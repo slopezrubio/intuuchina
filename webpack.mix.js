@@ -10,5 +10,6 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.setPublicPath('intuuchina');
-mix.sass('resources/sass/main.scss', 'css/lib/style.css');
+mix.setPublicPath('public');
+mix.sass('resources/sass/main.scss', 'css/lib/style.css')
+    .js('resources/js/app.js', 'js/app.js');

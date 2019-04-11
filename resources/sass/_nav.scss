@@ -1,56 +1,14 @@
-$montse: Montserrat;
-$black: black;
-$red1: #B71C1C;
-$red2:#F44336;
-$red3:#E57373;
-$red4:#C80B0B;
-$white: white;
-$black2:#2D2B2E;
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(45, 43, 46, 0.671);
-  // background-image: linear-gradient( to right, rgba(45, 43, 46, 0.671),#ffffff80);
-  .logo {
-    margin: 12px;
-    padding: 0;
-    width: 32%;
-    height: 32%;
-  }
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    li {
-      display: inline;
-      a {
-        font-size: 16px;
-        color: $white;
-        font-weight: 600;
-        margin: 1px 15px;
-        padding: 5px;
-        text-align: center;
-        display: inline-block;
-        i {
-          font-size: 14px;
-        }
-      }
-      a:hover {
-        font-family: $montse;
-        font-size: 16px;
-        color: $red4;
-        margin: 1px 15px;
-        padding: 5px;
-        text-align: center;
-        box-sizing: border-box;
-        width: 24px 0;
-        text-align: left;
-        text-decoration: none;
-        i {
-          font-size: 14px;
-        }
+.navbar {
+  background: rgba(0,0,0,0.3);
+
+  .-menu {
+    ul {
+
+      li {
+        float: left;
+        display: inline;
       }
     }
   }
 }
+
