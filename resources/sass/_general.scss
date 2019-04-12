@@ -1,0 +1,16 @@
+/* Reset CSS */
+
+ul {
+  margin-bottom: 0;
+}
+
+/* Text */
+
+a {
+  color: white;
+  font-weight: 700;
+  &:hover {
+    text-decoration: none;
+    color: $tertiaryRed;
+  }
+}

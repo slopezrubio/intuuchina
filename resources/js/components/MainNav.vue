@@ -1,8 +1,9 @@
 <template>
     <div class="navbar">
-        <div class="container">
-            <a class="col-xs-0 col-sd-0" href="/"><img src="storage/images/logo.png"></a>
-            <ul class="col-xs-12 col-sd-12">
+        <div class="container navbar-menu">
+            <a class="" href="/"><img src="storage/images/logo.png"></a>
+            <button><i class="fas fa-bars" ></i></button>
+            <ul class="col-lg-9 col-lg-9">
                 <li v-for="item in menuItems"><a v-bind:href="item.url">{{ item.name }}</a></li>
                 <li class=""><a href="#">Login</a></li>
                 <li class="nav-item dropdown"><a class="dropdown-toggle" href="#" id="navbarDropdown" role="button"

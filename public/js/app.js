@@ -1814,6 +1814,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "main-nav",
   data: function data() {
@@ -36954,12 +36955,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "navbar" }, [
-    _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "container navbar-menu" }, [
       _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
       _vm._v(" "),
       _c(
         "ul",
-        { staticClass: "col-xs-12 col-sd-12" },
+        { staticClass: "col-lg-9 col-lg-9" },
         [
           _vm._l(_vm.menuItems, function(item) {
             return _c("li", [
@@ -36969,9 +36972,9 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(2),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(3)
         ],
         2
       )
@@ -36983,9 +36986,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "col-xs-0 col-sd-0", attrs: { href: "/" } }, [
+    return _c("a", { attrs: { href: "/" } }, [
       _c("img", { attrs: { src: "storage/images/logo.png" } })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", [_c("i", { staticClass: "fas fa-bars" })])
   },
   function() {
     var _vm = this

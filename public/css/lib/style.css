@@ -1,10 +1,41 @@
+/* Reset CSS */
+
+ul {
+  margin-bottom: 0;
+}
+
+/* Text */
+
+a {
+  color: white;
+  font-weight: 700;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #E57373;
+}
+
 .navbar {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.navbar .-menu ul li {
-  float: left;
-  display: inline;
+.navbar-menu {
+  padding-bottom: 3px;
+  justify-content: flex-start;
+}
+
+.navbar-menu ul {
+  list-style-type: none;
+}
+
+.navbar-menu ul li {
+  padding: 10px;
+  padding-top: 15px;
+}
+
+.navbar-menu img {
+  height: 55px;
 }
 
 section {

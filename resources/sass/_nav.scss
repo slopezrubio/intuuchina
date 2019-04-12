@@ -1,13 +1,19 @@
 .navbar {
   background: rgba(0,0,0,0.3);
 
-  .-menu {
+  &-menu {
+    padding-bottom: 3px;
+    justify-content: flex-start;
     ul {
-
+      list-style-type: none;
       li {
-        float: left;
-        display: inline;
+        padding: 10px;
+        padding-top: 15px;
       }
+    }
+
+    img {
+      height: 55px;
     }
   }
 }
