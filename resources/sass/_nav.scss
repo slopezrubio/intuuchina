@@ -1,19 +1,66 @@
+
 .navbar {
   background: rgba(0,0,0,0.3);
+  .logo {
 
-  &-menu {
-    padding-bottom: 3px;
-    justify-content: flex-start;
-    ul {
-      list-style-type: none;
-      li {
-        padding: 10px;
-        padding-top: 15px;
+  }
+  @media #{$small-and-medium-devices} {
+    &_menu {
+      padding-bottom: 3px;
+      justify-content: flex-start;
+      &--hidden {
+        display: none;
+        li {
+          padding-bottom: 10px;
+          padding-top: 15px;
+        }
+      }
+
+      .toggleMenu {
+        background: rgba(0,0,0,0);
+        border: 1px solid $primaryWhite;
+        padding: 10px 15px;
+        i {
+          font-size: 2.3em;
+          color: $primaryWhite;
+        }
+      }
+
+      &--display {
+        display: block;
+        padding: 0px;
+        animation: easy 1s ease-in-out;
+        -moz-animation: easy 1s ease-in-out;
+        -webkit-animation: easy 1s ease-in-out;
+        -ms-animation: easy 1s ease-in-out;
+      }
+
+      img {
+        height: 55px;
       }
     }
+  }
 
-    img {
-      height: 55px;
+  @media #{$large-devices} {
+    &_menu {
+      padding-bottom: 3px;
+      justify-content: flex-start;
+      ul {
+        li {
+          float: left;
+          padding-bottom: 10px;
+          padding-top: 15px;
+          padding-left: 20px;
+        }
+      }
+
+      .toggleMenu {
+        display: none;
+      }
+
+      img {
+        height: 55px;
+      }
     }
   }
 }

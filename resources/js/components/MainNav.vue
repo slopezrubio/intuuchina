@@ -1,11 +1,10 @@
 <template>
     <div class="navbar">
-        <div class="container navbar-menu">
-            <a class="" href="/"><img src="storage/images/logo.png"></a>
-            <button><i class="fas fa-bars" ></i></button>
-            <ul class="col-lg-9 col-lg-9">
+        <div class="container-fluid navbar_menu">
+            <a class="logo" href="/"><img src="storage/images/logo.png"></a>
+            <button class="toggleMenu" v-on:click="displayNav"><i class="fas fa-bars" ></i></button>
+            <ul class="col-lg-9 col-lg-9 navbar_menu navbar_menu--hidden">
                 <li v-for="item in menuItems"><a v-bind:href="item.url">{{ item.name }}</a></li>
-                <li class=""><a href="#">Login</a></li>
                 <li class="nav-item dropdown"><a class="dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ES</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -40,6 +39,11 @@
                         url: '/login'
                     }
                 ]
+            }
+        },
+        methods: {
+            displayNav: function(event) {
+                $('.navbar_menu--hidden').toggleClass('navbar_menu--display');
             }
         },
         mounted() {

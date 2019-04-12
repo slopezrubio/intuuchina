@@ -17,3 +17,8 @@ $tertiaryRed:#E57373;
 $quaternaryRed:#C80B0B;
 $primaryWhite: white;
 
+// Breakpoints
+$small-and-medium-devices: "only screen and (min-width: 100px) and (max-width: 992px)";
+$small-devices: "only screen and (max-width: 320px)";
+$medium-devices: "only screen and (min-width: 321px) and (max-width: 780px)";
+$large-devices: "only screen and (min-width: 993px)";

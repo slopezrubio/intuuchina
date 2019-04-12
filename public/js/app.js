@@ -1814,7 +1814,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "main-nav",
   data: function data() {
@@ -1836,6 +1835,11 @@ __webpack_require__.r(__webpack_exports__);
         url: '/login'
       }]
     };
+  },
+  methods: {
+    displayNav: function displayNav(event) {
+      $('.navbar_menu--hidden').toggleClass('navbar_menu--display');
+    }
   },
   mounted: function mounted() {}
 });
@@ -36955,14 +36959,18 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "navbar" }, [
-    _c("div", { staticClass: "container navbar-menu" }, [
+    _c("div", { staticClass: "container-fluid navbar_menu" }, [
       _vm._m(0),
       _vm._v(" "),
-      _vm._m(1),
+      _c(
+        "button",
+        { staticClass: "toggleMenu", on: { click: _vm.displayNav } },
+        [_c("i", { staticClass: "fas fa-bars" })]
+      ),
       _vm._v(" "),
       _c(
         "ul",
-        { staticClass: "col-lg-9 col-lg-9" },
+        { staticClass: "col-lg-9 col-lg-9 navbar_menu navbar_menu--hidden" },
         [
           _vm._l(_vm.menuItems, function(item) {
             return _c("li", [
@@ -36972,9 +36980,7 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm._m(3)
+          _vm._m(1)
         ],
         2
       )
@@ -36986,21 +36992,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "/" } }, [
+    return _c("a", { staticClass: "logo", attrs: { href: "/" } }, [
       _c("img", { attrs: { src: "storage/images/logo.png" } })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", [_c("i", { staticClass: "fas fa-bars" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", {}, [_c("a", { attrs: { href: "#" } }, [_vm._v("Login")])])
   },
   function() {
     var _vm = this
@@ -49433,8 +49427,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })
