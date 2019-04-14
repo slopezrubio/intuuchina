@@ -1,4 +1,9 @@
-/* Reset CSS */
+@charset "UTF-8";
+
+/* -------------
+ * - Reset CSS -
+ * -------------
+ */
 
 ul {
   margin-bottom: 0;
@@ -10,7 +15,24 @@ ul li {
   padding: 0;
 }
 
-/* Text */
+/* ------------------------------------------------------- */
+
+/* -------------
+ * --- Text ----
+ * -------------
+ */
+
+h1,
+h2,
+h3,
+h4,
+button {
+  color: white;
+}
+
+h4 {
+  font-size: 2em;
+}
 
 a {
   color: white;
@@ -21,6 +43,22 @@ a:hover {
   text-decoration: none;
   color: #E57373;
 }
+
+/* -------------
+ * - Elements --
+ * -------------
+ */
+
+header {
+  position: relative;
+}
+
+.primary-button {
+  background: #B71C1C;
+  padding: 10px;
+}
+
+/* Menú desplegado */
 
 @-webkit-keyframes easy {
   0% {
@@ -42,14 +80,19 @@ a:hover {
   }
 }
 
+/* Mixins */
+
 .navbar {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 
 @media only screen and (min-width: 100px) and (max-width: 992px) {
   .navbar_menu {
     padding-bottom: 3px;
-    justify-content: flex-start;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
   .navbar_menu--hidden {
@@ -64,17 +107,21 @@ a:hover {
   .navbar_menu .toggleMenu {
     background: rgba(0, 0, 0, 0);
     border: 1px solid white;
-    padding: 10px 15px;
+    padding: 8px 13px;
   }
 
   .navbar_menu .toggleMenu i {
-    font-size: 2.3em;
+    font-size: 2em;
     color: white;
   }
 
   .navbar_menu--display {
     display: block;
-    padding: 0px;
+    position: absolute;
+    top: 74px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5em 2em;
     animation: easy 1s ease-in-out;
     -moz-animation: easy 1s ease-in-out;
     -webkit-animation: easy 1s ease-in-out;
@@ -92,7 +139,7 @@ a:hover {
     justify-content: flex-start;
   }
 
-  .navbar_menu ul li {
+  .navbar_menu li {
     float: left;
     padding-bottom: 10px;
     padding-top: 15px;
@@ -882,68 +929,43 @@ main #id2 img {
   z-index: -100;
 }
 
-section .box {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  border: 3px solid white;
-  border-radius: 18px;
-  padding: 20px 40px;
-  background-color: #00000050;
-  margin: auto;
-  margin-top: 6rem;
+/* Centrar verticalmente (el elemento padre tiene que
+ * tener el atributo 'position: relative' para que
+ * funcione)
+ */
+
+.main-section--primary {
+  /* Centrar verticalmente */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  z-index: 1;
 }
 
-section .box h3 {
+.main-section--primary .title-card {
+  background: rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  padding: 3em;
+  border-radius: 8px;
+  border: 1px solid white;
+}
+
+.main-section--primary .title-card-header {
+  font-size: calc(2.9281496063vw + 3.8661417323px);
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.main-section--primary .title-card-footer {
   color: white;
-  text-align: left;
 }
 
-section .box p {
-  text-align: left;
-  color: white;
-}
-
-section .box .space-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-section .box .space-between h4 {
-  color: white;
-  margin: 6px;
-  cursor: pointer;
-}
-
-section .box .space-between h4 span {
-  font-size: 65px;
-}
-
-section .box .space-between .media {
-  text-align: left;
-  padding-top: 20px;
-}
-
-section .box .space-between .media .fa-linkedin-in {
-  font-size: 30px;
-  color: white;
-  margin: 10px;
-  vertical-align: text-bottom;
-}
-
-section .box .space-between .media .fa-facebook-f {
-  font-size: 30px;
-  color: white;
-  margin: 10px;
-}
-
-section .box .space-between .media .fa-twitter {
-  font-size: 30px;
-  color: white;
-  margin: 10px;
+.main-section--primary .title-card-footer .media {
+  display: block;
+  float: left;
 }
 
 .grid {

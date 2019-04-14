@@ -1,13 +1,11 @@
 @extends('layouts.master')
 
-@extends('layouts.master')
-
 <header>
     {{--Elemento NAV--}}
     @include('partials._nav')
 
     {{--Elemento SLIDER--}}
-    @include('partials._slider')
+    @include('partials._page-title')
 </header>
 
 {{--Apartado de prensa--}}

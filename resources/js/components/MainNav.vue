@@ -1,18 +1,18 @@
 <template>
     <div class="navbar">
-        <div class="container-fluid navbar_menu">
+        <div class="navbar_menu">
             <a class="logo" href="/"><img src="storage/images/logo.png"></a>
             <button class="toggleMenu" v-on:click="displayNav"><i class="fas fa-bars" ></i></button>
-            <ul class="col-lg-9 col-lg-9 navbar_menu navbar_menu--hidden">
-                <li v-for="item in menuItems"><a v-bind:href="item.url">{{ item.name }}</a></li>
-                <li class="nav-item dropdown"><a class="dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ES</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">EN</a>
-                    </div>
-                </li>
-            </ul>
         </div>
+        <ul class="col-lg-9 col-lg-9 navbar_menu navbar_menu--hidden">
+            <li v-for="item in menuItems"><a v-bind:href="item.url">{{ item.name }}</a></li>
+            <li class="nav-item dropdown"><a class="dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ES</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">EN</a>
+                </div>
+            </li>
+        </ul>
     </div>
 </template>
 

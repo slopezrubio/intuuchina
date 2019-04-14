@@ -1,12 +1,11 @@
 @extends('layouts.master')
 
 <header>
-     <div class="img">
         {{--Elemento NAV--}}
         @include('partials._nav')
 
         {{--Elemento SLIDER--}}
-        @include('partials._slider')
+        @include('partials._page-title')
 
          <div class="box">
             <h1>Prácticas</h1>

@@ -7,8 +7,8 @@
     {{--Elemento NAV--}}
     @include('partials._nav')
 
-    {{--Elemento SLIDER--}}
-    @include('partials._slider')
+    {{--Título de la página--}}
+    @include('partials._page-title')
 </header>
     {{--Elemento Medios de TV--}}
     @include('partials._news')
