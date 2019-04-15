@@ -58,6 +58,12 @@ header {
   padding: 10px;
 }
 
+nav {
+  height: auto;
+  line-height: auto;
+  background: rgba(0, 0, 0, 0.2);
+}
+
 /* Menú desplegado */
 
 @-webkit-keyframes easy {
@@ -81,6 +87,19 @@ header {
 }
 
 /* Mixins */
+
+#login .close-modal {
+  justify-content: space-between;
+}
+
+#login .close-modal h4,
+#login .close-modal p {
+  color: black;
+}
+
+#login .close-modal i {
+  color: #d1d1d1;
+}
 
 .navbar {
   background: rgba(0, 0, 0, 0.2);
@@ -752,7 +771,7 @@ main .news {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
   background-color: #C80B0B;
   height: 500px;
-  z-index: 10;
+  z-index: 0;
   position: relative;
 }
 

@@ -1,0 +1,11 @@
+#login {
+  .close-modal {
+    justify-content: space-between;
+    h4, p {
+      color: $primaryDark;
+    }
+    i {
+      color: $neutralColor;
+    }
+  }
+}
