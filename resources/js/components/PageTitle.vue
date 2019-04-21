@@ -9,7 +9,7 @@
                     <a href="https://www.facebook.com/intuuchina"><i class="fab fa-facebook-f"></i></a>
                     -<a href="https://twitter.com/intuuchina"><i class="fab fa-twitter"></i></a>
                 </div>
-                <button class="primary-button">Ver Ofertas <i class="fas fa-angle-right"></i></button>
+                <button class="body-button_primary">Ver Ofertas <i class="fas fa-angle-right"></i></button>
             </div>
         </div>
 

@@ -38,3 +38,7 @@ Route::get('/internship', function() {
 Route::get('/login', function() {
     return view('pages/login');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

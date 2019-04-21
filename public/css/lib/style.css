@@ -53,15 +53,17 @@ header {
   position: relative;
 }
 
-.primary-button {
+.body-button {
+  padding: 15px;
+}
+
+.body-button_primary {
   background: #B71C1C;
-  padding: 10px;
 }
 
 nav {
   height: auto;
   line-height: auto;
-  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Menú desplegado */
@@ -88,21 +90,110 @@ nav {
 
 /* Mixins */
 
-#login .close-modal {
-  justify-content: space-between;
+#loginModal .medium-icon {
+  font-size: 3em;
 }
 
-#login .close-modal h4,
-#login .close-modal p {
-  color: black;
+#loginModal .modal-column {
+  flex-direction: column;
 }
 
-#login .close-modal i {
-  color: #d1d1d1;
+#loginModal .modal-column > :not(:first-child) {
+  margin: 10px 0;
+}
+
+#loginModal .modal-column > :not(:last-child) {
+  margin: 6px 0;
+}
+
+#loginModal .modal-column .modal-link {
+  color: #B71C1C;
+}
+
+#loginModal .modal-column .modal-link:hover,
+#loginModal .modal-column .modal-link:focus,
+#loginModal .modal-column .modal-link:active {
+  text-decoration: underline;
+}
+
+#loginModal [class^=modal-button] {
+  color: white;
+}
+
+#loginModal .modal-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  -moz-transform: perspective(1px) translateZ(0);
+  -ms-transform: perspective(1px) translateZ(0);
+  -o-transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  background: white;
+  -webkit-transition-property: color;
+  -moz-transition-property: color;
+  -ms-transition-property: color;
+  -o-transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  border: 2px solid #B71C1C;
+  border-radius: 22px;
+}
+
+#loginModal .modal-button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #B71C1C;
+  border-radius: 20px;
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+  -webkit-transform-origin: 50%;
+  -moz-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  -o-transform-origin: 50%;
+  -webkit-transform-property: transform;
+  -moz-transform-property: transform;
+  -ms-transform-property: transform;
+  -o-transform-property: transform;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
+  -ms-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+}
+
+#loginModal .modal-button:hover,
+#loginModal .modal-button:focus,
+#loginModal .modal-button:active {
+  color: #B71C1C;
+}
+
+#loginModal .modal-button:hover:before,
+#loginModal .modal-button:focus:before,
+#loginModal .modal-button:active:before {
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
 }
 
 .navbar {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.3);
   z-index: 2;
 }
 
@@ -139,7 +230,7 @@ nav {
     position: absolute;
     top: 74px;
     left: 0px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.3);
     padding: 0.5em 2em;
     animation: easy 1s ease-in-out;
     -moz-animation: easy 1s ease-in-out;

@@ -80,13 +80,20 @@ header {
   position: relative;
 }
 
-.primary-button {
-  background: $primaryRed;
-  padding: 10px;
+.body-button {
+  padding: 15px;
+  &_primary {
+    background: $primaryRed;
+  }
+
+  &_secondary {
+
+  }
 }
+
+
 
 nav {
   height: auto;
   line-height: auto;
-  background: $navbarDark;
 }
