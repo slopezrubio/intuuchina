@@ -26,6 +26,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Surnames') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="text" class="form-control{{ $errors->has('surnames') ? ' is-invalid' : '' }}" name="surnames" value="{{ old('surnames') }}" required>
+
+                                @if ($errors->has('surnames'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('surnames') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
@@ -40,11 +54,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="nationality" class="col-md-4 col-form-label text-md-right">Nationality</label>
+                            <label for="inputNationality" class="col-md-4 col-form-label text-md-right">Nationality</label>
                             <div class="col-md-6">
-                                <select class="custom-select" id="inputNationality">
-                                    <option selected>Choose...</option>
-                                    <option value="es">Spanish</option>
+                                <select class="custom-select" id="inputNationality" name="nationality">
+                                    <option value="es" selected aria-selected="true">Spanish</option>
                                     <option value="ch">Chinese</option>
                                     <option value="en">English</option>
                                 </select>

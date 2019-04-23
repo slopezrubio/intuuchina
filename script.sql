@@ -4,9 +4,9 @@ CREATE TABLE users (
 	id INT(11) NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     surnames VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) NOT NULL,
     nacionality VARCHAR(255) NOT NULL,
-    current_password VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     PRIMARY KEY (id)
