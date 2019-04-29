@@ -1101,6 +1101,11 @@ header {
   height: 35rem;
 }
 
+header.auth {
+  background: #B71C1C;
+  height: 20rem;
+}
+
 .grid h2 {
   font-weight: 500;
   font-size: 28px;

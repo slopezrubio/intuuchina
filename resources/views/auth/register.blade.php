@@ -92,7 +92,7 @@
                                     {{ __('Register') }}
                                 </button>
                             </div>
-                        </div>
+                        </div>f
                     </form>
                 </div>
             </div>
