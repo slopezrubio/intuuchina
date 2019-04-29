@@ -19,7 +19,7 @@ Route::get('/admin/offers', function() {
     return view('pages/admin/offers');
 })->name('offers');
 
-Route::post('/admin/offers', 'OffersController@register');
+Route::post('/admin/offers', 'OffersController@store');
 
 Route::get('/internship', function() {
     return view('pages/internship');

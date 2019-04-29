@@ -21,7 +21,9 @@ class CreateOffersTable extends Migration
             $table->string('job_type');
             $table->string('education');
             $table->string('duration');
-            $table->string('description')
+            $table->string('description');
+            $table->string('preferred_skills');
+            $table->string('non_technical_skills');
         });
     }
 
