@@ -1,0 +1,37 @@
+#loginModal {
+  .medium-icon {
+    font-size: 3em;
+  }
+
+  .modal-column {
+    flex-direction: column;
+    > :not(:first-child) {
+      margin: 10px 0;
+    }
+
+    > :not(:last-child) {
+      margin: 6px 0;
+    }
+
+    .modal-link {
+      color: $primaryRed;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  [class^="modal-button"] {
+    color: $primaryWhite;
+  }
+
+  .modal-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    @include shutter-in-horizontal();
+  }
+}
