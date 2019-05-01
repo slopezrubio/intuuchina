@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Offer;
 
 class OffersController extends Controller
@@ -15,6 +17,13 @@ class OffersController extends Controller
     public function index()
     {
         //
+        $offers = DB::table('offers')->get();
+
+        foreach ($offers as $offer) {
+           $offer->gone_by = $this->getDiffForHumans($offer->created_at);
+        }
+
+        return view('pages/admin/offers', compact('offers'));
     }
 
     /**
@@ -105,5 +114,9 @@ class OffersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDiffForHumans($date) {
+        return Carbon::parse($date)->diffForHumans(Carbon::now());
     }
 }

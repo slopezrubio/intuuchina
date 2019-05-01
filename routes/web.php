@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('pages/home');
 });
 
-Route::get('/admin/offers', function() {
-    return view('pages/admin/offers');
-})->name('offers');
+Route::get('/admin/offers', 'OffersController@index')->name('offers');
 
 Route::post('/admin/offers', 'OffersController@store');
 

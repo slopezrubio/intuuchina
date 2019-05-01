@@ -49433,6 +49433,41 @@ function displayNav(event) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_offers.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/_offers.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// Component Events
+document.querySelector('.dropdown-button').addEventListener('click', displayForm); // Component Methods
+
+function displayForm(event) {
+  event.preventDefault();
+  var formIsDisplayed = $('.form_body').length;
+
+  if (!formIsDisplayed) {
+    $('.form_body--hidden').addClass('form_body').removeClass('form_body--hidden');
+    var positionForm = $('.form_body').position();
+    scrollTo($('.form_body'));
+  }
+
+  if (formIsDisplayed) {
+    $('.form_body').addClass('form_body--hidden').removeClass('form_body');
+  }
+}
+
+function scrollTo(target) {
+  console.log(target);
+  var $target = $(target);
+  $("html, body").animate({
+    'scrollTop': target.offset().top
+  }, 1000, 'swing');
+}
+
+/***/ }),
+
 /***/ "./resources/sass/main.scss":
 /*!**********************************!*\
   !*** ./resources/sass/main.scss ***!
@@ -49445,15 +49480,16 @@ function displayNav(event) {
 /***/ }),
 
 /***/ 0:
-/*!************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/_nav.js ./resources/sass/main.scss ***!
-  \************************************************************************************************/
+/*!*************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/sass/main.scss ***!
+  \*************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })
