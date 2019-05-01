@@ -36,7 +36,7 @@ class OffersController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
+        $request->validate([
             'title' => 'required|max:255|string',
             'location' => 'required|string',
             'job-type' => 'required|string',
@@ -48,7 +48,7 @@ class OffersController extends Controller
         ]);
 
 
-        \App\Offer::create([
+        Offer::create([
             'title' => $request->get('title'),
             'location' => $request->get('location'),
             'job_type' => $request->get('job-type'),
@@ -59,7 +59,7 @@ class OffersController extends Controller
             'non_technical_skills' => $request->get('non-technical-skills'),
         ]);
         
-
+        return redirect()->route('offers');
     }
 
     /**
