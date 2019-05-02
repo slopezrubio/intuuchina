@@ -1161,7 +1161,7 @@ main #id2 img {
 
 .main-section--primary .title-card-header {
   font-size: calc(2.9281496063vw + 3.8661417323px);
-  line-height: 20px;
+  line-height: 1.4;
   font-weight: 700;
 }
 
