@@ -1,0 +1,42 @@
+/* Centrar verticalmente (el elemento padre tiene que
+ * tener el atributo 'position: relative' para que
+ * funcione)
+ */
+@mixin verticalAlign() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
+
+.main-section--primary {
+  /* Centrar verticalmente */
+  @include verticalAlign();
+
+  z-index: 1;
+  .title-card {
+    background: $sectionDark;
+    margin: 0 auto;
+    padding: 3em;
+    border-radius: 8px;
+    border: 1px solid $primaryWhite;
+
+    &-header {
+      $map: (576: 22, 768: 24, 992: 34);
+      font-size: minimosCuadrados($map);
+      line-height: 20px;
+      font-weight: 700;
+    }
+
+    &-footer {
+      color: $primaryWhite;
+      .media {
+        display: block;
+        float: left;
+      }
+
+    }
+  }
+}
