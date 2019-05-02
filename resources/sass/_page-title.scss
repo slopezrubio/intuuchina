@@ -26,7 +26,7 @@
     &-header {
       $map: (576: 22, 768: 24, 992: 34);
       font-size: minimosCuadrados($map);
-      line-height: 20px;
+      line-height: 1.4;
       font-weight: 700;
     }
 

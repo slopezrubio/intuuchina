@@ -35,6 +35,11 @@ header {
   height: 35rem;
 }
 
+header.auth {
+  background: $primaryRed;
+  height: 20rem;
+}
+
 //grid system
 .grid {
   @extend %grid;

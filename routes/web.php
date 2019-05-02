@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('pages/home');
 });
 
+Route::get('/admin/offers', 'OffersController@index')->name('offers');
+
+Route::post('/admin/offers', 'OffersController@store');
+
 Route::get('/internship', function() {
     return view('pages/internship');
 });

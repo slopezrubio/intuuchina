@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Para poder desplegar o implementar esta aplicación, debes tener instalado <a href="https://getcomposer.org/doc/00-intro.md#dependency-management">Composer</a>.
 
-Things you may want to cover:
+<ul>
+<li>Una vez tengas clonado el repositorio, duplica el fichero '.env.example' con el nombre de 'env'.</li>
 
-* Ruby version
+<li>Abre un terminal (en Mac), un shell (en Linux), o una linea de Comandos (en Windows) en el directorio donde se encuentra el directorio root de tu proyecto y inserta el siguiente comando para generar la clave en SHA necesaria para iniciar el proyecto:</li>
+</ul>
 
-* System dependencies
+    php artisan key:generate
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
