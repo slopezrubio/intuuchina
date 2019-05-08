@@ -27,7 +27,6 @@
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Surnames') }}</label>
-
                             <div class="col-md-6">
                                 <input id="email" type="text" class="form-control{{ $errors->has('surnames') ? ' is-invalid' : '' }}" name="surnames" value="{{ old('surnames') }}" required>
 
@@ -54,12 +53,45 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputNationality" class="col-md-4 col-form-label text-md-right">Nationality</label>
+                            <label for="inputNationality" class="col-md-4 col-form-label text-md-right">{{ __('Nationality') }}</label>
                             <div class="col-md-6">
-                                <select class="custom-select" id="inputNationality" name="nationality">
-                                    <option value="es" selected aria-selected="true">Spanish</option>
-                                    <option value="ch">Chinese</option>
-                                    <option value="en">English</option>
+                                <input id="nationality" type="text" class="form-control{{ $errors->has('nationality') ? ' is-invalid' : '' }}" name="nationality" value="{{ old('nationality') }}" required>
+
+                                @if ($errors->has('nationality'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('nationality') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputProgram" class="col-md-4 col-form-label text-md-right">Program</label>
+                            <div class="col-md-6">
+                                <select class="custom-select" id="inputProgram" name="program">
+                                    <option value="intership" selected aria-selected="true">Intership program</option>
+                                    <option value="inter_relocat">Intership + Relocation Program</option>
+                                    <option value="full">Full intership</option>
+                                    <option value="study">Study Chinese</option>
+                                    <option value="universty">University</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputIndustry" class="col-md-4 col-form-label text-md-right">Industry</label>
+                            <div class="col-md-6">
+                                <select class="custom-select" id="inputIndustry" name="industry">
+                                    <option value="" selected aria-selected="true">Finance</option>
+                                    <option value="">Design</option>
+                                    <option value="">Engineering</option>
+                                    <option value="">Consultant</option>
+                                    <option value="">Education</option>
+                                    <option value="">Hostelry</option>
+                                    <option value="">IT</option>
+                                    <option value="">Legal</option>
+                                    <option value="">Logistic</option>
+                                    <option value="">Marketing & Business Development</option>
                                 </select>
                             </div>
                         </div>
@@ -92,7 +124,7 @@
                                     {{ __('Register') }}
                                 </button>
                             </div>
-                        </div>f
+                        </div>
                     </form>
                 </div>
             </div>
