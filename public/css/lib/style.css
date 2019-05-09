@@ -717,25 +717,66 @@ header {
   font-size: 28px;
 }
 
+@media only screen and (min-width: 100px) and (max-width: 992px) {
+  footer .footer_header {
+    flex-direction: column;
+  }
+
+  footer .footer_header_contact_form {
+    max-width: 100%;
+  }
+
+  footer .footer_web-map {
+    max-width: 100%;
+    display: grid;
+    justify-content: space-between;
+    grid-template-rows: auto auto;
+    grid-template-columns: 40% 40%;
+    margin-left: 0px;
+    margin-top: 50px;
+  }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 992px) and (max-width: 550px) {
+  footer .footer .footer_web-map {
+    grid-template-rows: auto;
+    grid-template-columns: 100%;
+  }
+}
+
 footer {
   background: black;
   color: white;
 }
 
-footer .contact_form div {
+footer .footer {
+  padding: 0px 30px;
+}
+
+footer .footer_header {
+  display: flex;
+}
+
+footer .footer .footer_title {
+  padding-top: 35px;
+  padding-bottom: 5px;
+}
+
+footer .footer_contact_form div {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
 }
 
-footer .contact_form div .switch {
+footer .footer_contact_form div .switch {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 60px;
   height: 34px;
+  margin-top: 10px;
 }
 
-footer .contact_form div .switch .checkbox_slider {
+footer .footer_contact_form div .switch .checkbox_slider {
   position: absolute;
   cursor: pointer;
   right: 0;
@@ -749,11 +790,15 @@ footer .contact_form div .switch .checkbox_slider {
   -o-transition: .4s;
 }
 
-footer .contact_form div .switch .checkbox_slider--rounded {
+footer .footer_contact_form div .switch .checkbox_slider--rounded {
   border-radius: 34px;
 }
 
-footer .contact_form div .switch .checkbox_slider:before {
+footer .footer_contact_form div .switch .checkbox_slider--rounded:before {
+  border-radius: 50%;
+}
+
+footer .footer_contact_form div .switch .checkbox_slider:before {
   position: absolute;
   content: "";
   width: 26px;
@@ -761,42 +806,120 @@ footer .contact_form div .switch .checkbox_slider:before {
   background: white;
   left: 4px;
   bottom: 4px;
+  -webkit-transition: .4s;
+  -moz-transition: .4s;
+  -ms-transition: .4s;
+  -o-transition: .4s;
 }
 
-footer .contact_form div input:focus + .checkbox_slider {
+footer .footer_contact_form div input:focus + .checkbox_slider {
   box-shadow: 0 0 1px #B71C1C;
 }
 
-footer .contact_form div input:checked + .checkbox_slider {
+footer .footer_contact_form div input:checked + .checkbox_slider {
   background: #B71C1C;
 }
 
-footer .contact_form div input[type^=checkbox] {
+footer .footer_contact_form div input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(26px);
+  -moz-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  -o-transform: translateX(26px);
+}
+
+footer .footer_contact_form div input[type^=checkbox] {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-footer .contact_form div label {
-  padding-top: 60px;
-  padding-bottom: 15px;
+footer .footer_contact_form div label,
+footer .footer_contact_form div .g-recaptcha {
+  padding-top: 45px;
   margin-bottom: 0px;
 }
 
-footer .contact_form div input,
-footer .contact_form div textarea {
+footer .footer_contact_form div label.switch,
+footer .footer_contact_form div .g-recaptcha.switch {
+  padding: 0;
+}
+
+footer .footer_contact_form div input,
+footer .footer_contact_form div textarea {
   background: black;
   color: white;
   border-width: 0px 0px 2px 0px;
   padding: 10px 0px;
+  font-size: 0.8em;
 }
 
-footer .contact_form div textarea::-webkit-input-placeholder {
+footer .footer_contact_form div textarea::-webkit-input-placeholder {
   color: #d1d1d1;
 }
 
-footer .contact_form div textarea::-moz-placeholder {
+footer .footer_contact_form div textarea::-moz-placeholder {
   color: #d1d1d1;
+}
+
+footer .footer_contact_form div .footer_submit,
+footer .footer_contact_form div .footer_reset {
+  cursor: pointer;
+  padding: 10px 0;
+  margin-top: 45px;
+  width: 40%;
+  background: #d1d1d1;
+  border: none;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  -moz-transform: perspective(1px) translateZ(0);
+  -ms-transform: perspective(1px) translateZ(0);
+  -o-transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-property: color, background;
+  -moz-transition-property: color, background;
+  -ms-transition-property: color, background;
+  -o-transition-property: color, background;
+  border-radius: 34px;
+}
+
+footer .footer_contact_form div .footer_submit:hover,
+footer .footer_contact_form div .footer_submit:focus,
+footer .footer_contact_form div .footer_submit:active,
+footer .footer_contact_form div .footer_reset:hover,
+footer .footer_contact_form div .footer_reset:focus,
+footer .footer_contact_form div .footer_reset:active {
+  background: #B71C1C;
+  color: white;
+}
+
+footer .footer_contact_form div:last-of-type {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+footer .footer_web-map h3 {
+  text-transform: uppercase;
+}
+
+footer .footer_web-map h4 {
+  font-size: 12px;
+  color: #B71C1C;
+}
+
+footer .footer_web-map li,
+footer .footer_web-map a {
+  color: #d1d1d1;
+}
+
+footer .footer_footer h4 {
+  color: #B71C1C;
+  font-size: 1.2em;
 }
 
 section .box-testi {

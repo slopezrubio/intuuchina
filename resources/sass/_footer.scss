@@ -1,73 +1,163 @@
 
+@media #{$small-and-medium-devices} {
+  footer {
+    .footer {
+      &_header {
+        flex-direction: column;
+        &_contact_form {
+          max-width: 100%;
+        }
+      }
+
+      &_web-map {
+        max-width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-rows: auto auto;
+        grid-template-columns: 40% 40%;
+        margin-left: 0px;
+        margin-top: 50px;
+      }
+
+      @media #{$footer-fix} {
+        .footer_web-map {
+          grid-template-rows: auto;
+          grid-template-columns: 100%;
+        }
+      }
+    }
+  }
+}
 
 footer {
   background: $primaryDark;
   color: $primaryWhite;
-  .contact_form {
-    div {
+  .footer {
+    &_header {
       display: flex;
-      justify-content: space-around;
-      flex-direction: column;
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-        .checkbox_slider {
-          position: absolute;
-          cursor: pointer;
-          right: 0;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          background: $neutralColor;
-          @include prefixed('transition','.4s');
-          &--rounded {
-              border-radius: 34px;
-          }
-          &:before {
+    }
+    padding: 0px 30px;
+    .footer_title {
+      padding-top: 35px;
+      padding-bottom: 5px;
+    }
+    &_contact_form {
+      div {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        .switch {
+          position: relative;
+          display: block;
+          width: 60px;
+          height: 34px;
+          margin-top: 10px;
+          .checkbox_slider {
             position: absolute;
-            content:"";
-            width:26px;
-            height: 26px;
-            background: $primaryWhite;
-            left: 4px;
-            bottom: 4px;
+            cursor: pointer;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: $neutralColor;
+            @include prefixed('transition','.4s');
+            &--rounded {
+                border-radius: 34px;
+            }
+            &--rounded:before {
+              border-radius: 50%;
+            }
+
+            &:before {
+              position: absolute;
+              content:"";
+              width:26px;
+              height: 26px;
+              background: $primaryWhite;
+              left: 4px;
+              bottom: 4px;
+              @include prefixed('transition','.4s');
+            }
+          }
+        }
+        input:focus + .checkbox_slider {
+          box-shadow: 0 0 1px $primaryRed;
+        }
+
+        input:checked + .checkbox_slider {
+          background: $primaryRed;
+        }
+
+        input:checked + .checkbox_slider:before {
+          @include prefixed('transform', 'translateX(26px)');
+        }
+
+        input[type^=checkbox] {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        label, .g-recaptcha {
+          padding-top: 45px;
+          margin-bottom: 0px;
+          &.switch {
+            padding: 0;
           }
         }
 
+        input, textarea {
+          background: $primaryDark;
+          color: $primaryWhite;
+          border-width: 0px 0px 2px 0px;
+          padding: 10px 0px;
+          font-size: 0.8em;
+        }
 
+        textarea::-webkit-input-placeholder {
+          color: $neutralColor;
+        }
+
+        textarea::-moz-placeholder {
+          color: $neutralColor;
+        }
+
+        .footer_submit, .footer_reset {
+          cursor: pointer;
+          padding: 10px 0;
+          margin-top: 45px;
+          width: 40%;
+          background: $neutralColor;
+          border: none;
+          @include fade();
+          border-radius: 34px;
+        }
+
+        &:last-of-type {
+          flex-direction: row;
+          justify-content: space-between;
+        }
       }
-      input:focus + .checkbox_slider {
-        box-shadow: 0 0 1px $primaryRed;
+    }
+    &_web-map {
+      h3 {
+        text-transform: uppercase;
       }
 
-      input:checked + .checkbox_slider {
-        background: $primaryRed;
-      }
-      input[type^=checkbox] {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-      label{
-        padding-top: 60px;
-        padding-bottom: 15px;
-        margin-bottom: 0px;
-      }
-      input, textarea {
-        background: $primaryDark;
-        color: $primaryWhite;
-        border-width: 0px 0px 2px 0px;
-        padding: 10px 0px;
+      h4 {
+        font-size: 12px;
+        color: $primaryRed;
       }
 
-      textarea::-webkit-input-placeholder {
+      li, a {
         color: $neutralColor;
       }
+    }
 
-      textarea::-moz-placeholder {
-        color: $neutralColor;
+    &_footer {
+      h4 {
+        color: $primaryRed;
+        font-size: 1.2em
       }
     }
   }

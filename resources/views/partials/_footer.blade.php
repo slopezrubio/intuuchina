@@ -1,35 +1,93 @@
 <footer>
 
-    <div class="container">
-        <div class="mx-auto">
-            <h3 class="contact">Contact us!</h3>
-        </div>
-        <form action="" class="contact_form mx-auto">
-            <div class="col-xs-10 contact_form_input">
-                <label for="name">Nombre</label>
-                <input type="text" name="name" id="name">
-            </div>
-            <div class="col-xs-10">
-                <label for="email">Correo</label>
-                <input type="text" name="email" id="email">
-            </div>
-            <div class="col-xs-10">
-                <label for="issue">Asunto</label>
-                <input type="text" name="issue" id="issue">
-            </div>
-            <div class="class-xs-10">
-                <label for="question">Mensaje</label>
-                <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta"></textarea>
-            </div>
-            <div class="class-xs-10">
-                <label for="terms">Términos y condiciones</label>
-                <span class="switch">
-                    <input id="terms" name="terms" type="checkbox">
-                    <span class="checkbox_slider checkbox_slider--rounded"></span>
-                </span>
+    <div class="container-fluid footer">
+        <div class="footer_header">
+            {{--Contact form--}}
+            <form action="" class="footer_contact_form col-md-7 col-sm-10">
+                <div class="mx-auto footer_title">
+                    <h3>Contact us!</h3>
+                </div>
+                <div class="col-xs-10 contact_form_input">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div class="col-xs-10">
+                    <label for="email">Correo</label>
+                    <input type="text" name="email" id="email">
+                </div>
+                <div class="col-xs-10">
+                    <label for="issue">Asunto</label>
+                    <input type="text" name="issue" id="issue">
+                </div>
+                <div class="col-xs-10">
+                    <label for="question">Mensaje</label>
+                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta"></textarea>
+                </div>
+                <div class="col-xs-10">
+                    <label aria-label="terms">Acepto los términos y condiciones</label>
+                    <label for="terms" class="switch">
+                        <input id="terms" name="terms" type="checkbox">
+                        <span class="checkbox_slider checkbox_slider--rounded"></span>
+                    </label>
+                </div>
+                <div class="col-xs-10">
+                    <div class="g-recaptcha" data-sitekey="6LcIhqIUAAAAAPPWaly2yJAAadIjMISICA_9rQy3"></div>
+                </div>
+                <div class="col-xs-10">
+                    <button type="submit" class="footer_submit">Submit</button>
+                    <button type="reset" class="footer_reset">Cancel</button>
+                </div>
+            </form>
 
+            {{--Web Map--}}
+            <div class="footer_web-map offset-md-1 col-md-4">
+                <div class="footer_title">
+                    <h3>Prácticas</h3>
+                    <ul class="web-map_list">
+                        <li class="web-map_item"><a href="#">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div class="footer_title">
+                    <h3>Aprende Chino</h3>
+                    <ul class="web-map_list">
+                        <li class="web-map_item"><a href="#">Online</a></li>
+                        <li class="web-map_item"><a href="#">Presencial</a></li>
+                    </ul>
+                </div>
+                <div class="footer_title">
+                    <h3>Universidad</h3>
+                    <ul class="web-map_list">
+                        <li class="web-map_item"><a href="#">Master of Business Administration</a></li>
+                        <li class="web-map_item"><a href="#">Master of International Business</a></li>
+                    </ul>
+                </div>
+                <div class="footer_title">
+                    <h3>Why Intuuchina</h3>
+                    <ul class="web-map_list">
+                        <li class="web-map_item"><a href="#">Sobre Nosotros</a></li>
+                    </ul>
+                </div>
             </div>
-        </form>
+        </div>
+        <div class="footer_footer">
+            <div class="footer_social-media col-md-4">
+                <h4>Síguenos</h4>
+                <ul class="footer_sublist">
+                    <li class="sublist_item">
+                        <i class="fab fa-facebook-f"></i>
+                        <label><a href="https://www.facebook.com/intuuchina" target="_blank">Facebook</a></label>
+                    </li>
+                    <li class="footer_sublist">
+                        <i class="fab fa-twitter"></i>
+                        <label><a href="https://twitter.com/intuuchina" target="_blank">Twitter</a></label>
+                    </li>
+                    <li class="footer_sublist">
+                        <i class="fab fa-linkedin-in"></i>
+                        <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank">Siguenos en Linkedin</a></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </footer>
 {{--<footer>--}}
