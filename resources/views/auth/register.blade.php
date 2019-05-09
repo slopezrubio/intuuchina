@@ -26,9 +26,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Surnames') }}</label>
+                            <label for="surnames" class="col-md-4 col-form-label text-md-right">{{ __('Surnames') }}</label>
                             <div class="col-md-6">
-                                <input id="email" type="text" class="form-control{{ $errors->has('surnames') ? ' is-invalid' : '' }}" name="surnames" value="{{ old('surnames') }}" required>
+                                <input id="surnames" type="text" class="form-control{{ $errors->has('surnames') ? ' is-invalid' : '' }}" name="surnames" value="{{ old('surnames') }}" required>
 
                                 @if ($errors->has('surnames'))
                                     <span class="invalid-feedback" role="alert">
@@ -82,16 +82,16 @@
                             <label for="inputIndustry" class="col-md-4 col-form-label text-md-right">Industry</label>
                             <div class="col-md-6">
                                 <select class="custom-select" id="inputIndustry" name="industry">
-                                    <option value="" selected aria-selected="true">Finance</option>
-                                    <option value="">Design</option>
-                                    <option value="">Engineering</option>
-                                    <option value="">Consultant</option>
-                                    <option value="">Education</option>
-                                    <option value="">Hostelry</option>
-                                    <option value="">IT</option>
-                                    <option value="">Legal</option>
-                                    <option value="">Logistic</option>
-                                    <option value="">Marketing & Business Development</option>
+                                    <option value="finance" selected aria-selected="true">Finance</option>
+                                    <option value="design">Design</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="consultant">Consultant</option>
+                                    <option value="education">Education</option>
+                                    <option value="hostelry">Hostelry</option>
+                                    <option value="it">IT</option>
+                                    <option value="legal">Legal</option>
+                                    <option value="logistic">Logistic</option>
+                                    <option value="marketing_business">Marketing & Business Development</option>
                                 </select>
                             </div>
                         </div>
