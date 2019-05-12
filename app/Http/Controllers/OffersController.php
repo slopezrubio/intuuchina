@@ -17,10 +17,11 @@ class OffersController extends Controller
     public function index()
     {
         //
-        $offers = DB::table('offers')->get();
+        $offers = Offer::orderBy('created_at','DESC')->get();
 
         foreach ($offers as $offer) {
-           $offer->gone_by = $this->getDiffForHumans($offer->created_at);
+            $this->renew($offer->id, $offer->created_at);
+            $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 
         return view('pages/admin/offers', compact('offers'));
@@ -116,7 +117,27 @@ class OffersController extends Controller
         //
     }
 
+    /*
+     * Get the difference between the creation Date of an offer and the current time
+     *
+     * @param string $date
+     * @return string
+     */
     public function getDiffForHumans($date) {
         return Carbon::parse($date)->diffForHumans(Carbon::now());
+    }
+
+    /*
+     * Updates the date of creation of all the offers which were created two months ago to make
+     * them firstly visible again when they are listed.
+     *
+     * @param string $date
+     */
+    public function renew($offer, $date) {
+        $differenceFromNow = Carbon::parse($date)->floatDiffInMonths(Carbon::now());
+        $dateLimitWithoutRenewing = 2;
+        if ($dateLimitWithoutRenewing <= $differenceFromNow) {
+            Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+        }
     }
 }
