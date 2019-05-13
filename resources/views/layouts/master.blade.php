@@ -11,6 +11,9 @@
     <!-- Título de la aplicación -->
     <title>{{ config('app.name', 'Laravel') }}e</title>
 
+    <!-- reCAPCTCHA v2.0 de Google -->
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 

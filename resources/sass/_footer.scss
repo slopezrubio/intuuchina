@@ -1,136 +1,163 @@
-$black: black;
-$red1: #B71C1C;
-$red2:#F44336;
-$red3:#E57373;
-$red4:#C80B0B;
-$white: white;
-$black2:#2D2B2E;
-$black3:#161414;
-footer {
-  background-color: $black3;
-  color: $white;
-  //all footer
-  .container-all {
-    width: 100%;
-    max-width: 1600px;
-    margin: auto;
-    //high footer
-    .container-footer {
-      display: flex;
-      justify-content: space-evenly;
-      padding: 25px;
-      //contact by phone and mail
-      .column1 {
-        max-width: 400px;
-        h4 {
-          color: $red4;
-          font: {
-            size: 18px;
-          }
-        }
-        .row1 {
-          margin-top: 20px;
-          i {
-            font-size: 20px;
-          }
-          label {
-            margin-top: 10px;
-            margin-left: 20px;
-            max-width: 140px;
-            font-size: 15px;
-            a {
-              text-decoration: none;
-              color: $white;
-            }
-            a:hover {
-              color: $red4;
-              transition: 0.2s;
-            }
-          }
-        }
-        .row1:hover {
-          color: $red4;
-          transition: 0.2s;
-        }
-      }
-      // social media
-      .column2 {
-        max-width: 400px;
-        h4 {
-          font-size: 18px;
-          color: $red4;
-        }
-        .row2 {
-          margin-top: 5px;
-          display: flex;
-          padding: 4.5px;
-          i {
-            font-size: 20px;
-          }
-          label {
-            a {
-              margin-top: 10px;
-              margin-left: 20px;
-              color: $white;
-              text-decoration: none;
-              font-size: 15px;
-            }
-            a:hover {
-              color: $red4;
-              transition: 0.2s;
-            }
-          }
-        }
-        .row2:hover {
-          color: $red4;
-          transition: 0.2s;
-        }
-      }
-    }
-    //part final
+
+@media #{$small-and-medium-devices} {
+  footer {
     .footer {
-      max-width: 1100px;
-      margin-left: 50px;
-      padding: 0;
-      display: flex;
-      justify-content: space-between;
-      .copyright {
-        color: $white;
-        p {
-          font-size: 15px;
-          a {
-            text-decoration: none;
-            color: #c24c15;
-            font-weight: 600;
-            font-size: 15px;
-          }
-          a:hover {
-            color: $red4;
-          }
+      &_header {
+        flex-direction: column;
+        &_contact_form {
+          max-width: 100%;
         }
       }
-      .info {
-        a {
-          text-decoration: none;
-          color: $white;
-          font-size: 15px;
-        }
-        a:hover {
-          color: $red4;
+
+      &_web-map {
+        max-width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-rows: auto auto;
+        grid-template-columns: 40% 40%;
+        margin-left: 0px;
+        margin-top: 50px;
+      }
+
+      @media #{$footer-fix} {
+        .footer_web-map {
+          grid-template-rows: auto;
+          grid-template-columns: 100%;
         }
       }
     }
   }
 }
 
-@media screen and(max-width:1100px) {
-  footer {
-    .container-all {
-      .container-footer {
-        flex: wrap;
-        .column2 {
-          margin-top: 40px;
+footer {
+  background: $primaryDark;
+  color: $primaryWhite;
+  .footer {
+    &_header {
+      display: flex;
+    }
+    padding: 0px 30px;
+    .footer_title {
+      padding-top: 35px;
+      padding-bottom: 5px;
+    }
+    &_contact_form {
+      div {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        .switch {
+          position: relative;
+          display: block;
+          width: 60px;
+          height: 34px;
+          margin-top: 10px;
+          .checkbox_slider {
+            position: absolute;
+            cursor: pointer;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: $neutralColor;
+            @include prefixed('transition','.4s');
+            &--rounded {
+                border-radius: 34px;
+            }
+            &--rounded:before {
+              border-radius: 50%;
+            }
+
+            &:before {
+              position: absolute;
+              content:"";
+              width:26px;
+              height: 26px;
+              background: $primaryWhite;
+              left: 4px;
+              bottom: 4px;
+              @include prefixed('transition','.4s');
+            }
+          }
         }
+        input:focus + .checkbox_slider {
+          box-shadow: 0 0 1px $primaryRed;
+        }
+
+        input:checked + .checkbox_slider {
+          background: $primaryRed;
+        }
+
+        input:checked + .checkbox_slider:before {
+          @include prefixed('transform', 'translateX(26px)');
+        }
+
+        input[type^=checkbox] {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        label, .g-recaptcha {
+          padding-top: 45px;
+          margin-bottom: 0px;
+          &.switch {
+            padding: 0;
+          }
+        }
+
+        input, textarea {
+          background: $primaryDark;
+          color: $primaryWhite;
+          border-width: 0px 0px 2px 0px;
+          padding: 10px 0px;
+          font-size: 0.8em;
+        }
+
+        textarea::-webkit-input-placeholder {
+          color: $neutralColor;
+        }
+
+        textarea::-moz-placeholder {
+          color: $neutralColor;
+        }
+
+        .footer_submit, .footer_reset {
+          cursor: pointer;
+          padding: 10px 0;
+          margin-top: 45px;
+          width: 40%;
+          background: $neutralColor;
+          border: none;
+          @include fade();
+          border-radius: 34px;
+        }
+
+        &:last-of-type {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+    &_web-map {
+      h3 {
+        text-transform: uppercase;
+      }
+
+      h4 {
+        font-size: 12px;
+        color: $primaryRed;
+      }
+
+      li, a {
+        color: $neutralColor;
+      }
+    }
+
+    &_footer {
+      h4 {
+        color: $primaryRed;
+        font-size: 1.2em
       }
     }
   }
