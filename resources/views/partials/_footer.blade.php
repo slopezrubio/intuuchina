@@ -4,7 +4,7 @@
         <div class="footer_header">
             {{--Contact form--}}
             <form action="" class="footer_contact_form col-md-7 col-sm-10">
-                <div class="mx-auto footer_title">
+                <div class="footer_title">
                     <h3>Contact us!</h3>
                 </div>
                 <div class="col-xs-10 contact_form_input">
@@ -42,30 +42,35 @@
             {{--Web Map--}}
             <div class="footer_web-map offset-md-1 col-md-4">
                 <div class="footer_title">
-                    <h3>Prácticas</h3>
-                    <ul class="web-map_list">
-                        <li class="web-map_item"><a href="#">Ofertas</a></li>
-                    </ul>
+                    <h3>Mapa Web</h3>
                 </div>
-                <div class="footer_title">
-                    <h3>Aprende Chino</h3>
-                    <ul class="web-map_list">
-                        <li class="web-map_item"><a href="#">Online</a></li>
-                        <li class="web-map_item"><a href="#">Presencial</a></li>
-                    </ul>
-                </div>
-                <div class="footer_title">
-                    <h3>Universidad</h3>
-                    <ul class="web-map_list">
-                        <li class="web-map_item"><a href="#">Master of Business Administration</a></li>
-                        <li class="web-map_item"><a href="#">Master of International Business</a></li>
-                    </ul>
-                </div>
-                <div class="footer_title">
-                    <h3>Why Intuuchina</h3>
-                    <ul class="web-map_list">
-                        <li class="web-map_item"><a href="#">Sobre Nosotros</a></li>
-                    </ul>
+                <div class="footer_web-map_items">
+                    <div>
+                        <h4 class="footer_subtitle">Prácticas</h4>
+                        <ul class="web-map_list">
+                            <li class="web-map_item"><a href="#">Ofertas</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer_subtitle">Aprende Chino</h4>
+                        <ul class="web-map_list">
+                            <li class="web-map_item"><a href="#">Online</a></li>
+                            <li class="web-map_item"><a href="#">Presencial</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer_subtitle">Universidad</h4>
+                        <ul class="web-map_list">
+                            <li class="web-map_item"><a href="#">Master of Business Administration</a></li>
+                            <li class="web-map_item"><a href="#">Master of International Business</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer_subtitle">Why Intuuchina</h4>
+                        <ul class="web-map_list">
+                            <li class="web-map_item"><a href="#">Sobre Nosotros</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
