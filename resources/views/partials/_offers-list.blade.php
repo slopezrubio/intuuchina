@@ -6,7 +6,7 @@
                     <h5 class="mb-1">{{ $offer->title }}</h5>
                     <small>{{ $offer->gone_by }}</small>
                 </div>
-                <small>{{ $offer->job_type }}</small>
+                <small>{{ $offer->industry }}</small>
             </a>
         @endforeach
     </div>

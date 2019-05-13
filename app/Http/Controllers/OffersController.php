@@ -48,7 +48,7 @@ class OffersController extends Controller
         $request->validate([
             'title' => 'required|max:255|string',
             'location' => 'required|string',
-            'job-type' => 'required|string',
+            'industry' => 'required|string',
             'education' => 'required|string',
             'duration' => 'required|string',
             'description' => 'max:1000',
@@ -60,14 +60,14 @@ class OffersController extends Controller
         Offer::create([
             'title' => $request->get('title'),
             'location' => $request->get('location'),
-            'job_type' => $request->get('job-type'),
+            'industry' => $request->get('industry'),
             'education' => $request->get('education'),
             'duration' => $request->get('duration'),
             'description' => $request->get('description'),
             'preferred_skills' => $request->get('preferred-skills'),
             'non_technical_skills' => $request->get('non-technical-skills'),
         ]);
-        
+
         return redirect()->route('offers');
     }
 
