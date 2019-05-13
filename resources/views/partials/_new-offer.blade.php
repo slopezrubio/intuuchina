@@ -21,10 +21,7 @@
         <div class="form-group row">
             <label for="location" class="col-md-4 col-form-label text-md-right">Location</label>
             <div class="col-md-6">
-                <select class="form-control" name="location" id="location">
-                    <option value="shangai">Shangai</option>
-                    <option value="beijing">Beijing</option>
-                </select>
+                <input id="location" type="text" class="form-control" name="location" value="{{ old('location') }}" required>
                 @if ($errors->has('location'))
                     <div class="alert alert-danger" role="alert">
                        {{ $errors->first('location') }}
@@ -33,31 +30,23 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="job-type" class="col-md-4 col-form-label text-md-right">Job Type</label>
+            <label for="industry" class="col-md-4 col-form-label text-md-right">Industry</label>
             <div class="col-md-6">
-                <select class="form-control" name="job-type" id="job-type">
-                        <option value="Automotive">Automotive</option>
-                        <option value="Busines-Devoelopment">Business Development</option>
-                        <option value="Consultant">Consultant</option>
-                        <option value="Desing">Desing</option>
-                        <option value="Distribution">Destribution</option>
-                        <option value="Education">Education</option>
-                        <option value="Engineerring">Engineerring</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Healt-Care">Healt Care</option>
-                        <option value="Hospitlity">Hospitality</option>
-                        <option value="Human-Resources">Human Resouces</option>
-                        <option value="Information_Technology">Information Technology</option>
-                        <option value="Legal">Legal</option>
-                        <option value="Logistics">Logistics</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Nonpront">Nonpront</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Transportation">Transportation</option>
+                <select class="form-control" name="industry" id="industry">
+                    <option value="finance" selected aria-selected="true">Finance</option>
+                    <option value="design">Design</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="consultant">Consultant</option>
+                    <option value="education">Education</option>
+                    <option value="hostelry">Hostelry</option>
+                    <option value="it">IT</option>
+                    <option value="legal">Legal</option>
+                    <option value="logistic">Logistic</option>
+                    <option value="marketing_business">Marketing & Business Development</option>
                 </select>
-                @if ($errors->has('job-type'))
+                @if ($errors->has('industry'))
                     <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('job-type') }}
+                        {{ $errors->first('industry') }}
                     </div>
                 @endif
             </div>
