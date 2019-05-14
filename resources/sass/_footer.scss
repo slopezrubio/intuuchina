@@ -1,3 +1,11 @@
+@media #{$large-devices} {
+  .footer {
+    &_documentation {
+      flex-direction: row !important;
+      justify-content: space-between !important;
+    }
+  }
+}
 
 @media #{$small-and-medium-devices} {
   footer {
@@ -114,11 +122,11 @@ footer {
           font-size: 0.8em;
         }
 
-        textarea::-webkit-input-placeholder {
+        textarea::-webkit-input-placeholder, textarea:-ms-input-placeholder, textarea::-moz-placeholder  {
           color: $neutralColor;
         }
 
-        textarea::-moz-placeholder {
+        input::-webkit-input-placeholder, input::-moz-placeholder, input::-ms-input-placeholder {
           color: $neutralColor;
         }
 
@@ -168,18 +176,30 @@ footer {
         padding: 0 0.5em 0 0;
         font-family: $social-media-font;
       }
+    }
 
-      &_sublist {
-        display: flex;
-        justify-content: space-between;
+    &_sublist {
+      display: flex;
+      justify-content: flex-start;
+      padding-top: 2em;
+      li:not(:first-of-type) {
+        padding-left: 3em;
       }
     }
 
     &_footer {
       h4 {
         color: $primaryRed;
-        font-size: 1.2em
+        font-size: 1.2em;
       }
+    }
+
+    &_documentation {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      font-size: 0.8em;
+      padding: 3em 0;
     }
   }
 }
@@ -188,6 +208,14 @@ footer {
   .footer {
     &_web-map_items {
       grid-template-columns: 1fr !important;
+    }
+
+    &_sublist {
+      flex-direction: column;
+
+      li:not(:first-of-type) {
+        padding-left: 0em !important;
+      }
     }
   }
 }

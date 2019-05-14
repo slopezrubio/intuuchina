@@ -9,11 +9,11 @@
                 </div>
                 <div class="col-xs-10 contact_form_input">
                     <label for="name">Nombre</label>
-                    <input type="text" name="name" id="name">
+                    <input type="text" name="name" id="name" placeholder="Nombre">
                 </div>
                 <div class="col-xs-10">
                     <label for="email">Correo</label>
-                    <input type="text" name="email" id="email">
+                    <input type="text" name="email" id="email" placeholder="Correo">
                 </div>
                 <div class="col-xs-10">
                     <label for="issue">Asunto</label>
@@ -74,8 +74,8 @@
                 </div>
             </div>
         </div>
-        <div class="footer_footer">
-            <div class="footer_social-media col-md-4">
+        <div class="footer_footer col-md-12">
+            <div class="footer_social-media">
                 <div class="footer_title">
                     <h3>Síguenos</h3>
                 </div>
@@ -83,13 +83,18 @@
                     <li class="sublist_item">
                         <label><a href="https://www.facebook.com/intuuchina" target="_blank"><i class="fab fa-facebook-square">Facebook</i></a></label>
                     </li>
-                    <li class="footer_sublist">
+                    <li class="sublist_item">
                         <label><a href="https://twitter.com/intuuchina" target="_blank"><i class="fab fa-twitter-square">Twitter</i></a></label>
                     </li>
-                    <li class="footer_sublist">
+                    <li class="sublist_item">
                         <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank"><i class="fab fa-linkedin">Linkedin</i></a></label>
                     </li>
                 </ul>
+            </div>
+            <div class="footer_documentation">
+                <p>IntuuChina Copyright &copy; 2019 Todos los derechos reservados </p>
+                <p>Made with love &hearts; by <a href="http://factoriaf5.org">Factoria F5</a></p>
+                <p><a href="#">Politica de privacidad</a> | <a href="#">Terminos y condiciones</a></p>
             </div>
         </div>
     </div>

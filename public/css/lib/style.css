@@ -717,6 +717,13 @@ header {
   font-size: 28px;
 }
 
+@media only screen and (min-width: 993px) {
+  .footer_documentation {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+}
+
 @media only screen and (min-width: 100px) and (max-width: 992px) {
   footer .footer_title {
     display: flex;
@@ -855,11 +862,15 @@ footer .footer_contact_form div textarea {
   font-size: 0.8em;
 }
 
-footer .footer_contact_form div textarea::-webkit-input-placeholder {
+footer .footer_contact_form div textarea::-webkit-input-placeholder,
+footer .footer_contact_form div textarea:-ms-input-placeholder,
+footer .footer_contact_form div textarea::-moz-placeholder {
   color: #d1d1d1;
 }
 
-footer .footer_contact_form div textarea::-moz-placeholder {
+footer .footer_contact_form div input::-webkit-input-placeholder,
+footer .footer_contact_form div input::-moz-placeholder,
+footer .footer_contact_form div input::-ms-input-placeholder {
   color: #d1d1d1;
 }
 
@@ -934,9 +945,14 @@ footer .footer_social-media i::before {
   font-family: "Font Awesome 5 Brands";
 }
 
-footer .footer_social-media_sublist {
+footer .footer_sublist {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  padding-top: 2em;
+}
+
+footer .footer_sublist li:not(:first-of-type) {
+  padding-left: 3em;
 }
 
 footer .footer_footer h4 {
@@ -944,9 +960,25 @@ footer .footer_footer h4 {
   font-size: 1.2em;
 }
 
+footer .footer_documentation {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: 0.8em;
+  padding: 3em 0;
+}
+
 @media only screen and (max-width: 550px) {
   .footer_web-map_items {
     grid-template-columns: 1fr !important;
+  }
+
+  .footer_sublist {
+    flex-direction: column;
+  }
+
+  .footer_sublist li:not(:first-of-type) {
+    padding-left: 0em !important;
   }
 }
 
