@@ -1,7 +1,18 @@
+@media #{$large-devices} {
+  .footer {
+    &_documentation {
+      flex-direction: row !important;
+      justify-content: space-between !important;
+    }
+  }
+}
 
 @media #{$small-and-medium-devices} {
   footer {
     .footer {
+      &_title {
+        display: flex;
+      }
       &_header {
         flex-direction: column;
         &_contact_form {
@@ -11,19 +22,11 @@
 
       &_web-map {
         max-width: 100%;
-        display: grid;
+        display: flex;
         justify-content: space-between;
-        grid-template-rows: auto auto;
-        grid-template-columns: 40% 40%;
+        flex-direction: column;
         margin-left: 0px;
         margin-top: 50px;
-      }
-
-      @media #{$footer-fix} {
-        .footer_web-map {
-          grid-template-rows: auto;
-          grid-template-columns: 100%;
-        }
       }
     }
   }
@@ -33,6 +36,11 @@ footer {
   background: $primaryDark;
   color: $primaryWhite;
   .footer {
+    .footer_subtitle {
+      color: $secondaryRed;
+      text-transform: uppercase;
+      font-size: 1.3em;
+    }
     &_header {
       display: flex;
     }
@@ -114,11 +122,11 @@ footer {
           font-size: 0.8em;
         }
 
-        textarea::-webkit-input-placeholder {
+        textarea::-webkit-input-placeholder, textarea:-ms-input-placeholder, textarea::-moz-placeholder  {
           color: $neutralColor;
         }
 
-        textarea::-moz-placeholder {
+        input::-webkit-input-placeholder, input::-moz-placeholder, input::-ms-input-placeholder {
           color: $neutralColor;
         }
 
@@ -127,7 +135,7 @@ footer {
           padding: 10px 0;
           margin-top: 45px;
           width: 40%;
-          background: $neutralColor;
+          background: $tertiaryRed;
           border: none;
           @include fade();
           border-radius: 34px;
@@ -140,24 +148,73 @@ footer {
       }
     }
     &_web-map {
-      h3 {
-        text-transform: uppercase;
+      &_items {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        div {
+          padding: 1em 0;
+          .web-map_list {
+            li {
+              padding: 0.5em 0;
+            }
+          }
+        }
       }
-
-      h4 {
-        font-size: 12px;
-        color: $primaryRed;
-      }
-
       li, a {
         color: $neutralColor;
+      }
+    }
+
+    &_social-media {
+      i {
+        font-family: $primary-font;
+      }
+
+      i::before {
+        font-size: 2em;
+        padding: 0 0.5em 0 0;
+        font-family: $social-media-font;
+      }
+    }
+
+    &_sublist {
+      display: flex;
+      justify-content: flex-start;
+      padding-top: 2em;
+      li:not(:first-of-type) {
+        padding-left: 3em;
       }
     }
 
     &_footer {
       h4 {
         color: $primaryRed;
-        font-size: 1.2em
+        font-size: 1.2em;
+      }
+    }
+
+    &_documentation {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      font-size: 0.8em;
+      padding: 3em 0;
+    }
+  }
+}
+
+@media #{$footer-fix} {
+  .footer {
+    &_web-map_items {
+      grid-template-columns: 1fr !important;
+    }
+
+    &_sublist {
+      flex-direction: column;
+
+      li:not(:first-of-type) {
+        padding-left: 0em !important;
       }
     }
   }
