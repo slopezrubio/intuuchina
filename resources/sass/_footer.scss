@@ -1,12 +1,4 @@
 
-@media #{$footer-fix} {
-  .footer {
-    &_web-map_items {
-      grid-template-columns: 1fr;
-    }
-  }
-}
-
 @media #{$small-and-medium-devices} {
   footer {
     .footer {
@@ -154,10 +146,32 @@ footer {
         grid-template-columns: 1fr 1fr;
         div {
           padding: 1em 0;
+          .web-map_list {
+            li {
+              padding: 0.5em 0;
+            }
+          }
         }
       }
       li, a {
         color: $neutralColor;
+      }
+    }
+
+    &_social-media {
+      i {
+        font-family: $primary-font;
+      }
+
+      i::before {
+        font-size: 2em;
+        padding: 0 0.5em 0 0;
+        font-family: $social-media-font;
+      }
+
+      &_sublist {
+        display: flex;
+        justify-content: space-between;
       }
     }
 
@@ -166,6 +180,14 @@ footer {
         color: $primaryRed;
         font-size: 1.2em
       }
+    }
+  }
+}
+
+@media #{$footer-fix} {
+  .footer {
+    &_web-map_items {
+      grid-template-columns: 1fr !important;
     }
   }
 }

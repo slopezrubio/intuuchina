@@ -76,19 +76,18 @@
         </div>
         <div class="footer_footer">
             <div class="footer_social-media col-md-4">
-                <h4>Síguenos</h4>
+                <div class="footer_title">
+                    <h3>Síguenos</h3>
+                </div>
                 <ul class="footer_sublist">
                     <li class="sublist_item">
-                        <i class="fab fa-facebook-f"></i>
-                        <label><a href="https://www.facebook.com/intuuchina" target="_blank">Facebook</a></label>
+                        <label><a href="https://www.facebook.com/intuuchina" target="_blank"><i class="fab fa-facebook-square">Facebook</i></a></label>
                     </li>
                     <li class="footer_sublist">
-                        <i class="fab fa-twitter"></i>
-                        <label><a href="https://twitter.com/intuuchina" target="_blank">Twitter</a></label>
+                        <label><a href="https://twitter.com/intuuchina" target="_blank"><i class="fab fa-twitter-square">Twitter</i></a></label>
                     </li>
                     <li class="footer_sublist">
-                        <i class="fab fa-linkedin-in"></i>
-                        <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank">Siguenos en Linkedin</a></label>
+                        <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank"><i class="fab fa-linkedin">Linkedin</i></a></label>
                     </li>
                 </ul>
             </div>

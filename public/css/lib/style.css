@@ -717,12 +717,6 @@ header {
   font-size: 28px;
 }
 
-@media only screen and (max-width: 550px) {
-  .footer_web-map_items {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media only screen and (min-width: 100px) and (max-width: 992px) {
   footer .footer_title {
     display: flex;
@@ -921,14 +915,39 @@ footer .footer_web-map_items div {
   padding: 1em 0;
 }
 
+footer .footer_web-map_items div .web-map_list li {
+  padding: 0.5em 0;
+}
+
 footer .footer_web-map li,
 footer .footer_web-map a {
   color: #d1d1d1;
 }
 
+footer .footer_social-media i {
+  font-family: "Montserrat", sans-serif;
+}
+
+footer .footer_social-media i::before {
+  font-size: 2em;
+  padding: 0 0.5em 0 0;
+  font-family: "Font Awesome 5 Brands";
+}
+
+footer .footer_social-media_sublist {
+  display: flex;
+  justify-content: space-between;
+}
+
 footer .footer_footer h4 {
   color: #B71C1C;
   font-size: 1.2em;
+}
+
+@media only screen and (max-width: 550px) {
+  .footer_web-map_items {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 section .box-testi {
