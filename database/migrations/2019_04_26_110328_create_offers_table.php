@@ -18,7 +18,7 @@ class CreateOffersTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('location');
-            $table->string('job_type');
+            $table->string('industry');
             $table->string('education');
             $table->string('duration');
             $table->string('description')->nullable();
