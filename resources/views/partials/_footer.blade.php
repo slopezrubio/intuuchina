@@ -26,6 +26,7 @@
                         <ul class="web-map_list">
                             <li class="web-map_item"><a href="#">Master of Business Administration</a></li>
                             <li class="web-map_item"><a href="#">Master of International Business</a></li>
+                            <li class="web-map_item"><a href="#">Other</a></li>
                         </ul>
                     </div>
                     <div>
@@ -59,9 +60,16 @@
                     <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta"></textarea>
                 </div>
                 <div class="col-xs-10">
-                    <label aria-label="terms">Acepto los términos y condiciones</label>
+                    <label aria-label="terms">Acepto los <a href="#">términos</a> y <a href="#">condiciones</a></label>
                     <label for="terms" class="switch">
                         <input id="terms" name="terms" type="checkbox">
+                        <span class="checkbox_slider checkbox_slider--rounded"></span>
+                    </label>
+                </div>
+                <div class="col-xs-10">
+                    <label aria-label="gdpr">De acuerdo con el <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" target="_blank">Reglamento General de Protección de datos</a></label>
+                    <label for="gdpr" class="switch">
+                        <input id="gdpr" name="gdpr" type="checkbox">
                         <span class="checkbox_slider checkbox_slider--rounded"></span>
                     </label>
                 </div>
@@ -93,9 +101,9 @@
             </div>
 
         </div>
-        <div class="footer_footer col-md-12">
+        <div class="footer_footer">
             {{--Terms and conditions & Signatures--}}
-            <div class="footer_documentation">
+            <div class="footer_documentation col-sm-12">
                 <p>IntuuChina Copyright &copy; 2019 Todos los derechos reservados </p>
                 <p>Made with love &hearts; by <a href="http://factoriaf5.org">Factoria F5</a></p>
                 <p><a href="#">Politica de privacidad</a> | <a href="#">Terminos y condiciones</a></p>

@@ -6,16 +6,43 @@ footer {
         display: grid;
         grid-template-rows: 1fr;
         grid-template-columns: 1fr 2fr 1fr;
-        div:not(first-of-type) {
-
-        }
+        grid-column-gap: 5%;
       }
 
       &_title {
         display: flex;
       }
+
+      &_web-map {
+        justify-content: initial;
+      }
     }
   }
+
+  @media #{$large-devices} {
+    .footer {
+      &_contact_form {
+        #message {
+          height: 130px;
+        }
+      }
+
+      &_social-media {
+        .footer_sublist {
+          flex-direction: row;
+          li:not(first-of-type) {
+            padding: 0 0.9em;
+          }
+        }
+      }
+
+      &_documentation {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  }
+
 
   @media #{$footer-fix} {
     .footer {
@@ -23,16 +50,38 @@ footer {
         display: grid;
         grid-template-rows: auto auto;
         grid-template-columns: 1fr 2fr;
+        grid-column-gap: 5%;
+      }
+
+      &_contact_form {
+        #message {
+          height: 130px;
+        }
       }
 
       &_title {
         display: flex;
+      }
+
+      &_web-map {
+        justify-content: initial;
+      }
+
+      &_sublist {
+        flex-direction: column;
+        padding-top: 2em;
+      }
+
+      &_documentation {
+        align-items: center;
       }
     }
   }
 }
 
 .footer {
+  $map: (321: 16, 454: 16, 1553: 14);
+  font-size: minimosCuadrados($map);
   color: $primaryWhite;
   a {
     font-size: 1em;
@@ -46,9 +95,8 @@ footer {
   &_header {
     display: flex;
     flex-direction: column;
-    padding-top: 50px;
-    div:not(first-of-type) {
-      margin-top: 2em;
+    > * {
+      padding: 2em 0;
     }
   }
 
@@ -57,6 +105,19 @@ footer {
     justify-content: space-between;
     flex-direction: column;
     margin-left: 0px;
+    div:not(:first-of-type) {
+      margin-top: 2em;
+    }
+    .footer_subtitle {
+      text-transform: uppercase;
+    }
+    div {
+      .web-map_list {
+        li {
+          padding-top: 0.5em;
+        }
+      }
+    }
     &_items {
       grid-template-columns: auto;
       grid-template-rows: auto;
@@ -92,8 +153,18 @@ footer {
           &--rounded {
             border-radius: 34px;
           }
+          &--rounded::after {
+            content: "NO";
+            color: $primaryDark;
+            top: 8px;
+            position: absolute;
+            font-size: 0.8em;
+            z-index: 1;
+            left: 33px;
+          }
           &--rounded:before {
             border-radius: 50%;
+            z-index: 10;
           }
 
           &:before {
@@ -118,6 +189,12 @@ footer {
 
       input:checked + .checkbox_slider:before {
         @include prefixed('transform', 'translateX(26px)');
+      }
+
+      input:checked + .checkbox_slider:after {
+        content: "YES";
+        color: $neutralColor;
+        left: 4px;
       }
 
       input[type^=checkbox] {
@@ -182,11 +259,20 @@ footer {
 
   &_sublist {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     padding-top: 2em;
-    li:not(:first-of-type) {
-      padding-left: 3em;
+    @media only screen and (min-width: 441px) and (max-width: 680px) {
+      flex-direction: row;
+      justify-content: space-between;
     }
+  }
+
+  &_documentation {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 0.8em;
+    padding: 3em 0;
   }
 }
 
