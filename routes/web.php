@@ -43,6 +43,8 @@ Route::get('/login', function() {
     return view('pages/login');
 });
 
+Route::post('/message','MailMessagesController@send')->name('mail');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

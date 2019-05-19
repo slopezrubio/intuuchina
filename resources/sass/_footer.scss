@@ -5,7 +5,7 @@ footer {
       &_header {
         display: grid;
         grid-template-rows: 1fr;
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 2fr 2fr 1fr;
         grid-column-gap: 5%;
       }
 
@@ -25,11 +25,20 @@ footer {
         #message {
           height: 130px;
         }
+
+        .switch_input {
+          display: grid;
+          grid-template-columns: 60% auto;
+          justify-content: space-between;
+          .switch {
+            margin-top: 2em;
+          }
+        }
       }
 
       &_social-media {
         .footer_sublist {
-          flex-direction: row;
+          flex-direction: column;
           li:not(first-of-type) {
             padding: 0 0.9em;
           }
@@ -70,10 +79,6 @@ footer {
       &_sublist {
         flex-direction: column;
         padding-top: 2em;
-      }
-
-      &_documentation {
-        align-items: center;
       }
     }
   }
@@ -131,6 +136,12 @@ footer {
     div:first-of-type label {
       padding-top: 0px;
     }
+
+    // Error messages
+    .invalid-feedback {
+      display: block;
+    }
+
     div {
       display: flex;
       justify-content: space-around;
@@ -203,6 +214,10 @@ footer {
         height: 0;
       }
 
+      label:first-of-type {
+        padding-top: 2em;
+      }
+
       label, .g-recaptcha {
         padding-top: 45px;
         margin-bottom: 0px;
@@ -271,8 +286,16 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
     font-size: 0.8em;
     padding: 3em 0;
+    &_signature {
+      text-align: center;
+      margin-bottom: 1em;
+      img {
+        width: 100px;
+      }
+    }
   }
 }
 

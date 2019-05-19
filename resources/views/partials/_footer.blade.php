@@ -39,34 +39,55 @@
             </div>
 
             {{--Contact form--}}
-            <form action="" class="footer_contact_form col-sm-12">
+            <form action="{{ route('mail') }}" method="post" class="footer_contact_form col-sm-12">
+                @csrf
                 <div class="footer_title">
                     <h3>Contact us!</h3>
                 </div>
                 <div class="col-xs-10 contact_form_input">
                     <label for="name">Nombre</label>
-                    <input type="text" name="name" id="name" placeholder="Nombre">
+                    <input type="text" name="name" id="name" placeholder="Nombre" class="{{ $errors->has('name') ? 'is-invalid' : '' }}">
+                    @if ($errors->has('name'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-xs-10">
                     <label for="email">Correo</label>
-                    <input type="text" name="email" id="email" placeholder="Correo">
+                    <input type="text" name="email" id="email" placeholder="Correo" class="{{ $errors->has('email') ? 'is-invalid' : '' }}">
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-xs-10">
-                    <label for="issue">Asunto</label>
-                    <input type="text" name="issue" id="issue">
+                    <label for="subject">Asunto</label>
+                    <input type="text" name="subject" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}">
+                    @if ($errors->has('subject'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('subject') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-xs-10">
-                    <label for="question">Mensaje</label>
-                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta"></textarea>
+                    <label for="message">Mensaje</label>
+                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta" class="{{ $errors->has('message') ? 'is-invalid' : '' }}"></textarea>
+                    @if ($errors->has('message'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('message') }}</strong>
+                        </span>
+                    @endif
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-10 switch_input">
                     <label aria-label="terms">Acepto los <a href="#">términos</a> y <a href="#">condiciones</a></label>
                     <label for="terms" class="switch">
                         <input id="terms" name="terms" type="checkbox">
                         <span class="checkbox_slider checkbox_slider--rounded"></span>
                     </label>
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-10 switch_input">
                     <label aria-label="gdpr">De acuerdo con el <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" target="_blank">Reglamento General de Protección de datos</a></label>
                     <label for="gdpr" class="switch">
                         <input id="gdpr" name="gdpr" type="checkbox">
@@ -92,7 +113,7 @@
                         <label><a href="https://www.facebook.com/intuuchina" target="_blank"><i class="fab fa-facebook-square">Facebook</i></a></label>
                     </li>
                     <li class="sublist_item">
-                        <label><a href="https://twitter.com/intuuchina" target="_blank"><i class="fab fa-twitter-square">Twitter</i></a></label>
+                        <label><a href="https://www.instagram.com/intuuchina/" target="_blank"><i class="fab fa-instagram">Instagram</i></a></label>
                     </li>
                     <li class="sublist_item">
                         <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank"><i class="fab fa-linkedin">Linkedin</i></a></label>
@@ -105,7 +126,10 @@
             {{--Terms and conditions & Signatures--}}
             <div class="footer_documentation col-sm-12">
                 <p>IntuuChina Copyright &copy; 2019 Todos los derechos reservados </p>
-                <p>Made with love &hearts; by <a href="http://factoriaf5.org">Factoria F5</a></p>
+                <span class="footer_documentation_signature">
+                    <p>Made with love &hearts; by <a href="http://factoriaf5.org"></p>
+                    <img src="storage/images/logo_factoriaf5.png" alt="Logo de factoriaF5">
+                </span>
                 <p><a href="#">Politica de privacidad</a> | <a href="#">Terminos y condiciones</a></p>
             </div>
         </div>
