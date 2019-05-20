@@ -23,10 +23,11 @@ $neutralColor: #d1d1d1;
 
 // Breakpoints
 $small-and-medium-devices: "only screen and (min-width: 100px) and (max-width: 992px)";
+$small-and-medium-devices_secondary: "only screen and (min-width: 100px) and (max-width: 680px)";
 $small-devices: "only screen and (max-width: 320px)";
-$footer-fix: "only screen and (max-width: 550px)";
+$footer-fix: "only screen and (min-width: 681px) and (max-width: 991px)";
 $medium-devices: "only screen and (min-width: 321px) and (max-width: 780px)";
-$large-devices: "only screen and (min-width: 993px)";
+$large-devices: "only screen and (min-width: 992px)";
 
 // Transitions
 $mediumDuration: .3s !default;
