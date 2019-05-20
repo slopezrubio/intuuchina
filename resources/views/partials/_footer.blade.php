@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-xs-10 contact_form_input">
                     <label for="name">Nombre</label>
-                    <input type="text" name="name" id="name" placeholder="Nombre" class="{{ $errors->has('name') ? 'is-invalid' : '' }}">
+                    <input type="text" name="name" id="name" placeholder="Nombre" class="{{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}">
                     @if ($errors->has('name'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-xs-10">
                     <label for="email">Correo</label>
-                    <input type="text" name="email" id="email" placeholder="Correo" class="{{ $errors->has('email') ? 'is-invalid' : '' }}">
+                    <input type="text" name="email" id="email" placeholder="Correo" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}">
                     @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('email') }}</strong>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-xs-10">
                     <label for="subject">Asunto</label>
-                    <input type="text" name="subject" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}">
+                    <input type="text" name="subject" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}" value="{{ old('subject') }}">
                     @if ($errors->has('subject'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('subject') }}</strong>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-xs-10">
                     <label for="message">Mensaje</label>
-                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta" class="{{ $errors->has('message') ? 'is-invalid' : '' }}"></textarea>
+                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta" class="{{ $errors->has('message') ? 'is-invalid' : '' }}">{{ old('message') }}</textarea>
                     @if ($errors->has('message'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('message') }}</strong>
@@ -86,6 +86,11 @@
                         <input id="terms" name="terms" type="checkbox">
                         <span class="checkbox_slider checkbox_slider--rounded"></span>
                     </label>
+                    @if ($errors->has('terms'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('terms') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-xs-10 switch_input">
                     <label aria-label="gdpr">De acuerdo con el <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" target="_blank">Reglamento General de Protección de datos</a></label>
@@ -93,9 +98,19 @@
                         <input id="gdpr" name="gdpr" type="checkbox">
                         <span class="checkbox_slider checkbox_slider--rounded"></span>
                     </label>
+                    @if ($errors->has('gdpr'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('gdpr') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-xs-10">
                     <div class="g-recaptcha" data-sitekey="6LcIhqIUAAAAAPPWaly2yJAAadIjMISICA_9rQy3"></div>
+                    @if ($errors->has('g-recaptcha-response'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-xs-10">
                     <button type="submit" class="footer_submit">Submit</button>

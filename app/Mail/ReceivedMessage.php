@@ -22,7 +22,7 @@ class ReceivedMessage extends Mailable
     public function __construct($msg)
     {
         $this->subject = $msg['subject'];
-        $this->msg = $msg['message'];
+        $this->msg = $msg;
     }
 
     /**

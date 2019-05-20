@@ -1630,7 +1630,7 @@ body {
 }
 
 header {
-  background-image: url(/../../storage/images/practicas-1-1.jpg);
+  background-image: url("/../../storage/images/practicas-1-1.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1761,5 +1761,135 @@ header.auth {
   padding: 2rem 1rem 2rem 1rem;
   letter-spacing: 1rem;
   font-size: calc(0.4105948047vw + 22.1172762305px);
+}
+
+.confirmation {
+  background-image: url("/../../storage/images/confirmation-message.jpg");
+  background-size: cover;
+  background-position-x: 100%;
+  height: 66vh;
+}
+
+.confirmation .confirmation_content {
+  color: black;
+  text-align: center;
+  padding: 3em 0 8em 0;
+}
+
+.confirmation .confirmation_content h1 {
+  font-size: calc(1.2523040845vw + 18.825273219px);
+  color: #F44336;
+  margin-bottom: 1em;
+}
+
+.confirmation .confirmation_content p {
+  font-size: calc(0.2087173474vw + 14.8042122032px);
+  margin-bottom: 3em;
+}
+
+.confirmation .confirmation_content [class^=confirmation_button] {
+  color: white;
+}
+
+.confirmation .confirmation_content .confirmation_more_info {
+  cursor: pointer;
+  padding: 10px;
+  font-size: calc(0.2087173474vw + 14.8042122032px);
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  -moz-transform: perspective(1px) translateZ(0);
+  -ms-transform: perspective(1px) translateZ(0);
+  -o-transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  background: white;
+  -webkit-transition-property: color;
+  -moz-transition-property: color;
+  -ms-transition-property: color;
+  -o-transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  border: 2px solid #B71C1C;
+  border-radius: 22px;
+}
+
+.confirmation .confirmation_content .confirmation_more_info:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #B71C1C;
+  border-radius: 20px;
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+  -webkit-transform-origin: 50%;
+  -moz-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  -o-transform-origin: 50%;
+  -webkit-transform-property: transform;
+  -moz-transform-property: transform;
+  -ms-transform-property: transform;
+  -o-transform-property: transform;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
+  -ms-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+}
+
+.confirmation .confirmation_content .confirmation_more_info:hover,
+.confirmation .confirmation_content .confirmation_more_info:focus,
+.confirmation .confirmation_content .confirmation_more_info:active {
+  color: #B71C1C;
+}
+
+.confirmation .confirmation_content .confirmation_more_info:hover:before,
+.confirmation .confirmation_content .confirmation_more_info:focus:before,
+.confirmation .confirmation_content .confirmation_more_info:active:before {
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
+}
+
+@media only screen and (min-width: 681px) and (max-width: 991px) {
+  .confirmation {
+    background-position-y: 100%;
+  }
+
+  .confirmation_content {
+    width: 70%;
+    text-align: left;
+  }
+
+  .confirmation_content .confirmation_more_info {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .confirmation {
+    background-position-y: 100%;
+  }
+
+  .confirmation_content {
+    width: 70%;
+    text-align: left;
+  }
+
+  .confirmation_content .confirmation_more_info {
+    width: 50%;
+  }
 }
 

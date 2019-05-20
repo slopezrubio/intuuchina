@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ var_dump($msg) }}</h1>
-    <p></p>
+    <h1>{{ $msg['subject'] }}</h1>
+    <p>{{ $msg['message'] }}</p>
 </body>
 </html>
