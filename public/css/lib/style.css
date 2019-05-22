@@ -1396,182 +1396,72 @@ main .news {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
   background-color: #C80B0B;
-  height: 500px;
+  height: 600px;
   z-index: 0;
   position: relative;
 }
 
-main .news h2 {
-  margin-top: 10px;
-  padding-left: 40px;
+main .news_container {
+  margin-left: 2em;
+  padding-top: 1.5em;
+}
+
+main .news_container .section_title {
+  display: block;
+}
+
+main .news_container .section_title h2 {
+  margin-bottom: 2em;
   font-size: 20px;
   text-align: left;
-  position: absolute;
   color: white;
 }
 
-main .news .note {
-  position: absolute;
-  top: 7px;
-  left: 80px;
+main .news_container .section_body {
+  display: flex;
+  justify-content: space-between;
 }
 
-main .news .note a {
+main .news_container .section_body .note a {
   display: inline-block;
-  margin-top: 80px;
   padding: 0;
-  margin-bottom: 0;
+  margin-bottom: 1em;
 }
 
-main .news .note .cosita p {
+main .news_container .section_body .note_quote .author {
+  display: block;
+}
+
+main .news_container .section_body .note_quote p {
   height: auto;
-  margin: 10px;
   font-size: 13px;
   font-style: italic;
   color: white;
   display: inline-block;
 }
 
-main .news .note .cosita .autor {
-  display: block;
-}
-
-main .news .tv {
-  margin-top: 30px;
+main .news_container .section_body .tv {
   width: 494px;
   height: 385px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  right: 0;
-  position: absolute;
+  align-items: baseline;
 }
 
-main .oferts {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 321px;
-}
+@media only screen and (min-width: 100px) and (max-width: 992px) {
+  main .news {
+    height: 1200px;
+  }
 
-main .oferts .item {
-  width: 100%;
-  height: 100%;
-  -webkit-filter: grayscale(100%);
-          filter: grayscale(100%);
-}
+  main .news_container .section_body div {
+    margin-bottom: 2em;
+  }
 
-main .oferts .rect {
-  text-align: center;
-  position: relative;
-  bottom: 23rem;
-  color: white;
-  background-color: #00000050;
-  width: 300px;
-  height: 350px;
-  margin-left: 70px;
-  border: 5px solid white;
-  border-radius: 20px;
-}
-
-main .oferts .rect h3 {
-  text-align: center;
-  padding-top: 20px;
-}
-
-main .oferts .rect hr {
-  border: 3px solid white;
-}
-
-main .oferts .rect p {
-  text-align: center;
-  margin-top: 50px;
-}
-
-main .oferts .rect button {
-  width: 100px;
-  height: 40px;
-  border: 3px solid white;
-  border-radius: 24px;
-  background: white;
-}
-
-main .oferts .rect button a {
-  text-align: center;
-  color: #2D2B2E;
-  margin-top: 30px;
-  font-weight: 600;
-}
-
-main .oferts .rect a:hover {
-  color: #C80B0B;
-  cursor: pointer;
-}
-
-main .border {
-  height: 8px;
-  background-color: #FF0000;
-  border: #FF0000;
-}
-
-main #id2 {
-  position: relative;
-}
-
-main #id2 h2 {
-  position: absolute;
-  right: 10px;
-  width: 453px;
-  top: 18px;
-  z-index: 100;
-  font-size: 30px;
-}
-
-main #id2 h4 {
-  font-weight: bold;
-  font-size: 14px;
-}
-
-main #id2 h4 a {
-  text-decoration: none;
-  color: #2D2B2E;
-}
-
-main #id2 h4 a:hover {
-  color: #B71C1C;
-  text-decoration: none;
-}
-
-main #id2 .service-1 {
-  position: absolute;
-  left: 169px;
-  width: 230px;
-  top: 400px;
-}
-
-main #id2 .service-2 {
-  position: absolute;
-  left: 372px;
-  width: 246px;
-  top: 200px;
-}
-
-main #id2 .service-3 {
-  position: absolute;
-  right: 440px;
-  width: 328px;
-  top: 430px;
-}
-
-main #id2 .service-4 {
-  position: absolute;
-  left: 990px;
-  width: 620px;
-  top: 120px;
-}
-
-main #id2 img {
-  z-index: -100;
+  main .news_container .section_body {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 /* Centrar verticalmente (el elemento padre tiene que
