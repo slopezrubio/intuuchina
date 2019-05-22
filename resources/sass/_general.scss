@@ -85,13 +85,11 @@ header {
   &_primary {
     background: $primaryRed;
   }
-
-  &_secondary {
-
-  }
 }
 
-
+header {
+  height: 100vh;
+}
 
 nav {
   height: auto;

@@ -14,29 +14,64 @@
 .main-section--primary {
   /* Centrar verticalmente */
   @include verticalAlign();
+  display: block;
+  width: 100%;
 
   z-index: 1;
   .title-card {
-    background: $sectionDark;
-    margin: 0 auto;
-    padding: 3em;
-    border-radius: 8px;
-    border: 1px solid $primaryWhite;
+      background: $sectionDark;
+      margin: 0 auto;
+      padding: 1.5em;
+      border-radius: 8px;
+      border: 2px solid $primaryWhite;
+      display: flex;
+      flex-direction: column-reverse;
 
-    &-header {
-      $map: (576: 22, 768: 24, 992: 34);
-      font-size: minimosCuadrados($map);
-      line-height: 1.4;
-      font-weight: 700;
-    }
-
-    &-footer {
-      color: $primaryWhite;
-      .media {
-        display: block;
-        float: left;
+      .cta {
+        border: none;
+        margin: 2em auto 0 auto;
+        height: 45px;
+        padding: 0;
+        cursor: pointer;
+        background: $tertiaryRed;
+        border: none;
+        @include fade();
+        border-radius: 34px;
+        a {
+          display: inline-block;
+          $map: (320: 14, 824: 18, 1903: 18);
+          font-size: minimosCuadrados($map);
+          line-height: 45px;
+          height: 100%;
+          width: 100%;
+          font-weight: 500;
+          &:hover,
+          &:focus,
+          &:active {
+            color: $primaryWhite;
+          }
+          i {
+            padding-left: 1em;
+          }
+        }
       }
 
+      &-header {
+        $map: (397: 18, 482: 18, 1903: 42);
+        font-size: minimosCuadrados($map);
+        line-height: 1.4;
+        font-weight: 700;
+      }
+  }
+}
+
+@media #{$small-devices} {
+  .title-card {
+    .cta {
+      height: 35px;
+      a {
+        line-height: 35px;
+      }
     }
   }
 }

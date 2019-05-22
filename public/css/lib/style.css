@@ -61,6 +61,10 @@ header {
   background: #B71C1C;
 }
 
+header {
+  height: 100vh;
+}
+
 nav {
   height: auto;
   line-height: auto;
@@ -359,12 +363,6 @@ nav {
   .navbar_menu img {
     height: 55px;
   }
-}
-
-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 section article {
@@ -1589,30 +1587,88 @@ main #id2 img {
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
+  display: block;
+  width: 100%;
   z-index: 1;
 }
 
 .main-section--primary .title-card {
   background: rgba(0, 0, 0, 0.5);
   margin: 0 auto;
-  padding: 3em;
+  padding: 1.5em;
   border-radius: 8px;
-  border: 1px solid white;
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.main-section--primary .title-card .cta {
+  border: none;
+  margin: 2em auto 0 auto;
+  height: 45px;
+  padding: 0;
+  cursor: pointer;
+  background: #E57373;
+  border: none;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  -moz-transform: perspective(1px) translateZ(0);
+  -ms-transform: perspective(1px) translateZ(0);
+  -o-transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-property: color, background;
+  -moz-transition-property: color, background;
+  -ms-transition-property: color, background;
+  -o-transition-property: color, background;
+  border-radius: 34px;
+}
+
+.main-section--primary .title-card .cta:hover,
+.main-section--primary .title-card .cta:focus,
+.main-section--primary .title-card .cta:active {
+  background: #B71C1C;
+  color: white;
+}
+
+.main-section--primary .title-card .cta a {
+  display: inline-block;
+  font-size: calc(0.2127341847vw + 14.5059964639px);
+  line-height: 45px;
+  height: 100%;
+  width: 100%;
+  font-weight: 500;
+}
+
+.main-section--primary .title-card .cta a:hover,
+.main-section--primary .title-card .cta a:focus,
+.main-section--primary .title-card .cta a:active {
+  color: white;
+}
+
+.main-section--primary .title-card .cta a i {
+  padding-left: 1em;
 }
 
 .main-section--primary .title-card-header {
-  font-size: calc(2.9281496063vw + 3.8661417323px);
+  font-size: calc(1.6357659165vw + 10.8309974009px);
   line-height: 1.4;
   font-weight: 700;
 }
 
-.main-section--primary .title-card-footer {
-  color: white;
-}
+@media only screen and (max-width: 320px) {
+  .title-card .cta {
+    height: 35px;
+  }
 
-.main-section--primary .title-card-footer .media {
-  display: block;
-  float: left;
+  .title-card .cta a {
+    line-height: 35px;
+  }
 }
 
 .grid {
