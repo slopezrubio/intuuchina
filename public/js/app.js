@@ -49201,6 +49201,56 @@ function displayNav(event) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_news.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/_news.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var news = {
+  init: function init() {
+    window.addEventListener('load', news.setup);
+    window.addEventListener('resize', function () {
+      news.polygon.style.height = 'auto';
+      news.setup();
+    });
+  },
+  polygon: document.querySelector('.news'),
+  currentBreakpoint: null,
+  breakpointsHeights: {
+    smallDevices: 136,
+    mediumDevices: 226,
+    largeDevices: 100
+  },
+  breakpoints: {
+    smallDevices: [100, 680],
+    mediumDevices: [681, 992],
+    largeDevices: [993]
+  },
+  setup: function setup() {
+    news.currentBreakpoint = news.getBreakpoint();
+    news.wrapBackground();
+  },
+  getBreakpoint: function getBreakpoint() {
+    var currentWidth = window.innerWidth;
+    var breakpointKey = 'largeDevices';
+    Object.keys(news.breakpoints).map(function (key, index) {
+      if (news.breakpoints[key][1] > currentWidth && news.breakpoints[key][0] < currentWidth) {
+        breakpointKey = key;
+      }
+    });
+    return breakpointKey;
+  },
+  wrapBackground: function wrapBackground() {
+    var toResize = news.breakpointsHeights[news.currentBreakpoint] + news.polygon.clientHeight;
+    news.polygon.style.height = toResize + 'px';
+  }
+};
+news.init();
+
+/***/ }),
+
 /***/ "./resources/js/components/_offers.js":
 /*!********************************************!*\
   !*** ./resources/js/components/_offers.js ***!
@@ -49209,7 +49259,10 @@ function displayNav(event) {
 /***/ (function(module, exports) {
 
 // Component Events
-document.querySelector('.dropdown-button').addEventListener('click', displayForm); // Component Methods
+if (document.querySelector('.dropdown-button')) {
+  document.querySelector('.dropdown-button').addEventListener('click', displayForm);
+} // Component Methods
+
 
 function displayForm(event) {
   event.preventDefault();
@@ -49248,15 +49301,16 @@ function scrollTo(target) {
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/sass/main.scss ***!
-  \*************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/sass/main.scss ***!
+  \************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 

@@ -1,34 +1,25 @@
-$montse: Montserrat;
-$black: black;
-$red1: #B71C1C;
-$red2:#F44336;
-$red3:#E57373;
-$red4:#C80B0B;
-$red5:#FF0000;
-$white: white;
-$black2:#2D2B2E;
-$gris:#C4C4C4;
+
 main {
   //decoration for page
   .triangulo {
     position: absolute;
-    color: $gris;
+    color: $neutralColor;
     width: 0;
     height: 0;
     border-right: 200px solid transparent;
-    border-left: 200px solid $gris;
-    border-top: 200px solid $gris;
+    border-left: 200px solid $neutralColor;
+    border-top: 200px solid $neutralColor;
     border-bottom: 200px solid transparent;
   }
   .news {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
-    background-color: $red4;
-    height: 600px;
+    @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 81%)');
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    background-color: $primaryRed;
     z-index: 0;
     position: relative;
     &_container {
       margin-left: 2em;
+      margin-right: 2em;
       padding-top: 1.5em;
       .section_title {
         display: block;
@@ -59,7 +50,7 @@ main {
               height: auto;
               font-size: 13px;
               font-style: italic;
-              color: $white;
+              color: $primaryWhite;
               display: inline-block;
             }
           }
@@ -78,10 +69,11 @@ main {
   }
 }
 
-@media #{$small-and-medium-devices} {
+@media #{$footer-fix} {
   main {
     .news {
-      height: 1200px;
+      @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 78%)');
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
       &_container {
         .section_body div {
           margin-bottom: 2em;
@@ -90,13 +82,57 @@ main {
           flex-direction: column;
           align-items: center;
           .tv {
-
+            width: 100%;
+            height: auto;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(5, 1fr);
+            grid-row-gap: 2em;
+            img {
+              position: relative;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 60px;
+            }
           }
         }
       }
     }
   }
 }
+
+@media #{$small-and-medium-devices_secondary} {
+  .news {
+    &_container {
+      .section_body {
+        flex-direction: column;
+        .tv {
+          width: 100%!important;
+          height: auto!important;
+          display: flex!important;
+          flex-wrap: wrap!important;
+          justify-content: center;
+          a {
+            padding: 0.7em;
+          }
+          img {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media #{$large-devices} {
+  .news {
+    @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 71%)');
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+  }
+}
+
   //.oferts {
   //  // -webkit-clip-path: polygon(0 0, 100% 55%, 100% 100%, 0% 100%);
   //  // clip-path: polygon(0 0, 100% 55%, 100% 100%, 0% 100%);

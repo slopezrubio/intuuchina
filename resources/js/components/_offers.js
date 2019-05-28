@@ -1,5 +1,7 @@
 // Component Events
-document.querySelector('.dropdown-button').addEventListener('click', displayForm);
+if (document.querySelector('.dropdown-button')) {
+    document.querySelector('.dropdown-button').addEventListener('click', displayForm);
+}
 
 // Component Methods
 function displayForm(event) {
