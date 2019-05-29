@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+<style>
+.hidden {
+    display: none !important;
+  }
+</style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -103,7 +110,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row" id="universityFieldset">
                             <label for="universityIndustry" class="col-md-4 col-form-label text-md-right">University</label>
                             <div class="col-md-6">
                                 <label><input type="checkbox" value="mba">Master of Business Administration</label>
@@ -147,5 +154,3 @@
         </div>
     </div>
 </div>
-<script src="resources/js/components/_register.js"></script>
-@endsection
