@@ -9,6 +9,6 @@ class Offer extends Model
 {
     //
 
-    protected $fillable = ['title', 'location', 'industry', 'education', 'duration', 'description', 'preferred_skills', 'non_technical_skills'];
+    protected $fillable = ['title', 'location', 'industry', 'duration', 'description', 'preferred_skills'];
 
 }

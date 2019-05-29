@@ -52,20 +52,6 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="education" class="col-md-4 col-form-label text-md-right">Education</label>
-            <div class="col-md-6">
-                <select class="form-control" name="education" id="education">
-                    <option value="graduate_degree">Graduate Degree</option>
-                    <option value="bachelor_degree">Bachelor Degree</option>
-                </select>
-                @if ($errors->has('education'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('education') }}
-                    </div>
-                @endif
-            </div>
-        </div>
-        <div class="form-group row">
             <label for="duration" class="col-md-4 col-form-label text-md-right">Duration</label>
             <div class="col-md-6">
                 <input type="text" id="duration" class="form-control" name="duration" value="{{old('duration')}}">
@@ -94,17 +80,6 @@
                 @if ($errors->has('preferred-skills'))
                     <div class="alert alert-danger" role="alert">
                        {{ $errors->first('preferred-skills') }}
-                    </div>
-                @endif
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="non-technical-skills" class="col-md-4 col-form-label text-md-right">Non-Technical Skills</label>
-            <div class="col-md-6">
-                <textarea id="non-technical-skills" class="form-control" name="non-technical-skills" rows="5" value="{{old('non-technical-skills')}}"></textarea>
-                @if ($errors->has('non-technical-skills'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('non-technical-skills') }}
                     </div>
                 @endif
             </div>
