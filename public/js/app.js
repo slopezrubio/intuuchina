@@ -49289,6 +49289,73 @@ function scrollTo(target) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_register.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/_register.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var select = document.querySelector('#inputProgram');
+var industryFieldset = document.querySelector('#industryFieldset');
+var studyFieldset = document.querySelector('#studyFieldset');
+var universityFieldset = document.querySelector('#universityFieldset');
+
+var showElement = function showElement(domElement) {
+  domElement.classList.remove('hidden');
+  domElement.setAttribute('aria-hidden', false);
+};
+
+var hideElement = function hideElement(domElement) {
+  domElement.classList.add('hidden');
+  domElement.setAttribute('aria-hidden', true);
+};
+
+if (industryFieldset) {
+  hideElement(industryFieldset);
+}
+
+if (studyFieldset) {
+  hideElement(studyFieldset);
+}
+
+if (universityFieldset) {
+  hideElement(universityFieldset);
+}
+
+select.addEventListener('change', function (event) {
+  var currentValue = event.target.value;
+
+  switch (currentValue) {
+    case 'intership':
+    case 'inter_relocat':
+    case 'inter_housing':
+      showElement(industryFieldset);
+      hideElement(studyFieldset);
+      hideElement(universityFieldset);
+      break;
+
+    case 'study':
+      showElement(studyFieldset);
+      hideElement(industryFieldset);
+      hideElement(universityFieldset);
+      break;
+
+    case 'universty':
+      showElement(universityFieldset);
+      hideElement(industryFieldset);
+      hideElement(studyFieldset);
+
+    default:
+      hideElement(studyFieldset);
+      hideElement(industryFieldset);
+      hideElement(universityFieldset);
+      break;
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/sass/main.scss":
 /*!**********************************!*\
   !*** ./resources/sass/main.scss ***!
@@ -49301,17 +49368,18 @@ function scrollTo(target) {
 /***/ }),
 
 /***/ 0:
-/*!************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/sass/main.scss ***!
-  \************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/sass/main.scss ***!
+  \***************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
-module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })
