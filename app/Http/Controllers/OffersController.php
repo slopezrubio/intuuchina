@@ -50,11 +50,9 @@ class OffersController extends Controller
             'title' => 'required|max:255|string',
             'location' => 'required|string',
             'industry' => 'required|string',
-            'education' => 'required|string',
             'duration' => 'required|string',
             'description' => 'max:1000',
             'preferred-skills' => 'max:500',
-            'non-technical-skills' => 'max:500',
         ]);
 
 
@@ -62,11 +60,9 @@ class OffersController extends Controller
             'title' => $request->get('title'),
             'location' => $request->get('location'),
             'industry' => $request->get('industry'),
-            'education' => $request->get('education'),
             'duration' => $request->get('duration'),
             'description' => $request->get('description'),
             'preferred_skills' => $request->get('preferred-skills'),
-            'non_technical_skills' => $request->get('non-technical-skills'),
         ]);
 
         return redirect()->route('offers');

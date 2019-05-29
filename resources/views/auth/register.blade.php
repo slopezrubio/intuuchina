@@ -71,7 +71,7 @@
                                 <select class="custom-select" id="inputProgram" name="program">
                                     <option value="intership" selected aria-selected="true">Intership program</option>
                                     <option value="inter_relocat">Intership + Relocation Program</option>
-                                    <option value="full">Full intership</option>
+                                    <option value="inter_housing"> Internship including housing</option>
                                     <option value="study">Study Chinese</option>
                                     <option value="universty">University</option>
                                 </select>
@@ -81,18 +81,33 @@
                         <div class="form-group row">
                             <label for="inputIndustry" class="col-md-4 col-form-label text-md-right">Industry</label>
                             <div class="col-md-6">
-                                <select class="custom-select" id="inputIndustry" name="industry">
-                                    <option value="finance" selected aria-selected="true">Finance</option>
-                                    <option value="design">Design</option>
-                                    <option value="engineering">Engineering</option>
-                                    <option value="consultant">Consultant</option>
-                                    <option value="education">Education</option>
-                                    <option value="hostelry">Hostelry</option>
-                                    <option value="it">IT</option>
-                                    <option value="legal">Legal</option>
-                                    <option value="logistic">Logistic</option>
-                                    <option value="marketing_business">Marketing & Business Development</option>
-                                </select>
+                                <label><input type="checkbox" id="" value="finance">Finance</label>
+                                <label><input type="checkbox" id="" value="design">Design</label>
+                                <label><input type="checkbox" id="" value="engineering">Engineering</label>
+                                <label><input type="checkbox" id="" value="consultant">Consultant</label>
+                                <label><input type="checkbox" id="" value="education">Education</label>
+                                <label><input type="checkbox" id="" value="hostelry">Hostelry</label>
+                                <label><input type="checkbox" id="" value="it">IT</label>
+                                <label><input type="checkbox" id="" value="legal">Legal</label>
+                                <label><input type="checkbox" id="" value="logistic">Logistic</label>
+                                <label><input type="checkbox" id="" value="marketing_business">Marketing & Business Development</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="studyIndustry" class="col-md-4 col-form-label text-md-right">Study Chinese</label>
+                            <div class="col-md-6">
+                                <label><input type="checkbox" id="" value="online">Online</label>
+                                <label><input type="checkbox" id="" value="presencial">Presencial</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="universityIndustry" class="col-md-4 col-form-label text-md-right">University</label>
+                            <div class="col-md-6">
+                                <label><input type="checkbox" id="" value="mba">Master of Business Administration</label>
+                                <label><input type="checkbox" id="" value="mib">Master of International Business</label>
+                                <label><input type="checkbox" id="" value="others">Others</label>
                             </div>
                         </div>
 
