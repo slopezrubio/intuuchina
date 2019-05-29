@@ -38,4 +38,7 @@ let news = {
     }
 };
 
-news.init();
+
+if (news.polygon !== null) {
+    news.init();
+}

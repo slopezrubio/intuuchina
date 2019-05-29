@@ -9,7 +9,7 @@
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
 
     <!-- Título de la aplicación -->
-    <title>{{ config('app.name', 'Laravel') }}e</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- reCAPCTCHA v2.0 de Google -->
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>

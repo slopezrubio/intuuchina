@@ -49052,9 +49052,9 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app'
-});
+/*const app = new Vue({
+    el: '#app'
+});*/
 
 /***/ }),
 
@@ -49193,7 +49193,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 // Component Events
-document.querySelector('.toggleMenu').addEventListener('click', displayNav); // Component Methods
+if (document.querySelector('.toggleMenu') !== null) {
+  document.querySelector('.toggleMenu').addEventListener('click', displayNav);
+} // Component Methods
+
 
 function displayNav(event) {
   $('.navbar_menu--hidden').toggleClass('navbar_menu--display');
@@ -49247,7 +49250,10 @@ var news = {
     news.polygon.style.height = toResize + 'px';
   }
 };
-news.init();
+
+if (news.polygon !== null) {
+  news.init();
+}
 
 /***/ }),
 
@@ -49296,63 +49302,82 @@ function scrollTo(target) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var select = document.querySelector('#inputProgram');
-var industryFieldset = document.querySelector('#industryFieldset');
-var studyFieldset = document.querySelector('#studyFieldset');
-var universityFieldset = document.querySelector('#universityFieldset');
+var register = {
+  select: document.querySelector('#inputProgram'),
+  industryFieldset: document.querySelector('#industryFieldset'),
+  studyFieldset: document.querySelector('#studyFieldset'),
+  universityFieldset: document.querySelector('#universityFieldset'),
+  showElement: function showElement(domElement) {
+    domElement.classList.remove('hidden');
+    domElement.setAttribute('aria-hidden', false);
+  },
+  hideElement: function hideElement(domElement) {
+    domElement.classList.add('hidden');
+    domElement.setAttribute('aria-hidden', true);
+  },
+  checkFields: function checkFields() {
+    if (register.industryFieldset) {
+      register.hideElement(industryFieldset);
+    }
 
-var showElement = function showElement(domElement) {
-  domElement.classList.remove('hidden');
-  domElement.setAttribute('aria-hidden', false);
-};
+    if (register.studyFieldset) {
+      register.hideElement(studyFieldset);
+    }
 
-var hideElement = function hideElement(domElement) {
-  domElement.classList.add('hidden');
-  domElement.setAttribute('aria-hidden', true);
-};
+    if (register.universityFieldset) {
+      register.hideElement(universityFieldset);
+    }
+  },
+  init: function init() {
+    window.addEventListener('load', register.checkFields);
+    register.select.addEventListener('change', function (event) {
+      var currentValue = event.target.value;
 
-if (industryFieldset) {
-  hideElement(industryFieldset);
-}
+      switch (currentValue) {
+        case 'intership':
+        case 'inter_relocat':
+        case 'inter_housing':
+          register.showElement(register.industryFieldset);
+          register.hideElement(register.studyFieldset);
+          register.hideElement(register.universityFieldset);
+          break;
 
-if (studyFieldset) {
-  hideElement(studyFieldset);
-}
+        case 'study':
+          register.showElement(register.studyFieldset);
+          register.hideElement(register.industryFieldset);
+          register.hideElement(register.universityFieldset);
+          break;
 
-if (universityFieldset) {
-  hideElement(universityFieldset);
-}
+        case 'universty':
+          register.showElement(register.universityFieldset);
+          register.hideElement(register.industryFieldset);
+          register.hideElement(register.studyFieldset);
 
-select.addEventListener('change', function (event) {
-  var currentValue = event.target.value;
-
-  switch (currentValue) {
-    case 'intership':
-    case 'inter_relocat':
-    case 'inter_housing':
-      showElement(industryFieldset);
-      hideElement(studyFieldset);
-      hideElement(universityFieldset);
-      break;
-
-    case 'study':
-      showElement(studyFieldset);
-      hideElement(industryFieldset);
-      hideElement(universityFieldset);
-      break;
-
-    case 'universty':
-      showElement(universityFieldset);
-      hideElement(industryFieldset);
-      hideElement(studyFieldset);
-
-    default:
-      hideElement(studyFieldset);
-      hideElement(industryFieldset);
-      hideElement(universityFieldset);
-      break;
+        default:
+          register.hideElement(register.studyFieldset);
+          register.hideElement(register.industryFieldset);
+          register.hideElement(register.universityFieldset);
+          break;
+      }
+    });
   }
-});
+};
+
+if (register.select !== null) {
+  register.init();
+} // const select = document.querySelector('#inputProgram')
+// const industryFieldset = document.querySelector('#industryFieldset')
+// const studyFieldset = document.querySelector('#studyFieldset')
+// const universityFieldset = document.querySelector('#universityFieldset')
+//
+// const showElement = (domElement) => {
+//   domElement.classList.remove('hidden')
+//   domElement.setAttribute('aria-hidden', false)
+// }
+// const hideElement = (domElement) => {
+//   domElement.classList.add('hidden')
+//   domElement.setAttribute('aria-hidden', true)
+// }
 
 /***/ }),
 
@@ -49374,12 +49399,12 @@ select.addEventListener('change', function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! C:\wamp64\www\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
+module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
 
 
 /***/ })

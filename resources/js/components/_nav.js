@@ -1,5 +1,7 @@
 // Component Events
-document.querySelector('.toggleMenu').addEventListener('click', displayNav);
+if (document.querySelector('.toggleMenu') !== null) {
+    document.querySelector('.toggleMenu').addEventListener('click', displayNav);
+}
 
 
 // Component Methods
