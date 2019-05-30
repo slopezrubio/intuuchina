@@ -6,6 +6,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Permite la visualización en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
 
     <!-- Título de la aplicación -->

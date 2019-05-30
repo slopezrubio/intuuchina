@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'surnames' => $data['surnames'],
             'email' => $data['email'],
             'nationality' => $data['nationality'],
+            'type' => 'user',
             'industry' => $this->checkField($data, 'industry'),
             'program' => $this->checkField($data, 'program'),
             'university' => $this->checkField($data, 'university'),

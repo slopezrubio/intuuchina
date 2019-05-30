@@ -43,6 +43,10 @@ Route::get('/login', function() {
     return view('pages/login');
 });
 
+//Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
+//    Route::match(['get', 'post'], '');
+//});
+
 Route::post('/message','MailMessagesController@send')->name('mail');
 
 Auth::routes();

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('industry')->nullable();
             $table->string('study')->nullable();
             $table->string('university')->nullable();
+            $table->string('type');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
