@@ -12,16 +12,17 @@ let register = {
     domElement.setAttribute('aria-hidden', true)
   },
   checkFields: () => {
+    console.log(universityFieldset);
     if (register.industryFieldset) {
-      register.hideElement(industryFieldset)
+      register.hideElement(register.industryFieldset)
     }
 
     if (register.studyFieldset) {
-      register.hideElement(studyFieldset)
+      register.hideElement(register.studyFieldset)
     }
 
     if (register.universityFieldset) {
-      register.hideElement(universityFieldset)
+      register.hideElement(register.universityFieldset)
     }
   },
   init: () => {
@@ -42,14 +43,14 @@ let register = {
           register.hideElement(register.industryFieldset)
           register.hideElement(register.universityFieldset)
           break
-        case 'universty':
+        case 'university':
           register.showElement(register.universityFieldset)
           register.hideElement(register.industryFieldset)
           register.hideElement(register.studyFieldset)
         default:
           register.hideElement(register.studyFieldset)
           register.hideElement(register.industryFieldset)
-          register.hideElement(register.universityFieldset)
+          register.showElement(register.universityFieldset)
           break
       }
     })

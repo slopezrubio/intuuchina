@@ -90,33 +90,33 @@
                             <div class="form-group row" id="industryFieldset">
                                 <label for="inputIndustry" class="col-md-4 col-form-label text-md-right">Industry</label>
                                 <div class="col-md-6">
-                                    <label><input type="checkbox" value="finance">Finance</label>
-                                    <label><input type="checkbox" value="design">Design</label>
-                                    <label><input type="checkbox" value="engineering">Engineering</label>
-                                    <label><input type="checkbox" value="consultant">Consultant</label>
-                                    <label><input type="checkbox" value="education">Education</label>
-                                    <label><input type="checkbox" value="hostelry">Hostelry</label>
-                                    <label><input type="checkbox" value="it">IT</label>
-                                    <label><input type="checkbox" value="legal">Legal</label>
-                                    <label><input type="checkbox" value="logistic">Logistic</label>
-                                    <label><input type="checkbox" value="marketing_business">Marketing & Business Development</label>
+                                    <label><input type="checkbox" value="finance" name="industry[]">Finance</label>
+                                    <label><input type="checkbox" value="design" name="industry[]">Design</label>
+                                    <label><input type="checkbox" value="engineering" name="industry[]">Engineering</label>
+                                    <label><input type="checkbox" value="consultant" name="industry[]">Consultant</label>
+                                    <label><input type="checkbox" value="education" name="industry[]">Education</label>
+                                    <label><input type="checkbox" value="hostelry" name="industry[]">Hostelry</label>
+                                    <label><input type="checkbox" value="it" name="industry[]">IT</label>
+                                    <label><input type="checkbox" value="legal" name="industry[]">Legal</label>
+                                    <label><input type="checkbox" value="logistic" name="industry[]">Logistic</label>
+                                    <label><input type="checkbox" value="marketing_business" name="industry[]">Marketing & Business Development</label>
                                 </div>
                             </div>
 
                             <div class="form-group row" id="studyFieldset">
                                 <label for="inputStudy" class="col-md-4 col-form-label text-md-right">Study Chinese</label>
                                 <div class="col-md-6">
-                                    <label><input type="checkbox" value="online">Online</label>
-                                    <label><input type="checkbox" value="presencial">Presencial</label>
+                                    <label><input type="checkbox" value="online" name="study[]">Online</label>
+                                    <label><input type="checkbox" value="presencial" name="study[]">Presencial</label>
                                 </div>
                             </div>
 
                             <div class="form-group row" id="universityFieldset">
-                                <label for="universityIndustry" class="col-md-4 col-form-label text-md-right">University</label>
+                                <label for="inputUniversity" class="col-md-4 col-form-label text-md-right">University</label>
                                 <div class="col-md-6">
-                                    <label><input type="checkbox" value="mba">Master of Business Administration</label>
-                                    <label><input type="checkbox" value="mib">Master of International Business</label>
-                                    <label><input type="checkbox" value="others">Others</label>
+                                    <label><input type="checkbox" value="mba" name="university[]">Master of Business Administration</label>
+                                    <label><input type="checkbox" value="mib" name="university[]">Master of International Business</label>
+                                    <label><input type="checkbox" value="others" name="university[]">Others</label>
                                 </div>
                             </div>
 

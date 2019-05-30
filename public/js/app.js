@@ -49316,16 +49316,18 @@ var register = {
     domElement.setAttribute('aria-hidden', true);
   },
   checkFields: function checkFields() {
+    console.log(universityFieldset);
+
     if (register.industryFieldset) {
-      register.hideElement(industryFieldset);
+      register.hideElement(register.industryFieldset);
     }
 
     if (register.studyFieldset) {
-      register.hideElement(studyFieldset);
+      register.hideElement(register.studyFieldset);
     }
 
     if (register.universityFieldset) {
-      register.hideElement(universityFieldset);
+      register.hideElement(register.universityFieldset);
     }
   },
   init: function init() {
@@ -49348,7 +49350,7 @@ var register = {
           register.hideElement(register.universityFieldset);
           break;
 
-        case 'universty':
+        case 'university':
           register.showElement(register.universityFieldset);
           register.hideElement(register.industryFieldset);
           register.hideElement(register.studyFieldset);
@@ -49356,7 +49358,7 @@ var register = {
         default:
           register.hideElement(register.studyFieldset);
           register.hideElement(register.industryFieldset);
-          register.hideElement(register.universityFieldset);
+          register.showElement(register.universityFieldset);
           break;
       }
     });

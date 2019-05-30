@@ -70,10 +70,27 @@ class RegisterController extends Controller
             'surnames' => $data['surnames'],
             'email' => $data['email'],
             'nationality' => $data['nationality'],
-            'program' => $data['program'],
-            'industry' => $data['industry'],
+            'industry' => $this->checkField($data, 'industry'),
+            'program' => $this->checkField($data, 'program'),
+            'university' => $this->checkField($data, 'university'),
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    protected function checkField($data, $field) {
+        if (isset($data[$field])) {
+            return $this->prepareArray($data[$field]);
+        }
+
+        return null;
+    }
+
+    protected function prepareArray($value) {
+        if (is_array($value)) {
+            return json_encode($value);
+        }
+
+        return $value;
     }
 
 }
