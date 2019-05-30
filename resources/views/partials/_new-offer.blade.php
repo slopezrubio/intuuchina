@@ -1,4 +1,4 @@
-<form method="POST" class="form" action="{{ route('offers') }}">
+<form method="POST" class="form" action="{{ route('admin.offers') }}">
     @csrf
     <div class="form-group row form_header">
         <a href="#" class="dropdown-button">Crear Nueva</a>

@@ -24,6 +24,24 @@ class OffersController extends Controller
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 
+        return view('pages/offers', compact('offers'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function admin()
+    {
+        //
+        $offers = Offer::orderBy('created_at','DESC')->get();
+
+        foreach ($offers as $offer) {
+            $this->renew($offer->id, $offer->created_at);
+            $offer->gone_by = $this->getDiffForHumans($offer->created_at);
+        }
+
         return view('pages/admin/offers', compact('offers'));
     }
 

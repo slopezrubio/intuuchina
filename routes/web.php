@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('pages/home');
 });
 
-Route::get('/admin/offers', 'OffersController@index')->name('offers');
-
-Route::post('/admin/offers', 'OffersController@store');
+Route::get('/offers', 'OffersController@index')->name('offers');
 
 Route::get('/internship', function() {
     return view('pages/internship');
@@ -43,9 +41,12 @@ Route::get('/login', function() {
     return view('pages/login');
 });
 
-//Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
-//    Route::match(['get', 'post'], '');
-//});
+Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
+    Route::match(['get', 'post'], '/admin/','HomeController@index');
+
+    Route::get('/admin/offers', 'OffersController@admin')->name('admin.offers');
+    Route::post('/admin/offers', 'OffersController@store');
+});
 
 Route::post('/message','MailMessagesController@send')->name('mail');
 

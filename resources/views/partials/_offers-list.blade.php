@@ -10,5 +10,4 @@
             </a>
         @endforeach
     </div>
-    @include('partials._new-offer')
 </div>
