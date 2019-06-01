@@ -9,7 +9,8 @@ $factory->define(App\Offer::class, function (Faker $faker) {
         'updated_at' => $faker->dateTime('now'),
         'location' => $faker->randomElement(array('shangai', 'beijing')),
         'industry' => $faker->randomElement(array('finance', 'design', 'consultant', 'educaton', 'it', 'legal')),
-        'duration' => $faker->regexify('^(10|11|12|[0-9]) ([Mm]onth[s]?)$'),
+        'duration' => $faker->randomElement(array(1,2,3,4,5,6,7,8,9,10,11,12)),
+        'picture' => $faker->regexify('storage/images/generic_finance_picture' . $faker->randomElement(array(1,2,3)) . '\.jpg'),
         'description' => $faker->text(190),
         'preferred_skills' => $faker->text(190),
     ];

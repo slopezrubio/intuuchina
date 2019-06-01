@@ -24,7 +24,12 @@ class OffersController extends Controller
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 
-        return view('pages/offers', compact('offers'));
+        /* Datos que se van a entregar a la vista */
+        $params = (object) array(
+            'title' => 'Prácticas'
+        );
+
+        return view('pages/offers', compact('offers', 'params'));
     }
 
     /**

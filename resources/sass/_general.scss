@@ -78,6 +78,7 @@ a {
  */
 header {
   position: relative;
+  text-transform: uppercase;
 }
 
 .body-button {
@@ -87,11 +88,51 @@ header {
   }
 }
 
+.cta {
+  border: none;
+  margin: 2em auto 0 auto;
+  height: 45px;
+  padding: 0;
+  cursor: pointer;
+  background: $tertiaryRed;
+  border: none;
+  @include fade();
+  border-radius: 34px;
+  a {
+    display: inline-block;
+    $map: (320: 14, 824: 18, 1903: 18);
+    font-size: minimosCuadrados($map);
+    line-height: 45px;
+    height: 100%;
+    width: 100%;
+    font-weight: 500;
+    &:hover,
+    &:focus,
+    &:active {
+      color: $primaryWhite;
+    }
+    i {
+      padding-left: 1em;
+    }
+  }
+}
+
 header {
-  height: 100vh;
+  height: 20em;
 }
 
 nav {
   height: auto;
   line-height: auto;
+}
+
+/* Imágenes del header */
+header#home{
+  background-image: url('/../../storage/images/practicas-1-1.jpg');
+  height: 50rem;
+  text-transform: none;
+}
+
+header#internship {
+  background-image: url('/../../storage/images/practicass.jpg');
 }

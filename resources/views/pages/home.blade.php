@@ -3,7 +3,7 @@
 
 @section('content')
 
-<header>
+<header id="home">
     {{--Elemento NAV--}}
     @include('partials._nav')
 

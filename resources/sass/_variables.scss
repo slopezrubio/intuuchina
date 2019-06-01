@@ -26,8 +26,11 @@ $small-and-medium-devices: "only screen and (min-width: 100px) and (max-width: 9
 $small-and-medium-devices_secondary: "only screen and (min-width: 100px) and (max-width: 680px)";
 $small-devices: "only screen and (max-width: 320px)";
 $footer-fix: "only screen and (min-width: 681px) and (max-width: 991px)";
+$offers-fix: "only screen and (min-width: 992px) and (max-width: 1340px)";
 $medium-devices: "only screen and (min-width: 321px) and (max-width: 780px)";
+$medium_devices_secondary: "only screen and (min-width: 575px) and (max-width: 991px)";
 $large-devices: "only screen and (min-width: 992px)";
+$large-devices_secondary: "only screen and (min-width: 1340px)";
 
 // Transitions
 $mediumDuration: .3s !default;

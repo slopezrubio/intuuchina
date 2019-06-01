@@ -15,32 +15,31 @@ Route::get('/', function () {
     return view('pages/home');
 });
 
-Route::get('/offers', 'OffersController@index')->name('offers');
+/* Ofertas */
+Route::get('/internship', 'OffersController@index')->name('offers');
+Route::get('/offers/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
 
-Route::get('/internship', function() {
-    return view('pages/internship');
-});
-
+/* Aprende Chino */
 Route::get('/learn', function() {
     return view('pages/learn-chinese');
 });
 
+/* Universidad */
 Route::get('/university', function() {
     return view('pages/university');
 });
 
+/* Why Us */
 Route::get('/why', function() {
     return view('pages/why-intuuchina');
 });
 
-Route::get('/internship', function() {
-    return view('pages/about');
-});
-
+/* Login */
 Route::get('/login', function() {
     return view('pages/login');
 });
 
+/* Administrador */
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
     Route::match(['get', 'post'], '/admin/','HomeController@index');
 
@@ -48,8 +47,11 @@ Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
     Route::post('/admin/offers', 'OffersController@store');
 });
 
+/* Formulario de contacto del pie de página */
 Route::post('/message','MailMessagesController@send')->name('mail');
 
+/* Autenticación */
 Auth::routes();
 
+/* Home */
 Route::get('/home', 'HomeController@index')->name('home');
