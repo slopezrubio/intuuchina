@@ -9,23 +9,28 @@
 
     .custom-select-wrapper {
       max-width: 350px;
-      /* El fondo donde esta situada la flecha del selector */
-      select.custom-select {
-        background-image: linear-gradient(to right, black, $primaryRed);
-        background-size: 8.5em;
-        background-position: 100% 0;
-        background-repeat: no-repeat;
+      background-image: linear-gradient(to right, $primaryDark 280px, $primaryRed 70px);
+      position: relative;
+      select {
+        background: transparent;
+        padding-right: 4.75em;
+        option {
+          background: $primaryDark;
+        }
       }
 
-      &:after {
+      &:before {
+        color: $primaryWhite;
+        content: '';
         position: absolute;
-        content: "";
-        top: 14px;
-        right: 10px;
-        width: 0;
-        height: 0;
-        border: 6px solid transparent;
-        border-color: #fff transparent transparent transparent;
+        left: calc(100% - 2.7em);
+        top: 6px;
+        width: 1em;
+        height: 1em;
+        border-top: solid 1px currentColor;
+        border-right: solid 1px currentColor;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
       }
     }
   }
