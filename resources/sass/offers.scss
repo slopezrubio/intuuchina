@@ -8,6 +8,14 @@
     }
   }
 
+  .offers_list {
+    .card-body {
+      .location {
+        text-transform: uppercase;
+      }
+    }
+  }
+
   @media #{$medium_devices_secondary} {
     .offers_list {
       display: grid;

@@ -11,7 +11,7 @@
                     <div>
                         <h4 class="footer_subtitle">Prácticas</h4>
                         <ul class="web-map_list">
-                            <li class="web-map_item"><a href="#">Ofertas</a></li>
+                            <li class="web-map_item"><a href="{{ route('offers') }}">Ofertas</a></li>
                         </ul>
                     </div>
                     <div>

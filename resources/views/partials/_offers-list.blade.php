@@ -8,9 +8,9 @@
                     <h5 class="card-title">{{ $offer->title }}</h5>
                     <p class="card-text location">{{ ucfirst($offer->location) }}</p>
                     @if($offer->duration > 1)
-                        <p class="card-text duration">{{ $offer->duration }} Months</p>
+                        <p class="card-text duration">Estancia: {{ $offer->duration }} Months</p>
                     @else
-                        <p class="card-text duration">{{ $offer->duration }} Month</p>
+                        <p class="card-text duration">Estancia: {{ $offer->duration }} Month</p>
                     @endif
                     <div class="offers_buttons">
                         <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="register">Inscribirse</a></button>

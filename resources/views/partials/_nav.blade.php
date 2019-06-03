@@ -12,7 +12,7 @@
         </div>
 
         <ul class="col-lg-9 col-lg-9 navbar_menu navbar_menu--hidden">
-            <li><a href="/internship">Prácticas</a></li>
+            <li><a href="{{ route('offers') }}">Prácticas</a></li>
             <li><a href="/learn">Aprende Chino</a></li>
             <li><a href="/university">Universidad</a></li>
             <li><a href="/why">Why Intuuchina</a></li>

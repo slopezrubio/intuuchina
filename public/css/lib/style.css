@@ -1770,6 +1770,10 @@ header.auth {
   color: #B71C1C;
 }
 
+.offers .offers_list .card-body .location {
+  text-transform: uppercase;
+}
+
 @media only screen and (min-width: 575px) and (max-width: 991px) {
   .offers .offers_list {
     display: grid;
