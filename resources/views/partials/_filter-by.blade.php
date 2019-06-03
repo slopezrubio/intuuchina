@@ -1,6 +1,6 @@
 <div class="filter_selector--mobile container-fluid arrow-down icon">
-    <label for="inputFilter" class="col-md-10 col-md-10 col-form-label">Filtrar por: </label>
-    <div class="custom-select-wrapper">
+    <label for="for="inputFilter"">Filtrar por: </label>
+    <div class="custom-select-wrapper col-md-10 col-md-10 col-form-label">
         <select class="custom-select" id="inputFilter" name="filterBy[]">
             <option value="" selected aria-selected="true">Elige una industria...</option>
             <option value="finance">Finance</option>

@@ -11,9 +11,14 @@
       max-width: 350px;
       background-image: linear-gradient(to right, $primaryDark 280px, $primaryRed 70px);
       position: relative;
+      padding: 0;
+      z-index: 2;
       select {
         background: transparent;
         padding-right: 4.75em;
+        border: none;
+        z-index: -1;
+        @include prefixed(appearance, none);
         option {
           background: $primaryDark;
         }
@@ -31,6 +36,7 @@
         border-right: solid 1px currentColor;
         -webkit-transform: rotate(135deg);
         transform: rotate(135deg);
+        z-index: -2;
       }
     }
   }
