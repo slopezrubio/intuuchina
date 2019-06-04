@@ -17,4 +17,5 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     .js('resources/js/components/_nav.js', 'js/app.js')
     .js('resources/js/components/_offers.js', 'js/app.js')
     .js('resources/js/components/_news.js', 'js/app.js')
-    .js('resources/js/components/_filter-by.js', 'js/app.js');
+    .js('resources/js/components/_filter-by.js', 'js/app.js')
+    .js('resources/js/components/_footer.js', 'js/app.js');

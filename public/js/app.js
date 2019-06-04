@@ -49214,6 +49214,52 @@ if (document.querySelector('.custom-select-wrapper') !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_footer.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/_footer.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var footer = {
+  init: function init() {
+    window.addEventListener('load', footer.setup);
+  },
+  element: document.getElementsByTagName('footer'),
+  form: document.querySelector('.footer_contact_form'),
+  setup: function setup() {
+    if (footer.hasErrorsMessages()) {
+      footer.setViewport();
+    }
+  },
+  hasErrorsMessages: function hasErrorsMessages() {
+    var errors = false;
+    var fields = footer.form.querySelectorAll('.col-xs-10');
+    console.log(fields[0]);
+
+    for (var i = 0; i < fields.length && errors === false; i++) {
+      if (fields[i].querySelector('.invalid-feedback') !== null) {
+        errors = true;
+      }
+    }
+
+    if (errors) {
+      return true;
+    }
+
+    return false;
+  },
+  setViewport: function setViewport() {
+    window.scrollBy(0, footer.element[0].offsetTop);
+  }
+};
+
+if (document.querySelector('.footer') !== null) {
+  footer.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/_nav.js":
 /*!*****************************************!*\
   !*** ./resources/js/components/_nav.js ***!
@@ -49424,9 +49470,9 @@ if (register.select !== null) {
 /***/ }),
 
 /***/ 0:
-/*!*******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/sass/main.scss ***!
-  \*******************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49436,6 +49482,7 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
