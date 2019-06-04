@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 /* Ofertas */
 Route::get('/internship', 'OffersController@index')->name('offers');
-Route::get('/offers/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
+
+/* Job Description */
+Route::get('/internship/{offer}', ['uses' => 'OffersController@single'])->where('offer', '[0-9]+');
 
 /* Aprende Chino */
 Route::get('/learn', function() {
@@ -26,7 +28,7 @@ Route::get('/learn', function() {
 
 /* Universidad */
 Route::get('/university', function() {
-    return view('pages/university');
+    return view;
 });
 
 /* Why Us */

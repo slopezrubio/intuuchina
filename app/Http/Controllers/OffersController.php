@@ -16,7 +16,10 @@ class OffersController extends Controller
      */
     public function index()
     {
-        //
+        /*
+         * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
+         * por la fecha de creación.
+         */
         $offers = Offer::orderBy('created_at','DESC')->get();
 
         foreach ($offers as $offer) {
@@ -24,7 +27,7 @@ class OffersController extends Controller
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 
-        /* Datos que se van a entregar a la vista */
+        /* Datos adicionales que se van a entregar a la vista */
         $params = (object) array(
             'title' => 'Prácticas'
         );
@@ -158,5 +161,22 @@ class OffersController extends Controller
         if ($dateLimitWithoutRenewing <= $differenceFromNow) {
             Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
         }
+    }
+
+    /*
+     * Select the offer with the id passed as a parameter.
+     *
+     * @param string $id
+     */
+    public function single($id) {
+        $offer = Offer::find($id);
+
+        /* Datos adicionales que se van a entregar a la vista */
+        $params = (object) array(
+            'title' => strtoupper($offer->industry),
+            'subtitle' => $offer->title
+        );
+
+        return view(('pages/job-description'), compact('offer', 'params'));
     }
 }

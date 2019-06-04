@@ -6,5 +6,8 @@
         @else
             <h1 class="title-card-header">{{ $params->title }}</h1>
         @endif
+        @if( isset($params->subtitle) )
+            <h2>{{ $params->subtitle }}</h2>
+        @endif
     </div>
 </section>

@@ -9,6 +9,9 @@ use App\Rules\Captcha;
 
 class MailMessagesController extends Controller
 {
+    /*
+     * Fix: No secret provided (recaptcha) TODO
+     */
     public function send(Request $request) {
         $request->flash();
         $msg = $request->validate([

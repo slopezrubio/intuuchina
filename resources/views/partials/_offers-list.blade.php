@@ -14,7 +14,7 @@
                     @endif
                     <div class="offers_buttons">
                         <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="register">Inscribirse</a></button>
-                        <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/offers/{{ $offer->id }}">Detalles</a></button>
+                        <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">Detalles</a></button>
                     </div>
                 </div>
                 <div class="card-footer mb-2">
