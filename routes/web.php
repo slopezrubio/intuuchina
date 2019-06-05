@@ -19,7 +19,7 @@ Route::get('/', function () {
 Route::get('/internship', 'OffersController@index')->name('offers');
 
 /* Job Description */
-Route::get('/internship/{offer}', ['uses' => 'OffersController@single'])->where('offer', '[0-9]+');
+Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
 
 /* Aprende Chino */
 Route::get('/learn', function() {

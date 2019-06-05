@@ -888,15 +888,15 @@ footer {
 }
 
 .footer_web-map div:not(:first-of-type) {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .footer_web-map .footer_subtitle {
   text-transform: uppercase;
 }
 
-.footer_web-map div .web-map_list li {
-  padding-top: 0.5em;
+.footer_web-map div .web-map_list li a {
+  font-size: calc(0vw + 12px);
 }
 
 .footer_web-map_items {

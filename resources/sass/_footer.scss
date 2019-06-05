@@ -111,7 +111,7 @@ footer {
     flex-direction: column;
     margin-left: 0px;
     div:not(:first-of-type) {
-      margin-top: 2em;
+      margin-top: 1em;
     }
     .footer_subtitle {
       text-transform: uppercase;
@@ -119,7 +119,10 @@ footer {
     div {
       .web-map_list {
         li {
-          padding-top: 0.5em;
+          a {
+            $map: (642: 12, 984: 12);
+            font-size: minimosCuadrados($map);
+          }
         }
       }
     }
