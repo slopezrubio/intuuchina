@@ -49225,7 +49225,6 @@ var footer = {
   init: function init() {
     window.addEventListener('load', footer.setup);
   },
-  element: document.getElementsByTagName('footer'),
   form: document.querySelector('.footer_contact_form'),
   setup: function setup() {
     if (footer.hasErrorsMessages()) {
@@ -49235,10 +49234,9 @@ var footer = {
   hasErrorsMessages: function hasErrorsMessages() {
     var errors = false;
     var fields = footer.form.querySelectorAll('.col-xs-10');
-    console.log(fields[0]);
 
     for (var i = 0; i < fields.length && errors === false; i++) {
-      if (fields[i].querySelector('.invalid-feedback') !== null) {
+      if (fields[i].querySelector('.is-invalid') !== null) {
         errors = true;
       }
     }
@@ -49250,7 +49248,16 @@ var footer = {
     return false;
   },
   setViewport: function setViewport() {
-    window.scrollBy(0, footer.element[0].offsetTop);
+    /*
+     * Obtiene la diferencia de scroll entre la del usuario y la del formulario
+     * del pie de página.
+     */
+    var scrollToForm = footer.form.offsetTop - window.scrollY;
+    /*
+     * Realiza el scroll hasta el formulario de pie de página.
+     */
+
+    window.scrollBy(0, scrollToForm);
   }
 };
 
