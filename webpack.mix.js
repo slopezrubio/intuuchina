@@ -13,9 +13,12 @@ const mix = require('laravel-mix');
 mix.setPublicPath('public');
 mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     .js('resources/js/app.js', 'js/app.js')
+    .js('resources/js/components/general.js', 'js/app.js')
     .js('resources/js/components/_register.js', 'js/app.js')
     .js('resources/js/components/_nav.js', 'js/app.js')
+    .js('resources/js/components/_page-title.js', 'js/app.js')
     .js('resources/js/components/_offers.js', 'js/app.js')
+    .js('resources/js/components/_single-offer.js', 'js/app.js')
     .js('resources/js/components/_news.js', 'js/app.js')
     .js('resources/js/components/_filter-by.js', 'js/app.js')
     .js('resources/js/components/_footer.js', 'js/app.js');

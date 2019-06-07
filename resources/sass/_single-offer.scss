@@ -1,0 +1,23 @@
+main {
+  .readable_section {
+    padding: 0 1em;
+    margin-top: 1em;
+    &_title {
+      color: $primaryRed;
+      $map: (362: 22, 1400: 26);
+      font-size: minimosCuadrados($map);
+    }
+  }
+
+  .sendable_section {
+    &--fixed {
+      padding: 1.5em 1em;
+      position: fixed;
+      z-index: 1000;
+      width: 100%;
+      background: $neutralColor;
+      height: 94px;
+      top: 85%;
+    }
+  }
+}
