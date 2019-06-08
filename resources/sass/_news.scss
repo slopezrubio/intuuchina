@@ -34,7 +34,7 @@ main {
 
       .section_body {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         .note {
           a {
             display: inline-block;
@@ -130,6 +130,15 @@ main {
   .news {
     @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 71%)');
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+  }
+}
+
+@media #{$large-devices_secondary} {
+  .news_container {
+    .section_body {
+      padding-right: 10em;
+      padding-left: 10em;
+    }
   }
 }
 

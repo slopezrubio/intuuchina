@@ -1515,7 +1515,7 @@ main .news_container .section_title h2 {
 
 main .news_container .section_body {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 main .news_container .section_body .note a {
@@ -1613,6 +1613,13 @@ main .news_container .section_body .tv {
     -ms-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
     -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+  }
+}
+
+@media only screen and (min-width: 1340px) {
+  .news_container .section_body {
+    padding-right: 10em;
+    padding-left: 10em;
   }
 }
 
