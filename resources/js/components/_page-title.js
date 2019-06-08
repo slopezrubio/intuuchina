@@ -5,7 +5,9 @@ let pageTitle = {
     header: document.getElementsByTagName('header')[0],
     setup: () => {
         let currentPage = $(pageTitle.header).attr('id');
-        pageTitle.pages[currentPage]();
+        if (pageTitle.pages[currentPage] !== null) {
+            pageTitle.pages[currentPage]();
+        }
     },
     pages: {
         'job-description': function() {

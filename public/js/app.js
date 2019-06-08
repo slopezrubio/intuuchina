@@ -49391,7 +49391,10 @@ var pageTitle = {
   header: document.getElementsByTagName('header')[0],
   setup: function setup() {
     var currentPage = $(pageTitle.header).attr('id');
-    pageTitle.pages[currentPage]();
+
+    if (pageTitle.pages[currentPage] !== null) {
+      pageTitle.pages[currentPage]();
+    }
   },
   pages: {
     'job-description': function jobDescription() {
