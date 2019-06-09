@@ -1518,6 +1518,23 @@ main .news_container .section_body {
   justify-content: space-around;
 }
 
+main .news_container .section_body .note_window {
+  max-width: 450px;
+  overflow: hidden;
+}
+
+main .news_container .section_body .note_window .note_carrousel {
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+}
+
+main .news_container .section_body .note_window .note_carrousel .slider_note {
+  max-width: 450px;
+}
+
 main .news_container .section_body .note a {
   display: inline-block;
   padding: 0;

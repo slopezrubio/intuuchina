@@ -35,6 +35,19 @@ main {
       .section_body {
         display: flex;
         justify-content: space-around;
+        .note_window {
+          max-width: 450px;
+          overflow: hidden;
+          .note_carrousel {
+            transition:
+              transform 0.5s;
+            display: -webkit-inline-box;
+            display: -moz-inline-box;
+            .slider_note {
+              max-width: 450px;
+            }
+          }
+        }
         .note {
           a {
             display: inline-block;

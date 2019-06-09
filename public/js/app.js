@@ -49465,6 +49465,92 @@ if (register.select !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/sliders.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/sliders.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var sliders = {
+  currentSlide: 0,
+  carrousel: document.querySelector('.note_carrousel'),
+  pictureHolder: document.querySelector('.note_window'),
+  pictures: document.getElementsByClassName('slider_note'),
+  tvSliderWidth: 0,
+  tvLinks: document.querySelector('.tv').getElementsByTagName('a'),
+  init: function init(event) {
+    if (event.type !== 'resize') {
+      sliders.setup();
+    }
+
+    $(sliders.pictures).width(sliders.pictureHolder.clientWidth);
+    sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
+
+    if (event.type === 'resize') {
+      sliders.update();
+    }
+
+    sliders.setSize(sliders.pictureHolder, 'height', sliders.pictures[0].offsetHeight);
+  },
+  setup: function setup() {
+    sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = sliders.tvLinks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        element = _step.value;
+        element.addEventListener('click', function () {
+          var elementIndex = $(this).index();
+          sliders.moveTo(elementIndex);
+        });
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  },
+  update: function update() {
+    console.log(sliders.tvSliderWidth);
+    var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
+    sliders.setProperty(sliders.carrousel, 'transform', value);
+  },
+  moveTo: function moveTo(elementIndex) {
+    sliders.currentSlide = elementIndex + 1;
+    var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
+    sliders.setProperty(sliders.carrousel, 'transform', value);
+  },
+  getFirstChildWidth: function getFirstChildWidth(element) {
+    var indexFirstElement = 0;
+    return element[indexFirstElement].offsetWidth;
+  },
+  setProperty: function setProperty(element, property, value) {
+    element.style[property] = value;
+  },
+  getProperty: function getProperty(element, property) {
+    return element.style.getPropertyValue(property);
+  },
+  setSize: function setSize(element, type, value) {
+    element.style[type] = "".concat(value, "px");
+  }
+};
+$(document).ready(sliders.init);
+$(window).resize(sliders.init);
+
+/***/ }),
+
 /***/ "./resources/sass/main.scss":
 /*!**********************************!*\
   !*** ./resources/sass/main.scss ***!
@@ -49477,13 +49563,14 @@ if (register.select !== null) {
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
