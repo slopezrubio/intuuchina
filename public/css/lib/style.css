@@ -2021,6 +2021,26 @@ header.auth {
   font-size: calc(0.4105948047vw + 22.1172762305px);
 }
 
+main .readable_section {
+  padding: 0 1em;
+  margin-top: 1em;
+}
+
+main .readable_section_title {
+  color: #B71C1C;
+  font-size: calc(0.3853564547vw + 20.6050096339px);
+}
+
+main .sendable_section--fixed {
+  padding: 1.5em 1em;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  background: #d1d1d1;
+  height: 94px;
+  top: 85%;
+}
+
 .confirmation {
   background-image: url("/../../storage/images/confirmation-message.jpg");
   background-size: cover;

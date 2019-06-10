@@ -49377,6 +49377,42 @@ function scrollTo(target) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_page-title.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/_page-title.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var pageTitle = {
+  init: function init() {
+    pageTitle.setup();
+  },
+  header: document.getElementsByTagName('header')[0],
+  setup: function setup() {
+    var currentPage = $(pageTitle.header).attr('id');
+
+    if (pageTitle.pages[currentPage] !== null) {
+      pageTitle.pages[currentPage]();
+    }
+  },
+  pages: {
+    'job-description': function jobDescription() {
+      var picture = pageTitle.getDataContent(pageTitle.header);
+      pageTitle.header.style.setProperty('background-image', "url('".concat(picture, "')"));
+    }
+  },
+  getDataContent: function getDataContent(element) {
+    return $(element).attr('data-content');
+  }
+};
+
+if (document.getElementsByTagName('header') !== null) {
+  pageTitle.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/_register.js":
 /*!**********************************************!*\
   !*** ./resources/js/components/_register.js ***!
@@ -49465,6 +49501,7 @@ if (register.select !== null) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/components/sliders.js":
 /*!********************************************!*\
   !*** ./resources/js/components/sliders.js ***!
@@ -49548,6 +49585,27 @@ var sliders = {
 };
 $(document).ready(sliders.init);
 $(window).resize(sliders.init);
+=======
+/***/ "./resources/js/components/_single-offer.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/_single-offer.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js: Unexpected token (24:40)\n\n\u001b[0m \u001b[90m 22 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 23 | \u001b[39m    toggleFixedButton\u001b[33m:\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 24 | \u001b[39m        \u001b[36mif\u001b[39m (singleOffer\u001b[33m.\u001b[39mgetScrollY() \u001b[33m>=\u001b[39m )\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 | \u001b[39m    }\u001b[0m\n\u001b[0m \u001b[90m 26 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 | \u001b[39m\u001b[0m\n    at Parser.raise (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:3851:17)\n    at Parser.unexpected (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5167:16)\n    at Parser.parseExprAtom (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6328:20)\n    at Parser.parseExprSubscripts (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5914:23)\n    at Parser.parseMaybeUnary (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5894:21)\n    at Parser.parseExprOpBaseRightExpr (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5854:34)\n    at Parser.parseExprOpRightExpr (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5847:21)\n    at Parser.parseExprOp (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5826:27)\n    at Parser.parseExprOps (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5791:17)\n    at Parser.parseMaybeConditional (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5754:23)\n    at Parser.parseMaybeAssign (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5701:21)\n    at Parser.parseExpression (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5649:23)\n    at Parser.parseHeaderExpression (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7560:22)\n    at Parser.parseIfStatement (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7644:22)\n    at Parser.parseStatementContent (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7336:21)\n    at Parser.parseStatement (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7291:17)\n    at Parser.parseBlockOrModuleBlockBody (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7868:25)\n    at Parser.parseBlockBody (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7855:10)\n    at Parser.parseBlock (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:7839:10)\n    at Parser.parseFunctionBody (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6909:24)\n    at Parser.parseArrowExpression (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6851:10)\n    at Parser.parseParenAndDistinguishExpression (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6489:12)\n    at Parser.parseExprAtom (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6260:21)\n    at Parser.parseExprSubscripts (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5914:23)\n    at Parser.parseMaybeUnary (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5894:21)\n    at Parser.parseExprOps (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5781:23)\n    at Parser.parseMaybeConditional (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5754:23)\n    at Parser.parseMaybeAssign (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5701:21)\n    at Parser.parseObjectProperty (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6768:101)\n    at Parser.parseObjPropValue (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6793:101)\n    at Parser.parseObjectMember (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6717:10)\n    at Parser.parseObj (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6641:25)\n    at Parser.parseExprAtom (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:6274:21)\n    at Parser.parseExprSubscripts (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5914:23)\n    at Parser.parseMaybeUnary (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5894:21)\n    at Parser.parseExprOps (/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/node_modules/@babel/parser/lib/index.js:5781:23)");
+
+/***/ }),
+
+/***/ "./resources/js/components/general.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/general.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+>>>>>>> vista_jobDescription
 
 /***/ }),
 
@@ -49563,6 +49621,7 @@ $(window).resize(sliders.init);
 /***/ }),
 
 /***/ 0:
+<<<<<<< HEAD
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_offers.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -49578,6 +49637,25 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
+=======
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/general.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/general.js */"./resources/js/components/general.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+>>>>>>> vista_jobDescription
 
 
 /***/ })
