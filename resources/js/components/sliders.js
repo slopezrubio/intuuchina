@@ -7,6 +7,7 @@
     tvLinks: document.querySelector('.tv') !== null ? document.querySelector('.tv').getElementsByTagName('a') : null,
     init: (event) => {
         if (event.type !== 'resize') {
+            console.log("hola");
             sliders.setup();
         }
 
@@ -53,7 +54,7 @@
     }
 };
 
-if (document.querySelector('.note_carrousel' !== null)) {
+if (document.querySelector('.note_carrousel') !== null) {
     $(document).ready(sliders.init);
     $(window).resize(sliders.init);
 }

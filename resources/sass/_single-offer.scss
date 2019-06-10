@@ -17,7 +17,7 @@ main {
       width: 100%;
       background: $neutralColor;
       height: 94px;
-      top: 85%;
+      top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
     }
   }
 }

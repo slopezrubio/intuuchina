@@ -6,7 +6,7 @@ let pageTitle = {
     setup: () => {
         let currentPage = $(pageTitle.header).attr('id');
         if (pageTitle.pages[currentPage] !== null) {
-            if (pageTitle.pages[currentPage] !== null) {
+            if (pageTitle.pages[currentPage] !== undefined) {
                 pageTitle.pages[currentPage]();
             }
         }
