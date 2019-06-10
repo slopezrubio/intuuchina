@@ -21,7 +21,7 @@ let singleOffer = {
         return window.innerWidth;
     },
     toggleFixedButton: () => {
-        if (singleOffer.getScrollY() >= )
+        //if (singleOffer.getScrollY() >= );
     }
 };
 

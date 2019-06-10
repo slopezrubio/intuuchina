@@ -4,7 +4,7 @@
     pictureHolder: document.querySelector('.note_window'),
     pictures: document.getElementsByClassName('slider_note'),
     tvSliderWidth: 0,
-    tvLinks: document.querySelector('.tv').getElementsByTagName('a'),
+    tvLinks: document.querySelector('.tv') !== null ? document.querySelector('.tv').getElementsByTagName('a') : null,
     init: (event) => {
         if (event.type !== 'resize') {
             sliders.setup();
@@ -53,5 +53,7 @@
     }
 };
 
-$(document).ready(sliders.init);
-$(window).resize(sliders.init);
+if (document.querySelector('.note_carrousel' !== null)) {
+    $(document).ready(sliders.init);
+    $(window).resize(sliders.init);
+}
