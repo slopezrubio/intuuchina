@@ -49368,7 +49368,6 @@ function displayForm(event) {
 }
 
 function scrollTo(target) {
-  console.log(target);
   var $target = $(target);
   $("html, body").animate({
     'scrollTop': target.offset().top
@@ -49436,8 +49435,6 @@ var register = {
     domElement.setAttribute('aria-hidden', true);
   },
   checkFields: function checkFields() {
-    console.log(universityFieldset);
-
     if (register.industryFieldset) {
       register.hideElement(register.industryFieldset);
     }
@@ -49517,6 +49514,7 @@ var singleOffer = {
   currentViewport: window.innerWidth,
   currentScrollY: window.scrollY,
   setup: function setup() {
+    singleOffer.setImages();
     window.addEventListener('resize', function () {
       singleOffer.currentViewport = singleOffer.getViewport();
     });
@@ -49525,13 +49523,51 @@ var singleOffer = {
       singleOffer.toggleFixedButton();
     });
   },
+  setImages: function setImages() {
+    var picture = singleOffer.getDataContent(document.querySelector('.card_background-image'));
+    singleOffer.setProperty(document.querySelector('.card_background-image'), 'background-image', "url('".concat(picture, "')"));
+  },
   getScrollY: function getScrollY() {
     return window.scrollY;
   },
   getViewport: function getViewport() {
     return window.innerWidth;
   },
-  toggleFixedButton: function toggleFixedButton() {//if (singleOffer.getScrollY() >= );
+  getDataContent: function getDataContent(element) {
+    return $(element).attr('data-content');
+  },
+  setProperty: function setProperty(element, property, value) {
+    element.style.setProperty(property, value);
+  },
+  toggleFixedButton: function toggleFixedButton() {
+    var lastSection = $('main .readable_section').last();
+    var firstIndex = 0;
+    var position = lastSection[firstIndex].clientHeight + lastSection[firstIndex].offsetTop;
+
+    if (singleOffer.theViewportPassedOverHere(position)) {
+      if (document.querySelector('.sendable_section--fixed')) {
+        var applyNowButton = document.querySelector('.sendable_section--fixed');
+        $(applyNowButton).toggleClass('sendable_section--fixed');
+        $(applyNowButton).toggleClass('sendable_section');
+        position = applyNowButton.clientHeight * 2;
+        singleOffer.scrollTo(position);
+      }
+    } else {
+      if (document.querySelector('.sendable_section')) {
+        var _applyNowButton = document.querySelector('.sendable_section');
+
+        $(_applyNowButton).toggleClass('sendable_section');
+        $(_applyNowButton).toggleClass('sendable_section--fixed');
+      }
+    }
+  },
+  scrollTo: function scrollTo(position) {
+    $("html, body").animate({
+      'scrollTop': position
+    }, 500, 'swing');
+  },
+  theViewportPassedOverHere: function theViewportPassedOverHere(y) {
+    return window.pageYOffset + window.innerHeight >= y;
   }
 };
 
@@ -49557,7 +49593,6 @@ var sliders = {
   tvLinks: document.querySelector('.tv') !== null ? document.querySelector('.tv').getElementsByTagName('a') : null,
   init: function init(event) {
     if (event.type !== 'resize') {
-      console.log("hola");
       sliders.setup();
     }
 
@@ -49600,7 +49635,6 @@ var sliders = {
     }
   },
   update: function update() {
-    console.log(sliders.tvSliderWidth);
     var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
     sliders.setProperty(sliders.carrousel, 'transform', value);
   },

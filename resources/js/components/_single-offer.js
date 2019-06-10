@@ -5,6 +5,7 @@ let singleOffer = {
     currentViewport: window.innerWidth,
     currentScrollY: window.scrollY,
     setup: () => {
+        singleOffer.setImages();
         window.addEventListener('resize', function() {
             singleOffer.currentViewport = singleOffer.getViewport();
         });
@@ -14,14 +15,49 @@ let singleOffer = {
             singleOffer.toggleFixedButton();
         })
     },
+    setImages: function() {
+        let picture = singleOffer.getDataContent(document.querySelector('.card_background-image'));
+        singleOffer.setProperty(document.querySelector('.card_background-image'), 'background-image', `url('${picture}')`);
+    },
     getScrollY: () => {
         return window.scrollY;
     },
     getViewport: () => {
         return window.innerWidth;
     },
+    getDataContent: (element) => {
+        return $(element).attr('data-content');
+    },
+    setProperty: (element, property, value) => {
+        element.style.setProperty(property,value);
+    },
     toggleFixedButton: () => {
-        //if (singleOffer.getScrollY() >= );
+        let lastSection = ($('main .readable_section').last());
+        let firstIndex = 0;
+        let position = lastSection[firstIndex].clientHeight + lastSection[firstIndex].offsetTop;
+        if (singleOffer.theViewportPassedOverHere(position)) {
+            if (document.querySelector('.sendable_section--fixed')) {
+                let applyNowButton = document.querySelector('.sendable_section--fixed');
+                $(applyNowButton).toggleClass('sendable_section--fixed');
+                $(applyNowButton).toggleClass('sendable_section');
+                position = applyNowButton.clientHeight * 2;
+                singleOffer.scrollTo(position);
+            }
+        } else {
+            if (document.querySelector('.sendable_section')) {
+                let applyNowButton = document.querySelector('.sendable_section');
+                $(applyNowButton).toggleClass('sendable_section');
+                $(applyNowButton).toggleClass('sendable_section--fixed');
+            }
+        }
+    },
+    scrollTo: (position) => {
+        $("html, body").animate({
+            'scrollTop': position
+        }, 500, 'swing');
+    },
+    theViewportPassedOverHere: (y) => {
+        return window.pageYOffset + window.innerHeight >= y;
     }
 };
 

@@ -136,6 +136,11 @@ header#internship {
   background-image: url("/../../storage/images/practicass.jpg");
 }
 
+header#job-description {
+  border-bottom: none;
+  height: 27em;
+}
+
 /* Menú desplegado */
 
 @-webkit-keyframes easy {
@@ -2021,24 +2026,152 @@ header.auth {
   font-size: calc(0.4105948047vw + 22.1172762305px);
 }
 
+main .breadcumb_section ol {
+  background: #d1d1d1;
+  padding: 0;
+  display: flex;
+}
+
+main .breadcumb_section ol li {
+  padding: 0 1em;
+  list-style-type: none;
+  line-height: 52px;
+  background: #B71C1C;
+}
+
+main .breadcumb_section ol li a {
+  display: block;
+  color: white;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
 main .readable_section {
   padding: 0 1em;
-  margin-top: 1em;
+  margin-top: 2.2em;
 }
 
 main .readable_section_title {
   color: #B71C1C;
-  font-size: calc(0.3853564547vw + 20.6050096339px);
+  font-size: calc(0.3772697639vw + 20.7150811718px);
+  margin-bottom: 1.2em;
+}
+
+main .readable_section .card_background-image {
+  display: flex;
+  justify-content: flex-end;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 80%;
+  max-width: 500px;
+}
+
+main .readable_section .card_background-image_info {
+  width: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+}
+
+main .readable_section .card_background-image_info .card-title {
+  padding: 1em 0 1em 5px;
+  letter-spacing: 0.4em;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+main .readable_section .card_background-image_info .card-text {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 1em 0;
+}
+
+main .readable_section .card_background-image_info .card-text .month {
+  display: flex;
+  flex-direction: column;
+}
+
+main .readable_section .card_background-image_info .card-text .month .month_value {
+  font-size: calc(2.4896481554vw + 68.8743132304px);
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 320px) {
+  main .readable_section .card_background-image {
+    background-size: 185%;
+    padding-bottom: 40%;
+    background-position: 50% 100%;
+  }
+
+  main .readable_section .card_background-image_info {
+    width: 100%;
+  }
+
+  main .readable_section .card_background-image_info .card-title {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+
+  main .readable_section .card_background-image_info .card-text {
+    padding: 0.5em 0;
+  }
+
+  main .readable_section .card_background-image_info .card-text .month {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  main .readable_section .card_background-image_info .card-text .month .month_value {
+    font-size: 22px;
+    padding-right: 0.3em;
+  }
+}
+
+main .sendable_section {
+  padding: 1.5em 1em;
+  z-index: 1000;
+  width: 100%;
+  background: white;
+  height: 94px;
+  margin-top: 2.2em;
+  margin-bottom: 1em;
+  top: calc(100% - 84px);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+main .sendable_section .offers_buttons {
+  display: flex;
+}
+
+main .sendable_section .offers_buttons .cta {
+  max-width: 325px;
 }
 
 main .sendable_section--fixed {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
   padding: 1.5em 1em;
   position: fixed;
   z-index: 1000;
   width: 100%;
   background: #d1d1d1;
   height: 94px;
-  top: 85%;
+  top: calc(100% - 84px);
+}
+
+main .sendable_section--fixed .offers_buttons {
+  display: flex;
+}
+
+main .sendable_section--fixed .offers_buttons .cta {
+  max-width: 325px;
 }
 
 .confirmation {

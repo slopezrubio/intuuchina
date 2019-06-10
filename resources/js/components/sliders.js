@@ -7,7 +7,6 @@
     tvLinks: document.querySelector('.tv') !== null ? document.querySelector('.tv').getElementsByTagName('a') : null,
     init: (event) => {
         if (event.type !== 'resize') {
-            console.log("hola");
             sliders.setup();
         }
 
@@ -30,7 +29,6 @@
         }
     },
     update: function() {
-        console.log(sliders.tvSliderWidth);
         let value = `translateX(${sliders.tvSliderWidth * -sliders.currentSlide}px)`;
         sliders.setProperty(sliders.carrousel, 'transform', value);
     },

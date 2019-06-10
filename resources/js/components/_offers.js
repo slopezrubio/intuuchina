@@ -23,7 +23,6 @@ function displayForm(event) {
 }
 
 function scrollTo(target) {
-    console.log(target);
     var $target = $(target);
     $("html, body").animate({
         'scrollTop': target.offset().top

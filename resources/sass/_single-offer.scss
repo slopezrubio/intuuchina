@@ -1,16 +1,116 @@
 main {
+  .breadcumb_section {
+    ol {
+      background: $neutralColor;
+      padding: 0;
+      display: flex;
+      li {
+        padding: 0 1em;
+        list-style-type: none;
+        line-height: 52px;
+        background: $primaryRed;
+        a {
+          display: block;
+          color: $primaryWhite;
+          text-decoration: underline;
+          font-weight: 500;
+        }
+      }
+    }
+  }
   .readable_section {
     padding: 0 1em;
-    margin-top: 1em;
+    margin-top: 2.2em;
     &_title {
       color: $primaryRed;
-      $map: (362: 22, 1400: 26);
+      $map: (320: 22, 362: 22, 1400: 26);
       font-size: minimosCuadrados($map);
+      margin-bottom: 1.2em;
+    }
+
+    .card_background-image {
+      display: flex;
+      justify-content: flex-end;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 50% 80%;
+      max-width: 500px;
+      &_info {
+        width: 50%;
+        background: rgba(0,0,0, 0.4);
+        color: $primaryWhite;
+        text-align: center;
+        .card-title {
+          padding: 1em 0 1em 5px;
+          letter-spacing: .4em;
+          font-weight: 700;
+          margin-bottom: 0;
+        }
+
+        .card-text {
+          font-size: 16px;
+          display: flex;
+          flex-direction: column;
+          padding: 1em 0;
+          .month {
+            display: flex;
+            flex-direction: column;
+            .month_value {
+              $map: (475: 98, 338: 37, 500: 109, 1800: 109);
+              font-size: minimosCuadrados($map);
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    @media #{$small-devices} {
+      .card_background-image {
+        background-size: 185%;
+        padding-bottom: 40%;
+        background-position: 50% 100%;
+        &_info {
+          width: 100%;
+          .card-title {
+            padding-top: .5em;
+            padding-bottom: .5em;
+          }
+          .card-text {
+            padding: .5em 0;
+            .month {
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              .month_value {
+                font-size: 22px;
+                padding-right: .3em;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
   .sendable_section {
+    padding: 1.5em 1em;
+    z-index: 1000;
+    width: 100%;
+    background: $primaryWhite;
+    height: 94px;
+    margin-top: 2.2em;
+    margin-bottom: 1em;
+    top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
+    @include prefixed(transition, all .3s ease-in-out);
+    .offers_buttons {
+      display: flex;
+      .cta {
+        max-width: 325px;
+      }
+    }
     &--fixed {
+      @include prefixed(transition, all .3s ease-in-out);
       padding: 1.5em 1em;
       position: fixed;
       z-index: 1000;
@@ -18,6 +118,12 @@ main {
       background: $neutralColor;
       height: 94px;
       top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
+      .offers_buttons {
+        display: flex;
+        .cta {
+          max-width: 325px;
+        }
+      }
     }
   }
 }

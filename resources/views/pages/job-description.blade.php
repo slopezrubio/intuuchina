@@ -11,4 +11,7 @@
 
     {{-- Ficha de la oferta de empleo --}}
     @include('partials._single-offer')
+
+    {{--Elemento FOOTER--}}
+    @include('partials._footer')
 @endsection

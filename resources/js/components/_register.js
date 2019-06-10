@@ -12,7 +12,6 @@ let register = {
     domElement.setAttribute('aria-hidden', true)
   },
   checkFields: () => {
-    console.log(universityFieldset);
     if (register.industryFieldset) {
       register.hideElement(register.industryFieldset)
     }
