@@ -40,7 +40,7 @@ let singleOffer = {
                 let applyNowButton = document.querySelector('.sendable_section--fixed');
                 $(applyNowButton).toggleClass('sendable_section--fixed');
                 $(applyNowButton).toggleClass('sendable_section');
-                position = applyNowButton.clientHeight * 2;
+                position = window.scrollY + (applyNowButton.clientHeight * 2);
                 singleOffer.scrollTo(position);
             }
         } else {
@@ -52,8 +52,9 @@ let singleOffer = {
         }
     },
     scrollTo: (position) => {
-        $("html, body").animate({
-            'scrollTop': position
+
+        $("html").animate({
+            'scrollTop': position,
         }, 500, 'swing');
     },
     theViewportPassedOverHere: (y) => {
