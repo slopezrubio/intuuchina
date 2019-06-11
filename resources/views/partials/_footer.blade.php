@@ -117,7 +117,7 @@
                 <p>IntuuChina Copyright &copy; 2019 Todos los derechos reservados </p>
                 <span class="footer_documentation_signature">
                     <p>Made with love &hearts; by <a href="http://factoriaf5.org"></p>
-                    <img src="storage/images/logo_factoriaf5.png" alt="Logo de factoriaF5">
+                    <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
                 </span>
                 <p><a href="#">Politica de privacidad</a> | <a href="#">Terminos y condiciones</a></p>
             </div>
