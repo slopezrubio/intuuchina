@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 /* Ofertas */
 Route::get('/internship', 'OffersController@index')->name('offers');
+Route::get('/internship/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+');
 
 /* Job Description */
 Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+');

@@ -163,6 +163,11 @@ class OffersController extends Controller
         }
     }
 
+    public function filterBy($industry) {
+        $offers = Offer::where('industry', $industry)->orderBy('created_at', 'DESC')->get();
+        return view('pages/admin/offers', compact('offers'));
+    }
+
     /*
      * Select the offer with the id passed as a parameter.
      *
