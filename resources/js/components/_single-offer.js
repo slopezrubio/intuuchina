@@ -4,15 +4,17 @@ let singleOffer = {
     },
     currentViewport: window.innerWidth,
     currentScrollY: window.scrollY,
-    setup: () => {
+    setup: (event) => {
         singleOffer.setImages();
         window.addEventListener('resize', function() {
             singleOffer.currentViewport = singleOffer.getViewport();
         });
 
-        window.addEventListener('scroll', function() {
+        singleOffer.toggleFixedButton(event);
+
+        window.addEventListener('scroll', function(event) {
             singleOffer.currentScrollY = singleOffer.getScrollY();
-            singleOffer.toggleFixedButton();
+            singleOffer.toggleFixedButton(event);
         })
     },
     setImages: function() {
@@ -31,28 +33,31 @@ let singleOffer = {
     setProperty: (element, property, value) => {
         element.style.setProperty(property,value);
     },
-    toggleFixedButton: () => {
+    toggleFixedButton: (event) => {
         let lastSection = ($('main .readable_section').last());
         let firstIndex = 0;
         let position = lastSection[firstIndex].clientHeight + lastSection[firstIndex].offsetTop;
         if (singleOffer.theViewportPassedOverHere(position)) {
             if (document.querySelector('.sendable_section--fixed')) {
                 let applyNowButton = document.querySelector('.sendable_section--fixed');
-                $(applyNowButton).toggleClass('sendable_section--fixed');
-                $(applyNowButton).toggleClass('sendable_section');
-                position = window.scrollY + (applyNowButton.clientHeight * 2);
-                singleOffer.scrollTo(position);
+                singleOffer.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
+                if (event.type === 'scroll') {
+                    position = window.scrollY + (applyNowButton.clientHeight * 2);
+                    singleOffer.scrollTo(position);
+                }
             }
         } else {
             if (document.querySelector('.sendable_section')) {
                 let applyNowButton = document.querySelector('.sendable_section');
-                $(applyNowButton).toggleClass('sendable_section');
-                $(applyNowButton).toggleClass('sendable_section--fixed');
+                singleOffer.toggleClass(applyNowButton, 'sendable_section', 'sendable_section--fixed');
             }
         }
     },
+    toggleClass: (element, firstClassName, secondClassName) => {
+        $(element).toggleClass(firstClassName);
+        $(element).toggleClass(secondClassName);
+    },
     scrollTo: (position) => {
-
         $("html").animate({
             'scrollTop': position,
         }, 500, 'swing');

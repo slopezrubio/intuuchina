@@ -49513,14 +49513,15 @@ var singleOffer = {
   },
   currentViewport: window.innerWidth,
   currentScrollY: window.scrollY,
-  setup: function setup() {
+  setup: function setup(event) {
     singleOffer.setImages();
     window.addEventListener('resize', function () {
       singleOffer.currentViewport = singleOffer.getViewport();
     });
-    window.addEventListener('scroll', function () {
+    singleOffer.toggleFixedButton(event);
+    window.addEventListener('scroll', function (event) {
       singleOffer.currentScrollY = singleOffer.getScrollY();
-      singleOffer.toggleFixedButton();
+      singleOffer.toggleFixedButton(event);
     });
   },
   setImages: function setImages() {
@@ -49539,7 +49540,7 @@ var singleOffer = {
   setProperty: function setProperty(element, property, value) {
     element.style.setProperty(property, value);
   },
-  toggleFixedButton: function toggleFixedButton() {
+  toggleFixedButton: function toggleFixedButton(event) {
     var lastSection = $('main .readable_section').last();
     var firstIndex = 0;
     var position = lastSection[firstIndex].clientHeight + lastSection[firstIndex].offsetTop;
@@ -49547,19 +49548,24 @@ var singleOffer = {
     if (singleOffer.theViewportPassedOverHere(position)) {
       if (document.querySelector('.sendable_section--fixed')) {
         var applyNowButton = document.querySelector('.sendable_section--fixed');
-        $(applyNowButton).toggleClass('sendable_section--fixed');
-        $(applyNowButton).toggleClass('sendable_section');
-        position = window.scrollY + applyNowButton.clientHeight * 2;
-        singleOffer.scrollTo(position);
+        singleOffer.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
+
+        if (event.type === 'scroll') {
+          position = window.scrollY + applyNowButton.clientHeight * 2;
+          singleOffer.scrollTo(position);
+        }
       }
     } else {
       if (document.querySelector('.sendable_section')) {
         var _applyNowButton = document.querySelector('.sendable_section');
 
-        $(_applyNowButton).toggleClass('sendable_section');
-        $(_applyNowButton).toggleClass('sendable_section--fixed');
+        singleOffer.toggleClass(_applyNowButton, 'sendable_section', 'sendable_section--fixed');
       }
     }
+  },
+  toggleClass: function toggleClass(element, firstClassName, secondClassName) {
+    $(element).toggleClass(firstClassName);
+    $(element).toggleClass(secondClassName);
   },
   scrollTo: function scrollTo(position) {
     $("html").animate({
