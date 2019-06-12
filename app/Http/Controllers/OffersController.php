@@ -165,7 +165,8 @@ class OffersController extends Controller
 
     public function filterBy($industry) {
         $offers = Offer::where('industry', $industry)->orderBy('created_at', 'DESC')->get();
-        return view('pages/admin/offers', compact('offers'));
+
+        return view('partials/_offers-list', compact('offers', 'params'));
     }
 
     /*
