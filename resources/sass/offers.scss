@@ -83,6 +83,30 @@
       .card-title {
         color: $primaryDark;
         font-weight: 700;
+        position: relative;
+        &:after {
+          content: "";
+          position: absolute;
+          background: black;
+          height: 2px;
+          width: 100%;
+          left: 0px;
+          bottom: 0px;
+          @include prefixed(transform, translateX(-100%));
+          background: transparent;
+        }
+
+        &:hover:after {
+          @include prefixed(transform, translateX(0));
+          background: $primaryDark;
+          @include prefixed(transition, all ease-in-out 0.5s);
+        }
+
+        a {
+          color: $primaryDark;
+          line-height: 1.6;
+          display: block;
+        }
       }
 
       .card-body {

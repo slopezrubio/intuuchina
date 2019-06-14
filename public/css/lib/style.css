@@ -1907,6 +1907,40 @@ header.auth {
 .offers .card-group .card .card-title {
   color: black;
   font-weight: 700;
+  position: relative;
+}
+
+.offers .card-group .card .card-title:after {
+  content: "";
+  position: absolute;
+  background: black;
+  height: 2px;
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  background: transparent;
+}
+
+.offers .card-group .card .card-title:hover:after {
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  -o-transform: translateX(0);
+  background: black;
+  -webkit-transition: all ease-in-out 0.5s;
+  -moz-transition: all ease-in-out 0.5s;
+  -ms-transition: all ease-in-out 0.5s;
+  -o-transition: all ease-in-out 0.5s;
+}
+
+.offers .card-group .card .card-title a {
+  color: black;
+  line-height: 1.6;
+  display: block;
 }
 
 .offers .card-group .card .card-body .cta {

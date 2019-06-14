@@ -8,7 +8,7 @@
                     <div class="card-shutter">{{ $offer->industry }}</div>
                     <img src="{{ $offer->picture }}" alt="Offer card image" class="card-img-top">
                     <div class="card-body mb-2">
-                        <h5 class="card-title">{{ $offer->title }}</h5>
+                        <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
                         <p class="card-text location">{{ ucfirst($offer->location) }}</p>
                         @if($offer->duration > 1)
                             <p class="card-text duration">Estancia: {{ $offer->duration }} Months</p>
