@@ -16,16 +16,7 @@ class OffersController extends Controller
      */
     public function index()
     {
-        /*
-         * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
-         * por la fecha de creación.
-         */
-        $offers = Offer::orderBy('created_at','DESC')->get();
-
-        foreach ($offers as $offer) {
-            $this->renew($offer->id, $offer->created_at);
-            $offer->gone_by = $this->getDiffForHumans($offer->created_at);
-        }
+        $offers = $this->all();
 
         /* Datos adicionales que se van a entregar a la vista */
         $params = (object) array(
@@ -42,7 +33,16 @@ class OffersController extends Controller
      */
     public function admin()
     {
-        //
+        $offers = $this->all();
+
+        return view('pages/admin/offers', compact('offers'));
+    }
+
+    public function all() {
+        /*
+         * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
+         * por la fecha de creación.
+         */
         $offers = Offer::orderBy('created_at','DESC')->get();
 
         foreach ($offers as $offer) {
@@ -50,7 +50,7 @@ class OffersController extends Controller
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 
-        return view('pages/admin/offers', compact('offers'));
+        return $offers;
     }
 
     /**
@@ -163,14 +163,22 @@ class OffersController extends Controller
         }
     }
 
+    /*
+     * Select all the offers that matches with the name of the industry passed as an argument
+     * and send the partial view that comprises just the list of offers.
+     */
     public function filterBy($industry) {
-        $offers = Offer::where('industry', $industry)->orderBy('created_at', 'DESC')->get();
+        if ($industry !== 'all') {
+            $offers = Offer::where('industry', $industry)->orderBy('created_at', 'DESC')->get();
+            return view('partials/_offers-list', compact('offers', 'params'));
+        }
 
+        $offers = $this->all();
         return view('partials/_offers-list', compact('offers', 'params'));
     }
 
     /*
-     * Select the offer with the id passed as a parameter.
+     * Select the offer that matches the 'id' passed as a parameter.
      *
      * @param string $id
      */

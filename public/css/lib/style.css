@@ -1835,6 +1835,13 @@ header.auth {
   color: #B71C1C;
 }
 
+.offers .item_not_found {
+  text-align: center;
+  color: red;
+  font-weight: 700;
+  padding: 3em;
+}
+
 .offers .offers_list .card-body .location {
   text-transform: uppercase;
 }
@@ -1884,6 +1891,7 @@ header.auth {
   text-align: center;
   padding: 0 1em;
   font-size: calc(0.1438848921vw + 15.5151079137px);
+  z-index: 1;
 }
 
 .offers .card-group .card img {

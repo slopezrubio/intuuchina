@@ -8,6 +8,13 @@
     }
   }
 
+  .item_not_found {
+    text-align: center;
+    color: red;
+    font-weight: 700;
+    padding: 3em;
+  }
+
   .offers_list {
     .card-body {
       .location {
@@ -63,6 +70,7 @@
         padding: 0 1em;
         $map: (337: 16, 1032: 17);
         font-size: minimosCuadrados($map);
+        z-index: 1;
       }
 
       img {
