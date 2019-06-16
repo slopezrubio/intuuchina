@@ -44,7 +44,12 @@ class OffersController extends Controller
          * por la fecha de creación.
          */
         $offers = Offer::orderBy('created_at','DESC')->get();
+        $offers = $this->setDaysRenewed($offers);
 
+        return $offers;
+    }
+
+    public function setDaysRenewed($offers) {
         foreach ($offers as $offer) {
             $this->renew($offer->id, $offer->created_at);
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
@@ -170,6 +175,7 @@ class OffersController extends Controller
     public function filterBy($industry) {
         if ($industry !== 'all') {
             $offers = Offer::where('industry', $industry)->orderBy('created_at', 'DESC')->get();
+            $offers = $this->setDaysRenewed($offers);
             return view('partials/_offers-list', compact('offers', 'params'));
         }
 
