@@ -171,11 +171,46 @@ footer {
     .invalid-feedback {
       display: block;
     }
+    .checkbox_input {
+      flex-direction: row;
+      justify-content: space-between;
+      label {
+        width: 80%;
+      }
+      .switch {
+        position: relative;
+        margin-top: 2em;
+        width: 28px;
+        height: 28px;
+        border: solid 1px $primaryWhite;
+      }
 
-    div {
-      display: flex;
-      justify-content: space-around;
-      flex-direction: column;
+      input[type^=checkbox] {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .checkbox_slider {
+        position: absolute;
+        cursor: pointer;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+      }
+
+      input:checked + .checkbox_slider {
+        background: $primaryRed;
+      }
+
+      input:checked + .checkbox_slider:after {
+        font-family: 'Font Awesome 5 Free';
+        content: "\f00c";
+      }
+    }
+
+    .switch_input {
       .switch {
         position: relative;
         display: block;
@@ -211,7 +246,7 @@ footer {
           &:before {
             position: absolute;
             content:"";
-            width:26px;
+            width: 26px;
             height: 26px;
             background: $primaryWhite;
             left: 4px;
@@ -243,6 +278,12 @@ footer {
         width: 0;
         height: 0;
       }
+    }
+
+    div {
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
 
       label:first-of-type {
         padding-top: 2em;

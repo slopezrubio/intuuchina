@@ -22,6 +22,9 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/solid.min.css') }}">
+    <script src="{{ asset('fontawesome/js/fontawesome.min.js') }}"></script>
 
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">

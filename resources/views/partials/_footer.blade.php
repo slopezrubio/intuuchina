@@ -66,11 +66,11 @@
 {{--                        </span>--}}
 {{--                    @endif--}}
 {{--                </div>--}}
-                <div class="col-xs-10 switch_input">
+                <div class="col-xs-10 checkbox_input">
                     <label aria-label="terms">Acepto los <a href="#">términos</a> y <a href="#">condiciones</a> así como también el <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" target="_blank">Reglamento General de Protección de datos</a></label>
                     <label for="terms" class="switch">
                         <input id="terms" name="terms" type="checkbox">
-                        <span class="checkbox_slider checkbox_slider--rounded"></span>
+                        <i class="checkbox_slider checkbox_slider--rounded"></i>
                     </label>
                     @if ($errors->has('terms'))
                         <span class="invalid-feedback" role="alert">

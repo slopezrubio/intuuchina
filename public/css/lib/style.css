@@ -947,13 +947,48 @@ footer {
   display: block;
 }
 
-.footer_contact_form div {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
+.footer_contact_form .checkbox_input {
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.footer_contact_form div .switch {
+.footer_contact_form .checkbox_input label {
+  width: 80%;
+}
+
+.footer_contact_form .checkbox_input .switch {
+  position: relative;
+  margin-top: 2em;
+  width: 28px;
+  height: 28px;
+  border: solid 1px white;
+}
+
+.footer_contact_form .checkbox_input input[type^=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.footer_contact_form .checkbox_input .checkbox_slider {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.footer_contact_form .checkbox_input input:checked + .checkbox_slider {
+  background: #B71C1C;
+}
+
+.footer_contact_form .checkbox_input input:checked + .checkbox_slider:after {
+  font-family: "Font Awesome 5 Free";
+  content: "\F00C";
+}
+
+.footer_contact_form .switch_input .switch {
   position: relative;
   display: block;
   width: 60px;
@@ -961,7 +996,7 @@ footer {
   margin-top: 10px;
 }
 
-.footer_contact_form div .switch .checkbox_slider {
+.footer_contact_form .switch_input .switch .checkbox_slider {
   position: absolute;
   cursor: pointer;
   right: 0;
@@ -975,11 +1010,11 @@ footer {
   -o-transition: .4s;
 }
 
-.footer_contact_form div .switch .checkbox_slider--rounded {
+.footer_contact_form .switch_input .switch .checkbox_slider--rounded {
   border-radius: 34px;
 }
 
-.footer_contact_form div .switch .checkbox_slider--rounded::after {
+.footer_contact_form .switch_input .switch .checkbox_slider--rounded::after {
   content: "NO";
   color: black;
   top: 8px;
@@ -989,12 +1024,12 @@ footer {
   left: 33px;
 }
 
-.footer_contact_form div .switch .checkbox_slider--rounded:before {
+.footer_contact_form .switch_input .switch .checkbox_slider--rounded:before {
   border-radius: 50%;
   z-index: 10;
 }
 
-.footer_contact_form div .switch .checkbox_slider:before {
+.footer_contact_form .switch_input .switch .checkbox_slider:before {
   position: absolute;
   content: "";
   width: 26px;
@@ -1008,31 +1043,37 @@ footer {
   -o-transition: .4s;
 }
 
-.footer_contact_form div input:focus + .checkbox_slider {
+.footer_contact_form .switch_input input:focus + .checkbox_slider {
   box-shadow: 0 0 1px #B71C1C;
 }
 
-.footer_contact_form div input:checked + .checkbox_slider {
+.footer_contact_form .switch_input input:checked + .checkbox_slider {
   background: #B71C1C;
 }
 
-.footer_contact_form div input:checked + .checkbox_slider:before {
+.footer_contact_form .switch_input input:checked + .checkbox_slider:before {
   -webkit-transform: translateX(26px);
   -moz-transform: translateX(26px);
   -ms-transform: translateX(26px);
   -o-transform: translateX(26px);
 }
 
-.footer_contact_form div input:checked + .checkbox_slider:after {
+.footer_contact_form .switch_input input:checked + .checkbox_slider:after {
   content: "YES";
   color: #d1d1d1;
   left: 4px;
 }
 
-.footer_contact_form div input[type^=checkbox] {
+.footer_contact_form .switch_input input[type^=checkbox] {
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+.footer_contact_form div {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
 }
 
 .footer_contact_form div label:first-of-type {
