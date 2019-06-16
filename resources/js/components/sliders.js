@@ -21,10 +21,14 @@
     },
     setup: function() {
         sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
-        for (element of sliders.tvLinks) {
-            element.addEventListener('click', function() {
+
+        // Compatibility with all the browsers
+        for (let i = 0; i < sliders.tvLinks.length; i++) {
+            sliders.tvLinks[i].addEventListener('click', function(e) {
+                e.preventDefault();
                 let elementIndex = $(this).index();
                 sliders.moveTo(elementIndex);
+                sliders.noScroll();
             })
         }
     },
@@ -49,6 +53,9 @@
     },
     setSize: (element, type, value) => {
         element.style[type] = `${value}px`;
+    },
+    noScroll: () => {
+        window.scrollBy(0, 0);
     }
 };
 

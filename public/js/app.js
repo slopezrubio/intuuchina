@@ -49676,32 +49676,15 @@ var sliders = {
     sliders.setSize(sliders.pictureHolder, 'height', sliders.pictures[0].offsetHeight);
   },
   setup: function setup() {
-    sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures); // Compatibility with all the browsers
 
-    try {
-      for (var _iterator = sliders.tvLinks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        element = _step.value;
-        element.addEventListener('click', function () {
-          var elementIndex = $(this).index();
-          sliders.moveTo(elementIndex);
-        });
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+    for (var i = 0; i < sliders.tvLinks.length; i++) {
+      sliders.tvLinks[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var elementIndex = $(this).index();
+        sliders.moveTo(elementIndex);
+        sliders.noScroll();
+      });
     }
   },
   update: function update() {
@@ -49725,6 +49708,9 @@ var sliders = {
   },
   setSize: function setSize(element, type, value) {
     element.style[type] = "".concat(value, "px");
+  },
+  noScroll: function noScroll() {
+    window.scrollBy(0, 0);
   }
 };
 

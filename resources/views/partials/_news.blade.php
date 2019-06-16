@@ -28,7 +28,7 @@
                         </div>
                         <div class="slider_note">
                             <!-- noticias -->
-                            <a href="#" target="_blank"><img src="{{asset('storage/images/el-mundo.png')}}" alt="Logo de el diario de El Mundo"
+                            <a href="#" target="_blank"><img src="{{asset('storage/images/elmundo.png')}}" alt="Logo de el diario de El Mundo"
                                                              width="100px"></a>
                             <div class="note_quote">
                                 <p>"En solo 9 meses una candidata de IntuuChina paso de ser becaria en un departamento de ventas, a dirigir ese departamento"</p>
@@ -50,7 +50,7 @@
                                                              width="100px"></a>
                             <div class="note_quote">
                                 <p>"En tan solo 4 meses desde que llegue a China encontre un trabajo como account manager ... Creo que ha sido la mejor decision que he tomado"</p>
-                                <p class="author"><strong>I. MOUNT</strong><br>01/12/2015</p>
+                                <p class="author"><strong>I. MOUNT</strong><br/>01/12/2015</p>
                             </div>
                         </div>
                         <div class="slider_note">
@@ -59,7 +59,7 @@
                                                              width="100px"></a>
                             <div class="note_quote">
                                 <p>"Prefiero trabajar fuera, esta mejor remunerado, es mas facil encontrar una oportunidad con Intuuchina y es una experiencia fantastica"</p>
-                                <p class="author">>19/07/2015</p>
+                                <p class="author">19/07/2015</p>
                             </div>
                         </div>
                         <div class="slider_note">
