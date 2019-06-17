@@ -160,13 +160,13 @@ class OffersController extends Controller
      *
      * @param string $date
      */
-    public function renew($offer, $date) {
-        $differenceFromNow = Carbon::parse($date)->floatDiffInMonths(Carbon::now());
-        $dateLimitWithoutRenewing = 2;
-        if ($dateLimitWithoutRenewing <= $differenceFromNow) {
-            Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-        }
-    }
+    // public function renew($offer, $date) {
+    //     $differenceFromNow = Carbon::parse($date)->floatDiffInMonths(Carbon::now());
+    //     $dateLimitWithoutRenewing = 2;
+    //     if ($dateLimitWithoutRenewing <= $differenceFromNow) {
+    //         Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+    //     }
+    //}
 
     /*
      * Select all the offers that matches with the name of the industry passed as an argument
