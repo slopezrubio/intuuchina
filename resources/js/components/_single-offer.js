@@ -1,3 +1,5 @@
+import dom from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/dom';
+
 let singleOffer = {
     init: () => {
         window.addEventListener('load', singleOffer.setup);
@@ -49,13 +51,9 @@ let singleOffer = {
         } else {
             if (document.querySelector('.sendable_section')) {
                 let applyNowButton = document.querySelector('.sendable_section');
-                singleOffer.toggleClass(applyNowButton, 'sendable_section', 'sendable_section--fixed');
+                dom.toggleClass(applyNowButton, 'sendable_section', 'sendable_section--fixed');
             }
         }
-    },
-    toggleClass: (element, firstClassName, secondClassName) => {
-        $(element).toggleClass(firstClassName);
-        $(element).toggleClass(secondClassName);
     },
     scrollTo: (position) => {
         $("html").animate({

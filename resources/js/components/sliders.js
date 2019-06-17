@@ -1,4 +1,6 @@
- let sliders = {
+import dom from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/dom';
+
+let sliders = {
     currentSlide: 0,
     carrousel: document.querySelector('.note_carrousel'),
     pictureHolder: document.querySelector('.note_window'),
@@ -34,22 +36,16 @@
     },
     update: function() {
         let value = `translateX(${sliders.tvSliderWidth * -sliders.currentSlide}px)`;
-        sliders.setProperty(sliders.carrousel, 'transform', value);
+        dom.setProperty(sliders.carrousel, 'transform', value);
     },
     moveTo: function(elementIndex) {
         sliders.currentSlide = elementIndex + 1;
         let value = `translateX(${sliders.tvSliderWidth * -sliders.currentSlide}px)`;
-        sliders.setProperty(sliders.carrousel, 'transform', value);
+        dom.setProperty(sliders.carrousel, 'transform', value);
     },
     getFirstChildWidth: function(element) {
         let indexFirstElement = 0;
         return element[indexFirstElement].offsetWidth;
-    },
-    setProperty: function(element, property, value) {
-        element.style[property] = value;
-    },
-    getProperty: function(element, property) {
-        return element.style.getPropertyValue(property);
     },
     setSize: (element, type, value) => {
         element.style[type] = `${value}px`;

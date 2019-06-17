@@ -985,6 +985,7 @@ footer {
 
 .footer_contact_form .checkbox_input input:checked + .checkbox_slider:after {
   font-family: "Font Awesome 5 Free";
+  font-size: 30px;
   content: "\F00C";
 }
 
@@ -1015,9 +1016,10 @@ footer {
 }
 
 .footer_contact_form .switch_input .switch .checkbox_slider--rounded::after {
+  font-family: "Montserrat", sans-serif;
   content: "NO";
   color: black;
-  top: 8px;
+  top: 12px;
   position: absolute;
   font-size: 0.8em;
   z-index: 1;
@@ -1059,9 +1061,11 @@ footer {
 }
 
 .footer_contact_form .switch_input input:checked + .checkbox_slider:after {
+  font-family: "Montserrat", sans-serif;
   content: "YES";
   color: #d1d1d1;
   left: 4px;
+  top: 12px;
 }
 
 .footer_contact_form .switch_input input[type^=checkbox] {
