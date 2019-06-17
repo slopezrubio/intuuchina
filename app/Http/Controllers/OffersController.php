@@ -23,7 +23,7 @@ class OffersController extends Controller
         $offers = Offer::orderBy('created_at','DESC')->get();
 
         foreach ($offers as $offer) {
-            $this->renew($offer->id, $offer->created_at);
+            // $this->renew($offer->id, $offer->created_at);
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 
@@ -155,13 +155,13 @@ class OffersController extends Controller
      *
      * @param string $date
      */
-    public function renew($offer, $date) {
-        $differenceFromNow = Carbon::parse($date)->floatDiffInMonths(Carbon::now());
-        $dateLimitWithoutRenewing = 2;
-        if ($dateLimitWithoutRenewing <= $differenceFromNow) {
-            Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-        }
-    }
+    // public function renew($offer, $date) {
+    //     $differenceFromNow = Carbon::parse($date)->floatDiffInMonths(Carbon::now());
+    //     $dateLimitWithoutRenewing = 2;
+    //     if ($dateLimitWithoutRenewing <= $differenceFromNow) {
+    //         Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+    //     }
+    //}
 
     /*
      * Select the offer with the id passed as a parameter.
