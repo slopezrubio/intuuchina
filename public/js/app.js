@@ -49218,17 +49218,48 @@ if (document.querySelector('.custom-select-wrapper') !== null) {
 /*!********************************************!*\
   !*** ./resources/js/components/_footer.js ***!
   \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resources/js/main/breakpoints */ "./resources/js/main/breakpoints.js");
+/* harmony import */ var _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resources/js/main/dom */ "./resources/js/main/dom.js");
+
 
 var footer = {
   init: function init() {
     window.addEventListener('load', footer.setup);
+    window.addEventListener('resize', function () {
+      footer.setSwitch();
+    });
   },
   form: document.querySelector('.footer_contact_form'),
   setup: function setup() {
     if (footer.hasErrorsMessages()) {
       footer.setViewport();
+    }
+
+    footer.setSwitch();
+  },
+  getScreenSize: function getScreenSize() {
+    var screenSize = [];
+    screenSize.push(window.innerWidth, window.innerHeight);
+    return screenSize;
+  },
+  setSwitch: function setSwitch() {
+    var switchInput = document.querySelector('.switch_input') !== null ? document.querySelector('.switch_input') : document.querySelector('.checkbox_input');
+
+    if (footer.getScreenSize()[0] > _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices) {
+      if (document.querySelector('.checkbox_input') === null) {
+        _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(switchInput, 'switch_input', 'checkbox_input');
+      }
+    }
+
+    if (footer.getScreenSize()[0] <= _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices) {
+      if (document.querySelector('.switch_input') === null) {
+        _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(switchInput, 'switch_input', 'checkbox_input');
+      }
     }
   },
   hasErrorsMessages: function hasErrorsMessages() {
@@ -49290,8 +49321,12 @@ function displayNav(event) {
 /*!******************************************!*\
   !*** ./resources/js/components/_news.js ***!
   \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resources/js/main/breakpoints */ "./resources/js/main/breakpoints.js");
 
 var news = {
   init: function init() {
@@ -49303,16 +49338,6 @@ var news = {
   },
   polygon: document.querySelector('.news'),
   currentBreakpoint: null,
-  breakpointsHeights: {
-    smallDevices: 136,
-    mediumDevices: 226,
-    largeDevices: 100
-  },
-  breakpoints: {
-    smallDevices: [100, 680],
-    mediumDevices: [681, 992],
-    largeDevices: [993]
-  },
   setup: function setup() {
     news.currentBreakpoint = news.getBreakpoint();
     news.wrapBackground();
@@ -49320,15 +49345,15 @@ var news = {
   getBreakpoint: function getBreakpoint() {
     var currentWidth = window.innerWidth;
     var breakpointKey = 'largeDevices';
-    Object.keys(news.breakpoints).map(function (key, index) {
-      if (news.breakpoints[key][1] > currentWidth && news.breakpoints[key][0] < currentWidth) {
+    Object.keys(_media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths).map(function (key, index) {
+      if (_media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths[key][1] > currentWidth && _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths[key][0] < currentWidth) {
         breakpointKey = key;
       }
     });
     return breakpointKey;
   },
   wrapBackground: function wrapBackground() {
-    var toResize = news.breakpointsHeights[news.currentBreakpoint] + news.polygon.clientHeight;
+    var toResize = _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].heights[news.currentBreakpoint] + news.polygon.clientHeight;
     news.polygon.style.height = toResize + 'px';
   }
 };
@@ -49336,6 +49361,8 @@ var news = {
 if (news.polygon !== null) {
   news.init();
 }
+
+/* harmony default export */ __webpack_exports__["default"] = (news);
 
 /***/ }),
 
@@ -49568,8 +49595,12 @@ if (register.select !== null) {
 /*!**************************************************!*\
   !*** ./resources/js/components/_single-offer.js ***!
   \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resources/js/main/dom */ "./resources/js/main/dom.js");
 
 var singleOffer = {
   init: function init() {
@@ -49623,13 +49654,9 @@ var singleOffer = {
       if (document.querySelector('.sendable_section')) {
         var _applyNowButton = document.querySelector('.sendable_section');
 
-        singleOffer.toggleClass(_applyNowButton, 'sendable_section', 'sendable_section--fixed');
+        _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleClass(_applyNowButton, 'sendable_section', 'sendable_section--fixed');
       }
     }
-  },
-  toggleClass: function toggleClass(element, firstClassName, secondClassName) {
-    $(element).toggleClass(firstClassName);
-    $(element).toggleClass(secondClassName);
   },
   scrollTo: function scrollTo(position) {
     $("html").animate({
@@ -49651,8 +49678,12 @@ if (document.querySelector('#job-description') !== null) {
 /*!********************************************!*\
   !*** ./resources/js/components/sliders.js ***!
   \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./resources/js/main/dom */ "./resources/js/main/dom.js");
 
 var sliders = {
   currentSlide: 0,
@@ -49689,22 +49720,16 @@ var sliders = {
   },
   update: function update() {
     var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
-    sliders.setProperty(sliders.carrousel, 'transform', value);
+    _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(sliders.carrousel, 'transform', value);
   },
   moveTo: function moveTo(elementIndex) {
     sliders.currentSlide = elementIndex + 1;
     var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
-    sliders.setProperty(sliders.carrousel, 'transform', value);
+    _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(sliders.carrousel, 'transform', value);
   },
   getFirstChildWidth: function getFirstChildWidth(element) {
     var indexFirstElement = 0;
     return element[indexFirstElement].offsetWidth;
-  },
-  setProperty: function setProperty(element, property, value) {
-    element.style[property] = value;
-  },
-  getProperty: function getProperty(element, property) {
-    return element.style.getPropertyValue(property);
   },
   setSize: function setSize(element, type, value) {
     element.style[type] = "".concat(value, "px");
@@ -49718,6 +49743,56 @@ if (document.querySelector('.note_carrousel') !== null) {
   $(document).ready(sliders.init);
   $(window).resize(sliders.init);
 }
+
+/***/ }),
+
+/***/ "./resources/js/main/breakpoints.js":
+/*!******************************************!*\
+  !*** ./resources/js/main/breakpoints.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var breakpoints = {
+  heights: {
+    smallDevices: 136,
+    mediumDevices: 226,
+    largeDevices: 100
+  },
+  widths: {
+    smallDevices: [100, 680],
+    mediumDevices: [681, 992],
+    largeDevices: [993]
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (breakpoints);
+
+/***/ }),
+
+/***/ "./resources/js/main/dom.js":
+/*!**********************************!*\
+  !*** ./resources/js/main/dom.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var dom = {
+  setProperty: function setProperty(element, property, value) {
+    element.style[property] = value;
+  },
+  getProperty: function getProperty(element, property) {
+    return element.style.getPropertyValue(property);
+  },
+  toggleClass: function toggleClass(element, firstClassName, secondClassName) {
+    $(element).toggleClass(firstClassName);
+    $(element).toggleClass(secondClassName);
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (dom);
 
 /***/ }),
 
@@ -49739,18 +49814,18 @@ if (document.querySelector('.note_carrousel') !== null) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
-module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
 
 
 /***/ })

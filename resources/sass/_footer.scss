@@ -206,6 +206,7 @@ footer {
 
       input:checked + .checkbox_slider:after {
         font-family: 'Font Awesome 5 Free';
+        font-size: 30px;
         content: "\f00c";
       }
     }
@@ -230,9 +231,10 @@ footer {
             border-radius: 34px;
           }
           &--rounded::after {
+            font-family: 'Montserrat', sans-serif;
             content: "NO";
             color: $primaryDark;
-            top: 8px;
+            top: 12px;
             position: absolute;
             font-size: 0.8em;
             z-index: 1;
@@ -268,9 +270,11 @@ footer {
       }
 
       input:checked + .checkbox_slider:after {
+        font-family: 'Montserrat', sans-serif;
         content: "YES";
         color: $neutralColor;
         left: 4px;
+        top: 12px;
       }
 
       input[type^=checkbox] {

@@ -1,11 +1,40 @@
+import breakpoints from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/breakpoints';
+import dom from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/dom';
+
 let footer = {
     init: function() {
         window.addEventListener('load', footer.setup);
+        window.addEventListener('resize', function() {
+            footer.setSwitch();
+        });
     },
     form: document.querySelector('.footer_contact_form'),
     setup: () => {
         if (footer.hasErrorsMessages()) {
             footer.setViewport();
+        }
+        footer.setSwitch();
+    },
+    getScreenSize: () => {
+        let screenSize = [];
+        screenSize.push(window.innerWidth, window.innerHeight);
+        return screenSize;
+    },
+    setSwitch: () => {
+        let switchInput = document.querySelector('.switch_input') !== null
+            ? document.querySelector('.switch_input')
+            : document.querySelector('.checkbox_input');
+
+        if (footer.getScreenSize()[0] > breakpoints.widths.largeDevices) {
+            if (document.querySelector('.checkbox_input') === null) {
+                dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
+            }
+        }
+
+        if (footer.getScreenSize()[0] <= breakpoints.widths.largeDevices) {
+            if (document.querySelector('.switch_input') === null) {
+                dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
+            }
         }
     },
     hasErrorsMessages: function() {
