@@ -51,7 +51,6 @@ class OffersController extends Controller
 
     public function setDaysRenewed($offers) {
         foreach ($offers as $offer) {
-            $this->renew($offer->id, $offer->created_at);
             $offer->gone_by = $this->getDiffForHumans($offer->created_at);
         }
 

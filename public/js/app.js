@@ -49643,7 +49643,7 @@ var singleOffer = {
     if (singleOffer.theViewportPassedOverHere(position)) {
       if (document.querySelector('.sendable_section--fixed')) {
         var applyNowButton = document.querySelector('.sendable_section--fixed');
-        singleOffer.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
+        _media_meinsusseichhornchen_DATOS_Salva_Proyectos_Apache_intuuchina_resources_js_main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
 
         if (event.type === 'scroll') {
           position = window.scrollY + applyNowButton.clientHeight * 2;

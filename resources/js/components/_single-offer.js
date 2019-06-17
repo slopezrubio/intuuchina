@@ -42,7 +42,7 @@ let singleOffer = {
         if (singleOffer.theViewportPassedOverHere(position)) {
             if (document.querySelector('.sendable_section--fixed')) {
                 let applyNowButton = document.querySelector('.sendable_section--fixed');
-                singleOffer.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
+                dom.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
                 if (event.type === 'scroll') {
                     position = window.scrollY + (applyNowButton.clientHeight * 2);
                     singleOffer.scrollTo(position);
