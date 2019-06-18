@@ -44,15 +44,15 @@
                 <div class="footer_title">
                     <h3>Contact us!</h3>
                 </div>
-                <div class="col-xs-10 contact_form_input">
+                <div class="col-xs-10 text_input">
                     <label for="name">Nombre</label>
                     <input type="text" name="name" id="name" placeholder="{{ $errors->has('name') ? $errors->first('name') : 'No valen números: e.j. Marta99, Tiana23...' }}" class="{{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}">
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-10 text_input">
                     <label for="email">Correo</label>
                     <input type="text" name="email" id="email" placeholder="{{ $errors->has('email') ? $errors->first('email') : 'e.j. confucio@confucio.es' }}" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}">
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-10 text_input">
                     <label for="subject">Asunto</label>
                     <input type="text" name="subject" placeholder="{{ $errors->has('subject') ? $errors->first('subject') : 'Escribe aqui tu consulta' }}" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}" value="{{ old('subject') }}">
                 </div>

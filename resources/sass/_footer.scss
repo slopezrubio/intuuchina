@@ -5,7 +5,7 @@ footer {
       &_header {
         display: grid;
         grid-template-rows: 1fr;
-        grid-template-columns: 2fr 2fr 1fr;
+        grid-template-columns: 1fr 2fr 1fr;
         grid-column-gap: 5%;
       }
 
@@ -26,12 +26,30 @@ footer {
           height: 130px;
         }
 
+        .text_input {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: baseline;
+          input {
+            width: 85%;
+            padding-bottom: 5px;
+          }
+        }
+
         .switch_input {
           display: grid;
           grid-template-columns: 60% auto;
           justify-content: space-between;
           .switch {
             margin-top: 2em;
+          }
+        }
+
+        div:last-of-type {
+          flex-direction: row;
+          justify-content: flex-start;
+          .footer_submit {
+            margin-right: 2em;
           }
         }
       }
@@ -48,6 +66,13 @@ footer {
       &_documentation {
         flex-direction: row;
         justify-content: space-between;
+        &_signature {
+          display: flex;
+          align-items: first baseline;
+          a {
+            margin-left: .5em;
+          }
+        }
       }
     }
   }
@@ -98,11 +123,12 @@ footer {
 }
 
 .footer {
-  $map: (321: 16, 454: 16, 1553: 12);
+  $map: (321: 16, 454: 16, 990: 12, 1553: 12);
   font-size: minimosCuadrados($map);
   color: $primaryWhite;
   a {
-    font-size: 1em;
+    $map: (321: 12, 454: 12, 990: 12, 1553: 12);
+    font-size: minimosCuadrados($map);
   }
 
   .is-invalid {
@@ -321,16 +347,19 @@ footer {
         cursor: pointer;
         padding: 10px 0;
         margin-top: 45px;
-        width: 40%;
+        width: 30%;
         background: $tertiaryRed;
         border: none;
         @include fade();
         border-radius: 34px;
       }
+    }
 
-      &:last-of-type {
-        flex-direction: row;
-        justify-content: space-between;
+    & > div:last-of-type {
+      flex-direction: row;
+      justify-content: flex-start;
+      .footer_submit {
+        margin-right: 1.5em;
       }
     }
   }

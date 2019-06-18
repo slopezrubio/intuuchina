@@ -794,7 +794,7 @@ footer {
   footer .footer_header {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     grid-column-gap: 5%;
   }
 
@@ -812,6 +812,17 @@ footer {
     height: 130px;
   }
 
+  footer .footer_contact_form .text_input {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  footer .footer_contact_form .text_input input {
+    width: 85%;
+    padding-bottom: 5px;
+  }
+
   footer .footer_contact_form .switch_input {
     display: grid;
     grid-template-columns: 60% auto;
@@ -820,6 +831,15 @@ footer {
 
   footer .footer_contact_form .switch_input .switch {
     margin-top: 2em;
+  }
+
+  footer .footer_contact_form div:last-of-type {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  footer .footer_contact_form div:last-of-type .footer_submit {
+    margin-right: 2em;
   }
 
   footer .footer_social-media .footer_sublist {
@@ -833,6 +853,15 @@ footer {
   footer .footer_documentation {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  footer .footer_documentation_signature {
+    display: flex;
+    align-items: first baseline;
+  }
+
+  footer .footer_documentation_signature a {
+    margin-left: 0.5em;
   }
 }
 
@@ -877,12 +906,12 @@ footer {
 }
 
 .footer {
-  font-size: calc(-0.3398808886vw + 17.3041423621px);
+  font-size: calc(-0.3726871736vw + 17.091440105px);
   color: white;
 }
 
 .footer a {
-  font-size: 1em;
+  font-size: calc(0vw + 12px);
 }
 
 .footer .is-invalid::placeholder,
@@ -1121,7 +1150,7 @@ footer {
   cursor: pointer;
   padding: 10px 0;
   margin-top: 45px;
-  width: 40%;
+  width: 30%;
   background: #E57373;
   border: none;
   display: inline-block;
@@ -1153,9 +1182,13 @@ footer {
   color: white;
 }
 
-.footer_contact_form div:last-of-type {
+.footer_contact_form > div:last-of-type {
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.footer_contact_form > div:last-of-type .footer_submit {
+  margin-right: 1.5em;
 }
 
 .footer_social-media i {
