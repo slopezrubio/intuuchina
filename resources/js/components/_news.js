@@ -1,4 +1,4 @@
-import breakpoints from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/breakpoints';
+import breakpoints from '../main/breakpoints';
 
 let news = {
     init: () => {

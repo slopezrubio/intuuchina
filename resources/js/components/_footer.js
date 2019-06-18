@@ -1,5 +1,5 @@
-import breakpoints from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/breakpoints';
-import dom from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/dom';
+import breakpoints from '../main/breakpoints';
+import dom from '../main/dom';
 
 let footer = {
     init: function() {

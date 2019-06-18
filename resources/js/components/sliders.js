@@ -1,4 +1,4 @@
-import dom from '/media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/main/dom';
+import dom from '../main/dom';
 
 let sliders = {
     currentSlide: 0,
