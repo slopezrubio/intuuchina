@@ -35,7 +35,7 @@ class OffersController extends Controller
     {
         $offers = $this->all();
 
-        return view('pages/admin/offers', compact('offers'));
+        return view('pages/admin/offers', compact('admin.offers'));
     }
 
     public function all() {

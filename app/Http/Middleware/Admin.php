@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth as Auth;
 
 class Admin
 {
@@ -15,10 +16,22 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->type !== 'admin') {
+        if (!$this->isAdmin($request)) {
             return redirect('home');
         }
 
         return $next($request);
+    }
+
+    private function isGuest() {
+        return Auth::guest();
+    }
+
+    private function isAdmin($request) {
+        if (!$this->isGuest()) {
+            if ($request->user()) {
+                $request->user()->type === 'admin' ? true : false;
+            }
+        }
     }
 }
