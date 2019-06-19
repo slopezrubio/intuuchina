@@ -1618,10 +1618,18 @@ main .news_container .section_body .note_window .note_carrousel .slider_note {
   max-width: 450px;
 }
 
+main .news_container .section_body .note_window .note_carrousel .slider_note a img {
+  width: 70px;
+}
+
 main .news_container .section_body .note a {
   display: inline-block;
   padding: 0;
   margin-bottom: 1em;
+}
+
+main .news_container .section_body .note_quote {
+  margin-top: 1em;
 }
 
 main .news_container .section_body .note_quote .author {

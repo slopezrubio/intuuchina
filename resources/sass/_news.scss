@@ -45,6 +45,11 @@ main {
             display: -moz-inline-box;
             .slider_note {
               max-width: 450px;
+              a {
+                img {
+                  width: 70px;
+                }
+              }
             }
           }
         }
@@ -56,6 +61,7 @@ main {
           }
 
           &_quote {
+            margin-top: 1em;
             .author {
               display: block;
             }

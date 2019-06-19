@@ -14,7 +14,7 @@
                                                                                                        width="100px"></a>
                             <div class="note_quote">
                                 <p>"Las estadisticas confirman que IntuuChina dio en el clavo: Han logrado colocar a 290 personas de 46 nacionalidades ... El mayor porcentaje de exito (78%) se da entre quienes llegan a China con intencion de quedarse"</p>
-                                <p class="author"><strong>ZIGOR ALDAMA</strong><br>26/10/2014</p>
+                                <p class="author"><strong>Z.ALDAMA</strong><br>26/10/2014</p>
                             </div>
                         </div>
                         <div class="slider_note">
@@ -23,7 +23,6 @@
                                                                                                        width="100px"></a>
                             <div class="note_quote">
                                 <p>"Las compañias Chinas estan contratando talento extranjero que les ayude a internacionalizarse"</p>
-                                <p class="author"><strong>M. MUCHA</strong><br>26/10/2014</p>
                             </div>
                         </div>
                         <div class="slider_note">
@@ -32,7 +31,7 @@
                                                              width="100px"></a>
                             <div class="note_quote">
                                 <p>"En solo 9 meses una candidata de IntuuChina paso de ser becaria en un departamento de ventas, a dirigir ese departamento"</p>
-                                <p class="author"><strong>M. MUCHA</strong><br>26/10/2014</p>
+                                <p class="author"><strong>CONFUCIO</strong><br>26/10/2014</p>
                             </div>
                         </div>
                         <div class="slider_note">
