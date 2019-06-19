@@ -17,9 +17,11 @@
             </div>
         </div>
     </section>
-    <section class="sendable_section">
-        <div class="offers_buttons">
-            <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="register">Inscribirse</a></button>
-        </div>
-    </section>
+    @guest
+        <section class="sendable_section">
+            <div class="offers_buttons">
+                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="{{ route('register') }}">Inscribirse</a></button>
+            </div>
+        </section>
+    @endguest
 </main>

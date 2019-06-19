@@ -3,10 +3,10 @@
     <div class="navbar">
         <div class="navbar_menu">
             @auth()
-                <a class="logo" href="{{ url('/') }}"><img src="storage/images/logo.png"></a>
+                <a class="logo" href="{{ url('/') }}"><img src="{{ asset('storage/images/logo.png') }}"></a>
             @endauth
             @guest()
-                    <a class="logo" href="{{ url('/') }}"><img src="../storage/images/logo.png"></a>
+                    <a class="logo" href="{{ url('/') }}"><img src="{{ asset('storage/images/logo.png') }}"></a>
             @endguest
             <button class="toggleMenu"><i class="fas fa-bars" ></i></button>
         </div>

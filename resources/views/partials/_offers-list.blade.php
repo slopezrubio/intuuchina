@@ -10,11 +10,7 @@
                     <div class="card-body mb-2">
                         <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
                         <p class="card-text location">{{ ucfirst($offer->location) }}</p>
-                        @if($offer->duration > 1)
-                            <p class="card-text duration">Estancia: {{ $offer->duration }} Months</p>
-                        @else
-                            <p class="card-text duration">Estancia: {{ $offer->duration }} Month</p>
-                        @endif
+                            <p class="card-text duration">Staying: {{ $offer->duration }} {{ $offer->duration > 1 ? 'Months' : 'Month' }}</p>
                         <div class="offers_buttons">
                             <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="register">Inscribirse</a></button>
                             <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">Detalles</a></button>
