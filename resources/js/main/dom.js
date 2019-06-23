@@ -8,6 +8,12 @@ let dom = {
     toggleClass: (element, firstClassName, secondClassName) => {
         $(element).toggleClass(firstClassName);
         $(element).toggleClass(secondClassName);
+    },
+    toggleSingleClass: (element, className) => {
+        $(element).toggleClass(className);
+    },
+    expandToViewport: (element) => {
+        $(element).width(document.body.clientWidth);
     }
 };
 

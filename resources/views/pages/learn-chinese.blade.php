@@ -1,19 +1,12 @@
 @extends('layouts.master')
 
 @section('content')
-    <header>
-        <div class="img">
-            {{--Elemento NAV--}}
-            @include('partials._nav')
+    <header id="learn-chinese">
+        {{--Elemento NAV--}}
+        @include('partials._nav')
 
-            {{--Elemento SLIDER--}}
-            @include('partials._page-title')
-
-            <div class="box">
-                <h1>Aprende <strong>Chino</strong></h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit laboriosam unde.</p>
-            </div>
-        </div>
+        {{--Elemento SLIDER--}}
+        @include('partials._page-title')
     </header>
 
     <main>

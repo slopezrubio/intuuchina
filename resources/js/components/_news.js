@@ -30,7 +30,6 @@ let news = {
     }
 };
 
-
 if (news.polygon !== null) {
     news.init();
 }

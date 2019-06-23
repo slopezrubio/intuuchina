@@ -49185,6 +49185,43 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/_chinese-courses.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/_chinese-courses.js ***!
+  \*****************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+
+
+var chineseCourses = {
+  init: function init() {
+    window.addEventListener('load', chineseCourses.setup);
+    window.addEventListener('resize', chineseCourses.setup);
+  },
+  courses: document.querySelectorAll('.description-base'),
+  coursesHolder: document.querySelector('.course-descriptions'),
+  setup: function setup() {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.coursesHolder);
+    chineseCourses.setSizeCourses();
+  },
+  setSizeCourses: function setSizeCourses() {
+    for (var i = 0; i < chineseCourses.courses.length; i++) {
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.courses[i]);
+    }
+  }
+};
+
+if (document.querySelector('.course-descriptions') !== null) {
+  chineseCourses.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/_filter-by.js":
 /*!***********************************************!*\
   !*** ./resources/js/components/_filter-by.js ***!
@@ -49685,7 +49722,7 @@ if (document.querySelector('#job-description') !== null) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
 
-var sliders = {
+var press = {
   currentSlide: 0,
   carrousel: document.querySelector('.note_carrousel'),
   pictureHolder: document.querySelector('.note_window'),
@@ -49694,38 +49731,38 @@ var sliders = {
   tvLinks: document.querySelector('.tv') !== null ? document.querySelector('.tv').getElementsByTagName('a') : null,
   init: function init(event) {
     if (event.type !== 'resize') {
-      sliders.setup();
+      press.setup();
     }
 
-    $(sliders.pictures).width(sliders.pictureHolder.clientWidth);
-    sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
+    $(press.pictures).width(press.pictureHolder.clientWidth);
+    press.tvSliderWidth = press.getFirstChildWidth(press.pictures);
 
     if (event.type === 'resize') {
-      sliders.update();
+      press.update();
     }
 
-    sliders.setSize(sliders.pictureHolder, 'height', sliders.pictures[0].offsetHeight);
+    press.setSize(press.pictureHolder, 'height', press.pictures[0].offsetHeight);
   },
   setup: function setup() {
-    sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures); // Compatibility with all the browsers
+    press.tvSliderWidth = press.getFirstChildWidth(press.pictures); // Compatibility with all the browsers
 
-    for (var i = 0; i < sliders.tvLinks.length; i++) {
-      sliders.tvLinks[i].addEventListener('click', function (e) {
+    for (var i = 0; i < press.tvLinks.length; i++) {
+      press.tvLinks[i].addEventListener('click', function (e) {
         e.preventDefault();
         var elementIndex = $(this).index();
-        sliders.moveTo(elementIndex);
-        sliders.noScroll();
+        press.moveTo(elementIndex);
+        press.noScroll();
       });
     }
   },
   update: function update() {
-    var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(sliders.carrousel, 'transform', value);
+    var value = "translateX(".concat(press.tvSliderWidth * -press.currentSlide, "px)");
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(press.carrousel, 'transform', value);
   },
   moveTo: function moveTo(elementIndex) {
-    sliders.currentSlide = elementIndex + 1;
-    var value = "translateX(".concat(sliders.tvSliderWidth * -sliders.currentSlide, "px)");
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(sliders.carrousel, 'transform', value);
+    press.currentSlide = elementIndex + 1;
+    var value = "translateX(".concat(press.tvSliderWidth * -press.currentSlide, "px)");
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(press.carrousel, 'transform', value);
   },
   getFirstChildWidth: function getFirstChildWidth(element) {
     var indexFirstElement = 0;
@@ -49738,10 +49775,69 @@ var sliders = {
     window.scrollBy(0, 0);
   }
 };
+var courses = {
+  currentSlide: 0,
+  carrousel: document.querySelector('.description-container'),
+  pictureHolder: document.querySelector('.course-descriptions'),
+  pictures: document.getElementsByClassName('description-base'),
+  courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
+  init: function init(event) {
+    if (event.type !== 'resize') {
+      courses.setup();
+    }
+
+    $(courses.pictures).width(courses.pictureHolder.clientWidth);
+    courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
+    /*if (event.type === 'resize') {
+        courses.update();
+    }*/
+  },
+  setup: function setup() {
+    courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures); // Compatibility with all the browsers
+
+    for (var i = 0; i < courses.courseLinks.length; i++) {
+      courses.courseLinks[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var elementIndex = $(this).index();
+        courses.moveTo(elementIndex);
+        courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+        courses.changeSliderBackground[elementIndex](courses.carrousel);
+        courses.changeSliderBackground[elementIndex](document.querySelector('.description-options'));
+      });
+    }
+  },
+  toggleControllers: function toggleControllers(firstController, secondController) {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(firstController, 'selected');
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(secondController, 'selected');
+  },
+  changeSliderBackground: [function (element) {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#000000');
+  }, function (element) {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#B71C1C');
+  }],
+  setSize: function setSize(element, type, value) {
+    element.style[type] = "".concat(value, "px");
+  },
+  courseSliderWidth: 0,
+  getFirstChildWidth: function getFirstChildWidth(element) {
+    var indexFirstElement = 0;
+    return element[indexFirstElement].offsetWidth;
+  },
+  moveTo: function moveTo(elementIndex) {
+    courses.currentSlide = elementIndex;
+    var value = "translateX(".concat(courses.courseSliderWidth * -courses.currentSlide, "px)");
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
+  }
+};
 
 if (document.querySelector('.note_carrousel') !== null) {
-  $(document).ready(sliders.init);
-  $(window).resize(sliders.init);
+  $(document).ready(press.init);
+  $(window).resize(press.init);
+}
+
+if (document.querySelector('.course-descriptions') !== null) {
+  $(document).ready(courses.init);
+  $(window).resize(courses.init);
 }
 
 /***/ }),
@@ -49790,6 +49886,12 @@ var dom = {
   toggleClass: function toggleClass(element, firstClassName, secondClassName) {
     $(element).toggleClass(firstClassName);
     $(element).toggleClass(secondClassName);
+  },
+  toggleSingleClass: function toggleSingleClass(element, className) {
+    $(element).toggleClass(className);
+  },
+  expandToViewport: function expandToViewport(element) {
+    $(element).width(document.body.clientWidth);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (dom);
@@ -49808,9 +49910,9 @@ var dom = {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49823,6 +49925,7 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");

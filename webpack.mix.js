@@ -21,5 +21,6 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     .js('resources/js/components/_offers-list.js', 'js/app.js')
     .js('resources/js/components/_single-offer.js', 'js/app.js')
     .js('resources/js/components/_news.js', 'js/app.js')
+    .js('resources/js/components/_chinese-courses.js', 'js/app.js')
     .js('resources/js/components/_filter-by.js', 'js/app.js')
     .js('resources/js/components/_footer.js', 'js/app.js');

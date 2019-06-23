@@ -24,7 +24,10 @@ Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0
 
 /* Aprende Chino */
 Route::get('/learn', function() {
-    return view('pages/learn-chinese');
+    $params = (object) array(
+        'title' => "Aprende Chino",
+    );
+    return view('pages/learn-chinese', compact('params'));
 });
 
 /* Universidad */

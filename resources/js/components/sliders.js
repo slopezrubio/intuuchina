@@ -1,6 +1,6 @@
 import dom from '../main/dom';
 
-let sliders = {
+let press = {
     currentSlide: 0,
     carrousel: document.querySelector('.note_carrousel'),
     pictureHolder: document.querySelector('.note_window'),
@@ -9,39 +9,39 @@ let sliders = {
     tvLinks: document.querySelector('.tv') !== null ? document.querySelector('.tv').getElementsByTagName('a') : null,
     init: (event) => {
         if (event.type !== 'resize') {
-            sliders.setup();
+            press.setup();
         }
 
-        $(sliders.pictures).width(sliders.pictureHolder.clientWidth);
-        sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
+        $(press.pictures).width(press.pictureHolder.clientWidth);
+        press.tvSliderWidth = press.getFirstChildWidth(press.pictures);
 
         if (event.type === 'resize') {
-            sliders.update();
+            press.update();
         }
 
-        sliders.setSize(sliders.pictureHolder, 'height', sliders.pictures[0].offsetHeight);
+        press.setSize(press.pictureHolder, 'height', press.pictures[0].offsetHeight);
     },
     setup: function() {
-        sliders.tvSliderWidth = sliders.getFirstChildWidth(sliders.pictures);
+        press.tvSliderWidth = press.getFirstChildWidth(press.pictures);
 
         // Compatibility with all the browsers
-        for (let i = 0; i < sliders.tvLinks.length; i++) {
-            sliders.tvLinks[i].addEventListener('click', function(e) {
+        for (let i = 0; i < press.tvLinks.length; i++) {
+            press.tvLinks[i].addEventListener('click', function(e) {
                 e.preventDefault();
                 let elementIndex = $(this).index();
-                sliders.moveTo(elementIndex);
-                sliders.noScroll();
+                press.moveTo(elementIndex);
+                press.noScroll();
             })
         }
     },
     update: function() {
-        let value = `translateX(${sliders.tvSliderWidth * -sliders.currentSlide}px)`;
-        dom.setProperty(sliders.carrousel, 'transform', value);
+        let value = `translateX(${press.tvSliderWidth * -press.currentSlide}px)`;
+        dom.setProperty(press.carrousel, 'transform', value);
     },
     moveTo: function(elementIndex) {
-        sliders.currentSlide = elementIndex + 1;
-        let value = `translateX(${sliders.tvSliderWidth * -sliders.currentSlide}px)`;
-        dom.setProperty(sliders.carrousel, 'transform', value);
+        press.currentSlide = elementIndex + 1;
+        let value = `translateX(${press.tvSliderWidth * -press.currentSlide}px)`;
+        dom.setProperty(press.carrousel, 'transform', value);
     },
     getFirstChildWidth: function(element) {
         let indexFirstElement = 0;
@@ -55,7 +55,73 @@ let sliders = {
     }
 };
 
+let courses = {
+    currentSlide: 0,
+    carrousel: document.querySelector('.description-container'),
+    pictureHolder: document.querySelector('.course-descriptions'),
+    pictures: document.getElementsByClassName('description-base'),
+    courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
+    init: (event) => {
+        if (event.type !== 'resize') {
+            courses.setup();
+        }
+
+        $(courses.pictures).width(courses.pictureHolder.clientWidth);
+        courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
+
+        /*if (event.type === 'resize') {
+            courses.update();
+        }*/
+
+    },
+    setup: function() {
+        courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
+
+        // Compatibility with all the browsers
+        for (let i = 0; i < courses.courseLinks.length; i++) {
+            courses.courseLinks[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                let elementIndex = $(this).index();
+                courses.moveTo(elementIndex);
+                courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+                courses.changeSliderBackground[elementIndex](courses.carrousel);
+                courses.changeSliderBackground[elementIndex](document.querySelector('.description-options'));
+            })
+        }
+    },
+    toggleControllers: (firstController, secondController) => {
+        dom.toggleSingleClass(firstController, 'selected');
+        dom.toggleSingleClass(secondController, 'selected');
+    },
+    changeSliderBackground: [
+        (element) => {
+            dom.setProperty(element, 'background','#000000');
+        },
+        (element) => {
+            dom.setProperty(element, 'background','#B71C1C');
+        }
+    ],
+    setSize: (element, type, value) => {
+        element.style[type] = `${value}px`;
+    },
+    courseSliderWidth: 0,
+    getFirstChildWidth: function(element) {
+        let indexFirstElement = 0;
+        return element[indexFirstElement].offsetWidth;
+    },
+    moveTo: function(elementIndex) {
+        courses.currentSlide = elementIndex;
+        let value = `translateX(${courses.courseSliderWidth * -courses.currentSlide}px)`;
+        dom.setProperty(courses.carrousel, 'transform', value);
+    },
+};
+
 if (document.querySelector('.note_carrousel') !== null) {
-    $(document).ready(sliders.init);
-    $(window).resize(sliders.init);
+    $(document).ready(press.init);
+    $(window).resize(press.init);
+}
+
+if (document.querySelector('.course-descriptions') !== null) {
+    $(document).ready(courses.init);
+    $(window).resize(courses.init);
 }
