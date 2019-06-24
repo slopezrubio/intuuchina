@@ -1,4 +1,5 @@
 import dom from '../main/dom';
+import breakpoints from "../main/breakpoints";
 
 let press = {
     currentSlide: 0,
@@ -66,28 +67,55 @@ let courses = {
             courses.setup();
         }
 
-        $(courses.pictures).width(courses.pictureHolder.clientWidth);
+        if (breakpoints.widths.largeDevices[0] > window.innerWidth) {
+            $(courses.pictures).width(courses.pictureHolder.clientWidth);
+        }
+
         courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
 
-        /*if (event.type === 'resize') {
-            courses.update();
-        }*/
+        if (event.type === 'resize') {
+            //courses.update();
+            //document.querySelector('.description-options').clientWidth;
+        }
 
     },
     setup: function() {
         courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
 
-        // Compatibility with all the browsers
-        for (let i = 0; i < courses.courseLinks.length; i++) {
-            courses.courseLinks[i].addEventListener('click', function(e) {
-                e.preventDefault();
-                let elementIndex = $(this).index();
-                courses.moveTo(elementIndex);
-                courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
-                courses.changeSliderBackground[elementIndex](courses.carrousel);
-                courses.changeSliderBackground[elementIndex](document.querySelector('.description-options'));
-            })
+        if (!breakpoints.isLargeDevice()) {
+            // Compatibility with all the browsers
+            for (let i = 0; i < courses.courseLinks.length; i++) {
+                courses.courseLinks[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let elementIndex = $(this).index();
+                    courses.moveTo(elementIndex);
+                    courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+                    courses.changeSliderBackground[elementIndex](courses.carrousel);
+                })
+            }
+        } else {
+            for (let i = 0; i < courses.courseLinks.length; i++) {
+                courses.resetSize(courses.pictures[i]);
+            }
+
+            courses.setDesktopSliders[courses.checkSelectedController()]();
         }
+    },
+    resetSize: (element) => {
+        dom.setProperty(element, 'width', '');
+    },
+    setDesktopSliders: {
+        first: () => {
+            dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
+            dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
+        },
+        second: () => {
+            dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
+            dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+        }
+    },
+    checkSelectedController: () => {
+        return $('.selected').is(':last-child') ? 'second' : 'first';
     },
     toggleControllers: (firstController, secondController) => {
         dom.toggleSingleClass(firstController, 'selected');

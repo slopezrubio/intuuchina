@@ -39,16 +39,21 @@
 
 .course-descriptions {
   background: $primaryDark;
+  position: relative;
   .description-container {
     display: -webkit-inline-box;
     @include prefixed(transition, all ease-in-out .5s);
     .description-base {
       box-sizing: border-box;
       color: $white;
+      padding-bottom: 2em;
+      p {
+        margin-bottom: 3em;
+      }
       & > * {
         padding: 1em 2em;
       }
-      .description-header{
+      .description-header {
         display: flex;
         flex-direction: column;
         align-content: center;
@@ -121,16 +126,19 @@
       }
     }
   }
+
   .description-options {
+    left: 0%;
+    bottom: 30px;
+    width: 100%;
     @include prefixed(display, flex);
-    @include prefixed(transition, all ease-in-out .5s);
+    @include prefixed(justify-content, center);
+    position: absolute;
     color: $primaryWhite;
     font-weight: 700;
-    justify-content: space-evenly;
     a {
       padding: .5em 1em;
       @include prefixed(border-radius, 25px);
-      margin-bottom: 2em;
       $map: (320: 16, 996: 12);
       font-size: 1em;
       &:hover,
@@ -141,8 +149,13 @@
         color: $primaryWhite;
       }
     }
+
+    a:last-of-type {
+      margin-left: 1.5em;
+    }
   }
 }
+
 .course-information {
   width: 100%;
   @include prefixed(display, flex);
@@ -172,4 +185,67 @@
   background-position-y: 30%;
   @include prefixed(filter, greyscale(100%));
   transition: all 0.8s ease;
+}
+
+@media #{$large-devices} {
+  .course-descriptions {
+    overflow: hidden;
+    .description-container {
+      display: flex;
+      .right-slide, .left-slide {
+        width: 80%;
+      }
+
+      .left-slide, left-slide--none {
+        background: $primaryDark;
+      }
+
+      .right-slide, .right-slide--none {
+        background: $primaryRed;
+      }
+
+      .right-slide--none, .left-slide--none {
+        width: 20%;
+        position: relative;
+        z-index: 0;
+        @include prefixed(display, flex);
+        @include prefixed(align-items, center);
+      }
+      .right-slide--none {
+        .description-header {
+          .cta {
+            display: none;
+          }
+        }
+        p {
+          display: none;
+        }
+
+        &:before {
+          content: "";
+          width: 379px;
+          background: $primaryRed;
+          height: 379px;
+          position: absolute;
+          @include prefixed(transform, rotate(45deg));
+          z-index: -1;
+          top: -10px;
+          left: -102px;
+          border-radius: 25px;
+          border-left: 50px solid $primaryRed;
+        }
+
+        &:after {
+          content: "\f100";
+          position: absolute;
+          color: white;
+          font-size: 80px;
+          left: -148px;
+          top: 34%;
+          font-weight: 900;
+          font-family: "Font Awesome 5 Free";
+        }
+      }
+    }
+  }
 }

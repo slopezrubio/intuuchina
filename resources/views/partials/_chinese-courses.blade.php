@@ -2,7 +2,7 @@
     <div class="description-container">
         <div class="description-base">
             <div class="description-header">
-                <h2 id="presencial" onclick="toggleDescription()">CURSO PRESENCIAL <span>EN CHINA</span></h2>
+                <h2 id="presencial" onclick="toggleDescription()">Curso presencial <span>en China</span></h2>
                 <a class="cta" href="#course-information">Más Info</a>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
@@ -12,7 +12,7 @@
         </div>
         <div class="description-base">
             <div class="description-header">
-                <h2 id="online" course-title" onclick="toggleDescription()">CURSO<span> ONLINE</span></h2>
+                <h2 id="online" course-title" onclick="toggleDescription()">Curso<span> Online</span></h2>
                 <a class="cta" href="#course-information">Más Info</a>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
@@ -22,8 +22,8 @@
         </div>
     </div>
     <div class="description-options">
-        <a class="selected" href="#"><span>PRESENCIAL</span></a>
-        <a href="#"><apan>ONLINE</apan></a>
+        <a class="selected" href="#"><span>Presencial</span></a>
+        <a href="#"><span>Online</span></a>
     </div>
 </section>
 <section class="course-information" id="bg-classroom-course">

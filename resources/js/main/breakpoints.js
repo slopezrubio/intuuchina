@@ -9,6 +9,9 @@ let breakpoints = {
         mediumDevices: [681, 992],
         largeDevices: [993]
     },
+    isLargeDevice: () => {
+        return document.body.clientWidth >= 992;
+    }
 };
 
 export default breakpoints;

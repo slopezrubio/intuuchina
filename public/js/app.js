@@ -49721,6 +49721,8 @@ if (document.querySelector('#job-description') !== null) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+
 
 var press = {
   currentSlide: 0,
@@ -49786,25 +49788,53 @@ var courses = {
       courses.setup();
     }
 
-    $(courses.pictures).width(courses.pictureHolder.clientWidth);
+    if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].widths.largeDevices[0] > window.innerWidth) {
+      $(courses.pictures).width(courses.pictureHolder.clientWidth);
+    }
+
     courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
-    /*if (event.type === 'resize') {
-        courses.update();
-    }*/
+
+    if (event.type === 'resize') {//courses.update();
+      //document.querySelector('.description-options').clientWidth;
+    }
   },
   setup: function setup() {
-    courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures); // Compatibility with all the browsers
+    courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
 
-    for (var i = 0; i < courses.courseLinks.length; i++) {
-      courses.courseLinks[i].addEventListener('click', function (e) {
-        e.preventDefault();
-        var elementIndex = $(this).index();
-        courses.moveTo(elementIndex);
-        courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
-        courses.changeSliderBackground[elementIndex](courses.carrousel);
-        courses.changeSliderBackground[elementIndex](document.querySelector('.description-options'));
-      });
+    if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
+      // Compatibility with all the browsers
+      for (var i = 0; i < courses.courseLinks.length; i++) {
+        courses.courseLinks[i].addEventListener('click', function (e) {
+          e.preventDefault();
+          var elementIndex = $(this).index();
+          courses.moveTo(elementIndex);
+          courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+          courses.changeSliderBackground[elementIndex](courses.carrousel);
+        });
+      }
+    } else {
+      for (var _i = 0; _i < courses.courseLinks.length; _i++) {
+        courses.resetSize(courses.pictures[_i]);
+      }
+
+      courses.setDesktopSliders[courses.checkSelectedController()]();
     }
+  },
+  resetSize: function resetSize(element) {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'width', '');
+  },
+  setDesktopSliders: {
+    first: function first() {
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
+    },
+    second: function second() {
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+    }
+  },
+  checkSelectedController: function checkSelectedController() {
+    return $('.selected').is(':last-child') ? 'second' : 'first';
   },
   toggleControllers: function toggleControllers(firstController, secondController) {
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(firstController, 'selected');
@@ -49861,6 +49891,9 @@ var breakpoints = {
     smallDevices: [100, 680],
     mediumDevices: [681, 992],
     largeDevices: [993]
+  },
+  isLargeDevice: function isLargeDevice() {
+    return document.body.clientWidth >= 992;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (breakpoints);
@@ -49916,19 +49949,19 @@ var dom = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })

@@ -568,6 +568,7 @@ header .img {
 
 .course-descriptions {
   background: black;
+  position: relative;
 }
 
 .course-descriptions .description-container {
@@ -578,6 +579,11 @@ header .img {
 .course-descriptions .description-container .description-base {
   box-sizing: border-box;
   color: white;
+  padding-bottom: 2em;
+}
+
+.course-descriptions .description-container .description-base p {
+  margin-bottom: 3em;
 }
 
 .course-descriptions .description-container .description-base > * {
@@ -665,21 +671,26 @@ header .img {
 }
 
 .course-descriptions .description-options {
+  left: 0%;
+  bottom: 30px;
+  width: 100%;
   -webkit-display: flex;
   -moz-display: flex;
   -ms-display: flex;
   -o-display: flex;
   display: flex;
-  transition: all ease-in-out 0.5s;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  position: absolute;
   color: white;
   font-weight: 700;
-  justify-content: space-evenly;
 }
 
 .course-descriptions .description-options a {
   padding: 0.5em 1em;
   border-radius: 25px;
-  margin-bottom: 2em;
   font-size: 1em;
 }
 
@@ -689,6 +700,10 @@ header .img {
   transition: all ease-in-out 0.5s;
   background: rgba(255, 255, 255, 0.4);
   color: white;
+}
+
+.course-descriptions .description-options a:last-of-type {
+  margin-left: 1.5em;
 }
 
 .course-information {
@@ -733,6 +748,81 @@ header .img {
   -o-filter: greyscale(100%);
   filter: greyscale(100%);
   transition: all 0.8s ease;
+}
+
+@media only screen and (min-width: 992px) {
+  .course-descriptions {
+    overflow: hidden;
+  }
+
+  .course-descriptions .description-container {
+    display: flex;
+  }
+
+  .course-descriptions .description-container .right-slide,
+  .course-descriptions .description-container .left-slide {
+    width: 80%;
+  }
+
+  .course-descriptions .description-container .left-slide,
+  .course-descriptions .description-container left-slide--none {
+    background: black;
+  }
+
+  .course-descriptions .description-container .right-slide,
+  .course-descriptions .description-container .right-slide--none {
+    background: #B71C1C;
+  }
+
+  .course-descriptions .description-container .right-slide--none,
+  .course-descriptions .description-container .left-slide--none {
+    width: 20%;
+    position: relative;
+    z-index: 0;
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+  }
+
+  .course-descriptions .description-container .right-slide--none .description-header .cta {
+    display: none;
+  }
+
+  .course-descriptions .description-container .right-slide--none p {
+    display: none;
+  }
+
+  .course-descriptions .description-container .right-slide--none:before {
+    content: "";
+    width: 379px;
+    background: #B71C1C;
+    height: 379px;
+    position: absolute;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    z-index: -1;
+    top: -10px;
+    left: -102px;
+    border-radius: 25px;
+    border-left: 50px solid #B71C1C;
+  }
+
+  .course-descriptions .description-container .right-slide--none:after {
+    content: "\F100";
+    position: absolute;
+    color: white;
+    font-size: 80px;
+    left: -148px;
+    top: 34%;
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+  }
 }
 
 .grid {
@@ -1707,7 +1797,7 @@ main .news_container .section_body .tv {
   -ms-transform: translateY(-50%);
   display: block;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .main-section--primary .title-card {
