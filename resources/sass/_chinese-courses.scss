@@ -1,4 +1,4 @@
-%default-info-box{
+%default-info-box {
   box-sizing: border-box;
   padding: 2rem;
   width: 100%;
@@ -6,7 +6,11 @@
   border: 10px solid $white;
   border-radius: 30px;
   box-shadow: 3px 3px 20px #00000080;
+  @include prefixed(display, flex);
+  @include prefixed(flex-direction, column);
+  @include prefixed(justify-content, center);
   p {
+    margin-bottom: 0px;
     @include prefixed(display, flex);
     @include prefixed(flex-direction, column);
     .price-tag {
@@ -14,11 +18,17 @@
       font-size: minimosCuadrados($map);
       font-weight: 700;
       text-align: center;
+      display: flex;
       .euro {
         $map: (295: 30, 389: 38, 688: 48, 1875: 48);
         font-size: minimosCuadrados($map);
         font-style: normal;
       }
+    }
+
+    .advice {
+      $map: (295: 16, 389: 14, 688: 14, 1875: 14);
+      font-size: minimosCuadrados($map);
     }
     & > * {
       width: auto;
@@ -26,6 +36,7 @@
     }
   }
 }
+
 .course-descriptions {
   background: $primaryDark;
   .description-container {
@@ -89,9 +100,9 @@
       }
     }
 
-    .online-description{
+    .online-description {
       .description-header{
-        h2{
+        h2 {
           color: #000000;
         }
       }
@@ -99,17 +110,14 @@
     .description-disabled{
       transition: all 0.9s ease;
       .description-header{
-        h2{
+        h2 {
           cursor: pointer;
         }
-        a{
+        a {
           width: 0;
           padding: 0;
           font-size: 0;
         }
-      }
-      p{
-        font-size: 0;
       }
     }
   }

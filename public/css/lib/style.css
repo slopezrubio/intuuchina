@@ -519,9 +519,22 @@ header .img {
   border: 10px solid white;
   border-radius: 30px;
   box-shadow: 3px 3px 20px #00000080;
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -moz-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
 }
 
 .course-information .course-information_box p {
+  margin-bottom: 0px;
   -webkit-display: flex;
   -moz-display: flex;
   -ms-display: flex;
@@ -536,11 +549,16 @@ header .img {
   font-size: calc(2.992876027vw + 49.2053288505px);
   font-weight: 700;
   text-align: center;
+  display: flex;
 }
 
 .course-information .course-information_box p .price-tag .euro {
   font-size: calc(0.8500450265vw + 34.0997594974px);
   font-style: normal;
+}
+
+.course-information .course-information_box p .advice {
+  font-size: calc(-0.0649361767vw + 15.0271194146px);
 }
 
 .course-information .course-information_box p > * {
@@ -643,10 +661,6 @@ header .img {
 .course-descriptions .description-container .description-disabled .description-header a {
   width: 0;
   padding: 0;
-  font-size: 0;
-}
-
-.course-descriptions .description-container .description-disabled p {
   font-size: 0;
 }
 
