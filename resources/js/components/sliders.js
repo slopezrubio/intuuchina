@@ -63,63 +63,107 @@ let courses = {
     pictures: document.getElementsByClassName('description-base'),
     courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
     init: (event) => {
-        if (event.type !== 'resize') {
-            courses.setup();
-        }
+        courses.setup(event);
 
         if (breakpoints.widths.largeDevices[0] > window.innerWidth) {
             $(courses.pictures).width(courses.pictureHolder.clientWidth);
         }
-
-        courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
-
-        if (event.type === 'resize') {
-            courses.setup();
-            //document.querySelector('.description-options').clientWidth;
+        //document.querySelector('.description-options').clientWidth;
+    },
+    setup: function(event) {
+        courses.courseSliderWidth = courses.pictureHolder.clientWidth;
+        for (let i = 0; i < courses.courseLinks.length; i++) {
+            courses.courseLinks[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                let elementIndex = $(this).index();
+                if (!breakpoints.isLargeDevice()) {
+                    courses.moveTo(elementIndex);
+                } else {
+                    courses.setDesktopSliders[i + 1]();
+                }
+                courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+                courses.changeSliderBackground[elementIndex](courses.carrousel);
+            });
         }
 
-    },
-    setup: function() {
-        courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
+        for (let i = 0; i < courses.pictures.length; i++) {
+            courses.pictures[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                let elementIndex = $(this).index();
+                courses.setDesktopSliders[i + 1]();
+                courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+                courses.changeSliderBackground[elementIndex](courses.carrousel);
+            });
+        }
 
         if (!breakpoints.isLargeDevice()) {
             // Compatibility with all the browsers
-            for (let i = 0; i < courses.courseLinks.length; i++) {
-                courses.courseLinks[i].addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let elementIndex = $(this).index();
-                    courses.moveTo(elementIndex);
-                    courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
-                    courses.changeSliderBackground[elementIndex](courses.carrousel);
-                })
+            if (event.type === 'resize') {
+                courses.update()
+                if (document.querySelector('.left-slide') !== null || document.querySelector('.right-slide') !== null) {
+                    courses.resetDesktopSliders();
+                }
             }
         } else {
-            //courses.setDesktopSliders[courses.checkSelectedController()]();
-
-            for (let i = 0; i < courses.pictures.length; i++) {
-                courses.pictures[i].addEventListener('click', function(e) {
-                    e.preventDefault();
-                    courses.setDesktopSliders[i + 1]();
-                });
-            }
+            courses.setDesktopSliders[courses.checkSelectedController()]();
+            courses.resetResponsiveSliders();
         }
+    },
+    resetResponsiveSliders: () => {
+        dom.setProperty(courses.carrousel, 'transform','translate(0px)');
+    },
+    keepSliderPositionWhenResponsive: () => {
+        return courses.currentSlide === 0 ? 0 : courses.courseSliderWidth;
+    },
+    resetDesktopSliders: () => {
+            for (let i = 0; i < courses.pictures.length; i++) {
+                $(courses.pictures[i]).attr('class', 'description-base');
+            }
     },
     setDesktopSliders: {
         1: () => {
+            courses.currentSlide = 0;
             if (document.querySelector('.left-slide') === null) {
                 dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
+            }
+
+            if (document.querySelector('.left-slide--none') !== null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
+            }
+
+            if (document.querySelector('.right-slide') !== null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+            }
+
+            if (document.querySelector('.right-slide--none') === null) {
                 dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
             }
         },
         2: () => {
+            courses.currentSlide = 1;
             if (document.querySelector('.right-slide') === null) {
-                dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
-                dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'right-slide');
+            }
+
+            if (document.querySelector('.right-slide--none') !== null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'right-slide--none');
+            }
+
+            if (document.querySelector('.left-slide') !== null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide - 1], 'left-slide');
+            }
+
+            if (document.querySelector('.left-slide--none') === null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide - 1], 'left-slide--none');
             }
         }
     },
     checkSelectedController: () => {
         return $('.selected').is(':last-child') ? 2 : 1;
+    },
+    update: function() {
+        let value = 'translateX(' + (50 * -courses.currentSlide) + '%)';
+        dom.setProperty(courses.carrousel, 'transform', value);
     },
     toggleControllers: (firstController, secondController) => {
         dom.toggleSingleClass(firstController, 'selected');
@@ -143,7 +187,8 @@ let courses = {
     },
     moveTo: function(elementIndex) {
         courses.currentSlide = elementIndex;
-        let value = `translateX(${courses.courseSliderWidth * -courses.currentSlide}px)`;
+        let value = 'translateX(' + (50 * -courses.currentSlide) + '%)';
+        console.log(value);
         dom.setProperty(courses.carrousel, 'transform', value);
     },
 };
@@ -154,6 +199,6 @@ if (document.querySelector('.note_carrousel') !== null) {
 }
 
 if (document.querySelector('.course-descriptions') !== null) {
-    $(document).ready(courses.init);
+    window.addEventListener('load', courses.init);
     $(window).resize(courses.init);
 }

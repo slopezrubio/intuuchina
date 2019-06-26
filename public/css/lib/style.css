@@ -612,12 +612,6 @@ header .img {
 .course-descriptions .description-container .description-base .description-header a {
   margin-left: 0px;
   font-size: calc(0.2127341847vw + 14.5059964639px);
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
   padding: 0.7rem 2rem;
   border-radius: 2rem;
   text-decoration: none;
@@ -757,11 +751,34 @@ header .img {
 
   .course-descriptions .description-container {
     display: flex;
+    height: 456px;
   }
 
   .course-descriptions .description-container .right-slide,
   .course-descriptions .description-container .left-slide {
     width: auto;
+  }
+
+  .course-descriptions .description-container .right-slide p,
+  .course-descriptions .description-container .left-slide p {
+    width: 60%;
+  }
+
+  .course-descriptions .description-container .right-slide .description-header {
+    -moz-align-items: flex-end;
+    -ms-align-items: flex-end;
+    -o-align-items: flex-end;
+    align-items: flex-end;
+  }
+
+  .course-descriptions .description-container .right-slide .description-header a {
+    margin-right: 0;
+    margin-left: auto;
+  }
+
+  .course-descriptions .description-container .right-slide p {
+    text-align: right;
+    float: right;
   }
 
   .course-descriptions .description-container .right-slide--none,
@@ -794,41 +811,48 @@ header .img {
   .course-descriptions .description-container .right-slide--none:before,
   .course-descriptions .description-container .left-slide--none:before {
     content: "";
-    width: 379px;
-    height: 379px;
+    width: 407px;
+    height: 407px;
     position: absolute;
     z-index: -1;
     border-radius: 25px;
+    top: 26px;
   }
 
   .course-descriptions .description-container .right-slide--none:after,
   .course-descriptions .description-container .left-slide--none:after {
-    content: "\F100";
     position: absolute;
     color: white;
     font-size: 80px;
-    left: -148px;
-    top: 113px;
+    top: 169px;
     font-weight: 900;
     font-family: "Font Awesome 5 Free";
   }
 
   .course-descriptions .description-container .left-slide--none:before {
     right: -102px;
-    top: -17px;
     background: black;
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
     border-left: 50px solid black;
   }
 
+  .course-descriptions .description-container .left-slide--none:after {
+    content: "\F101";
+    right: -158px;
+  }
+
   .course-descriptions .description-container .right-slide--none:before {
-    top: -17px;
     left: -102px;
     background: #B71C1C;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     border-left: 50px solid #B71C1C;
+  }
+
+  .course-descriptions .description-container .right-slide--none:after {
+    content: "\F100";
+    left: -158px;
   }
 }
 

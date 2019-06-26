@@ -72,8 +72,6 @@
           margin-left: 0px;
           $map: (320: 14, 824: 18, 1903: 18);
           font-size: minimosCuadrados($map);
-          width: fit-content;
-          height: fit-content;
           padding: 0.7rem 2rem;
           border-radius: 2rem;
           text-decoration: none;
@@ -192,8 +190,27 @@
     overflow: hidden;
     .description-container {
       display: flex;
+      height: 456px;
       .right-slide, .left-slide {
         width: auto;
+        p {
+          width: 60%;
+        }
+      }
+
+      .right-slide {
+        .description-header {
+          @include prefixed(align-items, flex-end);
+          a {
+            margin-right: 0;
+            margin-left: auto;
+          }
+        }
+
+        p {
+          text-align: right;
+          float: right;
+        }
       }
 
       .right-slide--none, .left-slide--none {
@@ -214,20 +231,19 @@
 
         &:before {
           content: "";
-          width: 379px;
-          height: 379px;
+          width: 407px;
+          height: 407px;
           position: absolute;
           z-index: -1;
           border-radius: 25px;
+          top: 26px;
         }
 
         &:after {
-          content: "\f100";
           position: absolute;
           color: white;
           font-size: 80px;
-          left: -148px;
-          top: 113px;
+          top: 169px;
           font-weight: 900;
           font-family: "Font Awesome 5 Free";
         }
@@ -236,22 +252,29 @@
       .left-slide--none {
         &:before {
           right: -102px;
-          top: -17px;
           background: $primaryDark;
           @include prefixed(transform, rotate(-45deg));
           border-left: 50px solid $primaryDark;
+        }
+
+        &:after {
+          content: "\f101";
+          right: -158px;
         }
       }
 
       .right-slide--none {
         &:before {
-          top: -17px;
           left: -102px;
           background: $primaryRed;
           @include prefixed(transform, rotate(45deg));
           border-left: 50px solid $primaryRed;
         }
 
+        &:after {
+          content: "\f100";
+          left: -158px;
+        }
       }
     }
   }

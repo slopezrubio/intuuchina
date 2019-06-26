@@ -49784,65 +49784,121 @@ var courses = {
   pictures: document.getElementsByClassName('description-base'),
   courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
   init: function init(event) {
-    if (event.type !== 'resize') {
-      courses.setup();
-    }
+    courses.setup(event);
 
     if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].widths.largeDevices[0] > window.innerWidth) {
       $(courses.pictures).width(courses.pictureHolder.clientWidth);
-    }
+    } //document.querySelector('.description-options').clientWidth;
 
-    courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
-
-    if (event.type === 'resize') {
-      courses.setup(); //document.querySelector('.description-options').clientWidth;
-    }
   },
-  setup: function setup() {
-    courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
+  setup: function setup(event) {
+    courses.courseSliderWidth = courses.pictureHolder.clientWidth;
+
+    var _loop = function _loop(i) {
+      courses.courseLinks[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var elementIndex = $(this).index();
+
+        if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
+          courses.moveTo(elementIndex);
+        } else {
+          courses.setDesktopSliders[i + 1]();
+        }
+
+        courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+        courses.changeSliderBackground[elementIndex](courses.carrousel);
+      });
+    };
+
+    for (var i = 0; i < courses.courseLinks.length; i++) {
+      _loop(i);
+    }
+
+    var _loop2 = function _loop2(i) {
+      courses.pictures[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var elementIndex = $(this).index();
+        courses.setDesktopSliders[i + 1]();
+        courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+        courses.changeSliderBackground[elementIndex](courses.carrousel);
+      });
+    };
+
+    for (var i = 0; i < courses.pictures.length; i++) {
+      _loop2(i);
+    }
 
     if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
       // Compatibility with all the browsers
-      for (var i = 0; i < courses.courseLinks.length; i++) {
-        courses.courseLinks[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          var elementIndex = $(this).index();
-          courses.moveTo(elementIndex);
-          courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
-          courses.changeSliderBackground[elementIndex](courses.carrousel);
-        });
+      if (event.type === 'resize') {
+        courses.update();
+
+        if (document.querySelector('.left-slide') !== null || document.querySelector('.right-slide') !== null) {
+          courses.resetDesktopSliders();
+        }
       }
     } else {
-      var _loop = function _loop(_i) {
-        courses.pictures[_i].addEventListener('click', function (e) {
-          e.preventDefault();
-
-          courses.setDesktopSliders[_i + 1]();
-        });
-      };
-
-      //courses.setDesktopSliders[courses.checkSelectedController()]();
-      for (var _i = 0; _i < courses.pictures.length; _i++) {
-        _loop(_i);
-      }
+      courses.setDesktopSliders[courses.checkSelectedController()]();
+      courses.resetResponsiveSliders();
+    }
+  },
+  resetResponsiveSliders: function resetResponsiveSliders() {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', 'translate(0px)');
+  },
+  keepSliderPositionWhenResponsive: function keepSliderPositionWhenResponsive() {
+    return courses.currentSlide === 0 ? 0 : courses.courseSliderWidth;
+  },
+  resetDesktopSliders: function resetDesktopSliders() {
+    for (var i = 0; i < courses.pictures.length; i++) {
+      $(courses.pictures[i]).attr('class', 'description-base');
     }
   },
   setDesktopSliders: {
     1: function _() {
+      courses.currentSlide = 0;
+
       if (document.querySelector('.left-slide') === null) {
         _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
+      }
+
+      if (document.querySelector('.left-slide--none') !== null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
+      }
+
+      if (document.querySelector('.right-slide') !== null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+      }
+
+      if (document.querySelector('.right-slide--none') === null) {
         _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
       }
     },
     2: function _() {
+      courses.currentSlide = 1;
+
       if (document.querySelector('.right-slide') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'right-slide');
+      }
+
+      if (document.querySelector('.right-slide--none') !== null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'right-slide--none');
+      }
+
+      if (document.querySelector('.left-slide') !== null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide - 1], 'left-slide');
+      }
+
+      if (document.querySelector('.left-slide--none') === null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide - 1], 'left-slide--none');
       }
     }
   },
   checkSelectedController: function checkSelectedController() {
     return $('.selected').is(':last-child') ? 2 : 1;
+  },
+  update: function update() {
+    var value = 'translateX(' + 50 * -courses.currentSlide + '%)';
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
   },
   toggleControllers: function toggleControllers(firstController, secondController) {
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(firstController, 'selected');
@@ -49863,7 +49919,8 @@ var courses = {
   },
   moveTo: function moveTo(elementIndex) {
     courses.currentSlide = elementIndex;
-    var value = "translateX(".concat(courses.courseSliderWidth * -courses.currentSlide, "px)");
+    var value = 'translateX(' + 50 * -courses.currentSlide + '%)';
+    console.log(value);
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
   }
 };
@@ -49874,7 +49931,7 @@ if (document.querySelector('.note_carrousel') !== null) {
 }
 
 if (document.querySelector('.course-descriptions') !== null) {
-  $(document).ready(courses.init);
+  window.addEventListener('load', courses.init);
   $(window).resize(courses.init);
 }
 
@@ -49901,7 +49958,7 @@ var breakpoints = {
     largeDevices: [993]
   },
   isLargeDevice: function isLargeDevice() {
-    return document.body.clientWidth >= 992;
+    return window.innerWidth >= breakpoints.widths.largeDevices[0];
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (breakpoints);
@@ -49960,19 +50017,19 @@ var dom = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })

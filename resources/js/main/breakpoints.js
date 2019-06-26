@@ -10,7 +10,7 @@ let breakpoints = {
         largeDevices: [993]
     },
     isLargeDevice: () => {
-        return document.body.clientWidth >= 992;
+        return window.innerWidth >= breakpoints.widths.largeDevices[0];
     }
 };
 
