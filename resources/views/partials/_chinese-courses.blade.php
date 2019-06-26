@@ -1,6 +1,6 @@
 <section class="course-descriptions">
     <div class="description-container">
-        <div class="description-base">
+        <div class="description-base left-slide--none">
             <div class="description-header">
                 <h2 id="presencial" onclick="toggleDescription()">Curso presencial <span>en China</span></h2>
                 <a class="cta" href="#course-information">Más Info</a>
@@ -10,9 +10,9 @@
                 ipsa quia ullam consequatur sequi quidem, dolore recusandae odit maiores iste harum ipsam?
             </p>
         </div>
-        <div class="description-base">
+        <div class="description-base right-slide">
             <div class="description-header">
-                <h2 id="online" course-title" onclick="toggleDescription()">Curso<span> Online</span></h2>
+                <h2 id="online" onclick="toggleDescription()">Curso<span> Online</span></h2>
                 <a class="cta" href="#course-information">Más Info</a>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,

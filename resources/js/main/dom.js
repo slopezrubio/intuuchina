@@ -5,6 +5,9 @@ let dom = {
     getProperty: function(element, property) {
         return element.style.getPropertyValue(property);
     },
+    resetProperty: function(element, property) {
+        element.style[property] = '';
+    },
     toggleClass: (element, firstClassName, secondClassName) => {
         $(element).toggleClass(firstClassName);
         $(element).toggleClass(secondClassName);

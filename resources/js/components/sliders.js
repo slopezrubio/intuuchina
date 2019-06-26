@@ -74,7 +74,7 @@ let courses = {
         courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
 
         if (event.type === 'resize') {
-            //courses.update();
+            courses.setup();
             //document.querySelector('.description-options').clientWidth;
         }
 
@@ -94,28 +94,32 @@ let courses = {
                 })
             }
         } else {
-            for (let i = 0; i < courses.courseLinks.length; i++) {
-                courses.resetSize(courses.pictures[i]);
-            }
+            //courses.setDesktopSliders[courses.checkSelectedController()]();
 
-            courses.setDesktopSliders[courses.checkSelectedController()]();
+            for (let i = 0; i < courses.pictures.length; i++) {
+                courses.pictures[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    courses.setDesktopSliders[i + 1]();
+                });
+            }
         }
     },
-    resetSize: (element) => {
-        dom.setProperty(element, 'width', '');
-    },
     setDesktopSliders: {
-        first: () => {
-            dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
-            dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
+        1: () => {
+            if (document.querySelector('.left-slide') === null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
+            }
         },
-        second: () => {
-            dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
-            dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+        2: () => {
+            if (document.querySelector('.right-slide') === null) {
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
+                dom.toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+            }
         }
     },
     checkSelectedController: () => {
-        return $('.selected').is(':last-child') ? 'second' : 'first';
+        return $('.selected').is(':last-child') ? 2 : 1;
     },
     toggleControllers: (firstController, secondController) => {
         dom.toggleSingleClass(firstController, 'selected');

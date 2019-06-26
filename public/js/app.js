@@ -49794,8 +49794,8 @@ var courses = {
 
     courses.courseSliderWidth = courses.getFirstChildWidth(courses.pictures);
 
-    if (event.type === 'resize') {//courses.update();
-      //document.querySelector('.description-options').clientWidth;
+    if (event.type === 'resize') {
+      courses.setup(); //document.querySelector('.description-options').clientWidth;
     }
   },
   setup: function setup() {
@@ -49813,28 +49813,36 @@ var courses = {
         });
       }
     } else {
-      for (var _i = 0; _i < courses.courseLinks.length; _i++) {
-        courses.resetSize(courses.pictures[_i]);
-      }
+      var _loop = function _loop(_i) {
+        courses.pictures[_i].addEventListener('click', function (e) {
+          e.preventDefault();
 
-      courses.setDesktopSliders[courses.checkSelectedController()]();
+          courses.setDesktopSliders[_i + 1]();
+        });
+      };
+
+      //courses.setDesktopSliders[courses.checkSelectedController()]();
+      for (var _i = 0; _i < courses.pictures.length; _i++) {
+        _loop(_i);
+      }
     }
   },
-  resetSize: function resetSize(element) {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'width', '');
-  },
   setDesktopSliders: {
-    first: function first() {
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
+    1: function _() {
+      if (document.querySelector('.left-slide') === null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
+      }
     },
-    second: function second() {
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+    2: function _() {
+      if (document.querySelector('.right-slide') === null) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
+        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
+      }
     }
   },
   checkSelectedController: function checkSelectedController() {
-    return $('.selected').is(':last-child') ? 'second' : 'first';
+    return $('.selected').is(':last-child') ? 2 : 1;
   },
   toggleControllers: function toggleControllers(firstController, secondController) {
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(firstController, 'selected');
@@ -49916,6 +49924,9 @@ var dom = {
   getProperty: function getProperty(element, property) {
     return element.style.getPropertyValue(property);
   },
+  resetProperty: function resetProperty(element, property) {
+    element.style[property] = '';
+  },
   toggleClass: function toggleClass(element, firstClassName, secondClassName) {
     $(element).toggleClass(firstClassName);
     $(element).toggleClass(secondClassName);
@@ -49949,19 +49960,19 @@ var dom = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
-module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
 
 
 /***/ })
