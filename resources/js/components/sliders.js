@@ -188,7 +188,6 @@ let courses = {
     moveTo: function(elementIndex) {
         courses.currentSlide = elementIndex;
         let value = 'translateX(' + (50 * -courses.currentSlide) + '%)';
-        console.log(value);
         dom.setProperty(courses.carrousel, 'transform', value);
     },
 };
