@@ -193,8 +193,12 @@
       height: 456px;
       .right-slide, .left-slide {
         width: auto;
+        transition:
+            width 0.5s;
         p {
           width: 60%;
+          opacity: 1;
+          transition: opacity 0.2s 0.5s;
         }
       }
 
@@ -220,13 +224,15 @@
         z-index: 0;
         @include prefixed(display, flex);
         @include prefixed(align-items, center);
+        transition:
+          width 0.5s;
         .description-header {
           .cta {
             display: none;
           }
         }
         p {
-          display: none;
+          opacity: 0;
         }
 
         &:before {

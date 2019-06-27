@@ -757,11 +757,14 @@ header .img {
   .course-descriptions .description-container .right-slide,
   .course-descriptions .description-container .left-slide {
     width: auto;
+    transition: width 0.5s;
   }
 
   .course-descriptions .description-container .right-slide p,
   .course-descriptions .description-container .left-slide p {
     width: 60%;
+    opacity: 1;
+    transition: opacity 0.2s 0.5s;
   }
 
   .course-descriptions .description-container .right-slide .description-header {
@@ -796,6 +799,7 @@ header .img {
     -ms-align-items: center;
     -o-align-items: center;
     align-items: center;
+    transition: width 0.5s;
   }
 
   .course-descriptions .description-container .right-slide--none .description-header .cta,
@@ -805,7 +809,7 @@ header .img {
 
   .course-descriptions .description-container .right-slide--none p,
   .course-descriptions .description-container .left-slide--none p {
-    display: none;
+    opacity: 0;
   }
 
   .course-descriptions .description-container .right-slide--none:before,
