@@ -44,6 +44,5 @@ class RenewOffers extends Command
         $TwoMonthAgo = Carbon:: now()->subMonth(2);
         $result = Offer::where('created_at', '<=', $TwoMonthAgo)->update(['created_at'=> Carbon:: now()]);
         echo $result;
-
     }
 }
