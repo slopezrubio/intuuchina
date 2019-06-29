@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -35,7 +36,12 @@ class OffersController extends Controller
     {
         $offers = $this->all();
 
-        return view('pages/admin/offers', compact('admin.offers'));
+        /* Datos adicionales que se van a entregar a la vista */
+        $params = (object) array(
+            'title' => 'Prácticas'
+        );
+
+        return view('pages/admin/offers', compact('offers', 'params'));
     }
 
     public function all() {
@@ -44,15 +50,8 @@ class OffersController extends Controller
          * por la fecha de creación.
          */
         $offers = Offer::orderBy('created_at','DESC')->get();
-        $offers = $this->setDaysRenewed($offers);
-
-        return $offers;
-    }
-
-    public function setDaysRenewed($offers) {
-        foreach ($offers as $offer) {
-            $offer->gone_by = $this->getDiffForHumans($offer->created_at);
-        }
+        $offer = new Offer();
+        $offers = $offer->setDaysRenewed($offers);
 
         return $offers;
     }
@@ -143,15 +142,7 @@ class OffersController extends Controller
         //
     }
 
-    /*
-     * Get the difference between the creation Date of an offer and the current time
-     *
-     * @param string $date
-     * @return string
-     */
-    public function getDiffForHumans($date) {
-        return Carbon::parse($date)->diffForHumans(Carbon::now());
-    }
+
 
     /*
      * Updates the date of creation of all the offers which were created two months ago to make
@@ -171,10 +162,11 @@ class OffersController extends Controller
      * Select all the offers that matches with the name of the industry passed as an argument
      * and send the partial view that comprises just the list of offers.
      */
-    public function filterBy($industry) {
-        if ($industry !== 'all') {
-            $offers = Offer::where('industry', $industry)->orderBy('created_at', 'DESC')->get();
-            $offers = $this->setDaysRenewed($offers);
+    public function filterBy($filter) {
+        if ($filter !== 'all') {
+            $offers = Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->get();
+            $offer = new Offer();
+            $offers = $offer->setDaysRenewed($offers);
             return view('partials/_offers-list', compact('offers', 'params'));
         }
 

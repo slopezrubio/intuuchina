@@ -30,7 +30,7 @@ class Admin
     private function isAdmin($request) {
         if (!$this->isGuest()) {
             if ($request->user()) {
-                $request->user()->type === 'admin' ? true : false;
+                return $request->user()->type === 'admin' ? true : false;
             }
         }
     }
