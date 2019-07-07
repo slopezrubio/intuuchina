@@ -90,17 +90,14 @@
 <!-- testimonials -->
 <section>
     <div class="box-testi">
-        <h2>Ellos ya lo han probado. <br>
-            <strong>No esperes a que te lo cuenten.</strong></h2>
+        <h2>Los que <strong>ya lo han probado</strong></h2>
         <img src="{{asset('storage/images/quotes.png')}}" class="quote1" alt="quote">
         <img src="{{asset('storage/images/quotes.png')}}" class="quote2" alt="quote">
         <div class="testim">
             <img class="linkedinpic"src="https://media.licdn.com/dms/image/C5603AQHsu9hQJueHrA/profile-displayphoto-shrink_800_800/0?e=1541635200&v=beta&t=ytKgfsWkDSe9Eiqy-AA4yPCduz7Pr5Ce2Ebeu7fNymU" alt="profilepic">
             <h3>Santiago Barba Bullón de Mendoza</h3>
-            <h4>Junior analyst en irea corporate finance</h4>
-            <!--<h5>January 19, 2018, Santiago was a client of IntuuChina</h5>-->
+            <h4>Junior Analyst/h4>
             <p>"Inntuchina was my go-to partner for everything China related"</p>
-            <a href="https://www.linkedin.com/in/santiago-barba-bull%C3%B3n-de-mendoza-46863570/"><i class="fab fa-linkedin"></i></a>
 
         </div>
 

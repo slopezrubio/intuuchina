@@ -3,7 +3,7 @@
     <div class="news">
         <div class="news_container">
             <div class="section_title">
-                <h2>Somos referentes y hemos aparecido <br>en los <strong> medios más importantes</strong></h2>
+                <h2>Los <strong>medios</strong> opinan</h2>
             </div>
             <div class="section_body">
                 <div class="note_window">
