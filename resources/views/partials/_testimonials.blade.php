@@ -98,7 +98,6 @@
             <h3>Santiago Barba Bullón de Mendoza</h3>
             <h4>Junior Analyst/h4>
             <p>"Inntuchina was my go-to partner for everything China related"</p>
-
         </div>
 
 {{--        <div class="testim">--}}

@@ -49564,7 +49564,9 @@ var register = {
   },
   checkFields: function checkFields() {
     if (register.industryFieldset) {
-      register.hideElement(register.industryFieldset);
+      if (register.select.value !== 'internship') {
+        register.hideElement(register.industryFieldset);
+      }
     }
 
     if (register.studyFieldset) {
@@ -49575,37 +49577,38 @@ var register = {
       register.hideElement(register.universityFieldset);
     }
   },
+  setFields: function setFields(selectorValue) {
+    switch (selectorValue) {
+      case 'internship':
+      case 'inter_relocat':
+      case 'inter_housing':
+        register.showElement(register.industryFieldset);
+        register.hideElement(register.studyFieldset);
+        register.hideElement(register.universityFieldset);
+        break;
+
+      case 'study':
+        register.showElement(register.studyFieldset);
+        register.hideElement(register.industryFieldset);
+        register.hideElement(register.universityFieldset);
+        break;
+
+      case 'university':
+        register.showElement(register.universityFieldset);
+        register.hideElement(register.industryFieldset);
+        register.hideElement(register.studyFieldset);
+
+      default:
+        register.hideElement(register.studyFieldset);
+        register.hideElement(register.industryFieldset);
+        register.showElement(register.universityFieldset);
+        break;
+    }
+  },
   init: function init() {
-    window.addEventListener('load', register.checkFields);
+    window.addEventListener('load', register.setFields(register.select.value));
     register.select.addEventListener('change', function (event) {
-      var currentValue = event.target.value;
-
-      switch (currentValue) {
-        case 'intership':
-        case 'inter_relocat':
-        case 'inter_housing':
-          register.showElement(register.industryFieldset);
-          register.hideElement(register.studyFieldset);
-          register.hideElement(register.universityFieldset);
-          break;
-
-        case 'study':
-          register.showElement(register.studyFieldset);
-          register.hideElement(register.industryFieldset);
-          register.hideElement(register.universityFieldset);
-          break;
-
-        case 'university':
-          register.showElement(register.universityFieldset);
-          register.hideElement(register.industryFieldset);
-          register.hideElement(register.studyFieldset);
-
-        default:
-          register.hideElement(register.studyFieldset);
-          register.hideElement(register.industryFieldset);
-          register.showElement(register.universityFieldset);
-          break;
-      }
+      register.setFields(event.target.value);
     });
   }
 };

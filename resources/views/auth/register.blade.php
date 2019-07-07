@@ -61,25 +61,15 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputNationality" class="col-md-4 col-form-label text-md-right">{{ __('Nationality') }}</label>
-                                <div class="col-md-6">
-                                    <input id="nationality" type="text" class="form-control{{ $errors->has('nationality') ? ' is-invalid' : '' }}" name="nationality" value="{{ old('nationality') }}" required>
-
-                                    @if ($errors->has('nationality'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('nationality') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @include('partials._nationality-selector')
                             </div>
 
                             <div class="form-group row" id="programFieldset">
                                 <label for="inputProgram" class="col-md-4 col-form-label text-md-right">Program</label>
                                 <div class="col-md-6">
                                     <select class="custom-select" id="inputProgram" name="program">
-                                        <option value="" selected aria-selected="true"></option>
-                                        <option value="intership">Intership program</option>
-                                        <option value="inter_relocat">Intership + Relocation Program</option>
+                                        <option value="internship" aria-selected="true" selected>Internship program</option>
+                                        <option value="inter_relocat">Internship + Relocation Program</option>
                                         <option value="inter_housing"> Internship including housing</option>
                                         <option value="study">Study Chinese</option>
                                         <option value="universty">University</option>
@@ -95,11 +85,12 @@
                                     <label><input type="checkbox" value="engineering" name="industry[]">Engineering</label>
                                     <label><input type="checkbox" value="consultant" name="industry[]">Consultant</label>
                                     <label><input type="checkbox" value="education" name="industry[]">Education</label>
-                                    <label><input type="checkbox" value="hostelry" name="industry[]">Hostelry</label>
+                                    <label><input type="checkbox" value="hospitality" name="industry[]">Hospitality</label>
                                     <label><input type="checkbox" value="it" name="industry[]">IT</label>
                                     <label><input type="checkbox" value="legal" name="industry[]">Legal</label>
                                     <label><input type="checkbox" value="logistic" name="industry[]">Logistic</label>
                                     <label><input type="checkbox" value="marketing_business" name="industry[]">Marketing & Business Development</label>
+                                    <label><input type="checkbox" value="human_resources" name="industry[]">HR</label>
                                 </div>
                             </div>
 

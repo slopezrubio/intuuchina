@@ -45,6 +45,30 @@ Route::get('/login', function() {
     return view('pages/login');
 });
 
+/* Términos y condiciones */
+Route::get('/terms&conditions', function() {
+    $params = (object) array(
+        'title' => "Términos y condiciones",
+    );
+    return view('pages/terms-and-conditions', compact('params'));
+})->name('terms&conditions');
+
+/* Reglamento General de protección de datos */
+Route::get('/gdpr', function() {
+    $params = (object) array(
+        'title' => "Ley de protección de datos",
+    );
+    return view('pages/gdpr', compact('params'));
+})->name('gdpr');
+
+/* Política de privacidad */
+Route::get('/privacy-policy', function() {
+    $params = (object) array(
+        'title' => "Política de privacidad",
+    );
+    return view('pages/privacy-policy', compact('params'));
+});
+
 /* Administrador */
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
     Route::match(['get', 'post'], '/admin/','HomeController@index');

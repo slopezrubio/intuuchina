@@ -142,22 +142,6 @@ class OffersController extends Controller
         //
     }
 
-
-
-    /*
-     * Updates the date of creation of all the offers which were created two months ago to make
-     * them firstly visible again when they are listed.
-     *
-     * @param string $date
-     */
-    // public function renew($offer, $date) {
-    //     $differenceFromNow = Carbon::parse($date)->floatDiffInMonths(Carbon::now());
-    //     $dateLimitWithoutRenewing = 2;
-    //     if ($dateLimitWithoutRenewing <= $differenceFromNow) {
-    //         Offer::where('id', $offer)->update(['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-    //     }
-    //}
-
     /*
      * Select all the offers that matches with the name of the industry passed as an argument
      * and send the partial view that comprises just the list of offers.

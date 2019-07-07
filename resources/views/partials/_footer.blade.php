@@ -67,7 +67,7 @@
 {{--                    @endif--}}
 {{--                </div>--}}
                 <div class="col-xs-10 switch_input">
-                    <label aria-label="terms">Acepto los <a href="#">términos</a> y <a href="#">condiciones</a> así como también el <a href="https://ec.europa.eu/commission/priorities/justice-and-fundamental-rights/data-protection/2018-reform-eu-data-protection-rules_en" target="_blank">Reglamento General de Protección de datos</a></label>
+                    <label aria-label="terms">Acepto los <a href="{{ route('terms&conditions') }}" target="_blank">términos y condiciones</a> así como también el <a href="{{ route('gdpr') }}" target="_blank">Reglamento General de Protección de datos</a></label>
                     <label for="terms" class="switch">
                         <input id="terms" name="terms" type="checkbox">
                         <i class="checkbox_slider fas checkbox_slider--rounded"></i>
@@ -119,7 +119,7 @@
                     <p>Made with love &hearts; by <a href="http://factoriaf5.org"></p>
                     <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
                 </span>
-                <p><a href="#">Politica de privacidad</a> | <a href="#">Terminos y condiciones</a></p>
+                <p><a href="{{ url('/privacy-policy') }}">Politica de privacidad</a> | <a href="{{ route('terms&conditions') }}">Terminos y condiciones</a></p>
             </div>
         </div>
     </div>

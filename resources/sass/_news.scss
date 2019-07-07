@@ -76,12 +76,20 @@ main {
         }
 
         .tv {
-          width: 494px;
-          height: 385px;
+          width: auto;
+          height: auto;
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          grid-gap: 2em;
           align-items: baseline;
+          a {
+            text-align: center;
+            width: auto;
+            img {
+              width: 60px;
+            }
+          }
         }
       }
     }
@@ -106,11 +114,14 @@ main {
             grid-template-rows: repeat(2, 1fr);
             grid-template-columns: repeat(5, 1fr);
             grid-row-gap: 2em;
-            img {
-              position: relative;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 60px;
+            a {
+              text-align: left;
+              img {
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+              }
             }
           }
         }
@@ -137,7 +148,6 @@ main {
             position: relative;
             left: 50%;
             transform: translateX(-50%);
-            width: 30px;
           }
         }
       }
@@ -149,6 +159,17 @@ main {
   .news {
     @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 71%)');
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+    &_container {
+      .section_body {
+        .tv {
+          a {
+            img {
+              width: 30px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
