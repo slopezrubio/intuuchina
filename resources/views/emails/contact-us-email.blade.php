@@ -9,6 +9,5 @@
 </head>
 <body>
     <h1>{{ $msg['subject'] }}</h1>
-    <p>{{ $msg['message'] }}</p>
 </body>
 </html>

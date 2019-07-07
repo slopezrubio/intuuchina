@@ -49920,7 +49920,6 @@ var courses = {
   moveTo: function moveTo(elementIndex) {
     courses.currentSlide = elementIndex;
     var value = 'translateX(' + 50 * -courses.currentSlide + '%)';
-    console.log(value);
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
   }
 };

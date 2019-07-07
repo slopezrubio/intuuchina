@@ -76,8 +76,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'nationality' => $data['nationality'],
             'type' => 'user',
+            'program' => $data['program'],
             'industry' => $this->checkArrayField($data, 'industry'),
-            'program' => $this->checkArrayField($data, 'program'),
             'university' => $this->checkArrayField($data, 'university'),
             'password' => Hash::make($data['password']),
         ]);
