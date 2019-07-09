@@ -49786,6 +49786,7 @@ var courses = {
   pictureHolder: document.querySelector('.course-descriptions'),
   pictures: document.getElementsByClassName('description-base'),
   courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
+  requestedCourseURL: null,
   init: function init(event) {
     courses.setup(event);
 
@@ -49800,6 +49801,12 @@ var courses = {
     var _loop = function _loop(i) {
       courses.courseLinks[i].addEventListener('click', function (e) {
         e.preventDefault();
+
+        if (courses.requestedCourseURL !== "/learn/course=".concat(i + 1)) {
+          courses.requestedCourseURL = "/learn/course=".concat(i + 1);
+          courses.getCourseInfo(courses.requestedCourseURL);
+        }
+
         var elementIndex = $(this).index();
 
         if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
@@ -49820,6 +49827,12 @@ var courses = {
     var _loop2 = function _loop2(i) {
       courses.pictures[i].addEventListener('click', function (e) {
         e.preventDefault();
+
+        if (courses.requestedCourseURL !== "/learn/course=".concat(i + 1)) {
+          courses.requestedCourseURL = "/learn/course=".concat(i + 1);
+          courses.getCourseInfo(courses.requestedCourseURL);
+        }
+
         var elementIndex = $(this).index();
         courses.setDesktopSliders[i + 1]();
         courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
@@ -49844,6 +49857,22 @@ var courses = {
       courses.setDesktopSliders[courses.checkSelectedController()]();
       courses.resetResponsiveSliders();
     }
+  },
+  getCourseInfo: function getCourseInfo(path) {
+    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    $.get({
+      url: path,
+      cache: false,
+      data: data,
+      dataType: 'html',
+      error: function error(xhr, status, _error) {
+        console.log(_error);
+      },
+      success: function success(data, status, xhr) {
+        $('.course-information').remove();
+        $('.course-descriptions').after(data);
+      }
+    });
   },
   resetResponsiveSliders: function resetResponsiveSliders() {
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', 'translate(0px)');
@@ -50019,19 +50048,19 @@ var dom = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })

@@ -30,6 +30,17 @@ Route::get('/learn', function() {
     return view('pages/learn-chinese', compact('params'));
 });
 
+/* Información Cursos Aprende Chino */
+Route::get('/learn/course={courseCode}', function($course) {
+    $params = (object) array(
+        'course' => $course,
+        'price' => $course == 1 ? "499" : "18",
+        'extra_info' => $course == 1 ? "Estancia mínima de un mes" : "Solicitar un mínimo de 40 horas"
+    );
+
+    return view('partials/_price-course-info', compact( 'params'));
+})->where('courseCode', '[0-9]+');
+
 /* Universidad */
 Route::get('/university', function() {
     return view;

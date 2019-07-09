@@ -516,8 +516,9 @@ header .img {
   padding: 2rem;
   width: 100%;
   background-color: #00000070;
-  border: 10px solid white;
+  border: 5px solid white;
   border-radius: 30px;
+  height: 350px;
   box-shadow: 3px 3px 20px #00000080;
   -webkit-display: flex;
   -moz-display: flex;
@@ -546,7 +547,7 @@ header .img {
 }
 
 .course-information .course-information_box p .price-tag {
-  font-size: calc(2.992876027vw + 49.2053288505px);
+  font-size: calc(1.3400351321vw + 48.6222648149px);
   font-weight: 700;
   text-align: center;
   display: flex;
@@ -564,6 +565,11 @@ header .img {
 .course-information .course-information_box p > * {
   width: auto;
   margin: 0 auto;
+}
+
+.course-information .price-box {
+  height: auto;
+  width: auto;
 }
 
 .course-descriptions {
@@ -714,6 +720,10 @@ header .img {
   align-items: center;
   padding: 2em;
   color: white;
+}
+
+.course-information .course-information_box:not(:last-child) {
+  margin-bottom: 2em;
 }
 
 /*.bg-online-course{

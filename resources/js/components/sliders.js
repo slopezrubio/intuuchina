@@ -62,6 +62,7 @@ let courses = {
     pictureHolder: document.querySelector('.course-descriptions'),
     pictures: document.getElementsByClassName('description-base'),
     courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
+    requestedCourseURL: null,
     init: (event) => {
         courses.setup(event);
 
@@ -75,6 +76,10 @@ let courses = {
         for (let i = 0; i < courses.courseLinks.length; i++) {
             courses.courseLinks[i].addEventListener('click', function(e) {
                 e.preventDefault();
+                if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
+                    courses.requestedCourseURL = `/learn/course=${i + 1}`;
+                    courses.getCourseInfo(courses.requestedCourseURL);
+                }
                 let elementIndex = $(this).index();
                 if (!breakpoints.isLargeDevice()) {
                     courses.moveTo(elementIndex);
@@ -89,6 +94,10 @@ let courses = {
         for (let i = 0; i < courses.pictures.length; i++) {
             courses.pictures[i].addEventListener('click', function(e) {
                 e.preventDefault();
+                if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
+                    courses.requestedCourseURL = `/learn/course=${i + 1}`;
+                    courses.getCourseInfo(courses.requestedCourseURL);
+                }
                 let elementIndex = $(this).index();
                 courses.setDesktopSliders[i + 1]();
                 courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
@@ -99,7 +108,7 @@ let courses = {
         if (!breakpoints.isLargeDevice()) {
             // Compatibility with all the browsers
             if (event.type === 'resize') {
-                courses.update()
+                courses.update();
                 if (document.querySelector('.left-slide') !== null || document.querySelector('.right-slide') !== null) {
                     courses.resetDesktopSliders();
                 }
@@ -108,6 +117,21 @@ let courses = {
             courses.setDesktopSliders[courses.checkSelectedController()]();
             courses.resetResponsiveSliders();
         }
+    },
+    getCourseInfo: function(path, data = null) {
+        $.get({
+            url: path,
+            cache: false,
+            data: data,
+            dataType: 'html',
+            error: function(xhr, status, error) {
+                console.log(error);
+            },
+            success: function(data, status, xhr) {
+                $('.course-information').remove();
+                $('.course-descriptions').after(data);
+            }
+        })
     },
     resetResponsiveSliders: () => {
         dom.setProperty(courses.carrousel, 'transform','translate(0px)');

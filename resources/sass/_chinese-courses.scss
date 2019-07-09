@@ -3,8 +3,9 @@
   padding: 2rem;
   width: 100%;
   background-color: #00000070;
-  border: 10px solid $white;
+  border: 5px solid $white;
   border-radius: 30px;
+  height: 350px;
   box-shadow: 3px 3px 20px #00000080;
   @include prefixed(display, flex);
   @include prefixed(flex-direction, column);
@@ -14,7 +15,7 @@
     @include prefixed(display, flex);
     @include prefixed(flex-direction, column);
     .price-tag {
-      $map: (295: 32, 389: 66, 688: 98, 1875: 98);
+      $map: (295: 32, 389: 66, 688: 70, 1875: 70);
       font-size: minimosCuadrados($map);
       font-weight: 700;
       text-align: center;
@@ -35,6 +36,11 @@
       margin: 0 auto;
     }
   }
+}
+
+%price-box {
+  height: auto;
+  width: auto;
 }
 
 .course-descriptions {
@@ -164,6 +170,12 @@
   color: $white;
   .course-information_box {
     @extend %default-info-box;
+  }
+  .price-box {
+    @extend %price-box;
+  }
+  .course-information_box:not(:last-child) {
+    margin-bottom: 2em;
   }
 }
 /*.bg-online-course{
