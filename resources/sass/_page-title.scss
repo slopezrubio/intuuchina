@@ -22,7 +22,7 @@
       background: $sectionDark;
       margin: 0 auto;
       padding: 1.5em;
-      border-radius: 8px;
+      border-radius: 28px;
       border: 2px solid $primaryWhite;
       display: flex;
       flex-direction: column-reverse;
@@ -57,10 +57,12 @@
       }
 
       &-header {
-        $map: (397: 18, 482: 18, 1903: 42);
+        $map: (397: 24, 482: 24, 1903: 42);
         font-size: minimosCuadrados($map);
         line-height: 1.4;
         font-weight: 700;
+        text-align: center;
+        margin: .5em;
       }
   }
 }

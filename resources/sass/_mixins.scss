@@ -82,3 +82,107 @@
     }
   }
 }
+
+@mixin marginBottom {
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+@mixin resetSelect {
+  @include prefixed(appearance, none);
+  padding-left: 0px;
+}
+
+@mixin arrowIcon {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1.7em);
+  top: 60px;
+  width: 1em;
+  height: 1em;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  @include prefixed(transform, rotate(135deg));
+  z-index: -2;
+}
+
+/* Gets the element disappeared */
+@mixin reset {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+@mixin switchButton {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 34px;
+  margin-top: 10px;
+  .checkbox_slider {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: $neutralColor;
+    @include prefixed('transition', '.4s');
+
+    &--rounded {
+      border-radius: 34px;
+    }
+
+    &--rounded::after {
+      font-family: 'Montserrat', sans-serif;
+      content: "NO";
+      color: $primaryDark;
+      top: 12px;
+      position: absolute;
+      font-size: 0.8em;
+      z-index: 1;
+      left: 33px;
+    }
+
+    &--rounded:before {
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    &:before {
+      position: absolute;
+      content: "";
+      width: 26px;
+      height: 26px;
+      background: $primaryWhite;
+      left: 4px;
+      bottom: 4px;
+      @include prefixed('transition', '.4s');
+    }
+  }
+
+  input:checked + .checkbox_slider:before {
+    @include prefixed('transform', 'translateX(26px)');
+  }
+
+  input:checked + .checkbox_slider {
+    background: $primaryRed;
+  }
+
+  input:focus + .checkbox_slider {
+    box-shadow: 0 0 1px $primaryRed;
+  }
+
+  input:checked + .checkbox_slider:after {
+    font-family: 'Montserrat', sans-serif;
+    content: "YES";
+    left: 4px;
+    top: 12px;
+    color: $primaryWhite;
+  }
+}

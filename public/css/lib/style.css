@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+/* Gets the element disappeared */
+
 /* -------------
  * - Reset CSS -
  * -------------
@@ -135,6 +137,10 @@ header#job-description {
 
 header#learn-chinese {
   background-image: url("/../../storage/images/learn1.jpg");
+}
+
+header#register {
+  background-image: url("/../../storage/images/classroom.jpg");
 }
 
 /* Menú desplegado */
@@ -867,6 +873,259 @@ header .img {
   .course-descriptions .description-container .right-slide--none:after {
     content: "\F100";
     left: -158px;
+  }
+}
+
+.container .extended-form {
+  padding: 2em 0;
+  border: none;
+}
+
+.container .extended-form .card-body {
+  padding: 0em;
+}
+
+.container .extended-form .card-body form input {
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+}
+
+.container .extended-form .card-body form input:focus {
+  box-shadow: none;
+}
+
+.container .extended-form .card-body form input:focus {
+  border-color: #C80B0B;
+}
+
+.container .extended-form .card-body form > div > label {
+  font-weight: 700;
+}
+
+.container .extended-form .card-body form > div:not(:first-of-type) {
+  margin-top: 19px;
+}
+
+.container .extended-form .card-body form .regular-select-wrapper {
+  z-index: 2;
+  position: relative;
+}
+
+.container .extended-form .card-body form .regular-select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  padding-left: 0px;
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  z-index: -1;
+  cursor: pointer;
+}
+
+.container .extended-form .card-body form .regular-select-wrapper select:focus {
+  box-shadow: none;
+}
+
+.container .extended-form .card-body form .regular-select-wrapper select:focus {
+  border-color: #C80B0B;
+}
+
+.container .extended-form .card-body form .regular-select-wrapper::before {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1.7em);
+  top: 60px;
+  width: 1em;
+  height: 1em;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  z-index: -2;
+  top: 5px;
+}
+
+.container .extended-form .card-body form .switch {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 34px;
+  margin-top: 10px;
+  width: 68px;
+  height: 38px;
+}
+
+.container .extended-form .card-body form .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #d1d1d1;
+  transition: .4s;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider--rounded {
+  border-radius: 34px;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider--rounded::after {
+  font-family: "Montserrat", sans-serif;
+  content: "NO";
+  color: black;
+  top: 12px;
+  position: absolute;
+  font-size: 0.8em;
+  z-index: 1;
+  left: 33px;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider--rounded:before {
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider:before {
+  position: absolute;
+  content: "";
+  width: 26px;
+  height: 26px;
+  background: white;
+  left: 4px;
+  bottom: 4px;
+  transition: .4s;
+}
+
+.container .extended-form .card-body form .switch input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.container .extended-form .card-body form .switch input:checked + .checkbox_slider {
+  background: #C80B0B;
+}
+
+.container .extended-form .card-body form .switch input:focus + .checkbox_slider {
+  box-shadow: 0 0 1px #C80B0B;
+}
+
+.container .extended-form .card-body form .switch input:checked + .checkbox_slider:after {
+  font-family: "Montserrat", sans-serif;
+  content: "YES";
+  left: 4px;
+  top: 12px;
+  color: white;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider:before {
+  width: 30px;
+  height: 30px;
+}
+
+.container .extended-form .card-body form .switch .checkbox_slider:after {
+  left: 38px;
+}
+
+.container .extended-form .card-body form .switch input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(28px);
+  transform: translateX(28px);
+}
+
+/* Toggled fields (University, Study and Industry) */
+
+#industryFieldset div .sw_input,
+#universityFieldset div .sw_input,
+#studyFieldset div .sw_input {
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  -o-justify-content: space-between;
+  justify-content: space-between;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  align-items: center;
+}
+
+#industryFieldset div .sw_input label,
+#universityFieldset div .sw_input label,
+#studyFieldset div .sw_input label {
+  margin-top: 0.5em;
+}
+
+#industryFieldset div .sw_input label:first-of-type,
+#universityFieldset div .sw_input label:first-of-type,
+#studyFieldset div .sw_input label:first-of-type {
+  width: 60%;
+}
+
+@media only screen and (max-width: 320px) {
+  #industryFieldset div .sw_input,
+  #universityFieldset div .sw_input,
+  #studyFieldset div .sw_input {
+    -moz-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    -moz-justify-content: flex-start;
+    -ms-justify-content: flex-start;
+    -o-justify-content: flex-start;
+    justify-content: flex-start;
+    -moz-align-items: flex-start;
+    -ms-align-items: flex-start;
+    -o-align-items: flex-start;
+    align-items: flex-start;
+  }
+
+  #industryFieldset div .sw_input label:first-of-type,
+  #universityFieldset div .sw_input label:first-of-type,
+  #studyFieldset div .sw_input label:first-of-type {
+    margin-bottom: 0;
+    margin-top: 1em;
+  }
+}
+
+@media only screen and (min-width: 575px) and (max-width: 991px) {
+  #industryFieldset,
+  #universityFieldset,
+  #studyFieldset {
+    width: 100%;
+  }
+
+  #industryFieldset div,
+  #universityFieldset div,
+  #studyFieldset div {
+    -webkit-display: grid;
+    -moz-display: grid;
+    -ms-display: grid;
+    -o-display: grid;
+    display: grid;
+    -webkit-grid-template-columns: 1fr 1fr;
+    -moz-grid-template-columns: 1fr 1fr;
+    -ms-grid-template-columns: 1fr 1fr;
+    -o-grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    -webkit-grid-gap: 0 1em;
+    -moz-grid-gap: 0 1em;
+    -ms-grid-gap: 0 1em;
+    -o-grid-gap: 0 1em;
+    grid-gap: 0 1em;
   }
 }
 
@@ -1866,7 +2125,7 @@ main .news_container .section_body .tv a img {
   background: rgba(0, 0, 0, 0.5);
   margin: 0 auto;
   padding: 1.5em;
-  border-radius: 8px;
+  border-radius: 28px;
   border: 2px solid white;
   display: flex;
   flex-direction: column-reverse;
@@ -1918,9 +2177,11 @@ main .news_container .section_body .tv a img {
 }
 
 .main-section--primary .title-card-header {
-  font-size: calc(1.6357659165vw + 10.8309974009px);
+  font-size: calc(1.2268244374vw + 18.6232480506px);
   line-height: 1.4;
   font-weight: 700;
+  text-align: center;
+  margin: 0.5em;
 }
 
 @media only screen and (max-width: 320px) {

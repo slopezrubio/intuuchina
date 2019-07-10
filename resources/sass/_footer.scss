@@ -256,6 +256,7 @@ footer {
           &--rounded {
             border-radius: 34px;
           }
+
           &--rounded::after {
             font-family: 'Montserrat', sans-serif;
             content: "NO";
@@ -266,6 +267,7 @@ footer {
             z-index: 1;
             left: 33px;
           }
+
           &--rounded:before {
             border-radius: 50%;
             z-index: 10;
@@ -283,6 +285,7 @@ footer {
           }
         }
       }
+
       input:focus + .checkbox_slider {
         box-shadow: 0 0 1px $primaryRed;
       }
