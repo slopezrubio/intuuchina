@@ -189,7 +189,7 @@
                                 <label for="inputUniversity" class="col-md-3 col-form-label text-md-left">University</label>
                                 <div class="col-md-9">
                                     <div class="sw_input">
-                                        <label aria-label="mba">MBA (Master of Business Administration)</label>
+                                        <label aria-label="mba">MBA</label>
                                         <label for="mba" class="switch">
                                             <input id="mba" type="checkbox" value="mba" name="university[]">
                                             <i class="checkbox_slider fas checkbox_slider--rounded"></i>
@@ -235,12 +235,18 @@
                             </div>
 
                             <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="col-5 col-md-5">
+                                    <button type="submit" class="shutter-button">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
+                                <div class="col-5 col-md-5 offset-md-2">
+                                    <button type="reset" class="shutter-button">
+                                        {{ __('Cancel') }}
+                                    </button>
+                                </div>
                             </div>
+
                         </form>
                     </div>
                 </div>

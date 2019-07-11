@@ -1044,6 +1044,73 @@ header .img {
   transform: translateX(28px);
 }
 
+.container .extended-form .card-body form .shutter-button {
+  padding: 10px;
+  font-size: 20px;
+  width: 100%;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  background: white;
+  transition-property: color;
+  transition-duration: 0.3s;
+  border: 2px solid #C80B0B;
+  border-radius: 22px;
+  border-radius: 30px;
+}
+
+.container .extended-form .card-body form .shutter-button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #C80B0B;
+  border-radius: 20px;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transform-property: transform;
+  -moz-transform-property: transform;
+  -ms-transform-property: transform;
+  -o-transform-property: transform;
+  transform-property: transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+}
+
+.container .extended-form .card-body form .shutter-button:hover,
+.container .extended-form .card-body form .shutter-button:focus,
+.container .extended-form .card-body form .shutter-button:active {
+  color: #C80B0B;
+}
+
+.container .extended-form .card-body form .shutter-button:hover:before,
+.container .extended-form .card-body form .shutter-button:focus:before,
+.container .extended-form .card-body form .shutter-button:active:before {
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+}
+
+@media only screen and (max-width: 410px) {
+  .container .extended-form .card-body form > div:last-of-type {
+    -moz-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .container .extended-form .card-body form > div:last-of-type .shutter-button {
+    max-width: 100%;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .container .extended-form .card-body form > div:first-of-type {
     -webkit-display: flex;
@@ -1064,6 +1131,7 @@ header .img {
 #industryFieldset div .sw_input,
 #universityFieldset div .sw_input,
 #studyFieldset div .sw_input {
+  height: 65px;
   -webkit-display: flex;
   -moz-display: flex;
   -ms-display: flex;

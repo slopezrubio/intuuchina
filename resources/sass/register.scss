@@ -62,17 +62,31 @@
                         @include prefixed('transform', 'translateX(28px)');
                     }
                 }
+
+                .shutter-button {
+                    padding: 10px;
+                    font-size: 20px;
+                    width: 100%;
+                    cursor: pointer;
+                    @include shutter-in-horizontal();
+                    border-radius: 30px;
+                }
             }
         }
     }
 }
 
-@media #{$footer-fix} {
+@media only screen and (max-width: 410px) {
     .container {
         .extended-form {
             .card-body {
                 form {
-
+                    & > div:last-of-type {
+                        @include prefixed(flex-direction, column);
+                        .shutter-button {
+                            max-width: 100%;
+                        }
+                    }
                 }
             }
         }
@@ -102,6 +116,7 @@
 #industryFieldset, #universityFieldset, #studyFieldset {
     div {
         .sw_input {
+            height: 65px;
             @include prefixed(display, flex);
             @include prefixed(justify-content, space-between);
             @include prefixed(align-items, center);
