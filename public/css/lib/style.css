@@ -1044,6 +1044,21 @@ header .img {
   transform: translateX(28px);
 }
 
+@media only screen and (min-width: 768px) {
+  .container .extended-form .card-body form > div:first-of-type {
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    margin-bottom: 0px;
+  }
+
+  .container .extended-form .card-body form > div:first-of-type > div > label {
+    font-weight: 700;
+  }
+}
+
 /* Toggled fields (University, Study and Industry) */
 
 #industryFieldset div .sw_input,
@@ -1068,12 +1083,13 @@ header .img {
 #universityFieldset div .sw_input label,
 #studyFieldset div .sw_input label {
   margin-top: 0.5em;
+  font-size: 15px;
 }
 
 #industryFieldset div .sw_input label:first-of-type,
 #universityFieldset div .sw_input label:first-of-type,
 #studyFieldset div .sw_input label:first-of-type {
-  width: 60%;
+  width: 45%;
 }
 
 @media only screen and (max-width: 320px) {
@@ -1102,12 +1118,6 @@ header .img {
 }
 
 @media only screen and (min-width: 575px) and (max-width: 991px) {
-  #industryFieldset,
-  #universityFieldset,
-  #studyFieldset {
-    width: 100%;
-  }
-
   #industryFieldset div,
   #universityFieldset div,
   #studyFieldset div {
@@ -1121,11 +1131,33 @@ header .img {
     -ms-grid-template-columns: 1fr 1fr;
     -o-grid-template-columns: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    -webkit-grid-gap: 0 1em;
-    -moz-grid-gap: 0 1em;
-    -ms-grid-gap: 0 1em;
-    -o-grid-gap: 0 1em;
-    grid-gap: 0 1em;
+    -webkit-grid-gap: 0 1.5em;
+    -moz-grid-gap: 0 1.5em;
+    -ms-grid-gap: 0 1.5em;
+    -o-grid-gap: 0 1.5em;
+    grid-gap: 0 1.5em;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #industryFieldset div,
+  #universityFieldset div,
+  #studyFieldset div {
+    -webkit-display: grid;
+    -moz-display: grid;
+    -ms-display: grid;
+    -o-display: grid;
+    display: grid;
+    -webkit-grid-template-columns: 1fr 1fr;
+    -moz-grid-template-columns: 1fr 1fr;
+    -ms-grid-template-columns: 1fr 1fr;
+    -o-grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    -webkit-grid-gap: 0 1.5em;
+    -moz-grid-gap: 0 1.5em;
+    -ms-grid-gap: 0 1.5em;
+    -o-grid-gap: 0 1.5em;
+    grid-gap: 0 1.5em;
   }
 }
 

@@ -1,5 +1,5 @@
-<label for="inputNationality" class="col-md-4 col-form-label text-md-right">{{ __('Nationality') }}</label>
-<div class="col-md-6">
+<label for="inputNationality" class="col-md-3 col-form-label text-md-left">{{ __('Nationality') }}</label>
+<div class="col-md-9">
     <div class="regular-select-wrapper">
         <select id="nationality" type="text" class="form-control{{ $errors->has('nationality') ? ' is-invalid' : '' }}" name="nationality" value="{{ old('nationality') }}" required>
             <option value="afghan">Afghan</option>

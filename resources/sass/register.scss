@@ -79,6 +79,25 @@
     }
 }
 
+@media only screen and (min-width: 768px) {
+    .container {
+        .extended-form {
+            .card-body {
+                form {
+                    & > div:first-of-type {
+                        @include prefixed(display, flex);
+                        margin-bottom: 0px;
+
+                        & > div > label {
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /* Toggled fields (University, Study and Industry) */
 #industryFieldset, #universityFieldset, #studyFieldset {
     div {
@@ -89,10 +108,11 @@
 
             label {
                 margin-top: .5em;
+                font-size: 15px;
             }
 
             label:first-of-type {
-                width: 60%;
+                width: 45%;
             }
         }
     }
@@ -116,15 +136,26 @@
 
 @media #{$medium_devices_secondary} {
     #industryFieldset, #universityFieldset, #studyFieldset {
-        width: 100%;
         div {
             @include prefixed(display, grid);
             @include prefixed(grid-template-columns, '1fr 1fr');
-            @include prefixed(grid-gap, '0 1em');
+            @include prefixed(grid-gap, '0 1.5em');
             .sw_input {
-
                 label:first-of-type {
+                }
+            }
+        }
+    }
+}
 
+@media #{$large-devices} {
+    #industryFieldset, #universityFieldset, #studyFieldset {
+        div {
+            @include prefixed(display, grid);
+            @include prefixed(grid-template-columns, '1fr 1fr');
+            @include prefixed(grid-gap, '0 1.5em');
+            .sw_input {
+                label:first-of-type {
                 }
             }
         }
