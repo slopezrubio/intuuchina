@@ -25,7 +25,7 @@
 
             <li class="dropdown">
                 <a href="#" class="nav-item" data-target="#university" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                    <div class="toggleOption" >Universidad</div>
+                    <div class="toggleOption" >Universidad<i class="fas fa-angle-right"></i></div>
                 </a>
 
                 <ul id="university" class="dropdown-menu accordeon" role="menu" aria-labelledby="university">
@@ -59,49 +59,65 @@
                     </a>
                 </li>
             @else
-                <li class="nav-item dropdown-toggle">
-                    <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <div class="caret"></div>
+                <li class="dropdown">
+                    <a href="#" class="nav-item" data-target="#userMenu" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <div class="toggleOption" >{{ Auth::user()->name }}<i class="fas fa-angle-right"></i></div>
                     </a>
+
+                    <ul id="userMenu" class="dropdown-menu accordeon" role="menu" aria-labelledby="userMenu">
+                        <li>
+                            <a href="" class="dropdown-item selection">
+                                <div class="toggleOption">Cambiar Contraseña</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item selection" >
+                                <div class="toggleOption">Cerrar Sessión</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
         @endguest
 
             <li class="inline-items">
-                <div class="inline-item">
-                    <a href="#">ES</a>
-                    <a href="#">ING</a>
+                <div class="toggleOption">
+                    @if(App::isLocale('es'))
+                        <a href="#" class="selected">ES</a>
+                    @else
+                        <a href="#">ES</a>
+                    @endif
+                    @if(App::isLocale('en'))
+                        <a href="#" class="selected">ING</a>
+                    @else
+                        <a href="#">IN</a>
+                    @endif
                 </div>
-{{--                <a href="#" class="nav-item" data-target="#language" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">--}}
-{{--                    <div class="toggleOption" >ES</div>--}}
-{{--                </a>--}}
-{{--                <ul id="language" class="dropdown-menu accordeon" aria-labelledby="language">--}}
-{{--                    <li>--}}
-{{--                        <a href="#">--}}
-{{--                            <div class=" ">--}}
-{{--                                <p><a href="#"></a>ES</p>--}}
-{{--                            </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="#">--}}
-{{--                            <div class="selection ">--}}
-{{--                                <p><a href="#"></a>ENG</p>--}}
-{{--                            </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
+                <a href="#" class="nav-item" data-target="#language" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                    <div class="toggleOption" >ES</div>
+                </a>
+                <ul id="language" class="dropdown-menu accordeon" aria-labelledby="language">
+                    <li>
+                        <a href="#">
+                            <div class=" ">
+                                <p><a href="#"></a>ES</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="selection ">
+                                <p><a href="#"></a>ENG</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="social-media-nav">
                 <div class="media" id="media">
-
                     <a href="https://www.linkedin.com/company/intuuchina" class="social-media-nav-link"><i class="fab fa-linkedin-in"></i></a>
-
                     <a href="https://www.facebook.com/intuuchina" class="social-media-nav-link"><i class="fab fa-facebook-f"></i></a>
-
                     <a href="https://instagram.com/intuuchina" class="social-media-nav-link"><i class="fab fa-instagram s"></i></a>
-
                 </div>
             </li>
         </ul>
