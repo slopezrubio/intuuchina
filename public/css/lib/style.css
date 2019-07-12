@@ -53,7 +53,6 @@ a:hover {
 
 header {
   position: relative;
-  text-transform: uppercase;
 }
 
 .body-button {
@@ -327,36 +326,139 @@ header#register {
 }
 
 .navbar {
-  background: rgba(255, 255, 255, 0.3);
+  background: white;
+  justify-content: center;
+  align-items: center;
   z-index: 2;
 }
 
-@media only screen and (min-width: 100px) and (max-width: 992px) {
+.navbar_menu li {
+  cursor: pointer;
+}
+
+.navbar_menu li div[data-toggle=dropdown] {
+  color: black;
+}
+
+.navbar_menu li div[data-toggle=dropdown]:hover {
+  color: white;
+}
+
+.navbar a {
+  color: black;
+}
+
+.navbar .selector:hover {
+  color: white;
+  background: black;
+}
+
+.navbar .media div {
+  float: left;
+}
+
+.navbar .media a {
+  padding: 1em;
+  margin: 0;
+  height: auto;
+  color: black;
+}
+
+.navbar .media a:hover {
+  background: black;
+  color: white;
+}
+
+.navbar .social-media-nav-links {
+  width: 3em;
+}
+
+.navbar .btn-secondary {
+  background: white;
+  border: none;
+  color: black;
+  font-weight: 700;
+  padding-left: 2em;
+}
+
+.navbar btn-btn-secondary dropdown-toggle {
+  background-color: white;
+  border-color: white;
+}
+
+@media only screen and (min-width: 100px) and (max-width: 1060px) {
+  .navbar .toggleOption {
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    padding-left: 2em;
+    font-weight: bold;
+  }
+
   .navbar_menu {
     padding-bottom: 3px;
     width: 100%;
-    display: flex;
+    flex: 0 0 100%;
     justify-content: space-between;
+    align-content: center;
+    max-width: 100%;
+  }
+
+  .navbar_menu li.dropdown {
+    cursor: pointer;
+  }
+
+  .navbar_menu li.dropdown a[data-toggle=dropdown] {
+    color: black;
+  }
+
+  .navbar_menu li.dropdown a[data-toggle=dropdown]:hover,
+  .navbar_menu li.dropdown a[data-toggle=dropdown]:active,
+  .navbar_menu li.dropdown a[data-toggle=dropdown]:focus {
+    color: white;
+  }
+
+  .navbar_menu li.dropdown:hover > a {
+    color: white;
   }
 
   .navbar_menu--hidden {
     display: none;
   }
 
-  .navbar_menu--hidden li {
-    padding-bottom: 10px;
-    padding-top: 15px;
+  .navbar_menu--hidden .accordeon {
+    width: 100%;
+    position: static;
+    margin: 0;
+    float: none;
+    padding: 0;
+    border: none;
+    border-radius: 0px;
+    border-radius: 0;
+  }
+
+  .navbar_menu--hidden .accordeon li a {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .navbar_menu--hidden .accordeon li:hover {
+    background: black;
+  }
+
+  .navbar_menu--hidden .accordeon li:hover a:hover {
+    background: none;
   }
 
   .navbar_menu .toggleMenu {
     background: rgba(0, 0, 0, 0);
-    border: 1px solid white;
+    border: 1px solid black;
     padding: 8px 13px;
+    float: right;
   }
 
   .navbar_menu .toggleMenu i {
     font-size: 2em;
-    color: white;
+    color: black;
   }
 
   .navbar_menu--display {
@@ -364,12 +466,44 @@ header#register {
     position: absolute;
     top: 74px;
     left: 0px;
-    background: rgba(255, 255, 255, 0.3);
-    padding: 0.5em 2em;
+    padding: 0;
+    background: white;
     animation: easy 1s ease-in-out;
     -moz-animation: easy 1s ease-in-out;
     -webkit-animation: easy 1s ease-in-out;
     -ms-animation: easy 1s ease-in-out;
+  }
+
+  .navbar_menu--display a,
+  .navbar_menu--display .media {
+    color: black;
+  }
+
+  .navbar_menu--display a span,
+  .navbar_menu--display a i,
+  .navbar_menu--display a a,
+  .navbar_menu--display .media span,
+  .navbar_menu--display .media i,
+  .navbar_menu--display .media a {
+    line-height: 40px;
+    padding-left: 1em;
+  }
+
+  .navbar_menu--display a i,
+  .navbar_menu--display .media i {
+    padding-right: 1em;
+  }
+
+  .navbar_menu--display li:hover {
+    background: black;
+  }
+
+  .navbar_menu--display li:hover a:hover {
+    color: white;
+  }
+
+  .navbar_menu--display .social-media-nav:hover {
+    background: initial;
   }
 
   .navbar_menu img {
@@ -377,17 +511,25 @@ header#register {
   }
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1060px) {
   .navbar_menu {
     padding-bottom: 3px;
-    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: bold;
   }
 
   .navbar_menu li {
     float: left;
-    padding-bottom: 10px;
-    padding-top: 15px;
     padding-left: 20px;
+  }
+
+  .navbar_menu .social-media-nav a {
+    width: 1em;
+    padding: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
   }
 
   .navbar_menu .toggleMenu {
@@ -2218,7 +2360,8 @@ main .news_container .section_body .tv a img {
   -ms-transform: translateY(-50%);
   display: block;
   width: 100%;
-  z-index: 2;
+  text-transform: uppercase;
+  z-index: 1;
 }
 
 .main-section--primary .title-card {

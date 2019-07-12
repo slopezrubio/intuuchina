@@ -16,8 +16,8 @@
   @include verticalAlign();
   display: block;
   width: 100%;
-
-  z-index: 2;
+  text-transform: uppercase;
+  z-index: 1;
   .title-card {
       background: $sectionDark;
       margin: 0 auto;

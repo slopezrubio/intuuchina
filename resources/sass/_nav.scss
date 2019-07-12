@@ -9,32 +9,138 @@
 @import 'modal-login';
 
 .navbar {
-  background: $navbarDark;
+  background: $primaryWhite;
+  justify-content: center;
+  align-items: center;
   z-index:2;
-  .logo {
-
+  &_menu {
+    li {
+      cursor: pointer;
+      div[data-toggle="dropdown"] {
+        color: $primaryDark;
+        &:hover {
+          color: $primaryWhite;
+        }
+      }
+    }
   }
-  @media #{$small-and-medium-devices} {
+
+  a {
+    color: $primaryDark;
+  }
+
+  .selector:hover{
+    color: $primaryWhite;
+    background: $primaryDark;
+  }
+
+  .media {
+    div {
+      float: left;
+    }
+
+    a {
+      padding: 1em;
+      margin: 0;
+      height: auto;
+      color: $primaryDark;
+
+    }
+    a:hover {
+      background: $primaryDark;
+      color: $primaryWhite;
+    }
+  }
+
+  .social-media-nav-links{
+    width: 3em;
+  }
+
+  .btn-secondary{
+    background: $primaryWhite;
+    border: none;
+    color: $primaryDark;
+    font-weight: 700;
+    padding-left: 2em;
+  }
+
+  btn-btn-secondary dropdown-toggle{
+    background-color: $primaryWhite;
+    border-color: $primaryWhite;
+  }
+
+  @media only screen and (min-width: 100px) and (max-width: 1060px) {
+    .toggleOption {
+      padding-top: 0.7em;
+      padding-bottom: 0.7em;
+      padding-left: 2em;
+      font-weight: bold;
+    }
+
     &_menu {
       padding-bottom: 3px;
       width: 100%;
-      display: flex;
+      flex: 0 0 100%;
       justify-content: space-between;
+      align-content: center;
+      max-width: 100%;
+
+      li.dropdown {
+        cursor: pointer;
+        a[data-toggle="dropdown"] {
+          color: $primaryDark;
+          &:hover,
+          &:active,
+          &:focus {
+            color: $primaryWhite;
+          }
+        }
+      }
+
+      li.dropdown:hover {
+        & > a {
+          color: $primaryWhite;
+        }
+      }
+
       &--hidden {
         display: none;
-        li {
-          padding-bottom: 10px;
-          padding-top: 15px;
+
+        .accordeon{
+          width: 100%;
+          position: static;
+          margin: 0;
+          float: none;
+          padding: 0;
+          border: none;
+          border-radius: 0px;
+          @include prefixed(border-radius, 0);
+          li {
+            a {
+              padding-top: 0;
+              padding-bottom: 0;
+            }
+          }
+
+          li:hover{
+            background: $primaryDark;
+
+            a:hover{
+              background: none;
+            }
+          }
         }
       }
 
       .toggleMenu {
         background: rgba(0,0,0,0);
-        border: 1px solid $primaryWhite;
+        border: 1px solid $primaryDark;
         padding: 8px 13px;
+        float: right;
+
         i {
           font-size: 2em;
-          color: $primaryWhite;
+          color: $primaryDark;
         }
       }
 
@@ -43,10 +149,36 @@
         position: absolute;
         top: 74px;
         left: 0px;
-        background: $navbarDark;
-        padding: .5em 2em;
+        padding: 0;
+        background: $navbarPrimary;
         @include animation(easy);
+        a, .media {
+          color: $primaryDark;
+          span, i,a {
+            line-height: 40px;
+            padding-left: 1em;
+
+
+          }
+          i {
+            padding-right: 1em;
+          }
+
+        }
+        li:hover {
+          background: $primaryDark;
+
+
+          a:hover{
+            color: $primaryWhite;
+          }
+        }
+        .social-media-nav:hover {
+          background: initial;
+        }
       }
+
+
 
       img {
         height: 55px;
@@ -54,19 +186,36 @@
     }
   }
 
-  @media #{$large-devices} {
+
+  @media only screen and (min-width: 1060px) {
     &_menu {
       padding-bottom: 3px;
-      justify-content: flex-start;
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: bold;
+
+
       li {
-         float: left;
-         padding-bottom: 10px;
-         padding-top: 15px;
-         padding-left: 20px;
-       }
+        float: left;
+        padding-left: 20px;
+      }
+
+
+      .social-media-nav {
+
+        a {
+          width: 1em;
+          padding: 2em;
+          padding-top: 1em;
+          padding-bottom: 1em;
+
+        }
+      }
 
       .toggleMenu {
         display: none;
+
       }
 
       img {
@@ -75,4 +224,3 @@
     }
   }
 }
-
