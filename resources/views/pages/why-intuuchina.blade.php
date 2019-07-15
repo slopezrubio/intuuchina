@@ -1,14 +1,12 @@
 @extends('layouts.master')
 
 @section('content')
-    <header>
-        <div class="img">
-            {{--Elemento NAV--}}
-            @include('partials._nav')
+    <header id="why-us">
+        {{--Elemento NAV--}}
+        @include('partials._nav')
 
-            {{--Elemento que muestras las estadísticas de Intuuchina--}}
-            @include('partials._stats')
-        </div>
+        {{--Elemento que muestras las estadísticas de Intuuchina--}}
+        @include('partials._stats')
     </header>
 
     {{--Elemento que muetra información extra sobre los motivos de elegir Intuuchina--}}

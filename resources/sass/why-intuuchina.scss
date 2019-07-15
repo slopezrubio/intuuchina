@@ -1,27 +1,40 @@
-section {
-  article {
-    margin: 40px;
-    h3 {
+.sensationalism-stats {
+  @include prefixed(display, flex);
+  @include prefixed(justify-content, center);
+  @include prefixed(flex-direction, row);
+  height: 95%;
+  @include prefixed(align-items, center);
+  .facts {
+    p {
       color: white;
-      justify-content: center;
       font-size: 20px;
+      text-align: center;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 1em;
+      &:last-of-type {
+        margin-top: 1em;
+        margin-bottom: 0px;
+      }
     }
     .circle {
+      @include prefixed(border-radius, 50%);
+      margin: 0 auto;
       width: 100px;
       height: 100px;
-      border: 3px solid white;
-      -moz-border-radius: 50%;
-      -webkit-border-radius: 50%;
-      border-radius: 3px solid white;
       background-color: #00000080;
-      // margin: 10px;
-      h4 {
+      border: 3px solid white;
+      h4.count {
         color: white;
-        font-weight: 600;
-        padding-top: 35px;
+        line-height: 100px;
+        text-align: center;
+        font-weight: 700;
       }
     }
   }
+
+  .facts:not(:first-of-type) {
+    display: none;
+  }
 }
+
+@import '_motifs';

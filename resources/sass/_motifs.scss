@@ -10,35 +10,90 @@ $red4:rgb(59, 53, 53);
 $white: white;
 $black2:#2D2B2E;
 $black3:#161414;
-$colors:( 'red1': #C80B0B, 'black':black, 'white':white, 'gris':#A9A7A7, );
-.container1 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 300px;
-  .red {
-    background-color: get-color('red1');
+$colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey':$neutralColor);
+
+/******* General Styles for the component *******/
+.red-section {
+  background-color: get-color('red');
+  h2 {
+    color: $primaryDark;
   }
-  .black {
-    background-color: get-color('black');
+  color: $primaryWhite;
+}
+
+.black-section {
+  background-color: get-color('black');
+  h2 {
+    color: $primaryWhite;
   }
-  .white {
-    background-color: get-color('white');
+  color: $neutralColor;
+}
+
+.white-section {
+  background-color: get-color('white');
+  h2 {
+    color: $primaryRed;
   }
-  .gris {
-    background-color: get-color('gris');
+  color: $primaryDark;
+}
+
+.grey-section {
+  background-color: get-color('grey');
+  h2 {
+    color: $primaryWhite;
   }
-  .redlet {
-    color: get-color('red1');
+  color: $primaryDark;
+}
+
+.black_and_white {
+  @include prefixed(filter, grayscale(100%));
+}
+
+grid-sd {
+  @include prefixed(display, grid);
+  @include prefixed(grid-template-columns, '1fr');
+}
+
+.no-padding {
+  padding: 0;
+}
+
+/*************** Component Style ****************/
+.container-fluid {
+  .motifs {
+    .motif {
+      &_card {
+        @include prefixed(display, flex);
+        @include prefixed(flex-direction, column);
+        @include prefixed(justify-content, center);
+        height: 375px;
+        padding: 2em;
+        &_title {
+          margin-bottom: 2em;
+        }
+
+        &_body {
+          &_text {
+            line-height: 1.8;
+          }
+        }
+      }
+      &_picture {
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
-  .blacklet {
-    color: get-color('black');
+
+  .motifs.unified {
+    .motif {
+      &_picture {
+        display: none;
+      }
+    }
   }
-  .whitelet {
-    color: get-color('white');
-  }
-  .grislet {
-    color: get-color('gris');
-  }
+
   .item {
     width: 28.2rem;
     height: 18.8rem;

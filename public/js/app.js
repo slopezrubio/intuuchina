@@ -49335,6 +49335,79 @@ if (document.querySelector('.footer') !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_motifs.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/_motifs.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/env */ "./resources/js/main/env.js");
+
+
+
+var motifs = {
+  sections: document.getElementsByClassName('motifs'),
+  init: function init() {
+    window.addEventListener('load', motifs.setup);
+    window.addEventListener('resize', function () {
+      motifs.setup();
+    });
+  },
+  setup: function setup() {
+    Object.keys(motifs.preparedFor).map(function (key) {
+      motifs.preparedFor[key]();
+    });
+  },
+  preparedFor: {
+    smallDevice: function smallDevice() {
+      if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isSmallDevice()) {
+        return false;
+      }
+
+      motifs.placePicturesAsBackground();
+    },
+    mediumDevice: function mediumDevice() {
+      if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isMediumDevice()) {
+        return false;
+      }
+
+      console.log('is medium');
+    },
+    largeDevice: function largeDevice() {
+      if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isLargeDevice()) {
+        return false;
+      }
+    }
+  },
+  placePicturesAsBackground: function placePicturesAsBackground() {
+    for (var i = 0; i < motifs.sections.length; i++) {
+      if (motifs.sections[i].querySelector('.motif_picture') !== null) {
+        var picture = motifs.sections[i].querySelector('.motif_picture').getElementsByTagName('img')[0];
+        _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(motifs.sections[i], 'unified');
+        motifs.setBackgroundImage(picture.getAttribute('src'), motifs.sections[i].querySelector('.motif_card'));
+      }
+    }
+  },
+  setBackgroundImage: function setBackgroundImage(picture, element) {
+    var filter = /\w+\.(jpe?g|gif|svg|png)$/g;
+    var url = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/' + picture.match(filter);
+    $(element).css("background", 'url(\'' + url + '\') no-repeat scroll center');
+    $(element).css("background-size", "cover");
+  },
+  pathToImages: function pathToImages(path) {}
+};
+
+if (document.querySelector('.motifs') !== null) {
+  motifs.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/_nav.js":
 /*!*****************************************!*\
   !*** ./resources/js/components/_nav.js ***!
@@ -49728,6 +49801,35 @@ if (document.querySelector('#job-description') !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_stats.js":
+/*!*******************************************!*\
+  !*** ./resources/js/components/_stats.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var stats = {
+  init: function init() {
+    $('.count').each(function () {
+      $(this).prop('Counter', 0).animate({
+        Counter: $(this).text()
+      }, {
+        duration: 4000,
+        easing: 'swing',
+        step: function step(now) {
+          $(this).text(Math.ceil(now));
+        }
+      });
+    });
+  }
+};
+
+if (document.querySelector('.sensationalism-stats') !== null) {
+  stats.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/sliders.js":
 /*!********************************************!*\
   !*** ./resources/js/components/sliders.js ***!
@@ -50004,6 +50106,12 @@ var breakpoints = {
   },
   isLargeDevice: function isLargeDevice() {
     return window.innerWidth >= breakpoints.widths.largeDevices[0];
+  },
+  isMediumDevice: function isMediumDevice() {
+    return window.innerWidth >= breakpoints.widths.mediumDevices[0] && window.innerWidth < breakpoints.widths.mediumDevices[1];
+  },
+  isSmallDevice: function isSmallDevice() {
+    return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1];
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (breakpoints);
@@ -50044,6 +50152,24 @@ var dom = {
 
 /***/ }),
 
+/***/ "./resources/js/main/env.js":
+/*!**********************************!*\
+  !*** ./resources/js/main/env.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var env = {
+  paths: {
+    "public": '/../../'
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (env);
+
+/***/ }),
+
 /***/ "./resources/sass/main.scss":
 /*!**********************************!*\
   !*** ./resources/sass/main.scss ***!
@@ -50056,9 +50182,9 @@ var dom = {
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50073,6 +50199,8 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 

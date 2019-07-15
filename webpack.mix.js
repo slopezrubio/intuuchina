@@ -23,4 +23,6 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     .js('resources/js/components/_news.js', 'js/app.js')
     .js('resources/js/components/_chinese-courses.js', 'js/app.js')
     .js('resources/js/components/_filter-by.js', 'js/app.js')
+    .js('resources/js/components/_stats.js', 'js/app.js')
+    .js('resources/js/components/_motifs.js', 'js/app.js')
     .js('resources/js/components/_footer.js', 'js/app.js');

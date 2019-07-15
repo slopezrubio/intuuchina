@@ -1,30 +1,24 @@
-<section>
-    <article>
-        <center>
-            <h3 >Más de</h3>
-            <div class="circle">
-                <h4 class="count">450</h4>
-            </div>
-            <h3>Personas en China</h3>
-        </center>
+<section class="sensationalism-stats">
+    <article class="facts">
+        <p>Más de</p>
+        <div class="circle">
+            <h4 class="count">450</h4>
+        </div>
+        <p>Personas en China</p>
     </article>
-    <article>
-        <center>
-            <h3>Más de</h3>
-            <div class="circle">
-                <h4 class="count">500</h4>
-            </div>
-            <h3>Solicitudes mensuales</h3>
-        </center>
+    <article class="facts">
+        <p>Más de</p>
+        <div class="circle">
+            <h4 class="count">500</h4>
+        </div>
+        <p>Solicitudes mensuales</p>
     </article>
-    <article>
-        <center>
-            <h3>Desde</h3>
-            <div class="circle">
-                <h4 class="count">41</h4>
-            </div>
-            <h3>Países</h3>
-        </center>
+    <article class="facts">
+        <p>Desde</p>
+        <div class="circle">
+            <h4 class="count">41</h4>
+        </div>
+        <p>Países</p>
     </article>
 </section>
 

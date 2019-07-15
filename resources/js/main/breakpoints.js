@@ -11,7 +11,14 @@ let breakpoints = {
     },
     isLargeDevice: () => {
         return window.innerWidth >= breakpoints.widths.largeDevices[0];
+    },
+    isMediumDevice: () => {
+        return window.innerWidth >= breakpoints.widths.mediumDevices[0] && window.innerWidth < breakpoints.widths.mediumDevices[1];
+    },
+    isSmallDevice: () => {
+        return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1]
     }
+
 };
 
 export default breakpoints;
