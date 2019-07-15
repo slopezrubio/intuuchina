@@ -137,6 +137,7 @@
     #industryFieldset, #universityFieldset, #studyFieldset {
         div {
             .sw_input {
+                height: auto;
                 @include prefixed(flex-direction, column);
                 @include prefixed(justify-content, flex-start);
                 @include prefixed(align-items, flex-start);
