@@ -1801,6 +1801,16 @@ footer {
     margin-right: 2em;
   }
 
+  footer .footer_contact_form .modal {
+    display: none;
+    color: black;
+  }
+
+  footer .footer_contact_form .modal,
+  footer .footer_contact_form .modal div {
+    flex-direction: column !important;
+  }
+
   footer .footer_social-media .footer_sublist {
     flex-direction: column;
   }
@@ -2132,6 +2142,16 @@ footer {
 
 .footer_contact_form > div:last-of-type .footer_submit {
   margin-right: 1.5em;
+}
+
+.footer_contact_form .modal {
+  display: none;
+  color: black;
+}
+
+.footer_contact_form .modal,
+.footer_contact_form .modal div {
+  flex-direction: column !important;
 }
 
 .footer_social-media i {
