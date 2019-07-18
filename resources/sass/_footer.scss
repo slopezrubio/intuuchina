@@ -52,6 +52,15 @@ footer {
             margin-right: 2em;
           }
         }
+        .modal {
+          display: none;
+          color: black;
+          &,
+          div {
+            flex-direction: column !important;
+          }
+        }
+
       }
 
       &_social-media {
@@ -363,6 +372,15 @@ footer {
       justify-content: flex-start;
       .footer_submit {
         margin-right: 1.5em;
+      }
+    }
+
+    .modal {
+      display: none;
+      color: black;
+      &,
+      div {
+        flex-direction: column !important;
       }
     }
   }
