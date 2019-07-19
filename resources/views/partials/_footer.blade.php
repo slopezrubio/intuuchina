@@ -75,9 +75,9 @@
                         <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <h5 class="modal-title" id="termsAndConditionsModalTitle">Términos y condiciones</h5>
-                            <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
+                            <h5 class="modal-title" id="termsAndConditionsModalTitle">Términos y condiciones</h5>
                         </div>
                         <div class="modal-body">
                             ...
