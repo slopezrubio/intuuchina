@@ -7,8 +7,16 @@ let chineseCourses = {
         window.addEventListener('resize',chineseCourses.setup);
     },
     courses: document.querySelectorAll('.description-base'),
+    cta: document.querySelectorAll('.cta'),
     coursesHolder: document.querySelector('.course-descriptions'),
-    setup: () => {
+    setup: (event) => {
+        if (event.type === 'load') {
+            for (let i = 0; i < chineseCourses.cta.length; i++) {
+                chineseCourses.cta[i].addEventListener('click', function(event) {
+                    event.stopPropagation();
+                })
+            }
+        }
         dom.expandToViewport(chineseCourses.coursesHolder);
         chineseCourses.setSizeCourses();
     },

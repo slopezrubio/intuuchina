@@ -2,8 +2,8 @@
     <div class="description-container">
         <div class="description-base">
             <div class="description-header">
-                <h2 id="presencial" onclick="toggleDescription()">Curso presencial <span>en China</span></h2>
-                <a class="cta" href="#course-information">Más Info</a>
+                <h2 id="presencial">Curso presencial <span>en China</span></h2>
+                <a class="cta" href="{{ route('register') }}">Inscribirse</a>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
                 aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat
@@ -12,8 +12,8 @@
         </div>
         <div class="description-base">
             <div class="description-header">
-                <h2 id="online" onclick="//toggleDescription()">Curso<span> Online</span></h2>
-                <a class="cta" href="#course-information">Más Info</a>
+                <h2 id="online">Curso<span> Online</span></h2>
+                <a class="cta" href="{{ route('register') }}">Inscribirse</a>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
                 aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat

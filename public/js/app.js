@@ -49204,8 +49204,17 @@ var chineseCourses = {
     window.addEventListener('resize', chineseCourses.setup);
   },
   courses: document.querySelectorAll('.description-base'),
+  cta: document.querySelectorAll('.cta'),
   coursesHolder: document.querySelector('.course-descriptions'),
-  setup: function setup() {
+  setup: function setup(event) {
+    if (event.type === 'load') {
+      for (var i = 0; i < chineseCourses.cta.length; i++) {
+        chineseCourses.cta[i].addEventListener('click', function (event) {
+          event.stopPropagation();
+        });
+      }
+    }
+
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.coursesHolder);
     chineseCourses.setSizeCourses();
   },
