@@ -4,7 +4,7 @@ import env from '../main/env';
 
 let motifs = {
     sections: document.getElementsByClassName('motifs'),
-    container: document.querySelector('.container-fluid'),
+    container: document.querySelector('.mx-width'),
     init: () => {
       window.addEventListener('load',motifs.setup);
       window.addEventListener('resize', function() {
@@ -12,6 +12,7 @@ let motifs = {
       });
     },
     setup: () => {
+        motifs.setContainer();
       Object.keys(motifs.preparedFor).map(function(key) {
           motifs.preparedFor[key]();
       });
@@ -46,6 +47,20 @@ let motifs = {
 
           motifs.removePictureAsBackground();
       },
+    },
+    setContainer: () => {
+        if (!$(motifs.container).hasClass('shadow')) {
+            if (window.innerWidth >= 1382) {
+                dom.toggleSingleClass(motifs.container, 'shadow');
+                return true;
+            }
+        }
+
+        if (window.innerWidth < 1382) {
+            dom.toggleSingleClass(motifs.container, 'shadow');
+        }
+
+        return true;
     },
     removePictureAsBackground: () => {
         if (document.querySelector('.unified') !== null) {
@@ -84,10 +99,7 @@ let motifs = {
         $(element).css("background", 'url(\'' + url + '\') no-repeat scroll center');
         $(element).css("background-size", "cover");
     },
-    pathToImages: (path) => {
-
-    }
-}
+};
 
 if (document.querySelector('.motifs') !== null) {
    motifs.init();

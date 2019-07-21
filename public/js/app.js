@@ -49361,7 +49361,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var motifs = {
   sections: document.getElementsByClassName('motifs'),
-  container: document.querySelector('.container-fluid'),
+  container: document.querySelector('.mx-width'),
   init: function init() {
     window.addEventListener('load', motifs.setup);
     window.addEventListener('resize', function () {
@@ -49369,6 +49369,7 @@ var motifs = {
     });
   },
   setup: function setup() {
+    motifs.setContainer();
     Object.keys(motifs.preparedFor).map(function (key) {
       motifs.preparedFor[key]();
     });
@@ -49408,6 +49409,20 @@ var motifs = {
       motifs.removePictureAsBackground();
     }
   },
+  setContainer: function setContainer() {
+    if (!$(motifs.container).hasClass('shadow')) {
+      if (window.innerWidth >= 1382) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(motifs.container, 'shadow');
+        return true;
+      }
+    }
+
+    if (window.innerWidth < 1382) {
+      _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(motifs.container, 'shadow');
+    }
+
+    return true;
+  },
   removePictureAsBackground: function removePictureAsBackground() {
     if (document.querySelector('.unified') !== null) {
       for (var i = 0; i < motifs.sections.length; i++) {
@@ -49444,8 +49459,7 @@ var motifs = {
     var url = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/' + picture.match(filter);
     $(element).css("background", 'url(\'' + url + '\') no-repeat scroll center');
     $(element).css("background-size", "cover");
-  },
-  pathToImages: function pathToImages(path) {}
+  }
 };
 
 if (document.querySelector('.motifs') !== null) {

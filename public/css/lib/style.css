@@ -588,10 +588,10 @@ header#why-us {
   -ms-display: flex;
   -o-display: flex;
   display: flex;
-  -moz-justify-content: center;
-  -ms-justify-content: center;
-  -o-justify-content: center;
-  justify-content: center;
+  -moz-justify-content: space-evenly;
+  -ms-justify-content: space-evenly;
+  -o-justify-content: space-evenly;
+  justify-content: space-evenly;
   -moz-flex-direction: row;
   -o-flex-direction: row;
   flex-direction: row;
@@ -612,7 +612,7 @@ header#why-us {
 
 .sensationalism-stats .facts p:last-of-type {
   margin-top: 1em;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .sensationalism-stats .facts .circle {
@@ -631,8 +631,16 @@ header#why-us {
   font-weight: 700;
 }
 
-.sensationalism-stats .facts:not(:first-of-type) {
-  display: none;
+@media only screen and (max-width: 680px) {
+  .sensationalism-stats .facts:not(:first-of-type) {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 681px) and (max-width: 991px) {
+  .sensationalism-stats .facts:last-of-type {
+    display: none;
+  }
 }
 
 /******* General Styles for the component *******/
@@ -642,7 +650,7 @@ header#why-us {
   color: white;
 }
 
-.red-section h4 {
+.red-section h5 {
   color: black;
 }
 
@@ -651,7 +659,7 @@ header#why-us {
   color: #d1d1d1;
 }
 
-.black-section h4 {
+.black-section h5 {
   color: white;
 }
 
@@ -660,7 +668,7 @@ header#why-us {
   color: black;
 }
 
-.white-section h4 {
+.white-section h5 {
   color: #C80B0B;
 }
 
@@ -669,7 +677,7 @@ header#why-us {
   color: black;
 }
 
-.grey-section h4 {
+.grey-section h5 {
   color: white;
 }
 
@@ -677,12 +685,19 @@ header#why-us {
   color: white;
 }
 
-.black_and_white h4 {
+.black_and_white h5 {
   color: white;
 }
 
 .mx-width {
   max-width: 1342px;
+}
+
+@media only screen and (min-width: 1382px) {
+  .mx-width {
+    margin-top: 2em;
+    margin-bottom: 4em;
+  }
 }
 
 .grid-sd {
@@ -759,6 +774,7 @@ header#why-us {
 
 .container-fluid .motifs .motif_card_title {
   margin-bottom: 2em;
+  font-size: 1.8em;
 }
 
 .container-fluid .motifs .motif_card_body_text {
@@ -880,7 +896,7 @@ header#why-us {
     justify-content: flex-start;
   }
 
-  .container-fluid .motifs .motif_card h4 {
+  .container-fluid .motifs .motif_card h5 {
     margin-bottom: 1em;
   }
 
@@ -991,7 +1007,7 @@ header#why-us {
     justify-content: flex-start;
   }
 
-  .container-fluid .motifs .motif_card h4 {
+  .container-fluid .motifs .motif_card h5 {
     margin-bottom: 1em;
     width: 100%;
   }

@@ -2,7 +2,7 @@
 
     <section class="motifs red-section" id="mission">
         <div class="motif_card">
-            <h4 class="motif_card_title">Misión y Visión</h4>
+            <h5 class="motif_card_title">Misión y Visión</h5>
             <div class="motif_card_body">
                 <p class="motif_card_body_text">
                     La primera prioridad de IntuuChina es ayudar a las personas y organizaciones a realizar una transición exitosa en China. Con este fin, lo guiaremos en su propio camino poniendo a su disposición los recursos más valiosos. Un equipo energético y experimentado.
@@ -13,7 +13,7 @@
 
     <section class="motifs white-section" id="awards">
         <div class="motif_card">
-            <h4 class="motif_card_title">Reconocimientos</h4>
+            <h5 class="motif_card_title">Reconocimientos</h5>
             <div class="motif_card_body">
                 <ul>
                     <li><p class="motif_card_text">Premio RTVE Startup internacional.</p></li>
@@ -30,7 +30,7 @@
 
     <section class="motifs grey-section" id="values">
         <div class="motif_card">
-            <h4 class="motif_card_title">Valores</h4>
+            <h5 class="motif_card_title">Valores</h5>
             <div class="motif_card_body">
                 <p class="motif_card_body_text">
                     El equipo de IntuuChina ha elegido los valores que quiere representar, y está fuertemente comprometido con los siguientes valores: esfuerzo, compromiso, ambición, perseverancia, singularidad, optimismo, mente abierta y proactividad.
@@ -41,7 +41,7 @@
 
     <section class="motifs white-section" id="distinguishable">
         <div class="motif_card">
-            <h4 class="motif_card_title">Nos hace diferentes</h4>
+            <h5 class="motif_card_title">Nos hace diferentes</h5>
             <div class="motif_card_body">
                 <p class="motif_card_body_text">
                     Este equipo está comprometido y dedicado a brindarle un conjunto de servicios personalizados que agregarán un valor real y una ventaja competitiva a la futura carrera profesional.
@@ -55,7 +55,7 @@
 
     <section class="motifs black-section" id="offering">
         <div class="motif_card">
-            <h4 class="motif_card_title">Lo que ofrecemos</h4>
+            <h5 class="motif_card_title">Lo que ofrecemos</h5>
             <div class="motif_card_body">
                 <p class="motif_card_body_text">
                     Lorem ipsum dolor amet iPhone roof party sartorial, copper mug blog schlitz iceland cornhole small batch palo santo dreamcatcher. Affogato raw denim sriracha, lomo waistcoat wayfarers truffaut hammock wolf.
@@ -69,7 +69,7 @@
 
     <section class="motifs grey-section" id="us">
         <div class="motif_card">
-            <h4 class="motif_card_title">Conoce IntuuChina</h4>
+            <h5 class="motif_card_title">Conoce IntuuChina</h5>
             <div class="motif_card_body">
                 <p class="motif_card_body_text">
                     Lorem ipsum dolor amet iPhone roof party sartorial, copper mug blog schlitz iceland cornhole small batch palo santo dreamcatcher. Affogato raw denim sriracha, lomo waistcoat wayfarers truffaut hammock wolf.

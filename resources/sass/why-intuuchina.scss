@@ -1,6 +1,6 @@
 .sensationalism-stats {
   @include prefixed(display, flex);
-  @include prefixed(justify-content, center);
+  @include prefixed(justify-content, space-evenly);
   @include prefixed(flex-direction, row);
   height: 95%;
   @include prefixed(align-items, center);
@@ -13,7 +13,7 @@
       margin-bottom: 1em;
       &:last-of-type {
         margin-top: 1em;
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
     }
     .circle {
@@ -32,8 +32,16 @@
     }
   }
 
-  .facts:not(:first-of-type) {
-    display: none;
+  @media only screen and (max-width: 680px) {
+    .facts:not(:first-of-type) {
+      display: none;
+    }
+  }
+
+  @media #{$footer-fix} {
+    .facts:last-of-type {
+      display: none;
+    }
   }
 }
 

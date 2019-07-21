@@ -15,7 +15,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 /******* General Styles for the component *******/
 .red-section {
   background-color: get-color('red');
-  h4 {
+  h5 {
     color: $primaryDark;
   }
   color: $primaryWhite;
@@ -23,7 +23,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 
 .black-section {
   background-color: get-color('black');
-  h4 {
+  h5 {
     color: $primaryWhite;
   }
   color: $neutralColor;
@@ -31,7 +31,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 
 .white-section {
   background-color: get-color('white');
-  h4 {
+  h5 {
     color: $primaryRed;
   }
   color: $primaryDark;
@@ -39,14 +39,14 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 
 .grey-section {
   background-color: get-color('grey');
-  h4 {
+  h5 {
     color: $primaryWhite;
   }
   color: $primaryDark;
 }
 
 .black_and_white {
-  h4 {
+  h5 {
     color: $primaryWhite;
   }
   color: $primaryWhite;
@@ -54,6 +54,14 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 
 .mx-width {
   max-width: 1342px;
+}
+
+@media only screen and (min-width: 1382px) {
+  .mx-width {
+    margin-top: 2em;
+    margin-bottom: 4em;
+  }
+
 }
 
 .grid-sd {
@@ -89,6 +97,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
         padding: 2em;
         &_title {
           margin-bottom: 2em;
+          font-size: 1.8em;
         }
 
         &_body {
@@ -175,7 +184,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
     .motifs {
       .motif_card {
         @include prefixed(justify-content, flex-start);
-        h4 {
+        h5 {
           margin-bottom: 1em;
         }
       }
@@ -234,7 +243,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
       @include prefixed(display, flex);
       .motif_card {
         @include prefixed(justify-content, flex-start);
-        h4 {
+        h5 {
           margin-bottom: 1em;
           width: 100%;
         }
