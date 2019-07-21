@@ -20,27 +20,30 @@
       font-weight: 700;
       text-align: center;
       display: flex;
-      .euro {
-        $map: (295: 30, 389: 38, 688: 48, 1875: 48);
+      i.currency {
+        $map: (295: 18, 1875: 48);
         font-size: minimosCuadrados($map);
         font-style: normal;
       }
     }
 
-    .advice {
-      $map: (295: 16, 389: 14, 688: 14, 1875: 14);
-      font-size: minimosCuadrados($map);
-    }
-    & > * {
+    & > *:not(.advice) {
       width: auto;
       margin: 0 auto;
+    }
+
+    .advice {
+      margin: 1em 0 0 .5em;
+      $map: (295: 16, 389: 14, 688: 14, 1875: 14);
+      font-size: minimosCuadrados($map);
     }
   }
 }
 
 %price-box {
-  height: auto;
-  width: auto;
+  height: 400px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .course-descriptions {
@@ -178,6 +181,15 @@
     margin-bottom: 2em;
   }
 }
+
+@media #{$small-devices} {
+  .course-information {
+    .price-box {
+      height: auto;
+    }
+  }
+}
+
 /*.bg-online-course{
   background-image: url('https://s3-alpha.figma.com/img/d553/6263/72e53597dc1fe926e95f230dcaca0dd9');
   background-repeat: no-repeat;

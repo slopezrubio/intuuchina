@@ -34,8 +34,11 @@ Route::get('/learn', function() {
 Route::get('/learn/course={courseCode}', function($course) {
     $params = (object) array(
         'course' => $course,
-        'price' => $course == 1 ? "499" : "18",
-        'extra_info' => $course == 1 ? "Estancia mínima de un mes" : "Solicitar un mínimo de 40 horas"
+        'price' => (object) array(
+            'eu' => $course == 1 ? "499" : "18",
+            'usd' => $course == 1 ? "470" : "15"
+        ),
+        'extra_info' => $course == 1 ? "The price above corresponds to the minimum staying of one month. Visa fees are not included." : "A minimum number of 40 hours in order to apply for this course."
     );
 
     return view('partials/_price-course-info', compact( 'params'));

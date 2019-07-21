@@ -1050,23 +1050,25 @@ header#why-us {
   display: flex;
 }
 
-.course-information .course-information_box p .price-tag .euro {
-  font-size: calc(0.8500450265vw + 34.0997594974px);
+.course-information .course-information_box p .price-tag i.currency {
+  font-size: calc(1.8987341772vw + 12.3987341772px);
   font-style: normal;
 }
 
-.course-information .course-information_box p .advice {
-  font-size: calc(-0.0649361767vw + 15.0271194146px);
-}
-
-.course-information .course-information_box p > * {
+.course-information .course-information_box p > *:not(.advice) {
   width: auto;
   margin: 0 auto;
 }
 
+.course-information .course-information_box p .advice {
+  margin: 1em 0 0 0.5em;
+  font-size: calc(-0.0649361767vw + 15.0271194146px);
+}
+
 .course-information .price-box {
-  height: auto;
-  width: auto;
+  height: 400px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .course-descriptions {
@@ -1221,6 +1223,12 @@ header#why-us {
 
 .course-information .course-information_box:not(:last-child) {
   margin-bottom: 2em;
+}
+
+@media only screen and (max-width: 320px) {
+  .course-information .price-box {
+    height: auto;
+  }
 }
 
 /*.bg-online-course{
