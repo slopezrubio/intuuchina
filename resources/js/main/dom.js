@@ -12,6 +12,9 @@ let dom = {
         $(element).toggleClass(firstClassName);
         $(element).toggleClass(secondClassName);
     },
+    removeSingleClass: (element, className) => {
+        $(element).removeClass(className);
+    },
     toggleSingleClass: (element, className) => {
         $(element).toggleClass(className);
     },

@@ -59,6 +59,7 @@ let press = {
 let courses = {
     currentSlide: 0,
     carrousel: document.querySelector('.description-container'),
+    defaultSelectedCourse: 1,
     pictureHolder: document.querySelector('.course-descriptions'),
     pictures: document.getElementsByClassName('description-base'),
     courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
@@ -69,10 +70,11 @@ let courses = {
         if (breakpoints.widths.largeDevices[0] > window.innerWidth) {
             $(courses.pictures).width(courses.pictureHolder.clientWidth);
         }
-        //document.querySelector('.description-options').clientWidth;
     },
     setup: function(event) {
         courses.courseSliderWidth = courses.pictureHolder.clientWidth;
+
+        // Events arranged to the slider controllers
         for (let i = 0; i < courses.courseLinks.length; i++) {
             courses.courseLinks[i].addEventListener('click', function(e) {
                 e.preventDefault();
@@ -80,33 +82,50 @@ let courses = {
                     courses.requestedCourseURL = `/learn/course=${i + 1}`;
                     courses.getCourseInfo(courses.requestedCourseURL);
                 }
+
                 let elementIndex = $(this).index();
                 if (!breakpoints.isLargeDevice()) {
                     courses.moveTo(elementIndex);
                 } else {
                     courses.setDesktopSliders[i + 1]();
                 }
-                courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
-                courses.changeSliderBackground[elementIndex](courses.carrousel);
+
+                if (!$(this).hasClass('selected')) {
+                    courses.toggleControllers(elementIndex);
+                    courses.changeSliderBackground[elementIndex](courses.carrousel);
+                }
             });
         }
 
+        // Events arranged to the clickable elements in the courses slider
         for (let i = 0; i < courses.pictures.length; i++) {
             courses.pictures[i].addEventListener('click', function(e) {
                 e.preventDefault();
+
+                /*
+                 * Makes a GET request to the server ({ROOT_FOLDER}/learn/course=${course-number})
+                 * to retrieve the fitting information for each course displayed
+                 */
                 if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
                     courses.requestedCourseURL = `/learn/course=${i + 1}`;
                     courses.getCourseInfo(courses.requestedCourseURL);
                 }
+
                 let elementIndex = $(this).index();
                 courses.setDesktopSliders[i + 1]();
-                courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+                courses.toggleControllers(elementIndex);
                 courses.changeSliderBackground[elementIndex](courses.carrousel);
             });
         }
 
+        // Sets the courses slider UI according to the current device used
         if (!breakpoints.isLargeDevice()) {
             // Compatibility with all the browsers
+
+            /*
+             * Checks while resizing to watch or tail whether the UI needs to alter so that can fit
+             * with the device used or simply keep the same.
+             */
             if (event.type === 'resize') {
                 courses.update();
                 if (document.querySelector('.left-slide') !== null || document.querySelector('.right-slide') !== null) {
@@ -114,6 +133,7 @@ let courses = {
                 }
             }
         } else {
+            // Sets the course slider UI ready to be displayed in desktop devices
             courses.setDesktopSliders[courses.checkSelectedController()]();
             courses.resetResponsiveSliders();
         }
@@ -183,22 +203,29 @@ let courses = {
         }
     },
     checkSelectedController: () => {
-        return $('.selected').is(':last-child') ? 2 : 1;
+        let controllerSelected = courses.defaultSelectedCourse;
+        for (let i = 0; i < courses.courseLinks.length; i++) {
+            if ($(courses.courseLinks[i]).hasClass('selected')) {
+                controllerSelected = i + 1;
+            }
+        }
+
+        return controllerSelected;
     },
     update: function() {
         let value = 'translateX(' + (50 * -courses.currentSlide) + '%)';
         dom.setProperty(courses.carrousel, 'transform', value);
     },
-    toggleControllers: (firstController, secondController) => {
-        dom.toggleSingleClass(firstController, 'selected');
-        dom.toggleSingleClass(secondController, 'selected');
+    toggleControllers: (selectedController) => {
+        dom.toggleSingleClass($('.description-options > .selected'), 'selected');
+        dom.toggleSingleClass($(courses.courseLinks[selectedController]), 'selected');
     },
     changeSliderBackground: [
         (element) => {
             dom.setProperty(element, 'background','#000000');
         },
         (element) => {
-            dom.setProperty(element, 'background','#B71C1C');
+            dom.setProperty(element, 'background','#C80B0B');
         }
     ],
     setSize: (element, type, value) => {

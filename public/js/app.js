@@ -49936,6 +49936,7 @@ var press = {
 var courses = {
   currentSlide: 0,
   carrousel: document.querySelector('.description-container'),
+  defaultSelectedCourse: 1,
   pictureHolder: document.querySelector('.course-descriptions'),
   pictures: document.getElementsByClassName('description-base'),
   courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
@@ -49945,11 +49946,10 @@ var courses = {
 
     if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].widths.largeDevices[0] > window.innerWidth) {
       $(courses.pictures).width(courses.pictureHolder.clientWidth);
-    } //document.querySelector('.description-options').clientWidth;
-
+    }
   },
   setup: function setup(event) {
-    courses.courseSliderWidth = courses.pictureHolder.clientWidth;
+    courses.courseSliderWidth = courses.pictureHolder.clientWidth; // Events arranged to the slider controllers
 
     var _loop = function _loop(i) {
       courses.courseLinks[i].addEventListener('click', function (e) {
@@ -49968,18 +49968,25 @@ var courses = {
           courses.setDesktopSliders[i + 1]();
         }
 
-        courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
-        courses.changeSliderBackground[elementIndex](courses.carrousel);
+        if (!$(this).hasClass('selected')) {
+          courses.toggleControllers(elementIndex);
+          courses.changeSliderBackground[elementIndex](courses.carrousel);
+        }
       });
     };
 
     for (var i = 0; i < courses.courseLinks.length; i++) {
       _loop(i);
-    }
+    } // Events arranged to the clickable elements in the courses slider
+
 
     var _loop2 = function _loop2(i) {
       courses.pictures[i].addEventListener('click', function (e) {
         e.preventDefault();
+        /*
+         * Makes a GET request to the server ({ROOT_FOLDER}/learn/course=${course-number})
+         * to retrieve the fitting information for each course displayed
+         */
 
         if (courses.requestedCourseURL !== "/learn/course=".concat(i + 1)) {
           courses.requestedCourseURL = "/learn/course=".concat(i + 1);
@@ -49988,17 +49995,23 @@ var courses = {
 
         var elementIndex = $(this).index();
         courses.setDesktopSliders[i + 1]();
-        courses.toggleControllers(document.querySelector('.selected'), courses.courseLinks[elementIndex]);
+        courses.toggleControllers(elementIndex);
         courses.changeSliderBackground[elementIndex](courses.carrousel);
       });
     };
 
     for (var i = 0; i < courses.pictures.length; i++) {
       _loop2(i);
-    }
+    } // Sets the courses slider UI according to the current device used
+
 
     if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
       // Compatibility with all the browsers
+
+      /*
+       * Checks while resizing to watch or tail whether the UI needs to alter so that can fit
+       * with the device used or simply keep the same.
+       */
       if (event.type === 'resize') {
         courses.update();
 
@@ -50007,6 +50020,7 @@ var courses = {
         }
       }
     } else {
+      // Sets the course slider UI ready to be displayed in desktop devices
       courses.setDesktopSliders[courses.checkSelectedController()]();
       courses.resetResponsiveSliders();
     }
@@ -50079,20 +50093,28 @@ var courses = {
     }
   },
   checkSelectedController: function checkSelectedController() {
-    return $('.selected').is(':last-child') ? 2 : 1;
+    var controllerSelected = courses.defaultSelectedCourse;
+
+    for (var i = 0; i < courses.courseLinks.length; i++) {
+      if ($(courses.courseLinks[i]).hasClass('selected')) {
+        controllerSelected = i + 1;
+      }
+    }
+
+    return controllerSelected;
   },
   update: function update() {
     var value = 'translateX(' + 50 * -courses.currentSlide + '%)';
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
   },
-  toggleControllers: function toggleControllers(firstController, secondController) {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(firstController, 'selected');
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(secondController, 'selected');
+  toggleControllers: function toggleControllers(selectedController) {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass($('.description-options > .selected'), 'selected');
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass($(courses.courseLinks[selectedController]), 'selected');
   },
   changeSliderBackground: [function (element) {
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#000000');
   }, function (element) {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#B71C1C');
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#C80B0B');
   }],
   setSize: function setSize(element, type, value) {
     element.style[type] = "".concat(value, "px");
@@ -50178,6 +50200,9 @@ var dom = {
     $(element).toggleClass(firstClassName);
     $(element).toggleClass(secondClassName);
   },
+  removeSingleClass: function removeSingleClass(element, className) {
+    $(element).removeClass(className);
+  },
   toggleSingleClass: function toggleSingleClass(element, className) {
     $(element).toggleClass(className);
   },
@@ -50225,21 +50250,21 @@ var env = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_stats.js */"./resources/js/components/_stats.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_motifs.js */"./resources/js/components/_motifs.js");
-__webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/intuuchina/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\sass\main.scss */"./resources/sass/main.scss");
 
 
 /***/ })
