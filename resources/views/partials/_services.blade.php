@@ -48,7 +48,7 @@
                 </p>
             </div>
             <div class="service_card_footer">
-                <a href="{{ url('/internship') }}" class="cta">See More</a>
+                <a href="{{ url('/learn') }}" class="cta">See More</a>
             </div>
         </div>
     </div>

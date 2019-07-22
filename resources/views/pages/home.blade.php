@@ -17,6 +17,9 @@
         {{--Sección de los servicios ofrecidos--}}
         @include('partials._services')
 
+        {{--Infografia del «Customer Journey»--}}
+        @include('partials._customer-journey')
+
         {{--Elemento de los testiomonios que han sido asesorados por Intuuchina--}}
         @include('partials._testimonials')
     </main>

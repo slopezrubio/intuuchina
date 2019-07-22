@@ -96,7 +96,7 @@
         <div class="testim">
             <img class="linkedinpic"src="https://media.licdn.com/dms/image/C5603AQHsu9hQJueHrA/profile-displayphoto-shrink_800_800/0?e=1541635200&v=beta&t=ytKgfsWkDSe9Eiqy-AA4yPCduz7Pr5Ce2Ebeu7fNymU" alt="profilepic">
             <h3>Santiago Barba Bullón de Mendoza</h3>
-            <h4>Junior Analyst/h4>
+            <h4>Junior Analyst</h4>
             <p>"Inntuchina was my go-to partner for everything China related"</p>
         </div>
 

@@ -2941,6 +2941,13 @@ main .news_container .section_body .tv a img {
   }
 }
 
+.infographic_picture img {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: block;
+}
+
 .grid {
   display: grid;
   margin: 12px;
