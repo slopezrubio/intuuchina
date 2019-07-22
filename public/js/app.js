@@ -49778,6 +49778,68 @@ if (register.select !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_services.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/_services.js ***!
+  \**********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_news__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/_news */ "./resources/js/components/_news.js");
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+
+
+var services = {
+  container: document.querySelector('.services'),
+  init: function init() {
+    window.addEventListener('load', services.setup);
+    window.addEventListener('resize', services.setup);
+  },
+  setup: function setup(event) {
+    services.setContainer(event);
+  },
+  setContainer: function setContainer(event) {
+    if (_components_news__WEBPACK_IMPORTED_MODULE_0__["default"].polygon !== null) {
+      var containerTopPosition = services.getContainerPosition();
+      var main = $('main');
+      var sections = $('main > section');
+      Object.keys(sections).forEach(function (key) {
+        if (parseInt(key) || key == 0) {
+          if (event.type === 'load') {
+            $(sections[key]).css({
+              'position': 'relative',
+              'top': containerTopPosition * -1 + 'px'
+            });
+          }
+
+          if (event.type === 'resize') {
+            $(sections[key]).css({
+              'top': containerTopPosition * -1 + 'px'
+            });
+          }
+        }
+      });
+      services.fixPositionRelative(main, containerTopPosition);
+    }
+  },
+  fixPositionRelative: function fixPositionRelative(element, displacedPosition, event) {
+    $(element).height('auto');
+    $(element).height($(element).height() - displacedPosition);
+  },
+  getContainerPosition: function getContainerPosition() {
+    var percentage = _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isMediumDevice() ? 0.22 : 0.19;
+    return _components_news__WEBPACK_IMPORTED_MODULE_0__["default"].polygon.clientHeight * percentage;
+  }
+};
+
+if (services.container !== null) {
+  services.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/_single-offer.js":
 /*!**************************************************!*\
   !*** ./resources/js/components/_single-offer.js ***!
@@ -50267,9 +50329,9 @@ var env = {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50282,6 +50344,7 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");

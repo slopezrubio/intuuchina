@@ -117,6 +117,10 @@ nav {
   line-height: auto;
 }
 
+main {
+  z-index: 20;
+}
+
 /* Imágenes del header */
 
 header#home {
@@ -2553,6 +2557,7 @@ main .triangulo {
   border-left: 200px solid #d1d1d1;
   border-top: 200px solid #d1d1d1;
   border-bottom: 200px solid transparent;
+  z-index: 2;
 }
 
 main .news {
@@ -2563,8 +2568,18 @@ main .news {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
   background-color: #C80B0B;
-  z-index: 0;
+  z-index: 2;
   position: relative;
+}
+
+main .news::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: white;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 main .news_container {
@@ -2651,6 +2666,14 @@ main .news_container .section_body .tv a img {
   width: 60px;
 }
 
+@media only screen and (min-width: 100px) and (max-width: 992px) {
+  main .news::before {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    bottom: -79%;
+  }
+}
+
 @media only screen and (min-width: 681px) and (max-width: 991px) {
   main .news {
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
@@ -2659,6 +2682,12 @@ main .news_container .section_body .tv a img {
     -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
+  }
+
+  main .news::before {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
+    bottom: -555px;
   }
 
   main .news_container .section_body div {
@@ -2718,13 +2747,17 @@ main .news_container .section_body .tv a img {
 
 @media only screen and (min-width: 992px) {
   .news {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
-    -moz-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
-    -ms-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
-    -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 71%);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 51%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    -moz-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    -ms-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+  }
+
+  .news::before {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+    bottom: -295px;
   }
 
   .news_container .section_body .tv a img {
@@ -2828,6 +2861,83 @@ main .news_container .section_body .tv a img {
 
   .title-card .cta a {
     line-height: 35px;
+  }
+}
+
+.services {
+  position: relative;
+  z-index: 1;
+}
+
+.services .service_card#s_internship {
+  background: url("/../../storage/images/team.jpg") no-repeat scroll center;
+  background-size: cover;
+}
+
+.services .service_card#s_university {
+  background: url("/../../storage/images/student.jpg") no-repeat scroll center;
+  background-size: cover;
+}
+
+.services .service_card#s_learn {
+  background: url("/../../storage/images/service-1.jpg") no-repeat scroll center;
+  background-size: cover;
+}
+
+.services .service_card:first-of-type {
+  padding-top: 10em;
+}
+
+.services .service_card {
+  padding: 3em 2em 3em 2em;
+}
+
+.services .service_card_container {
+  max-width: 500px;
+  border: 2px solid white;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 25px;
+  padding: 2em;
+  margin: 0 auto;
+}
+
+.services .service_card_container .service_card_body {
+  color: white;
+}
+
+.services .service_card_container .service_card_header {
+  height: 50px;
+}
+
+.services .service_card_container .service_card_footer .cta {
+  line-height: 45px;
+  font-weight: 500;
+  width: 80%;
+  margin: 3em auto 0 auto;
+  display: block;
+  text-align: center;
+}
+
+@media only screen and (min-width: 992px) {
+  .services {
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -moz-justify-content: space-evenly;
+    -ms-justify-content: space-evenly;
+    -o-justify-content: space-evenly;
+    justify-content: space-evenly;
+  }
+
+  .services .service_card {
+    padding-top: 10em;
+    width: calc(100% / 3);
+  }
+
+  .services .service_card_container .service_card_header {
+    height: 80px;
   }
 }
 

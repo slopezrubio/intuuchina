@@ -125,6 +125,10 @@ nav {
   line-height: auto;
 }
 
+main {
+  z-index: 20;
+}
+
 /* Imágenes del header */
 header#home{
   background-image: url('/../../storage/images/practicas-1-1.jpg');
