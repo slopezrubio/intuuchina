@@ -33,8 +33,31 @@ a {
   }
 }
 
-/// Función que cálcula el tamaño de la fuente mediante el método
-/// de los mínimos cuadrados.
+.number_list {
+  & > li {
+    list-style-type: symbols;
+    margin: 1em 0;
+  }
+}
+
+.alpha_list {
+  & > li {
+    list-style-type: lower-alpha;
+    margin: 1em 0;
+  }
+}
+
+.paragraph_title {
+  font-weight: 700;
+  margin-top: 1em;
+}
+
+/* ------------------------------------------------------- */
+
+/* -------------------
+ * --- Typography ----
+ * -------------------
+ */
 @function minimosCuadrados($values) {
   $length: length(map_keys($values));
 
@@ -71,6 +94,7 @@ a {
   @return calc(#{$slope*100}vw + #{$result}px);
 }
 
+/* ------------------------------------------------------- */
 
 /* -------------
  * - Elements --
@@ -129,7 +153,12 @@ main {
   z-index: 20;
 }
 
-/* Imágenes del header */
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Page Custom --
+ * ----------------
+ */
 header#home{
   background-image: url('/../../storage/images/practicas-1-1.jpg');
   height: 50rem;
@@ -158,3 +187,25 @@ header#why-us {
   background-size: cover;
   height: 50vh;
 }
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Modals --
+ * ----------------
+ */
+.info-modal {
+  max-width: 600px;
+  font-size: 16px;
+  a {
+    font-weight: 700;
+    color: $secondaryRed;
+    font-size: 16px !important;
+    &:hover,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* ------------------------------------------------------- */
