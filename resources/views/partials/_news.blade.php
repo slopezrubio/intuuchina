@@ -8,7 +8,6 @@
             <div class="note_window">
                 <div class="note_carrousel">
                     <div class="slider_note">
-                        <!-- noticias -->
                         <a href="https://elpais.com/economia/2016/05/05/actualidad/1462462986_888570.html" target="_blank"><img src="{{asset('storage/images/el-pais.png')}}" alt="antena3"
                                                                                                    width="100px"></a>
                         <div class="note_quote">
@@ -17,7 +16,6 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
                         <a href="https://www.youtube.com/watch?v=8dsj6xTclco" target="_blank"><img src="{{asset('storage/images/eitb.png')}}" alt="Logo de Euskal Irrati Telebista"
                                                                                                    width="100px"></a>
                         <div class="note_quote">
@@ -25,7 +23,6 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
                         <a href="https://www.elmundo.es/cronica/2014/10/26/544b4edee2704e68668b456e.html" target="_blank"><img src="{{asset('storage/images/elmundo.png')}}" alt="Logo de el diario de El Mundo"
                                                          width="100px"></a>
                         <div class="note_quote">
@@ -34,7 +31,6 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
                         <a href="https://www.youtube.com/watch?v=oFpAvIT0vjg" target="_blank"><img src="{{asset('storage/images/A3_logo.png')}}" alt="Logo de el diario de El Mundo"
                                                          width="100px"></a>
                         <div class="note_quote">
@@ -43,7 +39,6 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
                         <a href="https://fortune.com/2015/12/01/spain-job-market/" target="_blank"><img src="{{asset('storage/images/FORTUNE.png')}}" alt="Logo de la revista FORTUNE"
                                                          width="100px"></a>
                         <div class="note_quote">
@@ -52,8 +47,7 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
-                        <a href="" target="_blank"><img src="{{asset('storage/images/TV3.png')}}" alt="Logo del canal de televisión TV3"
+                        <a href="http://www.ccma.cat/tv3/alacarta/telenoticies-cap-de-setmana/buscar-feina-a-la-xina/video/5540176/" target="_blank"><img src="{{asset('storage/images/TV3.png')}}" alt="Logo del canal de televisión TV3"
                                                          width="100px"></a>
                         <div class="note_quote">
                             <p>"Prefiero trabajar fuera, está mejor remunerado, es mas fácil encontrar una oportunidad con Intuuchina y es una experiencia fantástica"</p>
@@ -61,7 +55,6 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
                         <a href="http://www.rtve.es/rtve/20161123/ii-premios-rtve-emprende-reconocen-intuuchina-clicars-sociograph-languing-walden-medical/1446483.shtml" target="_blank"><img src="{{asset('storage/images/rtve.png')}}" alt="Logo de Radio televisión Española"
                                                          width="100px"></a>
                         <div class="note_quote">
@@ -70,8 +63,7 @@
                         </div>
                     </div>
                     <div class="slider_note">
-                        <!-- noticias -->
-                        <a href="#" target="_blank"><img src="{{asset('storage/images/abc.png')}}" alt="Logo del diario ABC"
+                        <a href="https://www.bambooventures.org/foto" target="_blank"><img src="{{asset('storage/images/abc.png')}}" alt="Logo del diario ABC"
                                                          width="100px"></a>
                         <div class="note_quote">
                             <p>"El 80% de los IntuuChinos sigue su carrera en el pais... Ruben Sanchez consiguio el empleo despues de los primeros 6 meses de practicas"</p>
