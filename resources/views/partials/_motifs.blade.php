@@ -17,9 +17,9 @@
             <div class="motif_card_body">
                 <ul>
                     <li><p class="motif_card_text">Premio RTVE Startup internacional.</p></li>
-                    <li><p class="motif_card_text">Finalista IEBS en recursos humanos.</p></li>
-                    <li><p class="motif_card_text">Empresa & sociedad Fundación.</p></li>
-                    <li><p class="motif_card_text">Semifinalista IEBS en recursos humanos.</p></li>
+                    <li><p class="motif_card_text">2do premio a mejor startup del año por la cámara española</p></li>
+                    <li><p class="motif_card_text">Finalista premio Coomprendedor, fundación "Empresa & Sociedad"</p></li>
+                    <li><p class="motif_card_text">2do premio a mejor startup de RRHH IEBS</p></li>
                 </ul>
             </div>
         </div>
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="motif_picture">
-            <img src="{{ asset('storage/images/whyus_desktop_picture2.jpg') }}" alt="Candidatos asesorados por el personal de la compañia">
+            <img src="{{ asset('storage/images/whyus_desktop_picture4.png') }}" alt="Foto de grupo de algunos de los candidatos de la empresa en China">
         </div>
     </section>
 
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="motif_picture">
-            <img src="{{ asset('storage/images/whyus_desktop_picture1.jpg') }}" alt="Asesoramiento de alguno de los candidatos de la compañia">
+            <img src="{{ asset('storage/images/whyus_desktop_picture5.png') }}" alt="Foto de grupo de algunos de los candidatos de la empresa en China">
         </div>
     </section>
 
@@ -77,37 +77,4 @@
             </div>
         </div>
     </section>
-
 </div>
-
-<!-- <div class="container">
-
-
-
-  <div class="item"></div>
-  <div class="item"></div>
-</div>
-
-<div class="container">
-  <div class="item red">
-    <h2> Misión</h2>
-    <p>Lorem ipsum dolor amet iPhone roof party sartorial, copper mug blog schlitz iceland cornhole small batch palo santo dreamcatcher. Affogato raw denim sriracha, lomo waistcoat wayfarers truffaut hammock wolf. </p>
-  </div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-</div>
-
-<div class="container">
-  <div class="item red">
-    <h2> Misión</h2>
-    <p>Lorem ipsum dolor amet iPhone roof party sartorial, copper mug blog schlitz iceland cornhole small batch palo santo dreamcatcher. Affogato raw denim sriracha, lomo waistcoat wayfarers truffaut hammock wolf. </p>
-  </div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-</div> -->
