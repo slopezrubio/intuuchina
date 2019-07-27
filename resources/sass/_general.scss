@@ -111,6 +111,16 @@ header {
   }
 }
 
+/* Toggle Menu Button */
+#app {
+  .navbar-toggler {
+    @include squareWithBorder();
+    &-icon {
+      color: $primaryDark;
+    }
+  }
+}
+
 .cta {
   border: none;
   margin: 2em auto 0 auto;
@@ -151,6 +161,13 @@ nav {
 
 main {
   z-index: 20;
+}
+
+/* Logo */
+.navbar-brand {
+  img {
+    height: 55px;
+  }
 }
 
 /* ------------------------------------------------------- */

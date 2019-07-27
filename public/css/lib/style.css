@@ -87,6 +87,17 @@ header {
   background: #C80B0B;
 }
 
+/* Toggle Menu Button */
+
+#app .navbar-toggler {
+  padding: 0.5rem 0.5rem;
+  border: 1px solid black;
+}
+
+#app .navbar-toggler-icon {
+  color: black;
+}
+
 .cta {
   border: none;
   margin: 2em auto 0 auto;
@@ -143,6 +154,12 @@ nav {
 
 main {
   z-index: 20;
+}
+
+/* Logo */
+
+.navbar-brand img {
+  height: 55px;
 }
 
 /* ------------------------------------------------------- */
@@ -638,6 +655,197 @@ header#why-us {
   .navbar_menu img {
     height: 55px;
   }
+}
+
+main.full-viewport {
+  background: url("/../../storage/images/china1.jpg") no-repeat center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+}
+
+main.full-viewport #login {
+  max-width: 1000px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+main.full-viewport #login a:hover {
+  text-decoration: underline;
+}
+
+main.full-viewport #login .card {
+  border: none;
+  -ms-box-shadow: 0px 0px 6px black;
+  -o-box-shadow: 0px 0px 6px black;
+  box-shadow: 0px 0px 6px black;
+}
+
+main.full-viewport #login .card .card-header {
+  background: black;
+  color: white;
+}
+
+main.full-viewport #login .card .card-header a:hover,
+main.full-viewport #login .card .card-header a:active {
+  color: white;
+}
+
+main.full-viewport #login .card .card-header span:first-of-type {
+  font-size: 18px;
+}
+
+main.full-viewport #login .card .card-header span:last-of-type {
+  float: right;
+  line-height: 27px;
+}
+
+main.full-viewport #login .card .card-body form a {
+  color: #C80B0B;
+}
+
+main.full-viewport #login .card .card-body form input {
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+}
+
+main.full-viewport #login .card .card-body form input:focus,
+main.full-viewport #login .card .card-body form input:invalid {
+  box-shadow: none;
+}
+
+main.full-viewport #login .card .card-body form input:focus {
+  border-color: #C80B0B;
+}
+
+main.full-viewport #login .card .card-body form .cta {
+  width: 100%;
+}
+
+main.full-viewport #login .card .card-body form .switch {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 34px;
+  margin-top: 10px;
+  width: 68px;
+  height: 38px;
+}
+
+main.full-viewport #login .card .card-body form .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #d1d1d1;
+  transition: .4s;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider--rounded {
+  border-radius: 34px;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider--rounded::after {
+  font-family: "Montserrat", sans-serif;
+  content: "NO";
+  color: black;
+  top: 12px;
+  position: absolute;
+  font-size: 0.8em;
+  z-index: 1;
+  left: 33px;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider--rounded:before {
+  border-radius: 50%;
+  z-index: 10;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider:before {
+  position: absolute;
+  content: "";
+  width: 26px;
+  height: 26px;
+  background: white;
+  left: 4px;
+  bottom: 4px;
+  transition: .4s;
+}
+
+main.full-viewport #login .card .card-body form .switch input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+main.full-viewport #login .card .card-body form .switch input:checked + .checkbox_slider {
+  background: #C80B0B;
+}
+
+main.full-viewport #login .card .card-body form .switch input:focus + .checkbox_slider {
+  box-shadow: 0 0 1px #C80B0B;
+}
+
+main.full-viewport #login .card .card-body form .switch input:checked + .checkbox_slider:after {
+  font-family: "Montserrat", sans-serif;
+  content: "YES";
+  left: 4px;
+  top: 12px;
+  color: white;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider:before {
+  width: 30px;
+  height: 30px;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider:after {
+  left: 38px;
+}
+
+main.full-viewport #login .card .card-body form .switch .checkbox_slider--rounded::after {
+  top: 11px;
+}
+
+main.full-viewport #login .card .card-body form .switch input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(28px);
+  transform: translateX(28px);
+}
+
+main.full-viewport #login .card .card-body form .switch input:checked + .checkbox_slider:after {
+  top: 11px;
+}
+
+main.full-viewport .credit {
+  position: absolute;
+  top: 93%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  color: white;
+  color: #d1d1d1;
+  opacity: 0.5;
+}
+
+main.full-viewport .credit a {
+  font-weight: 500;
+}
+
+main.full-viewport .credit a:hover {
+  text-decoration: underline;
+  color: #d1d1d1;
 }
 
 .sensationalism-stats {
@@ -1465,7 +1673,8 @@ header#why-us {
   padding-left: 0px;
 }
 
-.container .extended-form .card-body form input:focus {
+.container .extended-form .card-body form input:focus,
+.container .extended-form .card-body form input:invalid {
   box-shadow: none;
 }
 
@@ -1501,7 +1710,8 @@ header#why-us {
   cursor: pointer;
 }
 
-.container .extended-form .card-body form .regular-select-wrapper select:focus {
+.container .extended-form .card-body form .regular-select-wrapper select:focus,
+.container .extended-form .card-body form .regular-select-wrapper select:invalid {
   box-shadow: none;
 }
 
