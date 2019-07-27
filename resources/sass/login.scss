@@ -88,6 +88,10 @@ main.full-viewport {
               top: 11px;
             }
           }
+
+          .switch ~ label {
+            margin-bottom: 0;
+          }
         }
       }
     }

@@ -828,6 +828,10 @@ main.full-viewport #login .card .card-body form .switch input:checked + .checkbo
   top: 11px;
 }
 
+main.full-viewport #login .card .card-body form .switch ~ label {
+  margin-bottom: 0;
+}
+
 main.full-viewport .credit {
   position: absolute;
   top: 93%;
