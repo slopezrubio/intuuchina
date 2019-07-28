@@ -3,19 +3,31 @@
     <div class="navbar">
         <div class="col-lg-2 col-md-12 navbar_menu">
             @auth()
-                <a class="logo" href="{{ url('/') }}"><img src="storage/images/logo.png"></a>
+                <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
             @endauth
             @guest()
 
-                <a class="logo" href="{{ url('/') }}"><img src="../storage/images/logo.png"></a>
+                <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
             @endguest
             <button class="toggleMenu"><i class="fas fa-bars"></i></button>
         </div>
         <ul class="col-lg-10 navbar_menu navbar_menu--hidden">
             <li>
-                <a href="/internship">
-                    <div class="toggleOption">Prácticas</div>
-                </a>
+                @auth
+                    @if(Auth::user()->type !== 'admin')
+                        <a href="{{ url('/internship') }}">
+                            <div class="toggleOption">Prácticas</div>
+                        </a>
+                    @else
+                        <a href="{{ route('admin.offers') }}">
+                            <div class="toggleOption">Prácticas</div>
+                        </a>
+                    @endif
+                @else
+                    <a href="{{ url('/internship') }}">
+                        <div class="toggleOption">Prácticas</div>
+                    </a>
+                @endauth
             </li>
             <li>
                 <a href="{{ url('/learn/1') }}">
@@ -71,9 +83,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="" class="dropdown-item selection" >
-                                <div class="toggleOption">Cerrar Sessión</div>
+                            <a class="dropdown-item selection" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <div class="toggleOption">{{ __('Logout') }}</div>
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </li>

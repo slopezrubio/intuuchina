@@ -3448,6 +3448,7 @@ header.auth {
 }
 
 .form_body--hidden {
+  display: none;
   -webkit-animation: scale-display--reversed 0.3s;
           animation: scale-display--reversed 0.3s;
   -webkit-animation-fill-mode: forwards;

@@ -6,14 +6,24 @@
             @foreach($offers as $offer)
                 <div class="card shadow">
                     <div class="card-shutter">{{ $offer->industry }}</div>
-                    <img src="{{ $offer->picture }}" alt="Offer card image" class="card-img-top">
+                    <img src="{{ asset('./' . $offer->picture) }}" alt="Offer card image" class="card-img-top">
                     <div class="card-body mb-2">
                         <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
                         <p class="card-text location">{{ ucfirst($offer->location) }}</p>
                             <p class="card-text duration">Staying: {{ $offer->duration }} {{ $offer->duration > 1 ? 'Months' : 'Month' }}</p>
                         <div class="offers_buttons">
-                            <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="register">Inscribirse</a></button>
-                            <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">Detalles</a></button>
+                            @auth
+                                @if(Auth::user()->type !== 'admin')
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="#">Solicitar</a></button>
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">Detalles</a></button>
+                                @else
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="{{ url('/admin/offers/edit/' . $offer->id) }}">Editar</a></button>
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">Eliminar</a></button>
+                                @endif
+                            @else
+                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="{{ route('register') }}">Inscribirse</a></button>
+                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">Detalles</a></button>
+                            @endauth
                         </div>
                     </div>
                     <div class="card-footer mb-2">

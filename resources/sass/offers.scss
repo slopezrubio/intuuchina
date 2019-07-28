@@ -143,6 +143,7 @@
     animation: scale-display 0.3s;
     animation-fill-mode: forwards;
     &--hidden {
+      display: none;
       animation: scale-display--reversed 0.3s;
       animation-fill-mode: forwards;
     }

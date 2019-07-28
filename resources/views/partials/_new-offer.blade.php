@@ -1,8 +1,5 @@
 <form method="POST" class="form" action="{{ route('admin.offers') }}">
     @csrf
-    <div class="form-group row form_header">
-        <a href="#" class="dropdown-button">Crear Nueva</a>
-    </div>
     <div class="container-fluid form_body--hidden">
         <div class="form-group row justify-content-center form-title">
             <h2 class="d-block text-center">Nueva oferta</h2>

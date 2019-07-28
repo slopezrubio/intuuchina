@@ -17,7 +17,7 @@
         @include('partials._offers-list')
 
         {{-- Formulario de nueva oferta --}}
-        @include('partials._new-offer');
+        @include('partials._new-offer')
     </main>
 
     @include('partials._footer')
