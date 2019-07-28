@@ -1,4 +1,4 @@
-<div class="filter_selector--mobile container-fluid arrow-down icon">
+<div class="filter_selector--mobile arrow-down icon col-8 col-md-8 col-lg-5">
     <label for="for="inputFilter"">Filtrar por: </label>
     <div class="custom-select-wrapper col-md-10 col-md-10 col-form-label">
         <select class="custom-select" id="inputFilter" name="filterBy[]">

@@ -10,13 +10,17 @@
     </header>
 
     <main>
-        <div class="row">
+        <div class="row align-items-center items_management container-fluid">
             {{-- Filtro de ofertas --}}
             @include('partials._filter-by')
 
-            <div class="form-group col-5 form_header">
-                <a href="#" class="dropdown-button">Crear Nueva</a>
-            </div>
+            @auth
+                @if(Auth::user()->type === 'admin')
+                    <div class="crud-buttons offset-2 col-2 col-sm-2 col-lg-5">
+                        <a href="#" class="cta col-4 float-right dropdown-button">New</a>
+                    </div>
+                @endif
+            @endauth
         </div>
 
         {{-- Tabla de ofertas --}}

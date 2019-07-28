@@ -6,7 +6,7 @@ let offersList = {
     setup: function() {
         offersList.inputFilter.addEventListener('change', function(event) {
             let selectedFilter = offersList.inputFilter.value;
-            let path = `internship/filter=${selectedFilter}`;
+            let path = window.location.pathname + `/filter=${selectedFilter}`;
             offersList.getRequest(path, selectedFilter);
         });
     },

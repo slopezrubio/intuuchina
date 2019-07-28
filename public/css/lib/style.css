@@ -3302,10 +3302,114 @@ header.auth {
   z-index: -2;
 }
 
-@media only screen and (min-width: 1340px) {
-  .filter_selector--mobile {
-    padding: 1em 9em;
-  }
+/******* General Styles for the component *******/
+
+.regular-select-wrapper {
+  z-index: 2;
+  position: relative;
+}
+
+.regular-select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  padding-left: 0px;
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  z-index: -1;
+  cursor: pointer;
+}
+
+.regular-select-wrapper select:focus,
+.regular-select-wrapper select:invalid {
+  box-shadow: none;
+}
+
+.regular-select-wrapper select:focus {
+  background: transparent;
+  border-color: #C80B0B;
+}
+
+.regular-select-wrapper::before {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1.7em);
+  top: 60px;
+  width: 1em;
+  height: 1em;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  z-index: -2;
+  top: 5px;
+}
+
+.form input {
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+}
+
+.form input:focus,
+.form input:invalid {
+  box-shadow: none;
+}
+
+.form input:focus {
+  border-color: #C80B0B;
+}
+
+.form .items_form {
+  -webkit-animation: scale-display 0.3s;
+          animation: scale-display 0.3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+.form .items_form--hidden {
+  display: none;
+  -webkit-animation: scale-display--reversed 0.3s;
+          animation: scale-display--reversed 0.3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+.form .form_header:first-of-type {
+  padding: 1rem;
+}
+
+.form .form-title {
+  border-top: 1px solid #C80B0B;
+}
+
+.form .form-title h2 {
+  color: #d1d1d1;
+  text-transform: uppercase;
+  padding: 2rem 1rem 2rem 1rem;
+  letter-spacing: 1rem;
+  line-height: 1.8;
+  font-size: calc(0.4105948047vw + 22.1172762305px);
+}
+
+.items_management .crud-buttons {
+  padding-right: 0;
+}
+
+.items_management .crud-buttons a {
+  font-weight: 500;
+}
+
+.items_management .crud-buttons .cta {
+  line-height: 45px;
+  padding: 0 1em;
+  min-width: 70px;
+  text-align: center;
 }
 
 .offers {
@@ -3436,93 +3540,10 @@ header.auth {
   }
 }
 
-.form .form_header:first-of-type {
-  padding: 1rem;
-}
-
-.form_body {
-  -webkit-animation: scale-display 0.3s;
-          animation: scale-display 0.3s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-
-.form_body--hidden {
-  display: none;
-  -webkit-animation: scale-display--reversed 0.3s;
-          animation: scale-display--reversed 0.3s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-
-.form .dropdown-button {
-  padding: 10px;
-  font-size: 20px;
-  margin: 0 auto;
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  background: white;
-  transition-property: color;
-  transition-duration: 0.3s;
-  border: 2px solid #C80B0B;
-  border-radius: 22px;
-  border-radius: 5px;
-}
-
-.form .dropdown-button:before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #C80B0B;
-  border-radius: 20px;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
-  -webkit-transform-origin: 50%;
-  transform-origin: 50%;
-  -webkit-transform-property: transform;
-  -moz-transform-property: transform;
-  -ms-transform-property: transform;
-  -o-transform-property: transform;
-  transform-property: transform;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-out;
-}
-
-.form .dropdown-button:hover,
-.form .dropdown-button:focus,
-.form .dropdown-button:active {
-  color: #C80B0B;
-}
-
-.form .dropdown-button:hover:before,
-.form .dropdown-button:focus:before,
-.form .dropdown-button:active:before {
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-}
-
-.form .dropdown-button:before {
-  border-radius: 3px;
-}
-
-.form .form-title {
-  border-top: 1px solid #C80B0B;
-}
-
-.form .form-title h2 {
-  color: #d1d1d1;
-  text-transform: uppercase;
-  padding: 2rem 1rem 2rem 1rem;
-  letter-spacing: 1rem;
-  font-size: calc(0.4105948047vw + 22.1172762305px);
+@media only screen and (min-width: 1340px) {
+  .items_management {
+    padding: 1em 8em;
+  }
 }
 
 main .breadcumb_section ol {

@@ -49565,7 +49565,7 @@ var offersList = {
   setup: function setup() {
     offersList.inputFilter.addEventListener('change', function (event) {
       var selectedFilter = offersList.inputFilter.value;
-      var path = "internship/filter=".concat(selectedFilter);
+      var path = window.location.pathname + "/filter=".concat(selectedFilter);
       offersList.getRequest(path, selectedFilter);
     });
   },
@@ -49629,23 +49629,22 @@ if (document.querySelector('.dropdown-button')) {
 
 function displayForm(event) {
   event.preventDefault();
-  var formIsDisplayed = $('.form_body').length;
+  var formIsDisplayed = $('.items_form').length;
 
   if (!formIsDisplayed) {
-    $('.form_body--hidden').addClass('form_body').removeClass('form_body--hidden');
-    var positionForm = $('.form_body').position();
-    scrollTo($('.form_body'));
+    $('.items_form--hidden').addClass('items_form').removeClass('items_form--hidden');
+    var previousElementPosition = document.querySelector('.offers').offsetTop + document.querySelector('.offers').clientHeight;
+    scrollTo(previousElementPosition);
   }
 
   if (formIsDisplayed) {
-    $('.form_body').addClass('form_body--hidden').removeClass('form_body');
+    $('.items_form').addClass('items_form--hidden').removeClass('items_form');
   }
 }
 
 function scrollTo(target) {
-  var $target = $(target);
   $("html, body").animate({
-    'scrollTop': target.offset().top
+    'scrollTop': target
   }, 1000, 'swing');
 }
 

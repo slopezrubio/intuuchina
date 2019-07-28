@@ -1,4 +1,22 @@
 @import 'filter-by';
+@import 'new-offer';
+
+.items_management {
+  .crud-buttons {
+    padding-right: 0;
+
+    a {
+      font-weight: 500;
+    }
+
+    .cta {
+      line-height: 45px;
+      padding: 0 1em;
+      min-width: 70px;
+      text-align: center;
+    }
+  }
+}
 
 .offers {
   padding: 1em 2em;
@@ -123,57 +141,17 @@
   }
 }
 
-  @media #{$footer-fix} {
-    .offers_list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 2em;
-      grid-row-gap: 2em;
-    }
+@media #{$footer-fix} {
+  .offers_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2em;
+    grid-row-gap: 2em;
   }
+}
 
-.form {
-  .form_header {
-    &:first-of-type {
-      padding: 1rem;
-    }
-  }
-
-  &_body {
-    animation: scale-display 0.3s;
-    animation-fill-mode: forwards;
-    &--hidden {
-      display: none;
-      animation: scale-display--reversed 0.3s;
-      animation-fill-mode: forwards;
-    }
-
-  }
-
-
-
-  .dropdown-button {
-    padding: 10px;
-    font-size: 20px;
-    margin: 0 auto;
-    @include shutter-in-horizontal();
-    border-radius: 5px;
-
-    &:before {
-      border-radius: 3px;
-    }
-  }
-
-  .form-title {
-    border-top: 1px solid $primaryRed;
-    h2 {
-      color: $neutralColor;
-      text-transform: uppercase;
-      padding: 2rem 1rem 2rem 1rem;
-      letter-spacing: 1rem;
-
-      $map: (356: 24, 1279: 26, 1689: 30);
-      font-size: minimosCuadrados($map)
-    }
+@media #{$large-devices_secondary} {
+  .items_management {
+    padding: 1em 8em;
   }
 }
