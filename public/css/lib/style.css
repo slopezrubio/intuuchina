@@ -1294,6 +1294,14 @@ main.full-viewport .credit a:hover {
   }
 }
 
+/******* General Styles for the component *******/
+
+.transition {
+  transition: all ease-in-out 0.5s;
+}
+
+/*----------------------------------------------*/
+
 .course-information .course-information_box {
   box-sizing: border-box;
   padding: 2rem;
@@ -1364,7 +1372,6 @@ main.full-viewport .credit a:hover {
 
 .course-descriptions .description-container {
   display: -webkit-inline-box;
-  transition: all ease-in-out 0.5s;
 }
 
 .course-descriptions .description-container .description-base {
@@ -1482,7 +1489,6 @@ main.full-viewport .credit a:hover {
 .course-descriptions .description-options a:hover,
 .course-descriptions .description-options a:active,
 .course-descriptions .description-options a.selected {
-  transition: all ease-in-out 0.5s;
   background: rgba(255, 255, 255, 0.4);
   color: white;
 }

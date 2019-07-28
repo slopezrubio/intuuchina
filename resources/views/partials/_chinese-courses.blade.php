@@ -22,8 +22,17 @@
         </div>
     </div>
     <div class="description-options">
-        <a class="selected" href="#"><span>Presencial</span></a>
-        <a href="#"><span>Online</span></a>
+        @if ($params->currentCourse == 1)
+            <a class="selected" href="#"><span>Presencial</span></a>
+        @else
+            <a href="#"><span>Presencial</span></a>
+        @endif
+
+        @if ($params->currentCourse == 2)
+            <a class="selected" href="#"><span>Online</span></a>
+        @else
+            <a href="#"><span>Online</span></a>
+        @endif
     </div>
 </section>
 @include('partials._price-course-info')

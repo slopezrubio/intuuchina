@@ -50104,8 +50104,24 @@ var courses = {
           courses.resetDesktopSliders();
         }
       }
+
+      if (event.type === 'load') {
+        // Slides the carrousel according to the controller (Presencial or Online) selected
+        courses.moveTo(courses.checkSelectedController() - 1); // Changes the background according to the slide requested in the server
+
+        courses.changeSliderBackground[courses.checkSelectedController() - 1](courses.carrousel);
+        /*
+         * Add transition to the carrousel so that the next time a course is selected it moves himself
+         * smoothly to reach the corresponding slide. The timeout is set in order to prevent the slide
+         * from applying the transition the first time the page is loaded by a request so it could be
+         * loaded faster.
+         */
+
+        setTimeout(courses.addTransition, 1000);
+      }
     } else {
       // Sets the course slider UI ready to be displayed in desktop devices
+      courses.changeSliderBackground[courses.checkSelectedController() - 1](courses.carrousel);
       courses.setDesktopSliders[courses.checkSelectedController()]();
       courses.resetResponsiveSliders();
     }
@@ -50125,6 +50141,9 @@ var courses = {
         $('.course-descriptions').after(data);
       }
     });
+  },
+  addTransition: function addTransition() {
+    courses.carrousel.classList.add('transition');
   },
   resetResponsiveSliders: function resetResponsiveSliders() {
     _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', 'translate(0px)');

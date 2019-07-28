@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li>
-                <a href="/learn">
+                <a href="{{ url('/learn/1') }}">
                     <div class="toggleOption">Aprende Chino</div>
                 </a>
             </li>

@@ -1,3 +1,10 @@
+/******* General Styles for the component *******/
+.transition {
+  @include prefixed(transition, all ease-in-out .5s);
+}
+
+/*----------------------------------------------*/
+
 %default-info-box {
   box-sizing: border-box;
   padding: 2rem;
@@ -51,7 +58,7 @@
   position: relative;
   .description-container {
     display: -webkit-inline-box;
-    @include prefixed(transition, all ease-in-out .5s);
+    //@include prefixed(transition, all ease-in-out .5s);
     .description-base {
       box-sizing: border-box;
       color: $white;
@@ -119,9 +126,9 @@
         }
       }
     }
-    .description-disabled{
+    .description-disabled {
       transition: all 0.9s ease;
-      .description-header{
+      .description-header {
         h2 {
           cursor: pointer;
         }
@@ -151,7 +158,7 @@
       &:hover,
       &:active,
       &.selected {
-        @include prefixed(transition, all ease-in-out 0.5s);
+        //@include prefixed(transition, all ease-in-out 0.5s);
         background: rgba(255, 255, 255, 0.4);
         color: $primaryWhite;
       }

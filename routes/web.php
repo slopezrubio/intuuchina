@@ -23,12 +23,13 @@ Route::get('/internship/filter={industry}', 'OffersController@filterBy')->where(
 Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
 
 /* Aprende Chino */
-Route::get('/learn', function() {
+Route::get('/learn/{course}', function($course = 1) {
     $params = (object) array(
         'title' => "Aprende Chino",
+        'currentCourse' => $course,
     );
     return view('pages/learn-chinese', compact('params'));
-});
+})->where('course', '[0-9]');
 
 /* Información Cursos Aprende Chino */
 Route::get('/learn/course={courseCode}', function($course) {

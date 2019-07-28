@@ -17,8 +17,8 @@
                     <div>
                         <h4 class="footer_subtitle">Aprende Chino</h4>
                         <ul class="web-map_list">
-                            <li class="web-map_item"><a href="#">Online</a></li>
-                            <li class="web-map_item"><a href="#">Presencial</a></li>
+                            <li class="web-map_item"><a href="{{ url('/learn/1') }}">Presencial</a></li>
+                            <li class="web-map_item"><a href="{{ url('/learn/2') }}">Online</a></li>
                         </ul>
                     </div>
                     <div>
