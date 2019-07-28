@@ -1,9 +1,6 @@
 <form method="POST" class="form" action="{{ route('admin.offers') }}">
     @csrf
     <div class="container-fluid form_body--hidden">
-        <div class="form-group row justify-content-center form-title">
-            <h2 class="d-block text-center">Nueva oferta</h2>
-        </div>
         <div class="form-group row">
             <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
             <div class="col-md-6">

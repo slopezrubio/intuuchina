@@ -10,8 +10,14 @@
     </header>
 
     <main>
-        {{-- Filtro de ofertas --}}
-        @include('partials._filter-by')
+        <div class="row">
+            {{-- Filtro de ofertas --}}
+            @include('partials._filter-by')
+
+            <div class="form-group col-5 form_header">
+                <a href="#" class="dropdown-button">Crear Nueva</a>
+            </div>
+        </div>
 
         {{-- Tabla de ofertas --}}
         @include('partials._offers-list')
