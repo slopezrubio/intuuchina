@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 
+window.Quill = require('quill');
+
 window.Vue = require('vue');
 
 /**

@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="form-group row" id="locationOfferFieldset">
-                    <label for="location" class="col-md-3 col-form-label text-md-left">location</label>
+                    <label for="location" class="col-md-3 col-form-label text-md-left">Location</label>
                     <div class="col-md-9">
                         <div class="regular-select-wrapper">
                             <select class="form-control" name="location" id="location">
@@ -72,21 +72,11 @@
                 <div class="form-group row">
                     <label for="description" class="col-md-3 col-form-label text-md-left">Description</label>
                     <div class="col-md-9">
-                        <textarea id="description" class="form-control"  name="description" rows="5" value="{{old('description')}}"></textarea>
+                        <div class="editor">
+                        </div>
                         @if ($errors->has('description'))
                             <div class="alert alert-danger" role="alert">
                                 {{ $errors->first('description') }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="preferred-skills" class="col-md-3 col-form-label text-md-left">Preferred Skills</label>
-                    <div class="col-md-9">
-                        <textarea id="preferred-skills" class="form-control" name="preferred-skills" rows="5" value="{{old('preferred-skills')}}"></textarea>
-                        @if ($errors->has('preferred-skills'))
-                            <div class="alert alert-danger" role="alert">
-                               {{ $errors->first('preferred-skills') }}
                             </div>
                         @endif
                     </div>
