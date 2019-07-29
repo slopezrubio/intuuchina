@@ -18,6 +18,13 @@
   }
 }
 
+.shutter-button {
+  cursor: pointer;
+  padding: .5em;
+  width: 100%;
+  @include shutter-in-horizontal();
+}
+
 .form {
   input {
     @include marginBottom;

@@ -10,8 +10,10 @@
     </header>
 
     <main>
-        {{-- Filtro de ofertas --}}
-        @include('partials._filter-by')
+        <div class="row align-items-center items_management container-fluid">
+            {{-- Filtro de ofertas --}}
+            @include('partials._filter-by')
+        </div>
 
         {{-- Tabla de ofertas --}}
         @include('partials._offers-list')

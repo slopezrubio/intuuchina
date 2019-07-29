@@ -42,7 +42,7 @@ let offersList = {
             },
             success: function(data, status, xhr) {
                 $('.offers').remove();
-                $('main').after(data);
+                $('.items_management').after(data);
 
                 //offersList.render(, data);
             }

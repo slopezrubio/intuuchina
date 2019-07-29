@@ -17,13 +17,19 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="location" class="col-md-3 col-form-label text-md-left">Location</label>
+                <div class="form-group row" id="locationOfferFieldset">
+                    <label for="location" class="col-md-3 col-form-label text-md-left">location</label>
                     <div class="col-md-9">
-                        <input id="location" type="text" class="form-control" name="location" value="{{ old('location') }}" required>
+                        <div class="regular-select-wrapper">
+                            <select class="form-control" name="location" id="location">
+                                <option value="honk-kong" selected aria-selected="true">Honk Kong</option>
+                                <option value="beijing">Beijing</option>
+                                <option value="shanghai">Shanghai</option>
+                            </select>
+                        </div>
                         @if ($errors->has('location'))
                             <div class="alert alert-danger" role="alert">
-                               {{ $errors->first('location') }}
+                                {{ $errors->first('location') }}
                             </div>
                         @endif
                     </div>
@@ -75,7 +81,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="preferred-skills" class="col-md-3 col-form-label text-md-right">Preferred Skills</label>
+                    <label for="preferred-skills" class="col-md-3 col-form-label text-md-left">Preferred Skills</label>
                     <div class="col-md-9">
                         <textarea id="preferred-skills" class="form-control" name="preferred-skills" rows="5" value="{{old('preferred-skills')}}"></textarea>
                         @if ($errors->has('preferred-skills'))
@@ -86,8 +92,9 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="submit" class="btn btn-primary" value="Submit">
+                    <div class="row justify-content-center col-12 my-4">
+                        <button type="submit" class="shutter-button col-4">Submit</button>
+                        <button type="reset" class="shutter-button col-4 offset-2 dropdown-button">Cancel</button>
                     </div>
                 </div>
             </div>
