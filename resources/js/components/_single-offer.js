@@ -36,9 +36,10 @@ let singleOffer = {
         element.style.setProperty(property,value);
     },
     toggleFixedButton: (event) => {
-        let lastSection = ($('main .readable_section').last());
-        let firstIndex = 0;
-        let position = lastSection[firstIndex].clientHeight + lastSection[firstIndex].offsetTop;
+        let lastSection = ($('.readable_section').last());
+
+        let firstIndex = 0;;
+        let position = $(lastSection[firstIndex]).offset().top + lastSection[firstIndex].clientHeight;
         if (singleOffer.theViewportPassedOverHere(position)) {
             if (document.querySelector('.sendable_section--fixed')) {
                 let applyNowButton = document.querySelector('.sendable_section--fixed');
@@ -61,6 +62,7 @@ let singleOffer = {
         }, 500, 'swing');
     },
     theViewportPassedOverHere: (y) => {
+        console.log(y + ' ' + window.pageYOffset + ' ' + window.innerHeight);
         return window.pageYOffset + window.innerHeight >= y;
     }
 };

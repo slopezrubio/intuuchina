@@ -15666,7 +15666,6 @@ main .breadcumb_section ol li a {
 }
 
 main .readable_section {
-  padding: 0 1em;
   margin-top: 2.2em;
 }
 
@@ -15719,12 +15718,12 @@ main .readable_section .card_background-image_info .card-text .month .month_valu
 @media only screen and (max-width: 320px) {
   main .readable_section .card_background-image {
     background-size: 185%;
-    padding-bottom: 40%;
     background-position: 50% 100%;
   }
 
   main .readable_section .card_background-image_info {
     width: 100%;
+    padding: 20% 0;
   }
 
   main .readable_section .card_background-image_info .card-title {
@@ -15745,6 +15744,18 @@ main .readable_section .card_background-image_info .card-text .month .month_valu
   main .readable_section .card_background-image_info .card-text .month .month_value {
     font-size: 22px;
     padding-right: 0.3em;
+  }
+}
+
+@media only screen and (min-width: 681px) and (max-width: 991px) {
+  main .readable_section .card_background-image_info {
+    width: 30%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  main .readable_section .card_background-image_info {
+    width: 30%;
   }
 }
 
@@ -15777,6 +15788,7 @@ main .sendable_section--fixed {
   background: #d1d1d1;
   height: 94px;
   top: calc(100% - 84px);
+  left: 0;
 }
 
 main .sendable_section--fixed .offers_buttons {

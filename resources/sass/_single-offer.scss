@@ -19,7 +19,6 @@ main {
     }
   }
   .readable_section {
-    padding: 0 1em;
     margin-top: 2.2em;
     &_title {
       color: $primaryRed;
@@ -68,10 +67,10 @@ main {
     @media #{$small-devices} {
       .card_background-image {
         background-size: 185%;
-        padding-bottom: 40%;
         background-position: 50% 100%;
         &_info {
           width: 100%;
+          padding: 20% 0;
           .card-title {
             padding-top: .5em;
             padding-bottom: .5em;
@@ -88,6 +87,22 @@ main {
               }
             }
           }
+        }
+      }
+    }
+
+    @media #{$footer-fix} {
+      .card_background-image {
+        &_info {
+          width: 30%;
+        }
+      }
+    }
+
+    @media #{$large-devices} {
+      .card_background-image {
+        &_info {
+          width: 30%;
         }
       }
     }
@@ -118,6 +133,7 @@ main {
       background: $neutralColor;
       height: 94px;
       top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
+      left: 0;
       .offers_buttons {
         display: flex;
         .cta {
@@ -127,3 +143,4 @@ main {
     }
   }
 }
+
