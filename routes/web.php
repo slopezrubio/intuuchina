@@ -61,7 +61,7 @@ Route::get('/login', function() {
 });
 
 /* Register with parameters */
-Route::post('/register/options','Auth\RegisterController@showRegistrationForm')->name('register.options');
+Route::post('/register/options','Auth\RegisterController@setOptions')->name('register.options');
 
 /* Administrador */
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){

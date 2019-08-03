@@ -121,5 +121,4 @@ class RegisterController extends Controller
 
         return $value;
     }
-
 }
