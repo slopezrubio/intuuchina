@@ -63688,9 +63688,11 @@ var courses = {
          * loaded faster.
          */
 
-        setTimeout(courses.addTransition, 300);
+        setTimeout(courses.addTransition, 100);
       }
     } else {
+      var _elementCount = courses.pictures.length; // Events arranged to the clickable elements in the courses slider
+
       var _loop = function _loop(i) {
         courses.pictures[i].addEventListener('click', function (e) {
           e.preventDefault();
@@ -63711,8 +63713,7 @@ var courses = {
         });
       };
 
-      // Events arranged to the clickable elements in the courses slider
-      for (var i = 0; i < courses.pictures.length; i++) {
+      for (var i = 0; i < _elementCount; i++) {
         _loop(i);
       } // Sets the course slider UI ready to be displayed in desktop devices
 
@@ -63720,8 +63721,9 @@ var courses = {
       courses.changeSliderBackground[courses.checkSelectedController() - 1](courses.carrousel);
       courses.setDesktopSliders[courses.checkSelectedController()]();
       courses.resetResponsiveSliders();
-    } // Events arranged to the slider controllers
+    }
 
+    var elementCount = courses.courseLinks.length; // Events arranged to the slider controllers
 
     var _loop2 = function _loop2(i) {
       courses.courseLinks[i].addEventListener('click', function (e) {
@@ -63747,7 +63749,7 @@ var courses = {
       });
     };
 
-    for (var i = 0; i < courses.courseLinks.length; i++) {
+    for (var i = 0; i < elementCount; i++) {
       _loop2(i);
     }
   },
@@ -63823,8 +63825,9 @@ var courses = {
   },
   checkSelectedController: function checkSelectedController() {
     var controllerSelected = courses.defaultSelectedCourse;
+    var elementsCount = courses.courseLinks.length;
 
-    for (var i = 0; i < courses.courseLinks.length; i++) {
+    for (var i = 0; i < elementsCount; i++) {
       if ($(courses.courseLinks[i]).hasClass('selected')) {
         controllerSelected = i + 1;
       }

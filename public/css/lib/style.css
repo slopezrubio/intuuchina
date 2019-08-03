@@ -13415,8 +13415,8 @@ main.full-viewport .credit a:hover {
 
 .course-descriptions .description-container .description-base .description-header button {
   margin-left: 0px;
-  font-size: calc(0.2127341847vw + 14.5059964639px);
-  padding: 0.7rem 2rem;
+  font-size: 1.2em;
+  padding: 0.5rem 2rem;
   border-radius: 2rem;
   text-decoration: none;
   transition-duration: 0.3s;

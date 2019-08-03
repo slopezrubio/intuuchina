@@ -3,11 +3,21 @@
         <div class="description-base">
             <div class="description-header">
                 <h2 id="presencial">Curso presencial <span>en China</span></h2>
-                <form action="{{ route('register.options') }}" method="POST">
-                    @csrf
-                    <input type="hidden" value="study" name="program" id="study">
-                    <button type="submit" name="study" value="presencial" class="cta">Inscribirse</button>
-                </form>
+                @auth
+                    @if(Auth::user()->type !== 'admin')
+                        <form action="#" method="POST">
+                            @csrf
+                            <input type="hidden" value="study" name="program" id="study">
+                            <button type="submit" value="presencial" name="study" class="cta">Solicitar</button>
+                        </form>
+                    @endif
+                @else
+                    <form action="{{ route('register.options') }}" method="POST">
+                        @csrf
+                        <input type="hidden" value="study" name="program" id="study">
+                        <button type="submit" value="presencial" name="study" class="cta">Inscribirse</button>
+                    </form>
+                @endauth
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
                 aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat
@@ -17,11 +27,21 @@
         <div class="description-base">
             <div class="description-header">
                 <h2 id="online">Curso<span> Online</span></h2>
-                <form action="{{ route('register.options') }}" method="POST">
-                    @csrf
-                    <input type="hidden" value="study" name="program" id="study">
-                    <button type="submit" value="online" name="study" class="cta">Inscribirse</button>
-                </form>
+                @auth
+                    @if(Auth::user()->type !== 'admin')
+                    <form action="#" method="POST">
+                        @csrf
+                        <input type="hidden" value="study" name="program" id="study">
+                        <button type="submit" value="online" name="study" class="cta">Solicitar</button>
+                    </form>
+                    @endif
+                @else
+                    <form action="{{ route('register.options') }}" method="POST">
+                        @csrf
+                        <input type="hidden" value="study" name="program" id="study">
+                        <button type="submit" value="online" name="study" class="cta">Inscribirse</button>
+                    </form>
+                @endauth
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
                 aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat

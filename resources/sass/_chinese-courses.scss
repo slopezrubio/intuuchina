@@ -86,9 +86,10 @@
         }
         button {
           margin-left: 0px;
-          $map: (320: 14, 824: 18, 1903: 18);
-          font-size: minimosCuadrados($map);
-          padding: 0.7rem 2rem;
+          //$map: (320: 14, 824: 18, 1903: 18);
+          //font-size: minimosCuadrados($map);
+          font-size: 1.2em;
+          padding: 0.5rem 2rem;
           border-radius: 2rem;
           text-decoration: none;
           transition-duration: 0.3s;

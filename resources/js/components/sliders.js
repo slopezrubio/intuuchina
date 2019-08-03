@@ -102,12 +102,14 @@ let courses = {
                  * from applying the transition the first time the page is loaded by a request so it could be
                  * loaded faster.
                  */
-                setTimeout(courses.addTransition, 300);
+                setTimeout(courses.addTransition, 100);
             }
 
         } else {
+            let elementCount =  courses.pictures.length;
+
             // Events arranged to the clickable elements in the courses slider
-            for (let i = 0; i < courses.pictures.length; i++) {
+            for (let i = 0; i < elementCount; i++) {
                 courses.pictures[i].addEventListener('click', function(e) {
                     e.preventDefault();
 
@@ -133,8 +135,10 @@ let courses = {
             courses.resetResponsiveSliders();
         }
 
+       let  elementCount = courses.courseLinks.length;
+
         // Events arranged to the slider controllers
-        for (let i = 0; i < courses.courseLinks.length; i++) {
+        for (let i = 0; i < elementCount; i++) {
             courses.courseLinks[i].addEventListener('click', function(e) {
                 e.preventDefault();
                 if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
@@ -227,7 +231,8 @@ let courses = {
     },
     checkSelectedController: () => {
         let controllerSelected = courses.defaultSelectedCourse;
-        for (let i = 0; i < courses.courseLinks.length; i++) {
+        let elementsCount = courses.courseLinks.length;
+        for (let i = 0; i < elementsCount ; i++) {
             if ($(courses.courseLinks[i]).hasClass('selected')) {
                 controllerSelected = i + 1;
             }
