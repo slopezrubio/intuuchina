@@ -234,6 +234,7 @@
       }
 
       .right-slide {
+        padding-right: 8%;
         .description-header {
           @include prefixed(align-items, flex-end);
           a {
@@ -246,6 +247,10 @@
           text-align: right;
           float: right;
         }
+      }
+
+      .left-slide {
+        padding-left: 8%;
       }
 
       .right-slide--none, .left-slide--none {
@@ -264,6 +269,7 @@
         }
         p {
           opacity: 0;
+          height: 0;
         }
 
         &:before {

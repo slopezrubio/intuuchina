@@ -13580,6 +13580,10 @@ main.full-viewport .credit a:hover {
     transition: opacity 0.2s 0.5s;
   }
 
+  .course-descriptions .description-container .right-slide {
+    padding-right: 8%;
+  }
+
   .course-descriptions .description-container .right-slide .description-header {
     -moz-align-items: flex-end;
     -ms-align-items: flex-end;
@@ -13595,6 +13599,10 @@ main.full-viewport .credit a:hover {
   .course-descriptions .description-container .right-slide p {
     text-align: right;
     float: right;
+  }
+
+  .course-descriptions .description-container .left-slide {
+    padding-left: 8%;
   }
 
   .course-descriptions .description-container .right-slide--none,
@@ -13623,6 +13631,7 @@ main.full-viewport .credit a:hover {
   .course-descriptions .description-container .right-slide--none p,
   .course-descriptions .description-container .left-slide--none p {
     opacity: 0;
+    height: 0;
   }
 
   .course-descriptions .description-container .right-slide--none:before,

@@ -74,50 +74,6 @@ let courses = {
     setup: function(event) {
         courses.courseSliderWidth = courses.pictureHolder.clientWidth;
 
-        // Events arranged to the slider controllers
-        for (let i = 0; i < courses.courseLinks.length; i++) {
-            courses.courseLinks[i].addEventListener('click', function(e) {
-                e.preventDefault();
-                if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
-                    courses.requestedCourseURL = `/learn/course=${i + 1}`;
-                    courses.getCourseInfo(courses.requestedCourseURL);
-                }
-
-                let elementIndex = $(this).index();
-                if (!breakpoints.isLargeDevice()) {
-                    courses.moveTo(elementIndex);
-                } else {
-                    courses.setDesktopSliders[i + 1]();
-                }
-
-                if (!$(this).hasClass('selected')) {
-                    courses.toggleControllers(elementIndex);
-                    courses.changeSliderBackground[elementIndex](courses.carrousel);
-                }
-            });
-        }
-
-        // Events arranged to the clickable elements in the courses slider
-        for (let i = 0; i < courses.pictures.length; i++) {
-            courses.pictures[i].addEventListener('click', function(e) {
-                e.preventDefault();
-
-                /*
-                 * Makes a GET request to the server ({ROOT_FOLDER}/learn/course=${course-number})
-                 * to retrieve the fitting information for each course displayed
-                 */
-                if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
-                    courses.requestedCourseURL = `/learn/course=${i + 1}`;
-                    courses.getCourseInfo(courses.requestedCourseURL);
-                }
-
-                let elementIndex = $(this).index();
-                courses.setDesktopSliders[i + 1]();
-                courses.toggleControllers(elementIndex);
-                courses.changeSliderBackground[elementIndex](courses.carrousel);
-            });
-        }
-
         // Sets the courses slider UI according to the current device used
         if (!breakpoints.isLargeDevice()) {
             // Compatibility with all the browsers
@@ -146,15 +102,61 @@ let courses = {
                  * from applying the transition the first time the page is loaded by a request so it could be
                  * loaded faster.
                  */
-                setTimeout(courses.addTransition, 1000);
+                setTimeout(courses.addTransition, 300);
             }
 
         } else {
+            // Events arranged to the clickable elements in the courses slider
+            for (let i = 0; i < courses.pictures.length; i++) {
+                courses.pictures[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    /*
+                     * Makes a GET request to the server ({ROOT_FOLDER}/learn/course=${course-number})
+                     * to retrieve the fitting information for each course displayed
+                     */
+                    if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
+                        courses.requestedCourseURL = `/learn/course=${i + 1}`;
+                        courses.getCourseInfo(courses.requestedCourseURL);
+                    }
+
+                    let elementIndex = $(this).index();
+                    courses.setDesktopSliders[i + 1]();
+                    courses.toggleControllers(elementIndex);
+                    courses.changeSliderBackground[elementIndex](courses.carrousel);
+                });
+            }
+
             // Sets the course slider UI ready to be displayed in desktop devices
             courses.changeSliderBackground[courses.checkSelectedController() - 1](courses.carrousel);
             courses.setDesktopSliders[courses.checkSelectedController()]();
             courses.resetResponsiveSliders();
         }
+
+        // Events arranged to the slider controllers
+        for (let i = 0; i < courses.courseLinks.length; i++) {
+            courses.courseLinks[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                if (courses.requestedCourseURL !== `/learn/course=${i + 1}`) {
+                    courses.requestedCourseURL = `/learn/course=${i + 1}`;
+                    courses.getCourseInfo(courses.requestedCourseURL);
+                }
+
+                let elementIndex = $(this).index();
+                if (!breakpoints.isLargeDevice()) {
+                    courses.moveTo(elementIndex);
+                } else {
+                    courses.setDesktopSliders[i + 1]();
+                }
+
+                if (!$(this).hasClass('selected')) {
+                    courses.toggleControllers(elementIndex);
+                    courses.changeSliderBackground[elementIndex](courses.carrousel);
+                }
+            });
+        }
+
+
     },
     getCourseInfo: function(path, data = null) {
         $.get({
