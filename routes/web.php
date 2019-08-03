@@ -60,6 +60,9 @@ Route::get('/login', function() {
     return view('pages/login');
 });
 
+/* Register with parameters */
+Route::post('/register/options','Auth\RegisterController@showRegistrationForm')->name('register.options');
+
 /* Administrador */
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
     Route::match(['get', 'post'], '/admin/','HomeController@index');

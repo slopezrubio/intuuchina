@@ -84,7 +84,7 @@
             color: $white;
           }
         }
-        a {
+        button {
           margin-left: 0px;
           $map: (320: 14, 824: 18, 1903: 18);
           font-size: minimosCuadrados($map);
@@ -110,7 +110,7 @@
           }
         }
 
-        #online ~ .cta {
+        #online ~ form > .cta {
           background: $sectionDark;
           &:hover {
             background: $primaryDark;
@@ -237,7 +237,7 @@
         padding-right: 8%;
         .description-header {
           @include prefixed(align-items, flex-end);
-          a {
+          button {
             margin-right: 0;
             margin-left: auto;
           }

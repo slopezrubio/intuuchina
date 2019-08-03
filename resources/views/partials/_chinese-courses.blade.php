@@ -3,7 +3,11 @@
         <div class="description-base">
             <div class="description-header">
                 <h2 id="presencial">Curso presencial <span>en China</span></h2>
-                <a class="cta" href="{{ route('register') }}">Inscribirse</a>
+                <form action="{{ route('register.options') }}" method="POST">
+                    @csrf
+                    <input type="hidden" value="study" name="program" id="study">
+                    <button type="submit" name="study" value="presencial" class="cta">Inscribirse</button>
+                </form>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
                 aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat
@@ -13,7 +17,11 @@
         <div class="description-base">
             <div class="description-header">
                 <h2 id="online">Curso<span> Online</span></h2>
-                <a class="cta" href="{{ route('register') }}">Inscribirse</a>
+                <form action="{{ route('register.options') }}" method="POST">
+                    @csrf
+                    <input type="hidden" value="study" name="program" id="study">
+                    <button type="submit" value="online" name="study" class="cta">Inscribirse</button>
+                </form>
             </div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
                 aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat

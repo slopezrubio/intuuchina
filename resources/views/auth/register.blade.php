@@ -72,11 +72,15 @@
                                 <div class="col-md-9">
                                     <div class="regular-select-wrapper">
                                         <select class="form-control" id="inputProgram" name="program">
-                                            <option value="internship" aria-selected="true" selected>Internship program</option>
+                                            @if(empty($options))
+                                                <option value="internship" aria-selected="true" selected>Internship program</option>
+                                            @else
+                                                <option value="internship" aria-selected="{{ isset($options['program']) && $options['program'] === 'internship' ? 'true' : 'false' }}" {{ isset($options['program']) && $options['program'] === 'internship' ? 'selected' : '' }}>Internship program</option>
+                                            @endif
                                             <option value="inter_relocat">Internship + Relocation Program</option>
                                             <option value="inter_housing">Internship Including Housing</option>
-                                            <option value="study">Study Chinese</option>
-                                            <option value="universty">University</option>
+                                            <option value="study" aria-selected="{{ isset($options['program']) && $options['program'] === 'study' ? 'true' : 'false' }}" {{ isset($options['program']) && $options['program'] === 'study' ? 'selected' : '' }}>Study Chinese</option>
+                                            <option value="universty" aria-selected="{{ isset($options['program']) && $options['program'] === 'university' ? 'true' : 'false' }}" {{ isset($options['program']) && $options['program'] === 'university' ? 'selected' : '' }}>University</option>
                                         </select>
                                     </div>
                                 </div>
@@ -171,14 +175,22 @@
                                     <div class="sw_input">
                                         <label aria-label="online">Online</label>
                                         <label for="online" class="switch">
-                                            <input id="online" type="checkbox" value="online" name="study[]">
+                                            @if(isset($options['study']) && $options['study'] === 'online')
+                                                <input id="online" type="checkbox" value="online" name="study[]" aria-checked="true" checked="true">
+                                            @else
+                                                <input id="online" type="checkbox" value="online" name="study[]">
+                                            @endif
                                             <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                                         </label>
                                     </div>
                                     <div class="sw_input">
                                         <label aria-label="presencial">Presencial</label>
                                         <label for="presencial" class="switch">
-                                            <input id="presencial" type="checkbox" value="presencial" name="study[]">
+                                            @if(isset($options['study']) && $options['study'] === 'presencial')
+                                                <input id="presencial" type="checkbox" value="presencial" name="study[]" aria-checked="true" checked="true">
+                                            @else
+                                                <input id="presencial" type="checkbox" value="presencial" name="study[]">
+                                            @endif
                                             <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                                         </label>
                                     </div>

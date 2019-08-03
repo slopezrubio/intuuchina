@@ -13413,7 +13413,7 @@ main.full-viewport .credit a:hover {
   color: white;
 }
 
-.course-descriptions .description-container .description-base .description-header a {
+.course-descriptions .description-container .description-base .description-header button {
   margin-left: 0px;
   font-size: calc(0.2127341847vw + 14.5059964639px);
   padding: 0.7rem 2rem;
@@ -13422,15 +13422,15 @@ main.full-viewport .credit a:hover {
   transition-duration: 0.3s;
 }
 
-.course-descriptions .description-container .description-base .description-header a:active {
+.course-descriptions .description-container .description-base .description-header button:active {
   text-decoration: none;
 }
 
-.course-descriptions .description-container .description-base .description-header a:visited {
+.course-descriptions .description-container .description-base .description-header button:visited {
   text-decoration: none;
 }
 
-.course-descriptions .description-container .description-base .description-header a:hover {
+.course-descriptions .description-container .description-base .description-header button:hover {
   opacity: 0.9;
 }
 
@@ -13442,11 +13442,11 @@ main.full-viewport .credit a:hover {
   color: white;
 }
 
-.course-descriptions .description-container .description-base .description-header #online ~ .cta {
+.course-descriptions .description-container .description-base .description-header #online ~ form > .cta {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.course-descriptions .description-container .description-base .description-header #online ~ .cta:hover {
+.course-descriptions .description-container .description-base .description-header #online ~ form > .cta:hover {
   background: black;
 }
 
@@ -13591,7 +13591,7 @@ main.full-viewport .credit a:hover {
     align-items: flex-end;
   }
 
-  .course-descriptions .description-container .right-slide .description-header a {
+  .course-descriptions .description-container .right-slide .description-header button {
     margin-right: 0;
     margin-left: auto;
   }
