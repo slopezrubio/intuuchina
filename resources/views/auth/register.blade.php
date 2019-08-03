@@ -234,13 +234,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row mb-0">
-                                <div class="col-5 col-md-5">
+                            <div class="form-group row justify-content-center">
+                                <div class="col-4 col-md-4">
                                     <button type="submit" class="shutter-button">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
-                                <div class="col-5 col-md-5 offset-md-2">
+                                <div class="col-4 col-md-4">
                                     <button type="reset" class="shutter-button">
                                         {{ __('Cancel') }}
                                     </button>
