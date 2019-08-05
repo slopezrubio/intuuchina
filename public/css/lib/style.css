@@ -15829,7 +15829,6 @@ main .sendable_section--fixed .offers_buttons .cta {
 
 .confirmation .confirmation_content p {
   font-size: calc(0.2087173474vw + 14.8042122032px);
-  margin-bottom: 3em;
 }
 
 .confirmation .confirmation_content [class^=confirmation_button] {
@@ -15851,6 +15850,7 @@ main .sendable_section--fixed .offers_buttons .cta {
   transition-duration: 0.3s;
   border: 2px solid #C80B0B;
   border-radius: 22px;
+  margin-top: 2em;
 }
 
 .confirmation .confirmation_content .confirmation_more_info:before {

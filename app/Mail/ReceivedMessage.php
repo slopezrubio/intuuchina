@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -33,6 +34,16 @@ class ReceivedMessage extends Mailable
      */
     public function build()
     {
+        if (Mail::failures()) {
+            return view('pages/home');
+        }
+
+        $this->confirmation();
+
         return $this->view('emails.contact-us-email');
+    }
+
+    public function confirmation() {
+        Mail::to($this->msg['email'])->queue(new ConfirmationEmailReceived($this->msg));
     }
 }

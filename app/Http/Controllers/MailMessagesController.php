@@ -32,4 +32,8 @@ class MailMessagesController extends Controller
 
         return view('pages.message-confirmation');
     }
+
+    public function hasBeenSent() {
+        return Mail::failures();
+    }
 }

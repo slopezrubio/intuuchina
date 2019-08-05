@@ -18,7 +18,6 @@
     p {
       $map: (425: 16, 812: 16, 1440: 18);
       font-size: minimosCuadrados($map);
-      margin-bottom: 3em;
     }
 
     [class^="confirmation_button"] {
@@ -31,6 +30,7 @@
       padding: 10px;
       font-size: minimosCuadrados($map);
       @include shutter-in-horizontal();
+      margin-top: 2em;
     }
   }
 }
