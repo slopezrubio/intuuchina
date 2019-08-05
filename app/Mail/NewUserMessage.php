@@ -12,6 +12,8 @@ class NewUserMessage extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $title;
+
 
     /**
      * Create a new message instance.
@@ -21,6 +23,7 @@ class NewUserMessage extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+        $this->title = "We appreciate your interest and trust in us";
     }
 
     /**

@@ -1,0 +1,28 @@
+body, p, h1, h2, h3, h4, h5, h6 {
+     font-family: "Montserrat", sans-serif;
+     font-size: 1em;
+}
+
+body {
+     padding: 1em;
+}
+
+p {
+     margin-bottom: 1em;
+     line-height: 1.4;
+}
+
+footer {
+     font-size: .85em;
+}
+
+.business-card {
+     text-decoration: none;
+     list-style-type: none;
+     color: #E57373;
+     padding: 0;
+}
+
+.business-card > li:not(:last-child) {
+     margin-bottom: .5em;
+}

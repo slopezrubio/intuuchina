@@ -12,6 +12,7 @@ class ConfirmationEmailReceived extends Mailable
     use Queueable, SerializesModels;
 
     public $name;
+    public $title;
 
     /**
      * Create a new message instance.
@@ -21,6 +22,7 @@ class ConfirmationEmailReceived extends Mailable
     public function __construct($msg)
     {
         $this->name = $msg['name'];
+        $this->title = "Thanks for contact us";
     }
 
     /**

@@ -15,6 +15,7 @@ class ReceivedMessage extends Mailable
 
     public $subject;
     public $msg;
+    public $title;
 
     /**
      * Create a new message instance.
@@ -25,6 +26,7 @@ class ReceivedMessage extends Mailable
     {
         $this->subject = $msg['subject'];
         $this->msg = $msg;
+        $this->title = "Requested made by " . $msg['name'];
     }
 
     /**

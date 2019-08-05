@@ -1,13 +1,25 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bienvenido, {{ $user['name'] }}</title>
-</head>
-<body>
-<h1>{{ $user['name'] }}</h1>
-</body>
-</html>
+@extends('layouts.mails')
+
+@section('content')
+    <main>
+        <h1>Welcome to IntuuChina</h1>
+        <p>
+            Dear {{ $user['name'] }},
+        </p>
+        <p>
+            Thank you for contacting us. It's a pleasure to receive your application for our internship program. My name is Patrick and my job is to advise and guide you throughout our selection process and hopefully greeting you in person in China.
+            The first step is to send me your CV in English along with a short description of what you need help with and any questions you might have.
+        </p>
+        <p>
+            After a first assessment, we will contact you to let you know if you are eligible for the program.
+        </p>
+        <p>
+            Do you think you could send me the CV within today?
+        </p>
+        <p>
+            All the best.
+        </p>
+    </main>
+
+    @include('partials.mails._footer')
+@endsection
