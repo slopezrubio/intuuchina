@@ -36,7 +36,7 @@
             </li>
 
             <li class="dropdown">
-                <a href="#" class="nav-item" data-target="#university" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                <a href="#" class="nav-item" data-target="#university" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="toggleOption" >Universidad<i class="fas fa-angle-right"></i></div>
                 </a>
 
@@ -97,8 +97,8 @@
                 </li>
         @endguest
 
-            <li class="inline-items">
-                <div class="toggleOption">
+            <li class="dropdown inline-items">
+                <div class="toggleOption" data-toggle="dropdown">
                     @if(App::isLocale('es'))
                         <a href="#" class="selected">ES</a>
                     @else
@@ -110,8 +110,8 @@
                         <a href="#">IN</a>
                     @endif
                 </div>
-                <a href="#" class="nav-item" data-target="#language" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                    <div class="toggleOption" >ES</div>
+                <a href="#" class="nav-item" data-target="#language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="toggleOption" >ES<i class="fas fa-angle-right"></i></div>
                 </a>
                 <ul id="language" class="dropdown-menu accordeon" aria-labelledby="language">
                     <li>
