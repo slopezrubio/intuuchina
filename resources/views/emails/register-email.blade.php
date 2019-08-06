@@ -7,7 +7,7 @@
             Dear {{ $user['name'] }},
         </p>
         <p>
-            Thank you for contacting us. It's a pleasure to receive your application for our internship program. My name is Patrick and my job is to advise and guide you throughout our selection process and hopefully greeting you in person in China.
+            Thank you for contacting us. It's a pleasure to receive your application for our {{ $user['program'] }} program. My name is Patrick and my job is to advise and guide you throughout our selection process and hopefully greeting you in person in China.
             The first step is to send me your CV in English along with a short description of what you need help with and any questions you might have.
         </p>
         <p>
