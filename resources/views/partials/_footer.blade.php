@@ -68,11 +68,6 @@
 {{--                </div>--}}
                 <div class="col-xs-10 switch_input">
                     <label aria-label="terms">Acepto los <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">términos y condiciones</a> así como también el <a href="#" data-toggle="modal" data-target="#GDPRModal">Reglamento General de Protección de datos</a></label>
-                    @include('partials._terms-and-conditions')
-
-                    @include('partials._gdpr')
-
-                    @include('partials._privacy-policy')
 
                     <label for="terms" class="switch">
                         <input id="terms" name="terms" type="checkbox">
@@ -115,7 +110,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
         <div class="footer_footer">
             {{--Terms and conditions & Signatures--}}
@@ -132,3 +126,9 @@
         </div>
     </div>
 </footer>
+
+@include('partials._terms-and-conditions')
+
+@include('partials._gdpr')
+
+@include('partials._privacy-policy')
