@@ -87,7 +87,7 @@ class RegisterController extends Controller
          *
          * PRODUCTION: Replace the default email to the one the users provide in the form.
          */
-        Mail::to('recmanvideos@gmail.com')->queue(new NewUserMessage($user));
+        Mail::to($user['email'])->queue(new NewUserMessage($user));
 
         return $user;
     }
