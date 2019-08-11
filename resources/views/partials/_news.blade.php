@@ -2,7 +2,7 @@
 <div class="news">
     <div class="news_container">
         <div class="section_title">
-            <h2>Los <strong>medios</strong> opinan</h2>
+            <h2>{{ __('content.what the media think') }}</h2>
         </div>
         <div class="section_body">
             <div class="note_window">
@@ -11,15 +11,15 @@
                         <a href="https://elpais.com/economia/2016/05/05/actualidad/1462462986_888570.html" target="_blank"><img src="{{asset('storage/images/el-pais.png')}}" alt="antena3"
                                                                                                    width="100px"></a>
                         <div class="note_quote">
-                            <p>"Las estadisticas confirman que IntuuChina dio en el clavo: Han logrado colocar a 290 personas de 46 nacionalidades ... El mayor porcentaje de exito (78%) se da entre quienes llegan a China con intencion de quedarse"</p>
-                            <p class="author"><strong>Z.ALDAMA</strong><br>08/05/2016</p>
+                            <p>{{ __('content.el pais quote') }}</p>
+                            <p class="author"><strong>{{ __('content.el pais author') }}</strong><br></p>
                         </div>
                     </div>
                     <div class="slider_note">
                         <a href="https://www.youtube.com/watch?v=8dsj6xTclco" target="_blank"><img src="{{asset('storage/images/eitb.png')}}" alt="Logo de Euskal Irrati Telebista"
                                                                                                    width="100px"></a>
                         <div class="note_quote">
-                            <p>"Las compañias Chinas estan contratando talento extranjero que les ayude a internacionalizarse"</p>
+                            <p>{{ __('content.eitb quote') }}</p>
                         </div>
                     </div>
                     <div class="slider_note">
