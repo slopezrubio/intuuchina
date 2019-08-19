@@ -5,34 +5,34 @@
             {{--Web Map--}}
             <div class="footer_web-map col-sm-12">
                 <div class="footer_title">
-                    <h3>Mapa Web</h3>
+                    <h3>{{ __('content.website map') }}</h3>
                 </div>
                 <div class="footer_web-map_items">
                     <div>
-                        <h4 class="footer_subtitle">Prácticas</h4>
+                        <h4 class="footer_subtitle">{{ __('content.internship') }}</h4>
                         <ul class="web-map_list">
-                            <li class="web-map_item"><a href="{{ route('offers') }}">Ofertas</a></li>
+                            <li class="web-map_item"><a href="{{ route('offers') }}">{{ __('links.job offers') }}</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="footer_subtitle">Aprende Chino</h4>
+                        <h4 class="footer_subtitle">{{ __('content.learn chinese') }}</h4>
                         <ul class="web-map_list">
-                            <li class="web-map_item"><a href="{{ url('/learn/1') }}">Presencial</a></li>
-                            <li class="web-map_item"><a href="{{ url('/learn/2') }}">Online</a></li>
+                            <li class="web-map_item"><a href="{{ url('/learn/1') }}">{{ __('links.in-person') }}</a></li>
+                            <li class="web-map_item"><a href="{{ url('/learn/2') }}">{{ __('links.on-line') }}</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="footer_subtitle">Universidad</h4>
+                        <h4 class="footer_subtitle">{{ __('content.university') }}</h4>
                         <ul class="web-map_list">
-                            <li class="web-map_item"><a href="#">Master of Business Administration</a></li>
-                            <li class="web-map_item"><a href="#">Master of International Business</a></li>
-                            <li class="web-map_item"><a href="#">Other</a></li>
+                            <li class="web-map_item"><a href="#">{{ __('links.master of business administration acronym') }}</a></li>
+                            <li class="web-map_item"><a href="#">{{ __('links.master of international business acronym') }}</a></li>
+                            <li class="web-map_item"><a href="#">{{ __('links.other studies') }}</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="footer_subtitle">Why Intuuchina</h4>
+                        <h4 class="footer_subtitle">{{ __('content.why intuuchina') }}</h4>
                         <ul class="web-map_list">
-                            <li class="web-map_item"><a href="#">Sobre Nosotros</a></li>
+                            <li class="web-map_item"><a href="#">{{ __('links.whyus') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,19 +42,19 @@
             <form action="{{ route('mail') }}" method="post" class="footer_contact_form col-sm-12">
                 @csrf
                 <div class="footer_title">
-                    <h3>Contact us!</h3>
+                    <h3>{{ __('content.contact us') }}</h3>
                 </div>
                 <div class="col-xs-10 text_input">
-                    <label for="name">Nombre</label>
-                    <input type="text" name="name" id="name" placeholder="{{ $errors->has('name') ? $errors->first('name') : 'No valen números: e.j. Marta99, Tiana23...' }}" class="{{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}">
+                    <label for="name">{{ __('content.name') }}</label>
+                    <input type="text" name="name" id="name" placeholder="{{ $errors->has('name') ? $errors->first('name') : __('content.name placeholder') }}" class="{{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}">
                 </div>
                 <div class="col-xs-10 text_input">
-                    <label for="email">Correo</label>
-                    <input type="text" name="email" id="email" placeholder="{{ $errors->has('email') ? $errors->first('email') : 'e.j. confucio@confucio.es' }}" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}">
+                    <label for="email">{{ __('content.mail') }}</label>
+                    <input type="text" name="email" id="email" placeholder="{{ $errors->has('email') ? $errors->first('email') : __('content.email placeholder') }}" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}">
                 </div>
                 <div class="col-xs-10 text_input">
-                    <label for="subject">Asunto</label>
-                    <input type="text" name="subject" placeholder="{{ $errors->has('subject') ? $errors->first('subject') : 'Escribe aqui tu consulta' }}" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}" value="{{ old('subject') }}">
+                    <label for="subject">{{ __('content.subject') }}</label>
+                    <input type="text" name="subject" placeholder="{{ $errors->has('subject') ? $errors->first('subject') : __('content.subject placeholder') }}" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}" value="{{ old('subject') }}">
                 </div>
 {{--                Campo de mensaje--}}
 {{--                <div class="col-xs-10">--}}
@@ -67,7 +67,7 @@
 {{--                    @endif--}}
 {{--                </div>--}}
                 <div class="col-xs-10 switch_input">
-                    <label aria-label="terms">Acepto los <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">términos y condiciones</a> así como también el <a href="#" data-toggle="modal" data-target="#GDPRModal">Reglamento General de Protección de datos</a></label>
+                    <label aria-label="terms">{{ __('content.i accept the')[0] }}<a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{{ __('links.terms and conditions') }}</a>{{ __('content.i accept the')[1] }}<a href="#" data-toggle="modal" data-target="#GDPRModal">{{ __('links.general data protection regulation') }}</a></label>
                     @include('partials._terms-and-conditions')
 
                     @include('partials._gdpr')
@@ -93,25 +93,25 @@
                     @endif
                 </div>
                 <div class="col-xs-10">
-                    <button type="submit" class="footer_submit">Submit</button>
-                    <button type="reset" class="footer_reset">Cancel</button>
+                    <button type="submit" class="footer_submit">{{ __('content.submit') }}</button>
+                    <button type="reset" class="footer_reset">{{ __('content.cancel') }}</button>
                 </div>
             </form>
 
             {{--Social Media Links--}}
             <div class="footer_social-media col-sm-12">
                 <div class="footer_title">
-                    <h3>Síguenos</h3>
+                    <h3>{{ __('content.follow us') }}</h3>
                 </div>
                 <ul class="footer_sublist">
                     <li class="sublist_item">
-                        <label><a href="https://www.facebook.com/intuuchina" target="_blank"><i class="fab fa-facebook-square">Facebook</i></a></label>
+                        <label><a href="https://www.facebook.com/intuuchina" target="_blank"><i class="fab fa-facebook-square">{{ __('links.facebook') }}</i></a></label>
                     </li>
                     <li class="sublist_item">
-                        <label><a href="https://www.instagram.com/intuuchina/" target="_blank"><i class="fab fa-instagram">Instagram</i></a></label>
+                        <label><a href="https://www.instagram.com/intuuchina/" target="_blank"><i class="fab fa-instagram">{{ __('links.instagram') }}</i></a></label>
                     </li>
                     <li class="sublist_item">
-                        <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank"><i class="fab fa-linkedin">Linkedin</i></a></label>
+                        <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank"><i class="fab fa-linkedin">{{ __('links.linkedin') }}</i></a></label>
                     </li>
                 </ul>
             </div>
@@ -120,13 +120,13 @@
         <div class="footer_footer">
             {{--Terms and conditions & Signatures--}}
             <div class="footer_documentation col-sm-12">
-                <p>IntuuChina Copyright &copy; 2019 Todos los derechos reservados </p>
+                <p>{{ __('content.copyright') }}</p>
                 <span class="footer_documentation_signature">
-                    <p>Made with love &hearts; by <a href="http://factoriaf5.org"></p>
+                    <p>{{ __('content.made with love by ') }}<a href="http://factoriaf5.org"></p>
                     <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
                 </span>
                 <p>
-                    <a href="#" data-toggle="modal" data-target="#privacyPolicy">Política de privacidad</a> | <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">Terminos y condiciones</a>
+                    <a href="#" data-toggle="modal" data-target="#privacyPolicy">{{ __('links.privacy policy') }}</a> | <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{{ __('links.terms and conditions') }}</a>
                 </p>
             </div>
         </div>
