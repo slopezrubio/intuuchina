@@ -151,12 +151,14 @@ header {
 }
 
 header {
-  height: 20em;
+  height: 30em;
+  text-transform: uppercase;
 }
 
 nav {
   height: auto;
   line-height: auto;
+  text-transform: none;
 }
 
 main {
@@ -178,7 +180,7 @@ main {
  */
 header#home{
   background-image: url('/../../storage/images/practicas-1-1.jpg');
-  height: 50rem;
+  height: 32em;
   text-transform: none;
 }
 
@@ -203,6 +205,7 @@ header#why-us {
   background: url('/../../storage/images/why2.jpg') no-repeat scroll center;
   background-size: cover;
   height: 50vh;
+  text-transform: none;
 }
 
 /* ------------------------------------------------------- */

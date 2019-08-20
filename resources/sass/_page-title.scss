@@ -4,7 +4,7 @@
  */
 @mixin verticalAlign() {
   position: absolute;
-  top: 50%;
+  top: calc(50% + 32px);
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
@@ -16,7 +16,6 @@
   @include verticalAlign();
   display: block;
   width: 100%;
-  text-transform: uppercase;
   z-index: 1;
   .title-card {
       background: $sectionDark;
@@ -26,6 +25,7 @@
       border: 2px solid $primaryWhite;
       display: flex;
       flex-direction: column-reverse;
+      max-width: 630px;
 
       .cta {
         border: none;
@@ -39,7 +39,7 @@
         border-radius: 34px;
         a {
           display: inline-block;
-          $map: (320: 14, 824: 18, 1903: 18);
+          $map: (320: 14, 824: 16, 1903: 16);
           font-size: minimosCuadrados($map);
           line-height: 45px;
           height: 100%;
@@ -57,13 +57,17 @@
       }
 
       &-header {
-        $map: (397: 24, 482: 24, 1903: 42);
+        $map: (397: 24, 482: 24, 1903: 30);
         font-size: minimosCuadrados($map);
         line-height: 1.4;
         font-weight: 700;
         text-align: center;
         margin: .5em;
       }
+  }
+
+  @media only screen and (max-width: 678px) {
+      padding: 0 1.5em;
   }
 }
 

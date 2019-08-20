@@ -12150,12 +12150,14 @@ header {
 }
 
 header {
-  height: 20em;
+  height: 30em;
+  text-transform: uppercase;
 }
 
 nav {
   height: auto;
   line-height: auto;
+  text-transform: none;
 }
 
 main {
@@ -12177,7 +12179,7 @@ main {
 
 header#home {
   background-image: url("/../../storage/images/practicas-1-1.jpg");
-  height: 50rem;
+  height: 32em;
   text-transform: none;
 }
 
@@ -12202,6 +12204,7 @@ header#why-us {
   background: url("/../../storage/images/why2.jpg") no-repeat scroll center;
   background-size: cover;
   height: 50vh;
+  text-transform: none;
 }
 
 /* ------------------------------------------------------- */
@@ -12573,13 +12576,11 @@ header#why-us {
     cursor: pointer;
   }
 
-  .navbar_menu--display li.dropdown a[data-toggle=dropdown] {
+  .navbar_menu--display li.dropdown a[aria-expanded=true] + a[aria-expanded=true]:not(:hover) {
     color: black;
   }
 
-  .navbar_menu--display li.dropdown a[data-toggle=dropdown]:hover,
-  .navbar_menu--display li.dropdown a[data-toggle=dropdown]:active,
-  .navbar_menu--display li.dropdown a[data-toggle=dropdown]:focus {
+  .navbar_menu--display li.dropdown a[aria-expanded=true] + a[aria-expanded=true]:hover {
     color: white;
   }
 
@@ -12871,11 +12872,11 @@ main.full-viewport .credit a:hover {
   -moz-flex-direction: row;
   -o-flex-direction: row;
   flex-direction: row;
-  height: 95%;
   -moz-align-items: center;
   -ms-align-items: center;
   -o-align-items: center;
   align-items: center;
+  margin-top: 4em;
 }
 
 .sensationalism-stats .facts p {
@@ -13331,6 +13332,64 @@ main.full-viewport .credit a:hover {
   justify-content: center;
 }
 
+.course-information .course-information_box .prices {
+  margin: 0.5em 0.5em 0 0.5em;
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -moz-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+}
+
+.course-information .course-information_box .prices .price-tag {
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -moz-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.course-information .course-information_box .prices .price-tag i.currency {
+  font-size: calc(1.2658227848vw + 24.2658227848px);
+  font-style: normal;
+  position: relative;
+  top: -20px;
+}
+
+@media only screen and (min-width: 550px) {
+  .course-information .course-information_box .prices {
+    -webkit-display: inline-flex;
+    -moz-display: inline-flex;
+    -ms-display: inline-flex;
+    -o-display: inline-flex;
+    display: inline-flex;
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+  }
+
+  .course-information .course-information_box .prices .price-tag:first-of-type {
+    margin-right: 1em;
+  }
+
+  .course-information .course-information_box .prices .price-tag:last-of-type {
+    float: right-;
+  }
+}
+
 .course-information .course-information_box p {
   margin-bottom: 0px;
   -webkit-display: flex;
@@ -13341,18 +13400,6 @@ main.full-viewport .credit a:hover {
   -moz-flex-direction: column;
   -o-flex-direction: column;
   flex-direction: column;
-}
-
-.course-information .course-information_box p .price-tag {
-  font-size: calc(1.3400351321vw + 48.6222648149px);
-  font-weight: 700;
-  text-align: center;
-  display: flex;
-}
-
-.course-information .course-information_box p .price-tag i.currency {
-  font-size: calc(1.8987341772vw + 12.3987341772px);
-  font-style: normal;
 }
 
 .course-information .course-information_box p > *:not(.advice) {
@@ -13366,9 +13413,9 @@ main.full-viewport .credit a:hover {
 }
 
 .course-information .price-box {
-  height: 400px;
+  height: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .course-descriptions {
@@ -14052,11 +14099,6 @@ body {
   background: white;
 }
 
-header {
-  background-color: #161414;
-  padding-bottom: 50px;
-}
-
 .grid h2 {
   font-weight: 500;
   font-size: 28px;
@@ -14197,7 +14239,7 @@ footer {
 }
 
 .footer a {
-  font-size: calc(0vw + 12px);
+  font-size: calc(-0.3726871736vw + 17.091440105px);
 }
 
 .footer .is-invalid::placeholder,
@@ -15105,14 +15147,13 @@ main .news_container .section_body .tv a img {
 .main-section--primary {
   /* Centrar verticalmente */
   position: absolute;
-  top: 50%;
+  top: calc(50% + 32px);
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   display: block;
   width: 100%;
-  text-transform: uppercase;
   z-index: 1;
 }
 
@@ -15124,6 +15165,7 @@ main .news_container .section_body .tv a img {
   border: 2px solid white;
   display: flex;
   flex-direction: column-reverse;
+  max-width: 630px;
 }
 
 .main-section--primary .title-card .cta {
@@ -15154,7 +15196,7 @@ main .news_container .section_body .tv a img {
 
 .main-section--primary .title-card .cta a {
   display: inline-block;
-  font-size: calc(0.2127341847vw + 14.5059964639px);
+  font-size: calc(0.1063670924vw + 14.252998232px);
   line-height: 45px;
   height: 100%;
   width: 100%;
@@ -15172,11 +15214,17 @@ main .news_container .section_body .tv a img {
 }
 
 .main-section--primary .title-card-header {
-  font-size: calc(1.2268244374vw + 18.6232480506px);
+  font-size: calc(0.4089414791vw + 22.2077493502px);
   line-height: 1.4;
   font-weight: 700;
   text-align: center;
   margin: 0.5em;
+}
+
+@media only screen and (max-width: 678px) {
+  .main-section--primary {
+    padding: 0 1.5em;
+  }
 }
 
 @media only screen and (max-width: 320px) {
@@ -15291,7 +15339,6 @@ header {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  padding-bottom: 50px;
 }
 
 header.auth {
@@ -15316,7 +15363,7 @@ header.auth {
 
 .filter_selector--mobile .custom-select-wrapper {
   max-width: 350px;
-  background-image: linear-gradient(to right, black 280px, #C80B0B 70px);
+  background-image: linear-gradient(to left, #C80B0B 70px, black 280px);
   position: relative;
   padding: 0;
   z-index: 2;

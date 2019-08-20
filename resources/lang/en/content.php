@@ -29,6 +29,7 @@ return [
     'learn chinese' => 'Learn Chinese',
     'university' => 'University',
     'why intuuchina' => 'Why IntuuChina',
+    'job offers' => 'Job Offers',
     'online course' => [
         'Online',
         'Course',

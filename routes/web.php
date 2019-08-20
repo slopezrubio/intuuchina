@@ -25,7 +25,7 @@ Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0
 /* Aprende Chino */
 Route::get('/learn/{course}', function($course = 1) {
     $params = (object) array(
-        'title' => "Aprende Chino",
+        'title' => __('learn chinese'),
         'currentCourse' => $course,
     );
     return view('pages/learn-chinese', compact('params'));

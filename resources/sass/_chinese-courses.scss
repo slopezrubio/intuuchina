@@ -17,22 +17,49 @@
   @include prefixed(display, flex);
   @include prefixed(flex-direction, column);
   @include prefixed(justify-content, center);
+  .prices {
+    margin: 0.5em 0.5em 0 0.5em;
+    @include prefixed(display, flex);
+    @include prefixed(flex-direction, column);
+    @include prefixed(justify-content, center);
+    .price-tag {
+      @include prefixed(display, flex);
+      @include prefixed(flex-direction, column);
+      $map: (295: 32, 389: 66, 688: 70, 1875: 70);
+      font-size: 64px;
+      font-weight: 700;
+      text-align: center;
+      i.currency {
+        $map: (295: 28, 1875: 48);
+        font-size: minimosCuadrados($map);
+        font-style: normal;
+        position: relative;
+        top: -20px;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 550px) {
+    .prices {
+      @include prefixed(display, inline-flex);
+      @include prefixed(flex-direction, row);
+      .price-tag {
+        &:first-of-type {
+          margin-right: 1em;
+        }
+
+        &:last-of-type {
+          float: right-;
+        }
+      }
+
+    }
+  }
+
   p {
     margin-bottom: 0px;
     @include prefixed(display, flex);
     @include prefixed(flex-direction, column);
-    .price-tag {
-      $map: (295: 32, 389: 66, 688: 70, 1875: 70);
-      font-size: minimosCuadrados($map);
-      font-weight: 700;
-      text-align: center;
-      display: flex;
-      i.currency {
-        $map: (295: 18, 1875: 48);
-        font-size: minimosCuadrados($map);
-        font-style: normal;
-      }
-    }
 
     & > *:not(.advice) {
       width: auto;
@@ -48,9 +75,9 @@
 }
 
 %price-box {
-  height: 400px;
+  height: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .course-descriptions {
