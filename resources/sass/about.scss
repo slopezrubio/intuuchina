@@ -22,11 +22,6 @@ body {
   background: $white;
 }
 
-header {
-  background-color: #161414;
-  padding-bottom: 50px;
-}
-
 //grid system
 .grid {
   @extend %grid;

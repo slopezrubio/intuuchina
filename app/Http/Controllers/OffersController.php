@@ -21,7 +21,7 @@ class OffersController extends Controller
 
         /* Datos adicionales que se van a entregar a la vista */
         $params = (object) array(
-            'title' => 'Prácticas'
+            'title' => __('job offers')
         );
 
         return view('pages/offers', compact('offers', 'params'));

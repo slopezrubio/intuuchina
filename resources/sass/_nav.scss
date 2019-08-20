@@ -46,7 +46,7 @@
       color: $primaryDark;
 
     }
-    a:hover {
+    a:hover, {
       background: $primaryDark;
       color: $primaryWhite;
     }
@@ -156,13 +156,13 @@
 
         li.dropdown {
           cursor: pointer;
-          a[data-toggle="dropdown"] {
+
+          a[aria-expanded="true"] + a[aria-expanded="true"]:not(:hover)  {
             color: $primaryDark;
-            &:hover,
-            &:active,
-            &:focus {
-              color: $primaryWhite;
-            }
+          }
+
+          a[aria-expanded="true"] + a[aria-expanded="true"]:hover {
+            color: $primaryWhite;
           }
 
           a {

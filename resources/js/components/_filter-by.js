@@ -3,7 +3,7 @@ let filterBy = {
         addEventListener('resize', filterBy.upload);
     },
     selector: document.querySelector('.custom-select-wrapper'),
-    arrowBackgroundWidth: 70,
+    arrowBackgroundWidth: 62,
     upload: () => {
         filterBy.moveArrow();
     },

@@ -16,58 +16,58 @@
                 @auth
                     @if(Auth::user()->type !== 'admin')
                         <a href="{{ url('/internship') }}">
-                            <div class="toggleOption">Prácticas</div>
+                            <div class="toggleOption">{{ __('links.internship') }}</div>
                         </a>
                     @else
                         <a href="{{ route('admin.offers') }}">
-                            <div class="toggleOption">Prácticas</div>
+                            <div class="toggleOption">{{ __('links.internship') }}</div>
                         </a>
                     @endif
                 @else
                     <a href="{{ url('/internship') }}">
-                        <div class="toggleOption">Prácticas</div>
+                        <div class="toggleOption">{{ __('links.internship') }}</div>
                     </a>
                 @endauth
             </li>
             <li>
                 <a href="{{ url('/learn/1') }}">
-                    <div class="toggleOption">Aprende Chino</div>
+                    <div class="toggleOption">{{ __('links.learn chinese') }}</div>
                 </a>
             </li>
 
             <li class="dropdown">
                 <a href="#" class="nav-item" data-target="#university" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="toggleOption" >Universidad<i class="fas fa-angle-right"></i></div>
+                    <div class="toggleOption" >{{ __('links.university') }}<i class="fas fa-angle-right"></i></div>
                 </a>
 
                 <ul id="university" class="dropdown-menu accordeon" role="menu" aria-labelledby="university">
                     <li>
                         <a href="" class="dropdown-item selection">
-                            <div class="toggleOption">MBI</div>
+                            <div class="toggleOption">{{ __('links.master of business administration acronym') }}</div>
                         </a>
                     </li>
                     <li>
                         <a href="" class="dropdown-item selection" >
-                            <div class="toggleOption">Master of International Business</div>
+                            <div class="toggleOption">{{ __('links.master of international business acronym') }}</div>
                         </a>
                     </li>
                     <li>
                         <a href="" class="dropdown-item selection" >
-                            <div class="toggleOption">Other</div>
+                            <div class="toggleOption">{{ __('links.other studies') }}</div>
                         </a>
                     </li>
                 </ul>
             </li>
 
             <li>
-                <a href="/why">
-                    <div class="toggleOption">Why Us</div>
+                <a href="{{ url('why') }}">
+                    <div class="toggleOption">{{ __('links.whyus') }}</div>
                 </a>
             </li>
             @guest
                 <li>
                     <a class="nav-item" data-toggle="modal" data-target="#loginModal">
-                        <div class="toggleOption">Login</div>
+                        <div class="toggleOption">{{ __('auth.login') }}</div>
                     </a>
                 </li>
             @else
@@ -86,7 +86,7 @@
                             <a class="dropdown-item selection" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <div class="toggleOption">{{ __('Logout') }}</div>
+                                <div class="toggleOption">{{ __('auth.logout') }}</div>
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

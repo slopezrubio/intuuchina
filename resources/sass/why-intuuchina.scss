@@ -2,8 +2,8 @@
   @include prefixed(display, flex);
   @include prefixed(justify-content, space-evenly);
   @include prefixed(flex-direction, row);
-  height: 95%;
   @include prefixed(align-items, center);
+  margin-top: 4em;
   .facts {
     p {
       color: white;

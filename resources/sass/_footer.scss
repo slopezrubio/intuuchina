@@ -22,6 +22,7 @@ footer {
   @media #{$large-devices} {
     .footer {
       &_contact_form {
+
         #message {
           height: 130px;
         }
@@ -136,7 +137,6 @@ footer {
   font-size: minimosCuadrados($map);
   color: $primaryWhite;
   a {
-    $map: (321: 12, 454: 12, 990: 12, 1553: 12);
     font-size: minimosCuadrados($map);
   }
 
@@ -198,6 +198,7 @@ footer {
   }
 
   &_contact_form {
+
     div:first-of-type label {
       padding-top: 0px;
     }
