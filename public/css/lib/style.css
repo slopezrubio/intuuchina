@@ -15649,6 +15649,7 @@ div.editor {
   color: black;
   font-weight: 700;
   position: relative;
+  height: 58px;
 }
 
 .offers .card-group .card .card-title:after {
@@ -15684,6 +15685,10 @@ div.editor {
 .offers .card-group .card .card-body .offers_buttons {
   display: flex;
   flex-wrap: wrap;
+}
+
+.offers .card-group .card .card-body .offers_buttons a {
+  font-size: 1em;
 }
 
 @media only screen and (min-width: 681px) and (max-width: 991px) {

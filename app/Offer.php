@@ -9,7 +9,7 @@ class Offer extends Model
 {
     //
 
-    protected $fillable = ['created_at', 'updated_at','title', 'location', 'industry', 'duration', 'description', 'preferred_skills'];
+    protected $fillable = ['created_at', 'updated_at','title', 'location', 'industry', 'duration', 'description', 'picture'];
 
     /**
      * Sets a new field for each offer the time consummated since the offer was

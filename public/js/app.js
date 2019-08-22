@@ -63194,6 +63194,11 @@ if (document.querySelector('.offers_list') !== null) {
 /***/ (function(module, exports) {
 
 var offers = {
+  form: document.querySelector('.form'),
+  duration: {
+    max: 24,
+    min: 1
+  },
   init: function init() {
     window.addEventListener('load', function (event) {
       offers.setup(event);
@@ -63201,7 +63206,6 @@ var offers = {
   },
   setup: function setup(event) {
     if (document.querySelector('.items_form') !== null || document.querySelector('.items_form--hidden')) {
-      console.log("hola");
       var editor = new Quill('.editor', {
         modules: {
           toolbar: [[{
@@ -63216,10 +63220,39 @@ var offers = {
             'indent': '+1'
           }, 'link', 'code-block']]
         },
-        placeholder: 'Compose an epic...',
+        placeholder: 'Write down the job description...',
         theme: 'snow'
       });
     }
+
+    offers.form.onsubmit = function () {
+      var description = document.querySelector('input[name=description]');
+      description.value = JSON.stringify(editor.getContents());
+    };
+
+    offers.form.querySelector('input[name=duration').onkeypress = function (event) {
+      if (!offers.validateKeyPressed(event.key)) {
+        event.preventDefault();
+      }
+    };
+
+    offers.form.querySelector('input[name=duration').onchange = function (event) {
+      this.value = offers.validateDuration(this.value);
+    };
+  },
+  validateKeyPressed: function validateKeyPressed(key) {
+    return Number.isInteger(parseInt(key));
+  },
+  validateDuration: function validateDuration(value) {
+    if (!(parseInt(value) > offers.duration['min']) || !(parseInt(value) <= offers.duration['max'])) {
+      if (parseInt(value) > offers.duration['max']) {
+        return offers.duration['max'];
+      }
+
+      return offers.duration['min'];
+    }
+
+    return value;
   } // Component Events
 
 };

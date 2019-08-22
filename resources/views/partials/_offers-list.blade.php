@@ -6,7 +6,7 @@
             @foreach($offers as $offer)
                 <div class="card shadow">
                     <div class="card-shutter">{{ $offer->industry }}</div>
-                    <img src="{{ asset('./' . $offer->picture) }}" alt="Offer card image" class="card-img-top">
+                    <img src="{{ asset('storage/images/' . $offer->picture) }}" alt="Offer card image" class="card-img-top">
                     <div class="card-body mb-2">
                         <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
                         <p class="card-text location">{{ ucfirst($offer->location) }}</p>

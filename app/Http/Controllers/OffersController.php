@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Offer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class OffersController extends Controller
 {
@@ -38,7 +39,7 @@ class OffersController extends Controller
 
         /* Datos adicionales que se van a entregar a la vista */
         $params = (object) array(
-            'title' => 'Prácticas'
+            'title' => __('job offers')
         );
 
         return view('pages/admin/offers', compact('offers', 'params'));
@@ -74,6 +75,7 @@ class OffersController extends Controller
      */
     public function store(Request $request)
     {
+
         //
         $request->validate([
             'title' => 'required|max:255|string',
@@ -81,9 +83,8 @@ class OffersController extends Controller
             'industry' => 'required|string',
             'duration' => 'required|string',
             'description' => 'max:1000',
-            'preferred-skills' => 'max:500',
+            'picture' => 'mimes:jpg,jpeg,bmp,png',
         ]);
-
 
         Offer::create([
             'title' => $request->get('title'),
@@ -91,10 +92,10 @@ class OffersController extends Controller
             'industry' => $request->get('industry'),
             'duration' => $request->get('duration'),
             'description' => $request->get('description'),
-            'preferred_skills' => $request->get('preferred-skills'),
+            'picture' => $this->uploadFile(storage_path('app/public/images/'), $request),
         ]);
 
-        return redirect()->route('offers');
+        return redirect()->route('admin.offers');
     }
 
     /**
@@ -156,6 +157,21 @@ class OffersController extends Controller
 
         $offers = $this->all();
         return view('partials/_offers-list', compact('offers', 'params'));
+    }
+
+    /*
+     * Check if there is already a file in the given path. If the opposite occur it store
+     * the file.
+     */
+    public function uploadFile(String $path, Request $request) {
+        if ($request->file('picture') !== null) {
+            $filename = $request->get('location') . '_' . $request->get('industry') . '_' . Carbon::now()->micro . '.' . $request->file('picture')->getClientOriginalExtension();
+            $request->file('picture')->storeAs('public/images', $filename);
+            return $filename;
+        }
+
+        $filename = 'generic_' . $request->get('industry') . '_picture.jpg';
+        return $filename;
     }
 
     /*

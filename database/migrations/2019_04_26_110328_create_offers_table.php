@@ -20,9 +20,8 @@ class CreateOffersTable extends Migration
             $table->string('location');
             $table->string('industry');
             $table->integer('duration');
-            $table->string('description')->nullable();
-            $table->string('preferred_skills')->nullable();
-            $table->string('picture')->nullable();
+            $table->json('description')->nullable();
+            $table->string('picture');
         });
     }
 

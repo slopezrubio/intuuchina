@@ -10,8 +10,7 @@ $factory->define(App\Offer::class, function (Faker $faker) {
         'location' => $faker->randomElement(array('shanghai', 'beijing', 'hongkong')),
         'industry' => $faker->randomElement(array('finance', 'design', 'consultant', 'educaton', 'it', 'legal')),
         'duration' => $faker->randomElement(array(1,2,3,4,5,6,7,8,9,10,11,12)),
-        'picture' => $faker->regexify('storage/images/generic_finance_picture' . $faker->randomElement(array(1,2,3)) . '\.jpg'),
         'description' => $faker->text(190),
-
+        'picture' => $faker->regexify('generic_finance_picture' . $faker->randomElement(array(1,2,3)) . '\.jpg'),
     ];
 });

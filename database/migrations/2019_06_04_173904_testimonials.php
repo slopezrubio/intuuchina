@@ -14,10 +14,8 @@ class Testimonials extends Migration
     public function up()
     {
         Schema::create('testimonials', function (Blueprint $table){
-            $table->bigINcrements()'id');
-        })
-
-        }
+            $table->bigINcrements('id');
+        });
         //
     }
 
@@ -29,5 +27,6 @@ class Testimonials extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('testimonials');
     }
 }

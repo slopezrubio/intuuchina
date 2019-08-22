@@ -30,6 +30,7 @@ return [
     'university' => 'University',
     'why intuuchina' => 'Why IntuuChina',
     'job offers' => 'Job Offers',
+    'new offer' => 'New Offer',
     'online course' => [
         'Online',
         'Course',
@@ -199,8 +200,8 @@ return [
             'value' => 'education',
         ],
         [
-            'text' => 'Hospitality',
-            'value' => 'hospitality',
+            'text' => 'Hostelry',
+            'value' => 'hostelry',
         ],
         [
             'text' => 'It',
@@ -219,12 +220,30 @@ return [
             'value' => 'marketing_business',
         ],
     ],
+    'offers locations' => [
+        [
+            'text' => 'Honk Kong',
+            'value' => 'honk-kong'
+        ],
+        [
+            'text' => 'Beijing',
+            'value' => 'beijing'
+        ],
+        [
+            'text' => 'Shangai',
+            'value' => 'shangai'
+        ],
+    ],
     'sign in' => 'Sign In',
     'apply for' => 'Apply for',
     'edit' => 'Editar',
     'delete' => 'Delete',
     'job description' => 'Job description',
     'also interested' => 'I\'m also interested',
+    'offer title label' => 'Title',
+    'offer location label' => 'Location',
+    'amount of months' => 'Amount of months roughly',
+    'job position' => 'Job Position',
 
 
 

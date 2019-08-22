@@ -1,4 +1,9 @@
 let offers = {
+    form: document.querySelector('.form'),
+    duration: {
+        max: 24,
+        min: 1
+    },
     init: () => {
         window.addEventListener('load', function(event) {
             offers.setup(event);
@@ -6,7 +11,6 @@ let offers = {
     },
     setup: (event) => {
         if (document.querySelector('.items_form') !== null || document.querySelector('.items_form--hidden')) {
-            console.log("hola");
             var editor = new Quill('.editor', {
                 modules: {
                     toolbar: [
@@ -16,11 +20,41 @@ let offers = {
                         [{ 'indent' : '-1'}, { 'indent' : '+1'}, 'link', 'code-block']
                     ]
                 },
-                placeholder: 'Compose an epic...',
+                placeholder: 'Write down the job description...',
                 theme: 'snow'
             });
         }
+
+        offers.form.onsubmit = function() {
+            let description = document.querySelector('input[name=description]');
+            description.value = JSON.stringify(editor.getContents());
+        };
+
+        offers.form.querySelector('input[name=duration').onkeypress = function(event) {
+            if (!offers.validateKeyPressed(event.key)) {
+                event.preventDefault();
+            }
+        };
+
+        offers.form.querySelector('input[name=duration').onchange = function(event) {
+            this.value = offers.validateDuration(this.value);
+        };
+    },
+    validateKeyPressed: function(key) {
+        return Number.isInteger(parseInt(key));
+    },
+    validateDuration: function(value) {
+        if (!(parseInt(value) > offers.duration['min']) || !(parseInt(value) <= offers.duration['max'])) {
+            if (parseInt(value) > offers.duration['max']) {
+                return offers.duration['max'];
+            }
+
+            return offers.duration['min'];
+        }
+
+        return value;
     }
+
 }
 
 // Component Events

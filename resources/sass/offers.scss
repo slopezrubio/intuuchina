@@ -102,6 +102,7 @@
         color: $primaryDark;
         font-weight: 700;
         position: relative;
+        height: 58px;
         &:after {
           content: "";
           position: absolute;
@@ -135,6 +136,9 @@
         .offers_buttons {
           display: flex;
           flex-wrap: wrap;
+          a {
+            font-size: 1em;
+          }
         }
       }
     }
