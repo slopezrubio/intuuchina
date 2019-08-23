@@ -1,3 +1,8 @@
+@if(Auth::user()->type === 'admin')
+    {{-- Ventana modal para eliminar ofertas --}}
+    @include('partials.modal-offer')
+@endif
+
 <div class="container-fluid offers">
     @if (count($offers) === 0)
         <p class="item_not_found">There are no offers with such characteristic</p>
@@ -17,8 +22,8 @@
                                     <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="#">{{ __('content.also interested') }}</a></button>
                                     <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.job description') }}/a></button>
                                 @else
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="{{ url('/admin/offers/edit/' . $offer->id) }}">{{ __('content.edit') }}</a></button>
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.delete') }}</a></button>
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a class="edit" href="{{ url('/admin/offers/edit/' . $offer->id) }}">{{ __('content.edit') }}</a></button>
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a class="delete" data-value="{{ $offer->id }}" data-toggle="modal" data-target="#offerModal">{{ __('content.delete') }}</a></button>
                                 @endif
                             @else
                                 <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="{{ route('register') }}">{{ __('content.apply for') }}</a></button>

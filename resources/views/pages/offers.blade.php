@@ -17,6 +17,7 @@
 
         {{-- Tabla de ofertas --}}
         @include('partials._offers-list')
+
     </main>
 
     @include('partials._footer')

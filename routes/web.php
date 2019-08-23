@@ -65,6 +65,7 @@ Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
     Route::get('/admin/offers', 'OffersController@admin')->name('admin.offers');
     Route::post('/admin/offers', 'OffersController@store');
     Route::get('/admin/offers/edit/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
+    Route::get('/admin/offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+');
     Route::get('/admin/offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
 });
 

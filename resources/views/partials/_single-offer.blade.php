@@ -17,7 +17,7 @@
             <div class="col-md-10 col-lg-10 col-xl-7">
                 <section class="readable_section">
                     <h3 class="readable_section_title">DESCRIPTION</h3>
-                    <p>{{ $offer->description }}</p>
+                    <p class="readable_section_body" id="jobDescription" data-html="{{ $offer->description }}"></p>
                 </section>
                 <section class="readable_section">
                     <h3 class="readable_section_title">DETAILS</h3>

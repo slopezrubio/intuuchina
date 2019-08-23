@@ -12,6 +12,8 @@ let singleOffer = {
             singleOffer.currentViewport = singleOffer.getViewport();
         });
 
+        document.querySelector('#jobDescription').innerHTML = singleOffer.showDescription(document.querySelector('#jobDescription').getAttribute('data-html'));
+
         singleOffer.toggleFixedButton(event);
 
         window.addEventListener('scroll', function(event) {
@@ -61,8 +63,13 @@ let singleOffer = {
             'scrollTop': position,
         }, 500, 'swing');
     },
+    showDescription: function(inputDelta) {
+        inputDelta = JSON.parse(inputDelta);
+        let tempCont = document.createElement("div");
+        (new Quill(tempCont)).setContents(inputDelta);
+        return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
+    },
     theViewportPassedOverHere: (y) => {
-        console.log(y + ' ' + window.pageYOffset + ' ' + window.innerHeight);
         return window.pageYOffset + window.innerHeight >= y;
     }
 };

@@ -12332,40 +12332,8 @@ header#why-us {
 
 /* Mixins */
 
-#loginModal .medium-icon {
-  font-size: 3em;
-}
-
-#loginModal .modal-column {
-  flex-direction: column;
-}
-
-#loginModal .modal-column > :not(:first-child) {
-  margin: 10px 0;
-}
-
-#loginModal .modal-column > :not(:last-child) {
-  margin: 6px 0;
-}
-
-#loginModal .modal-column .modal-link {
-  color: #C80B0B;
-}
-
-#loginModal .modal-column .modal-link:hover,
-#loginModal .modal-column .modal-link:focus,
-#loginModal .modal-column .modal-link:active {
-  text-decoration: underline;
-}
-
-#loginModal [class^=modal-button] {
-  color: white;
-}
-
-#loginModal .modal-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 20px;
+#loginModal .modal-button,
+#offerModal .modal-button {
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
@@ -12379,7 +12347,8 @@ header#why-us {
   border-radius: 22px;
 }
 
-#loginModal .modal-button:before {
+#loginModal .modal-button:before,
+#offerModal .modal-button:before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -12404,15 +12373,84 @@ header#why-us {
 
 #loginModal .modal-button:hover,
 #loginModal .modal-button:focus,
-#loginModal .modal-button:active {
+#loginModal .modal-button:active,
+#offerModal .modal-button:hover,
+#offerModal .modal-button:focus,
+#offerModal .modal-button:active {
   color: #C80B0B;
 }
 
 #loginModal .modal-button:hover:before,
 #loginModal .modal-button:focus:before,
-#loginModal .modal-button:active:before {
+#loginModal .modal-button:active:before,
+#offerModal .modal-button:hover:before,
+#offerModal .modal-button:focus:before,
+#offerModal .modal-button:active:before {
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
+}
+
+#loginModal .modal-link,
+#offerModal .modal-link {
+  color: #C80B0B;
+}
+
+#loginModal .modal-link:hover,
+#loginModal .modal-link:focus,
+#loginModal .modal-link:active,
+#offerModal .modal-link:hover,
+#offerModal .modal-link:focus,
+#offerModal .modal-link:active {
+  text-decoration: underline;
+}
+
+#loginModal [class^=modal-button],
+#offerModal [class^=modal-button] {
+  color: white;
+}
+
+#loginModal .medium-icon {
+  font-size: 3em;
+}
+
+#loginModal .modal-column {
+  flex-direction: column;
+}
+
+#loginModal .modal-column > :not(:first-child) {
+  margin: 10px 0;
+}
+
+#loginModal .modal-column > :not(:last-child) {
+  margin: 6px 0;
+}
+
+#loginModal .modal-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+}
+
+#offerModal .modal-footer .modal-button {
+  width: 33.333%;
+  height: 3em;
+}
+
+@media only screen and (max-width: 320px) {
+  #offerModal .modal-footer {
+    -moz-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+  }
+
+  #offerModal .modal-footer .modal-button {
+    width: 80%;
+    margin: 0 0 1em 0;
+  }
+
+  #offerModal .modal-footer .modal-button:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .navbar {
@@ -15734,6 +15772,24 @@ main .readable_section_title {
   color: #C80B0B;
   font-size: calc(0.3772697639vw + 20.7150811718px);
   margin-bottom: 1.2em;
+}
+
+main .readable_section #jobDescription ul {
+  margin-left: 1em;
+}
+
+main .readable_section #jobDescription ul li {
+  list-style-type: initial;
+}
+
+main .readable_section #jobDescription a {
+  color: #F44336;
+  font-weight: 500;
+}
+
+main .readable_section #jobDescription a:hover,
+main .readable_section #jobDescription a:active {
+  text-decoration: underline;
 }
 
 main .readable_section .card_background-image {

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Offer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Support\Facades\{Storage};
 
 class OffersController extends Controller
 {
@@ -141,6 +142,10 @@ class OffersController extends Controller
     public function destroy($id)
     {
         //
+        $this->deleteUploadedFileAssociatedWithOffer($id);
+        Offer::destroy($id);
+
+        return redirect()->route('admin.offers');
     }
 
     /*
@@ -172,6 +177,14 @@ class OffersController extends Controller
 
         $filename = 'generic_' . $request->get('industry') . '_picture.jpg';
         return $filename;
+    }
+
+    public function deleteUploadedFileAssociatedWithOffer($id) {
+        $offer = Offer::find($id);
+
+        if (!preg_match('/generic/', $offer->picture)) {
+            Storage::delete('public/images/' . $offer->picture);
+        }
     }
 
     /*

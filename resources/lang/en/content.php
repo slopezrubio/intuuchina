@@ -45,6 +45,7 @@ return [
     'what makes us different' => 'What Makes Us Different',
     'what we offer' => 'What We Offer',
     'know us' => 'Know Us',
+    'delete job offer modal' => 'Delete Job Offer',
 
 
 
@@ -133,6 +134,7 @@ return [
     'second prize for best hr iebs startup' => 'Second prize for best Human Resource IEBS Startup',
     'the intuuchina team have chosen the values' => 'The IntuuChina team has chosen the values ​​it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.',
     'this team is committed and dedicated to provide' => 'This team is committed and dedicated to provide a set of personalized services that will add real value and a competitive advantage to the future professional career.',
+    'are you sure you want to remove permanently job offer' => 'Are you sure you want to remove permanently :jobOffer offer?',
 
 
 
@@ -244,6 +246,9 @@ return [
     'offer location label' => 'Location',
     'amount of months' => 'Amount of months roughly',
     'job position' => 'Job Position',
+    'description' => 'Description',
+    'agree' => 'Agree',
+    'cancel' => 'Cancel',
 
 
 

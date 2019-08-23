@@ -27,6 +27,24 @@ main {
       margin-bottom: 1.2em;
     }
 
+    #jobDescription {
+      ul {
+        margin-left: 1em;
+        li {
+          list-style-type: initial;
+        }
+      }
+
+      a {
+        color: $secondaryRed;
+        font-weight: 500;
+
+        &:hover, &:active {
+          text-decoration: underline;
+        }
+      }
+    }
+
     .card_background-image {
       display: flex;
       justify-content: flex-end;

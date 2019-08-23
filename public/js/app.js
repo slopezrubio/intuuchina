@@ -63126,20 +63126,32 @@ if (news.polygon !== null) {
 /*!*************************************************!*\
   !*** ./resources/js/components/_offers-list.js ***!
   \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/messages */ "./resources/js/main/messages.js");
 
 var offersList = {
   init: function init() {
     window.addEventListener('load', offersList.setup);
   },
   inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
+  modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
+  deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
   setup: function setup() {
     offersList.inputFilter.addEventListener('change', function (event) {
       var selectedFilter = offersList.inputFilter.value;
       var path = window.location.pathname + "/filter=".concat(selectedFilter);
       offersList.getRequest(path, selectedFilter);
     });
+
+    for (var i = 0; i < offersList.deleteButtons.length; i++) {
+      offersList.deleteButtons[i].addEventListener('click', function () {
+        offersList.loadModalData(this);
+      });
+    }
   },
   render: function render(parentElement, data) {
     parentElement.innerHTML = data;
@@ -63162,6 +63174,13 @@ var offersList = {
       });
     })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
   },
+  loadModalData: function loadModalData(element) {
+    var chosenOffer = element.getAttribute('data-value');
+    var modalForm = document.querySelector('#removeOffer');
+    modalForm.setAttribute('action', modalForm.getAttribute('action').replace(/[0-9]+$/, chosenOffer));
+    var offerTitle = $(element).parent().parent().siblings('.card-title').text();
+    document.querySelector('.modal-body__text').innerHTML = _main_messages__WEBPACK_IMPORTED_MODULE_0__["default"].form.advices.removeOffer(offerTitle);
+  },
   getRequest: function getRequest(path) {
     var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     $.get({
@@ -63174,7 +63193,7 @@ var offersList = {
       },
       success: function success(data, status, xhr) {
         $('.offers').remove();
-        $('.items_management').after(data); //offersList.render(, data);
+        $('.items_management').after(data);
       }
     });
   }
@@ -63518,6 +63537,7 @@ var singleOffer = {
     window.addEventListener('resize', function () {
       singleOffer.currentViewport = singleOffer.getViewport();
     });
+    document.querySelector('#jobDescription').innerHTML = singleOffer.showDescription(document.querySelector('#jobDescription').getAttribute('data-html'));
     singleOffer.toggleFixedButton(event);
     window.addEventListener('scroll', function (event) {
       singleOffer.currentScrollY = singleOffer.getScrollY();
@@ -63569,8 +63589,13 @@ var singleOffer = {
       'scrollTop': position
     }, 500, 'swing');
   },
+  showDescription: function showDescription(inputDelta) {
+    inputDelta = JSON.parse(inputDelta);
+    var tempCont = document.createElement("div");
+    new Quill(tempCont).setContents(inputDelta);
+    return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
+  },
   theViewportPassedOverHere: function theViewportPassedOverHere(y) {
-    console.log(y + ' ' + window.pageYOffset + ' ' + window.innerHeight);
     return window.pageYOffset + window.innerHeight >= y;
   }
 };
@@ -63994,6 +64019,31 @@ var env = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (env);
+
+/***/ }),
+
+/***/ "./resources/js/main/messages.js":
+/*!***************************************!*\
+  !*** ./resources/js/main/messages.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var messages = {
+  form: {
+    labels: [],
+    inputs: [],
+    errors: [],
+    advices: {
+      removeOffer: function removeOffer(value) {
+        return "Are you sure you want to remove permanently ".concat(value, " offer?");
+      }
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (messages);
 
 /***/ }),
 

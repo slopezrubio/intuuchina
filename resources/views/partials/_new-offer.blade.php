@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-md-3 col-form-label text-md-left">Description</label>
+                    <label for="description" class="col-md-3 col-form-label text-md-left">{{ __('description') }}</label>
                     <input type="hidden" name="description">
                     <div class="col-md-9">
                         <div class="editor">
