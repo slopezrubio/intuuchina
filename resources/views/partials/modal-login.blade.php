@@ -21,12 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-form-label">{{ __('auth.password') }}</label>
-                        <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" id="inputPassword" name="password" required>
-                        @if ($errors->has('password'))
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                        @endif
+                        <input type="password" class="form-control" id="inputPassword" name="password" required>
                     </div>
                     <div class="form-group">
                         <div class="form-check">

@@ -22,7 +22,7 @@
                             @csrf
                             <div class="form-group">
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Name') }}</label>
+                                    <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('content.name') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
@@ -36,7 +36,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="surnames" class="offset-md-1 col-md-5 col-form-label text-md-left">{{ __('Surnames') }}</label>
+                                    <label for="surnames" class="offset-md-1 col-md-5 col-form-label text-md-left">{{ __('content.surnames') }}</label>
                                     <div class="col-md-6">
                                         <input id="surnames" type="text" class="form-control{{ $errors->has('surnames') ? ' is-invalid' : '' }}" name="surnames" value="{{ old('surnames') }}" required>
 
@@ -50,10 +50,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="email" class="col-md-3 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                                <label for="email" class="col-md-3 col-form-label text-md-left">{{ __('content.e-mail address') }}</label>
 
                                 <div class="col-md-9">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('content.email placeholder') }}" required>
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
@@ -72,16 +72,22 @@
                                 <div class="col-md-9">
                                     <div class="regular-select-wrapper">
                                         <select class="form-control" id="inputProgram" name="program">
-                                            @if(empty(session('options')))
-                                                <option value="internship" aria-selected="true" selected>Internship program</option>
-                                            @else
-                                                <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === 'internship' ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === 'internship' ? 'selected' : '' }}>Internship program</option>
-                                            @endif
-                                            <option value="inter_relocat">Internship + Relocation Program</option>
-                                            <option value="inter_housing">Internship Including Housing</option>
-                                            <option value="study" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === 'study' ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === 'study' ? 'selected' : '' }}>Study Chinese</option>
-                                            <option value="universty" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === 'university' ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === 'university' ? 'selected' : '' }}>University</option>
+                                            @for ($i = 0; $i < count(__('content.programs')); $i++)
+                                                @if ($i === 0)
+                                                    @if(empty(session('options')))
+                                                        <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="true" selected>{{ __('content.programs')[$i]['text'] }}</option>
+                                                    @else
+                                                        <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.program')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>
+                                                            {{ __('content.programs')[$i]['text'] }}
+                                                        </option>
+                                                    @endif
+                                                @endif
+                                                <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>{{ __('content.programs')[$i]['text'] }}</option>
+                                            @endfor
                                         </select>
+                                        <div>
+                                            {{ session('options')['program'] }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -166,6 +166,7 @@ return [
     */
 
     'name' => 'Name',
+    'surnames' => 'Surnames',
     'mail' => 'Email',
     'subject' => 'Subject',
     'i accept the' => [
@@ -177,7 +178,7 @@ return [
     'see more' => 'See more',
     'see job offers' => 'See Job Offers',
     'name placeholder' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
-    'email placeholder' => 'e.g. confucio@confucio.es',
+    'email placeholder' => 'e.g. confucio@confucio.com',
     'subject placeholder' => 'Write down here your issue',
     'offers filter label' => 'Filter by: ',
     'offers filter placeholder' => 'Choose an industry...',
@@ -237,6 +238,28 @@ return [
             'value' => 'shangai'
         ],
     ],
+    'programs' => [
+        [
+            'text' => 'Internship Program',
+            'value' => 'internship'
+        ],
+        [
+            'text' => 'Internship + Relocation Program',
+            'value' => 'inter_relocat'
+        ],
+        [
+            'text' => 'Internship Including Housing',
+            'value' => 'inter_housing'
+        ],
+        [
+            'text' => 'Study Chinese',
+            'value' => 'study'
+        ],
+        [
+            'text' => 'University',
+            'value' => 'universty'
+        ],
+    ],
     'sign in' => 'Sign In',
     'apply for' => 'Apply for',
     'edit' => 'Editar',
@@ -250,7 +273,7 @@ return [
     'description' => 'Description',
     'agree' => 'Agree',
     'cancel' => 'Cancel',
-
+    'e-mail address' => 'E-Mail Address',
 
 
     /*

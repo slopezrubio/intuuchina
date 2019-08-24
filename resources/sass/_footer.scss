@@ -46,6 +46,13 @@ footer {
           }
         }
 
+        .checkbox_input {
+          display: block;
+          .switch {
+            float: right;
+          }
+        }
+
         div:last-of-type {
           flex-direction: row;
           justify-content: flex-start;

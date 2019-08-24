@@ -13939,7 +13939,7 @@ main.full-viewport .credit a:hover {
 
 .container .extended-form .card-body form .shutter-button {
   padding: 0.4em;
-  font-size: 20px;
+  font-size: 16px;
   width: 100%;
   cursor: pointer;
   display: inline-block;
@@ -14187,6 +14187,14 @@ footer {
 
   footer .footer_contact_form .switch_input .switch {
     margin-top: 2em;
+  }
+
+  footer .footer_contact_form .checkbox_input {
+    display: block;
+  }
+
+  footer .footer_contact_form .checkbox_input .switch {
+    float: right;
   }
 
   footer .footer_contact_form div:last-of-type {
