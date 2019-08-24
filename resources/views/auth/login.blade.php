@@ -7,14 +7,14 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <span>{{ __('Login') }}</span>
-                    <span><a href="{{ url('/') }}">Turn back to Home</a> | <a href="{{ route('register') }}">Register</a></span>
+                    <span>{{ __('auth.login') }}</span>
+                    <span><a href="{{ url('/') }}">{{ __('auth.back to home') }}</a> | <a href="{{ route('register') }}">{{ __('auth.register') }}</a></span>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                     @csrf
                         <div class="form-group row">
-                            <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label text-left">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label text-left">{{ __('auth.e-mail address') }}</label>
                             <div class="col-12 col-sm-12 col-md-8">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password" class="col-12 col-sm-12 col-md-4 col-form-label text-left">{{ __('Password') }}</label>
+                            <label for="password" class="col-12 col-sm-12 col-md-4 col-form-label text-left">{{ __('auth.password') }}</label>
                             <div class="col-12 col-sm-12 col-md-8">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
                             </div>
@@ -42,18 +42,18 @@
                                         <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                         <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                                     </label>
-                                    <label class="col-8" aria-label="remember">{{ __('Remember Me') }}</label>
+                                    <label class="col-8" aria-label="remember">{{ __('auth.remember me') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="offset-sm-1 col-sm-10 offset-sm-1 offset-md-2 col-md-8 offset-md-2 offset-lg-3 col-lg-6 offset-lg-3">
-                                <button type="submit" class="cta">{{ __('Login') }}</button>
+                                <button type="submit" class="cta">{{ __('auth.login') }}</button>
                             </div>
                         </div>
                         <div class="form-group row justify-content-center">
                             @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                                <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('auth.forgot your password?') }}</a>
                             @endif
                         </div>
                     </form>

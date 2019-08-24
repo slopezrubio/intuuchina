@@ -62854,7 +62854,7 @@ var footer = {
   },
   form: document.querySelector('.footer_contact_form'),
   setup: function setup() {
-    if (footer.hasErrorsMessages()) {
+    if (footer.hasErrorsMessages(footer.form)) {
       footer.setViewport();
     }
 
@@ -62880,21 +62880,22 @@ var footer = {
       }
     }
   },
-  hasErrorsMessages: function hasErrorsMessages() {
-    var errors = false;
-    var fields = footer.form.querySelectorAll('.col-xs-10');
-
-    for (var i = 0; i < fields.length && errors === false; i++) {
-      if (fields[i].querySelector('.is-invalid') !== null) {
-        errors = true;
-      }
-    }
-
-    if (errors) {
+  hasErrorsMessages: function hasErrorsMessages(parent) {
+    if ($(parent).find('.invalid-feedback', '.is-invalid').length > 0) {
       return true;
     }
 
-    return false;
+    return false; // let fields = footer.form.querySelectorAll('.col-xs-10');
+    // for (let i = 0; i < fields.length && errors === false; i++) {
+    //     if (fields[i].querySelector('.is-invalid') !== null) {
+    //         errors = true;
+    //     }
+    // }
+    //
+    // if (errors) {
+    //     return true;
+    // }
+    // return false;
   },
   setViewport: function setViewport() {
     /*
@@ -63064,10 +63065,32 @@ function displayNav(event) {
 }
 
 var nav = {
-  init: function init() {}
+  init: function init() {
+    nav.setup();
+  },
+  setup: function setup() {
+    window.addEventListener('load', function () {
+      if (nav.hasErrorsMessages(nav.modalForm)) {
+        nav.showModal();
+      }
+
+      ;
+    });
+  },
+  modalForm: document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null,
+  hasErrorsMessages: function hasErrorsMessages(parent) {
+    if ($(parent).find('.is-invalid').length > 0) {
+      return true;
+    }
+
+    return false;
+  },
+  showModal: function showModal() {
+    $('#loginModal').modal();
+  }
 };
 
-if (document.querySelector('.navbar' !== null)) {
+if (document.getElementsByTagName('nav') !== null) {
   nav.init();
 }
 

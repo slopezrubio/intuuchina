@@ -10,7 +10,7 @@ let footer = {
     },
     form: document.querySelector('.footer_contact_form'),
     setup: () => {
-        if (footer.hasErrorsMessages()) {
+        if (footer.hasErrorsMessages(footer.form)) {
             footer.setViewport();
         }
         footer.setSwitch();
@@ -37,19 +37,23 @@ let footer = {
             }
         }
     },
-    hasErrorsMessages: function() {
-        let errors = false;
-        let fields = footer.form.querySelectorAll('.col-xs-10');
-        for (let i = 0; i < fields.length && errors === false; i++) {
-            if (fields[i].querySelector('.is-invalid') !== null) {
-                errors = true;
-            }
-        }
-
-        if (errors) {
+    hasErrorsMessages: function(parent) {
+        if ($(parent).find('.invalid-feedback', '.is-invalid').length > 0) {
             return true;
         }
+
         return false;
+        // let fields = footer.form.querySelectorAll('.col-xs-10');
+        // for (let i = 0; i < fields.length && errors === false; i++) {
+        //     if (fields[i].querySelector('.is-invalid') !== null) {
+        //         errors = true;
+        //     }
+        // }
+        //
+        // if (errors) {
+        //     return true;
+        // }
+        // return false;
     },
     setViewport: () => {
         /*

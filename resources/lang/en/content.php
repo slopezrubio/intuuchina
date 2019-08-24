@@ -46,6 +46,7 @@ return [
     'what we offer' => 'What We Offer',
     'know us' => 'Know Us',
     'delete job offer modal' => 'Delete Job Offer',
+    'login' => 'Login',
 
 
 
