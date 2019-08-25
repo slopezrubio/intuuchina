@@ -2,7 +2,7 @@
 <div class="news">
     <div class="news_container">
         <div class="section_title">
-            <h2>{{ __('content.what the media think')[0] }}<strong>{{ __('content.what the media think')[1] }}</strong>{{ __('content.what the media think')[2] }}</h2>
+            <h2>{!! trans('content.what the media think') !!}</h2>
         </div>
         <div class="section_body">
             <div class="note_window">

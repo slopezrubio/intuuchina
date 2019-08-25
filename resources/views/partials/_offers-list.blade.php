@@ -1,7 +1,9 @@
-@if(Auth::user()->type === 'admin')
-    {{-- Ventana modal para eliminar ofertas --}}
-    @include('partials.modal-offer')
-@endif
+@auth
+    @if(Auth::user()->type === 'admin')
+        {{-- Ventana modal para eliminar ofertas --}}
+        @include('partials.modal-offer')
+    @endif
+@endauth
 
 <div class="container-fluid offers">
     @if (count($offers) === 0)

@@ -1,6 +1,10 @@
-#loginModal, #offerModal {
+#loginModal, #offerModal, #termsAndConditionsModal, #GDPRModal, #privacyPolicy {
   .modal-button {
     @include shutter-in-horizontal();
+  }
+
+  .medium-icon {
+    font-size: 3em;
   }
 
   .modal-link {
@@ -19,9 +23,6 @@
 }
 
 #loginModal {
-  .medium-icon {
-    font-size: 3em;
-  }
 
   .modal-column {
     flex-direction: column;

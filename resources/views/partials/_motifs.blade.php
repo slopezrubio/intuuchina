@@ -16,10 +16,7 @@
             <h5 class="motif_card_title">{{ __('content.awards & honours') }}</h5>
             <div class="motif_card_body">
                 <ul>
-                    <li><p class="motif_card_text">{{ __('content.international startup rtve award') }}</p></li>
-                    <li><p class="motif_card_text">{{ __('content.second prize for best startup of the year') }}</p></li>
-                    <li><p class="motif_card_text">{{ __('content.Comprendedor award finalist, \"Empresa & Sociedad\" foundation') }}</p></li>
-                    <li><p class="motif_card_text">{{ __('content.second prize for best hr iebs startup') }}</p></li>
+                    {!! trans('content.awards and honours text') !!}
                 </ul>
             </div>
         </div>

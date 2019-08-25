@@ -19,11 +19,7 @@ return [
     */
 
     'homepage title' => 'Apply for an internships in Prime Technological Companies',
-    'what the media think' => [
-        'What ',
-        'the media ',
-        'think about'
-    ],
+    'what the media think' => 'What <strong>the media</strong> think about',
     'those who have already tried it says' => 'Those who have already tried it says',
     'internship' => 'Internship',
     'learn chinese' => 'Learn Chinese',
@@ -31,14 +27,8 @@ return [
     'why intuuchina' => 'Why IntuuChina',
     'job offers' => 'Job Offers',
     'new offer' => 'New Offer',
-    'online course' => [
-        'Online',
-        'Course',
-    ],
-    'in-person course' => [
-        'In-person course ',
-        'in China',
-    ],
+    'online course' => '<span>Online</span> Course',
+    'in-person course' => 'In-person Course <span>in China</span>',
     'mission & vision' => 'Mission and Vision',
     'awards & honours' => 'Awards and Honours',
     'values' => 'Values',
@@ -47,6 +37,7 @@ return [
     'know us' => 'Know Us',
     'delete job offer modal' => 'Delete Job Offer',
     'login' => 'Login',
+    'those who have already tried it' => 'Those <strong>who have already tried it</strong>',
 
 
 
@@ -129,10 +120,12 @@ return [
         ]
     ],
     'intuuchina\'s first priority' => 'IntuuChina\'s first priority is to help people and organizations make a successful transition in China. To this end, we will guide you on your own path by making available the most valuable resources. An energetic and experienced team.',
-    'international startup rtve award' => 'International Startup RTVE Award',
-    'second prize for best startup of the year' => 'Second Prize for best Startup of the year by the Spanish Chamber of Commerce',
-    'Comprendedor award finalist, \"Empresa & Sociedad\" foundation' => 'Comprendedor Award finalist, \"Empresa & Sociedad\" foundation',
-    'second prize for best hr iebs startup' => 'Second prize for best Human Resource IEBS Startup',
+    'awards and honours text' => '
+        <li><p class="motif_card_text">International Startup RTVE Award</p></li>
+        <li><p class="motif_card_text">Second Prize for best Startup of the year by the Spanish Chamber of Commerce</p></li>
+        <li><p class="motif_card_text">Comprendedor Award finalist, "Empresa & Sociedad" foundation</p></li>
+        <li><p class="motif_card_text">Second prize for best Human Resource IEBS Startup</p></li>
+    ',
     'the intuuchina team have chosen the values' => 'The IntuuChina team has chosen the values ​​it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.',
     'this team is committed and dedicated to provide' => 'This team is committed and dedicated to provide a set of personalized services that will add real value and a competitive advantage to the future professional career.',
     'are you sure you want to remove permanently job offer' => 'Are you sure you want to remove permanently :jobOffer offer?',
@@ -169,10 +162,7 @@ return [
     'surnames' => 'Surnames',
     'mail' => 'Email',
     'subject' => 'Subject',
-    'i accept the' => [
-        'I accept the ', '
-        as well as the ',
-    ],
+    'i accept the' => 'I accept the ' . __('links.terms and conditions') . ' as well as the '  . __('links.general data protection regulation'),
     'submit' => 'Submit',
     'cancel' => 'Cancel',
     'see more' => 'See more',

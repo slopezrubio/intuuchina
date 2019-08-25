@@ -105,9 +105,9 @@
                         <a href="#">ES</a>
                     @endif
                     @if(App::isLocale('en'))
-                        <a href="#" class="selected">ING</a>
+                        <a href="#" class="selected">EN</a>
                     @else
-                        <a href="#">IN</a>
+                        <a href="#">EN</a>
                     @endif
                 </div>
                 <a href="#" class="nav-item" data-target="#language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

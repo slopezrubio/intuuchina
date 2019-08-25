@@ -1,4 +1,9 @@
 <footer>
+    @include('partials._terms-and-conditions')
+
+    @include('partials._gdpr')
+
+    @include('partials._privacy-policy')
 
     <div class="container-fluid footer">
         <div class="footer_header">
@@ -41,6 +46,7 @@
             {{--Contact form--}}
             <form action="{{ route('mail') }}" method="post" class="footer_contact_form col-sm-12">
                 @csrf
+
                 <div class="footer_title">
                     <h3>{{ __('content.contact us') }}</h3>
                 </div>
@@ -67,12 +73,7 @@
 {{--                    @endif--}}
 {{--                </div>--}}
                 <div class="col-xs-10 switch_input">
-                    <label aria-label="terms">{{ __('content.i accept the')[0] }}<a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{{ __('links.terms and conditions') }}</a>{{ __('content.i accept the')[1] }}<a href="#" data-toggle="modal" data-target="#GDPRModal">{{ __('links.general data protection regulation') }}</a></label>
-                    @include('partials._terms-and-conditions')
-
-                    @include('partials._gdpr')
-
-                    @include('partials._privacy-policy')
+                    <label aria-label="terms">{!! trans('content.i accept the') !!}</label>
 
                     <label for="terms" class="switch">
                         <input id="terms" name="terms" type="checkbox">
@@ -126,7 +127,7 @@
                     <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
                 </span>
                 <p>
-                    <a href="#" data-toggle="modal" data-target="#privacyPolicy">{{ __('links.privacy policy') }}</a> | <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{{ __('links.terms and conditions') }}</a>
+                    <a href="#" data-toggle="modal" data-target="#privacyPolicy">{{ __('links.privacy policy') }}</a> | <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{!! trans('links.terms and conditions') !!}</a>
                 </p>
             </div>
         </div>

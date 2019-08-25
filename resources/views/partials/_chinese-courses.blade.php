@@ -2,7 +2,7 @@
     <div class="description-container">
         <div class="description-base">
             <div class="description-header">
-                <h2 id="presencial">{{ __('content.in-person course')[0] }}<span>{{ __('content.in-person course')[1] }}</span></h2>
+                <h2 id="presencial">{!! trans('content.in-person course') !!}</h2>
                 @auth
                     @if(Auth::user()->type !== 'admin')
                         <form action="#" method="POST">
@@ -25,12 +25,7 @@
         </div>
         <div class="description-base">
             <div class="description-header">
-                @if (App::getLocale() == 'en')
-                    <h2 id="online"><span>{{ __('content.online course')[0] }} </span>{{ __('content.online course')[1] }}</h2>
-                @elseif(App::getLocale() == 'es')
-                    <h2 id="online">{{ __('content.online course')[1] }} <span>{{ __('content.online course')[0] }}</span></h2>
-                @endif
-
+                <h2 id="online">{!! trans('content.online course') !!}</h2>
                 @auth
                     @if(Auth::user()->type !== 'admin')
                     <form action="#" method="POST">

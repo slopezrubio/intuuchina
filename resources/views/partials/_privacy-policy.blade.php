@@ -2,11 +2,11 @@
 <div class="modal fade" id="privacyPolicy" tabindex="-1" role="dialog" aria-labelledby="privacyPolicy" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable info-modal" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header align-items-center">
+                <h5 class="modal-title" id="privacyPolicy">Privacy Policy</h5>
+                <button type="button" class="close medium-icon" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="privacyPolicy">Privacy Policy</h5>
             </div>
             <div class="modal-body">
                 <p>
