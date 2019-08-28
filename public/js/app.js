@@ -62833,7 +62833,7 @@ var editOffer = {
       var editor = new Quill('.editor', {
         modules: {
           toolbar: [[{
-            header: [1, 2, false]
+            header: [4, 5, false]
           }], ['bold', 'italic', 'underline'], [{
             'list': 'ordered'
           }, {
@@ -63325,7 +63325,7 @@ var offers = {
       var editor = new Quill('.editor', {
         modules: {
           toolbar: [[{
-            header: [1, 2, false]
+            header: [4, 5, false]
           }], ['bold', 'italic', 'underline'], [{
             'list': 'ordered'
           }, {
@@ -63449,7 +63449,7 @@ var pageTitle = {
   pages: {
     'job-description': function jobDescription() {
       var picture = pageTitle.getDataContent(pageTitle.header);
-      pageTitle.header.style.setProperty('background-image', "url('".concat(picture, "')"));
+      pageTitle.header.style.setProperty('background-image', "url(../../storage/images/".concat(picture));
     }
   },
   getDataContent: function getDataContent(element) {

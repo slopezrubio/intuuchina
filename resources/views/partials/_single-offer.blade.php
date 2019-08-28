@@ -4,11 +4,11 @@
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-10 col-xl-7">
                 <section class="readable_section">
-                    <h3 class="readable_section_title">DESCRIPTION</h3>
+                    <h3 class="readable_section_title">{{ __('content.job description') }}</h3>
                     <p class="readable_section_body" id="jobDescription" data-html="{{ $offer->description }}"></p>
                 </section>
                 <section class="readable_section">
-                    <h3 class="readable_section_title">DETAILS</h3>
+                    <h3 class="readable_section_title">{{ __('content.details') }}</h3>
                     <div class="card_background-image" data-content="/../../storage/images/details_{{$offer->location }}.jpg">
                         <div class="card_background-image_info">
                             <p class="card-title">{{ ucfirst($offer->location) }}</p>
@@ -20,12 +20,12 @@
                     <div class="offers_buttons">
                         @auth
                             @if(Auth::user()->type !== 'admin')
-                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="#">Solicitar</a></button>
+                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="#">{{ __('content.join also') }}</a></button>
                             @else
-                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="#">Editar</a></button>
+                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="{{ url('/admin/offers/edit/' . $offer->id) }}">{{ __('content.edit') }}</a></button>
                             @endif
                         @else
-                            <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="{{ route('register') }}">Inscribirse</a></button>
+                            <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="{{ route('register') }}">{{ __('content.apply for') }}</a></button>
                         @endauth
                     </div>
                 </section>

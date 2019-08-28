@@ -14,7 +14,7 @@ let pageTitle = {
     pages: {
         'job-description': function() {
             let picture = pageTitle.getDataContent(pageTitle.header);
-            pageTitle.header.style.setProperty('background-image',`url('${picture}')`);
+            pageTitle.header.style.setProperty('background-image',`url(../../storage/images/${picture}`);
         }
     },
     getDataContent: (element) => {

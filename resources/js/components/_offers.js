@@ -14,7 +14,7 @@ let offers = {
             var editor = new Quill('.editor', {
                 modules: {
                     toolbar: [
-                        [{ header: [1, 2, false] }],
+                        [{ header: [4, 5, false] }],
                         ['bold', 'italic', 'underline'],
                         [{ 'list': 'ordered'}, { 'list': 'bullet' }, 'blockquote'],
                         [{ 'indent' : '-1'}, { 'indent' : '+1'}, 'link', 'code-block']

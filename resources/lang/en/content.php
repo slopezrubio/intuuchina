@@ -38,6 +38,8 @@ return [
     'delete job offer modal' => 'Delete Job Offer',
     'login' => 'Login',
     'those who have already tried it' => 'Those <strong>who have already tried it</strong>',
+    'job description' => 'Job Description',
+    'details' => 'Details',
 
 
 
@@ -266,6 +268,7 @@ return [
     'e-mail address' => 'E-Mail Address',
     'save' => 'Save',
     'duration' => 'Duration',
+    'join also' => 'Join Also',
 
 
     /*

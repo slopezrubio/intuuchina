@@ -56,13 +56,20 @@
         }
       }
 
-      &-header {
+      &-title {
         $map: (397: 24, 482: 24, 1903: 30);
         font-size: minimosCuadrados($map);
         line-height: 1.4;
-        font-weight: 700;
+        font-weight: 800;
         text-align: center;
         margin: .5em;
+      }
+
+      &-subtitle {
+        $map: (397: 24, 482: 24, 1903: 28);
+        font-size: minimosCuadrados($map);
+        margin: .5em;
+        text-align: center;
       }
   }
 

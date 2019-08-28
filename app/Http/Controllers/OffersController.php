@@ -83,7 +83,7 @@ class OffersController extends Controller
             'location' => 'required|string',
             'industry' => 'required|string',
             'duration' => 'required|string',
-            'description' => 'max:1000',
+            'description' => 'max:4000',
             'picture' => 'mimes:jpg,jpeg,bmp,png',
         ]);
 

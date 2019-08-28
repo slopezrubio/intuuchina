@@ -15302,12 +15302,18 @@ main .news_container .section_body .tv a img {
   padding-left: 1em;
 }
 
-.main-section--primary .title-card-header {
+.main-section--primary .title-card-title {
   font-size: calc(0.4089414791vw + 22.2077493502px);
   line-height: 1.4;
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
   margin: 0.5em;
+}
+
+.main-section--primary .title-card-subtitle {
+  font-size: calc(0.2726276528vw + 22.8051662335px);
+  margin: 0.5em;
+  text-align: center;
 }
 
 @media only screen and (max-width: 678px) {
@@ -15665,6 +15671,17 @@ div.editor {
   padding: 1em 2em;
 }
 
+.offers .img-window {
+  width: 100%;
+  height: 45%;
+  overflow: hidden;
+}
+
+.offers .img-window img {
+  height: 100%;
+  width: 100%;
+}
+
 .offers .manager-list a {
   color: #C80B0B;
 }
@@ -15830,12 +15847,30 @@ main .readable_section_title {
   margin-bottom: 1.2em;
 }
 
+main .readable_section #jobDescription h5,
+main .readable_section #jobDescription p {
+  color: black;
+}
+
+main .readable_section #jobDescription h4 {
+  font-size: calc(0.3772697639vw + 18.7150811718px);
+  margin-bottom: 1em;
+  color: #C80B0B;
+}
+
+main .readable_section #jobDescription h5 {
+  margin-bottom: 0.8em;
+  font-size: calc(-8.493379076vw + 144.9440507871px);
+}
+
 main .readable_section #jobDescription ul {
   margin-left: 1em;
+  margin-bottom: 2em;
 }
 
 main .readable_section #jobDescription ul li {
   list-style-type: initial;
+  margin: 0.5em;
 }
 
 main .readable_section #jobDescription a {

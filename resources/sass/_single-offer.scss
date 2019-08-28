@@ -28,10 +28,30 @@ main {
     }
 
     #jobDescription {
+
+      h5, p {
+        color: $primaryDark;
+      }
+
+      h4 {
+        $map: (320: 20, 362: 20, 1400: 24);
+        font-size: minimosCuadrados($map);
+        margin-bottom: 1em;
+        color: $primaryRed;
+      }
+
+      h5 {
+        margin-bottom: .8em;
+        $map: (320: 18, 362: 218, 1400: 22);
+        font-size: minimosCuadrados($map);
+      }
+
       ul {
         margin-left: 1em;
+        margin-bottom: 2em;
         li {
           list-style-type: initial;
+          margin: .5em;
         }
       }
 

@@ -29,5 +29,7 @@ return [
     'facebook' => 'Facebook',
     'instagram' => 'Instagram',
     'linkedin' => 'Linkedin',
+    'back to the job offers' => 'Back to the Job Offers',
+    'job offers dashboard' => 'Job Offers Dashboard',
 
 ];
