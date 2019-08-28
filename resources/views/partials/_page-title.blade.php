@@ -14,10 +14,15 @@
         @elseif(Request::is('register') || Request::is('register/options'))
             <h1 class="title-card-header">{{ __('content.sign in') }}</h1>
         @else
-            <h1 class="title-card-header">{{ $params->title }}</h1>
+            @if(isset($params))
+                <h1 class="title-card-header">{{ $params->title }}</h1>
+            @else
+                <h1 class="title-card-header">{{ $offer->industry }}</h1>
+            @endif
         @endif
-        @if( isset($params->subtitle) )
-            <h2>{{ $params->subtitle }}</h2>
+
+        @if( isset($offer) )
+            <h2>{{ $offer->title }}</h2>
         @endif
     </div>
 </section>

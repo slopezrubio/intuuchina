@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Offer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Illuminate\Support\Facades\{Storage};
+use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
 {
@@ -93,7 +93,7 @@ class OffersController extends Controller
             'industry' => $request->get('industry'),
             'duration' => $request->get('duration'),
             'description' => $request->get('description'),
-            'picture' => $this->uploadFile(storage_path('app/public/images/'), $request),
+            'picture' => $this->uploadFile($request),
         ]);
 
         return redirect()->route('admin.offers');
@@ -118,7 +118,10 @@ class OffersController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $offer = Offer::find($id);
+
+        return view('pages/admin/offer', compact('offer'));
     }
 
     /**
@@ -131,6 +134,43 @@ class OffersController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $offer = Offer::find($id);
+        $update = $this->setUpdatedAttributesToOffer($offer, $request->all(), $request);
+        $offer->renewUpdateAt($update);
+        $offer->save();
+
+        return redirect()->route('admin.offers');
+    }
+
+    /*
+     * Sets all the modified data of the offer send by the user through the form.
+     *
+     * @param  \App\Offer  $request
+     * @param  array $attributes
+     * @param \Illuminate\Http\Request $request
+     * @return boolean
+     */
+    public function setUpdatedAttributesToOffer(Offer $offer, array $attributes, Request $request) {
+        $updated = false;
+        foreach ($attributes as $key => $value) {
+            if ($key !== '_token') {
+                if ($key === 'picture') {
+                    $this->deleteUploadedFileAssociatedWithOffer($offer->id);
+                    $offer[$key] = $this->uploadFile($request);
+                    if (!$updated) {
+                        $updated = true;
+                    }
+                } else {
+                    if ($offer[$key] != $attributes[$key]) {
+                        $offer[$key] = $attributes[$key];
+                        if (!$updated) {
+                            $updated = true;
+                        }
+                    }
+                }
+            }
+        };
+        return $updated;
     }
 
     /**
@@ -155,28 +195,37 @@ class OffersController extends Controller
     public function filterBy($filter) {
         if ($filter !== 'all') {
             $offers = Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->get();
-            $offer = new Offer();
-            $offers = $offer->setDaysRenewed($offers);
-            return view('partials/_offers-list', compact('offers', 'params'));
+            if (count($offers) > 0) {
+                $offer = new Offer();
+                $offers = $offer->setDaysRenewed($offers);
+            }
+            return view('partials/_offers-list', compact('offers'));
         }
 
         $offers = $this->all();
-        return view('partials/_offers-list', compact('offers', 'params'));
+        return view('partials/_offers-list', compact('offers'));
     }
 
     /*
      * Check if there is already a file in the given path. If the opposite occur it store
      * the file.
      */
-    public function uploadFile(String $path, Request $request) {
+    public function uploadFile(Request $request) {
         if ($request->file('picture') !== null) {
-            $filename = $request->get('location') . '_' . $request->get('industry') . '_' . Carbon::now()->micro . '.' . $request->file('picture')->getClientOriginalExtension();
+            $filename = $this->generateFileName($request);
             $request->file('picture')->storeAs('public/images', $filename);
             return $filename;
         }
 
+        // Return the picture default name
         $filename = 'generic_' . $request->get('industry') . '_picture.jpg';
         return $filename;
+    }
+
+    public function generateFileName($request) {
+        if (method_exists($request, 'get')) {
+            return $request->get('location') . '_' . $request->get('industry') . '_' . Carbon::now()->micro . '.' . $request->file('picture')->getClientOriginalExtension();
+        }
     }
 
     public function deleteUploadedFileAssociatedWithOffer($id) {
@@ -194,12 +243,6 @@ class OffersController extends Controller
      */
     public function single($id) {
         $offer = Offer::find($id);
-
-        /* Datos adicionales que se van a entregar a la vista */
-        $params = (object) array(
-            'title' => strtoupper($offer->industry),
-            'subtitle' => $offer->title
-        );
 
         return view(('pages/job-description'), compact('offer', 'params'));
     }

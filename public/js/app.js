@@ -62803,6 +62803,79 @@ if (document.querySelector('.course-descriptions') !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_edit-offer.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/_edit-offer.js ***!
+  \************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/ajax */ "./resources/js/main/ajax.js");
+
+var editOffer = {
+  init: function init() {
+    editOffer.setup();
+  },
+  form: document.querySelector('#editOffer') !== null ? document.querySelector('#editOffer') : null,
+  setup: function setup() {
+    window.addEventListener('load', function (event) {
+      editOffer.loadWYSIWYGEditor();
+    });
+    editOffer.inputPicture.addEventListener('change', function (event) {
+      editOffer.picturePreview(this, $(this).siblings('.img-preview'));
+    });
+  },
+  inputPicture: document.getElementById('picture') !== null ? document.getElementById('picture') : null,
+  loadWYSIWYGEditor: function loadWYSIWYGEditor() {
+    if (document.querySelector('.items_form') !== null || document.querySelector('.items_form--hidden')) {
+      var editor = new Quill('.editor', {
+        modules: {
+          toolbar: [[{
+            header: [1, 2, false]
+          }], ['bold', 'italic', 'underline'], [{
+            'list': 'ordered'
+          }, {
+            'list': 'bullet'
+          }, 'blockquote'], [{
+            'indent': '-1'
+          }, {
+            'indent': '+1'
+          }, 'link', 'code-block']]
+        },
+        placeholder: 'Write down the job description...',
+        theme: 'snow'
+      });
+    }
+
+    var delta = document.querySelector('.editor').getAttribute('data-html');
+    editOffer.setDeltaToEditor(delta, editor);
+    editOffer.form.addEventListener('submit', function () {
+      var description = document.querySelector('input[name=description]');
+      description.value = JSON.stringify(editor.getContents());
+    });
+  },
+  setDeltaToEditor: function setDeltaToEditor(delta, editor) {
+    editor.setContents(JSON.parse(delta));
+  },
+  picturePreview: function picturePreview(input, imgElement) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function (e) {
+        $(imgElement).attr('src', e.target.result);
+      });
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+};
+
+if (document.querySelector('#editOffer') !== null) {
+  editOffer.init();
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/_filter-by.js":
 /*!***********************************************!*\
   !*** ./resources/js/components/_filter-by.js ***!
@@ -63237,7 +63310,7 @@ if (document.querySelector('.offers_list') !== null) {
 /***/ (function(module, exports) {
 
 var offers = {
-  form: document.querySelector('.form'),
+  form: document.querySelector('.form') !== null ? document.querySelector('.form') : null,
   duration: {
     max: 24,
     min: 1
@@ -63268,20 +63341,22 @@ var offers = {
       });
     }
 
-    offers.form.onsubmit = function () {
-      var description = document.querySelector('input[name=description]');
-      description.value = JSON.stringify(editor.getContents());
-    };
+    if (offers.form !== null) {
+      offers.form.addEventListener('submit', function () {
+        var description = document.querySelector('input[name=description]');
+        description.value = JSON.stringify(editor.getContents());
+      });
 
-    offers.form.querySelector('input[name=duration').onkeypress = function (event) {
-      if (!offers.validateKeyPressed(event.key)) {
-        event.preventDefault();
-      }
-    };
+      offers.form.querySelector('input[name=duration').onkeypress = function (event) {
+        if (!offers.validateKeyPressed(event.key)) {
+          event.preventDefault();
+        }
+      };
 
-    offers.form.querySelector('input[name=duration').onchange = function (event) {
-      this.value = offers.validateDuration(this.value);
-    };
+      offers.form.querySelector('input[name=duration').onchange = function (event) {
+        this.value = offers.validateDuration(this.value);
+      };
+    }
   },
   validateKeyPressed: function validateKeyPressed(key) {
     return Number.isInteger(parseInt(key));
@@ -63957,6 +64032,37 @@ if (document.querySelector('.course-descriptions') !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/main/ajax.js":
+/*!***********************************!*\
+  !*** ./resources/js/main/ajax.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var ajax = {
+  setAjax: function setAjax() {
+    try {
+      return new XMLHttpRequest();
+    } catch (e) {
+      try {
+        return new ActiveXObject("Msxml12.XMLHTTP");
+      } catch (e) {
+        try {
+          return new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (e) {
+          alert("Your browser can't support a picture preview");
+          return false;
+        }
+      }
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (ajax);
+
+/***/ }),
+
 /***/ "./resources/js/main/breakpoints.js":
 /*!******************************************!*\
   !*** ./resources/js/main/breakpoints.js ***!
@@ -64083,9 +64189,9 @@ var messages = {
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64097,6 +64203,7 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");

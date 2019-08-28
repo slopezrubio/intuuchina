@@ -224,8 +224,8 @@ return [
             'value' => 'beijing'
         ],
         [
-            'text' => 'Shangai',
-            'value' => 'shangai'
+            'text' => 'Shanghai',
+            'value' => 'shanghai'
         ],
     ],
     'programs' => [
@@ -264,6 +264,8 @@ return [
     'agree' => 'Agree',
     'cancel' => 'Cancel',
     'e-mail address' => 'E-Mail Address',
+    'save' => 'Save',
+    'duration' => 'Duration',
 
 
     /*

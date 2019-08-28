@@ -15641,6 +15641,11 @@ div.editor {
   font-size: calc(0.4105948047vw + 22.1172762305px);
 }
 
+#editOffer .img-preview {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
 .items_management .crud-buttons {
   padding-right: 0;
 }

@@ -61,10 +61,10 @@ Route::post('/register/options','Auth\RegisterController@setOptions')->name('reg
 /* Administrador */
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
     Route::match(['get', 'post'], '/admin/','HomeController@index');
-
     Route::get('/admin/offers', 'OffersController@admin')->name('admin.offers');
     Route::post('/admin/offers', 'OffersController@store');
-    Route::get('/admin/offers/edit/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
+    Route::post('/admin/offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+');
+    Route::get('/admin/offers/edit/{offer}', 'OffersController@edit')->where('offer', '[0-9]+');
     Route::get('/admin/offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+');
     Route::get('/admin/offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
 });

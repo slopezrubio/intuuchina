@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-md-3 col-form-label text-md-left">{{ __('description') }}</label>
+                    <label for="description" class="col-md-3 col-form-label text-md-left">{{ __('content.description') }}</label>
                     <input type="hidden" name="description">
                     <div class="col-md-9">
                         <div class="editor">
@@ -86,7 +86,7 @@
                 <div class="form-group row">
                     <label for="picture" class="col-md-3 col-form-label text-md-left">Picture</label>
                     <div class="col-md-9">
-                        <input type="file" id="duration" class="form-control" name="picture"">
+                        <input type="file" id="picture" class="form-control" name="picture"">
                         @if ($errors->has('picture'))
                             <div class="alert alert-danger" role="alert">
                                 {{ $errors->first('picture') }}

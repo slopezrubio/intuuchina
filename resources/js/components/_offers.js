@@ -1,5 +1,5 @@
 let offers = {
-    form: document.querySelector('.form'),
+    form: document.querySelector('.form') !== null ? document.querySelector('.form') : null,
     duration: {
         max: 24,
         min: 1
@@ -25,20 +25,22 @@ let offers = {
             });
         }
 
-        offers.form.onsubmit = function() {
-            let description = document.querySelector('input[name=description]');
-            description.value = JSON.stringify(editor.getContents());
-        };
+        if (offers.form !== null) {
+            offers.form.addEventListener('submit', function() {
+                let description = document.querySelector('input[name=description]');
+                description.value = JSON.stringify(editor.getContents());
+            });
 
-        offers.form.querySelector('input[name=duration').onkeypress = function(event) {
-            if (!offers.validateKeyPressed(event.key)) {
-                event.preventDefault();
-            }
-        };
+            offers.form.querySelector('input[name=duration').onkeypress = function(event) {
+                if (!offers.validateKeyPressed(event.key)) {
+                    event.preventDefault();
+                }
+            };
 
-        offers.form.querySelector('input[name=duration').onchange = function(event) {
-            this.value = offers.validateDuration(this.value);
-        };
+            offers.form.querySelector('input[name=duration').onchange = function(event) {
+                this.value = offers.validateDuration(this.value);
+            };
+        }
     },
     validateKeyPressed: function(key) {
         return Number.isInteger(parseInt(key));

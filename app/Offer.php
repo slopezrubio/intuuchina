@@ -36,4 +36,15 @@ class Offer extends Model
     public function getDiffForHumans($date) {
         return Carbon::parse($date)->diffForHumans(Carbon::now());
     }
+
+    /**
+     * Sets the last updated with the current time.
+     *
+     * @param boolean $updated
+     */
+    public function renewUpdateAt($updated) {
+        if ($updated) {
+            $this['updated_at'] = Carbon::now();
+        }
+    }
 }
