@@ -21,7 +21,7 @@ class CreateOffersTable extends Migration
             $table->string('industry');
             $table->integer('duration');
             $table->json('description')->nullable();
-            $table->string('picture');
+            $table->string('picture',200);
         });
     }
 
