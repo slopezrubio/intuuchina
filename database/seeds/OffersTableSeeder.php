@@ -11,7 +11,6 @@ class OffersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
         $offers = factory(App\Offer::class,5)->create();
     }
 }
