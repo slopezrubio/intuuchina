@@ -72,13 +72,13 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 .grid-md {
   @include prefixed(display, grid);
   @include prefixed(grid-template-columns, '50% 50%');
-  @include prefixed(grid-template-rows, '375px 375px 375px 375px 375px');
+  @include prefixed(grid-template-rows, 'auto auto auto auto auto');
 }
 
 .grid-ld {
   @include prefixed(display, grid);
   @include prefixed(grid-template-columns, 'calc(100% / 3) calc(100% / 3) calc(100% / 3)');
-  @include prefixed(grid-template-rows, '375px 375px 375px');
+  @include prefixed(grid-template-rows, 'auto auto auto');
 }
 
 .no-padding {
@@ -93,7 +93,6 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
         @include prefixed(display, flex);
         @include prefixed(flex-direction, column);
         @include prefixed(justify-content, center);
-        height: 375px;
         padding: 2em;
         &_title {
           margin-bottom: 2em;
