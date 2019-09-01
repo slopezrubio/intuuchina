@@ -12203,7 +12203,7 @@ header#register {
 header#why-us {
   background: url("/../../storage/images/why2.jpg") no-repeat scroll center;
   background-size: cover;
-  height: 50vh;
+  height: 55vh;
   text-transform: none;
 }
 
@@ -13082,11 +13082,11 @@ main.full-viewport .credit a:hover {
   -ms-grid-template-columns: 50% 50%;
   -o-grid-template-columns: 50% 50%;
   grid-template-columns: 50% 50%;
-  -webkit-grid-template-rows: 375px 375px 375px 375px 375px;
-  -moz-grid-template-rows: 375px 375px 375px 375px 375px;
-  -ms-grid-template-rows: 375px 375px 375px 375px 375px;
-  -o-grid-template-rows: 375px 375px 375px 375px 375px;
-  grid-template-rows: 375px 375px 375px 375px 375px;
+  -webkit-grid-template-rows: auto auto auto auto auto;
+  -moz-grid-template-rows: auto auto auto auto auto;
+  -ms-grid-template-rows: auto auto auto auto auto;
+  -o-grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto;
 }
 
 .grid-ld {
@@ -13100,11 +13100,11 @@ main.full-viewport .credit a:hover {
   -ms-grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
   -o-grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
   grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
-  -webkit-grid-template-rows: 375px 375px 375px;
-  -moz-grid-template-rows: 375px 375px 375px;
-  -ms-grid-template-rows: 375px 375px 375px;
-  -o-grid-template-rows: 375px 375px 375px;
-  grid-template-rows: 375px 375px 375px;
+  -webkit-grid-template-rows: auto auto auto;
+  -moz-grid-template-rows: auto auto auto;
+  -ms-grid-template-rows: auto auto auto;
+  -o-grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto;
 }
 
 .no-padding {
@@ -13126,7 +13126,6 @@ main.full-viewport .credit a:hover {
   -ms-justify-content: center;
   -o-justify-content: center;
   justify-content: center;
-  height: 375px;
   padding: 2em;
 }
 

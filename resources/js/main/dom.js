@@ -20,7 +20,15 @@ let dom = {
     },
     expandToViewport: (element) => {
         $(element).width(document.body.clientWidth);
-    }
+    },
+    getHighestElement: (elements) => {
+        let elementsHeight = [];
+        for (let i = 0; i < elements.length; i++) {
+            elementsHeight.push(elements[i].clientHeight);
+        }
+
+        return elements[elementsHeight.indexOf(Math.max.apply(null, elementsHeight))];
+    },
 };
 
 export default dom;
