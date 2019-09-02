@@ -26,7 +26,6 @@ let nav = {
     modalForm: document.querySelector('.modal__form') !== null ?  document.querySelector('.modal__form') : null,
     hasErrorsMessages: (parent) => {
         if ($(parent).find('.is-invalid').length > 0) {
-            console.log(parent);
             return true;
         }
 

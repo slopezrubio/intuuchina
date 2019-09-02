@@ -14037,9 +14037,9 @@ main.full-viewport .credit a:hover {
 
 @media only screen and (max-width: 410px) {
   .container .extended-form .card-body form > div:last-of-type {
-    -moz-flex-direction: column;
-    -o-flex-direction: column;
-    flex-direction: column;
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
   }
 
   .container .extended-form .card-body form > div:last-of-type .shutter-button {
