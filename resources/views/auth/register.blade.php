@@ -77,7 +77,7 @@
                                                     @if(empty(session('options')))
                                                         <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="true" selected>{{ __('content.programs')[$i]['text'] }}</option>
                                                     @else
-                                                        <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.program')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>
+                                                        <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>
                                                             {{ __('content.programs')[$i]['text'] }}
                                                         </option>
                                                     @endif
@@ -85,9 +85,6 @@
                                                 <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>{{ __('content.programs')[$i]['text'] }}</option>
                                             @endfor
                                         </select>
-                                        <div>
-                                            {{ session('options')['program'] }}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -253,18 +250,17 @@
                             </div>
 
                             <div class="form-group row justify-content-center">
-                                <div class="col-4 col-md-4">
+                                <div class="col-6 col-md-4">
                                     <button type="submit" class="shutter-button">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
-                                <div class="col-4 col-md-4">
+                                <div class="col-6 col-md-4">
                                     <button type="reset" class="shutter-button">
                                         {{ __('Cancel') }}
                                     </button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>

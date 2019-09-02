@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Array_;
 
 class RegisterController extends Controller
 {
@@ -120,5 +122,41 @@ class RegisterController extends Controller
         }
 
         return $value;
+    }
+
+    /**
+     * Flashes a set of parameters into the session as to get the register form ready with the corresponding inputs loaded and
+     * selected depending on the source where the request was made. Then redirects the user to the register form.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function registerWithOptions(Request $request) {
+        session()->flash('options', $this->setOptions($request->all()));
+        return redirect()->route('register');
+    }
+
+    /**
+     * Creates the array is going to be flashed into the session by the @see registerWithOptions method.
+     *
+     * @param array $parameters
+     * @return array
+     */
+    private function setOptions(Array $parameters) {
+        $found = false;
+        $options = [];
+        while ($parameter = current($parameters) && $found !== true) {
+            for ($y = 0; $y < count(__('content.programs')) && $found !== true; $y++) {
+                $pattern = '/^' . __('content.programs')[$y]['value'] . '$/';
+                if (preg_match($pattern, key($parameters))) {
+                    $found = true;
+                    $options[key($parameters)] = current($parameters);
+                }
+            }
+            next($parameters);
+        }
+
+        $options['program'] = $parameters['program'];
+        return $options;
     }
 }

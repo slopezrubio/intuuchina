@@ -82,7 +82,7 @@
             .card-body {
                 form {
                     & > div:last-of-type {
-                        @include prefixed(flex-direction, column);
+                        @include prefixed(flex-direction, row);
                         .shutter-button {
                             max-width: 100%;
                         }
