@@ -132,6 +132,8 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function registerWithOptions(Request $request) {
+        session()->pull('options');
+        session()->pull('program');
         session()->flash('options', $this->setOptions($request->all()));
         return redirect()->route('register');
     }
@@ -147,8 +149,8 @@ class RegisterController extends Controller
         $options = [];
         while ($parameter = current($parameters) && $found !== true) {
             for ($y = 0; $y < count(__('content.programs')) && $found !== true; $y++) {
-                $pattern = '/^' . __('content.programs')[$y]['value'] . '$/';
-                if (preg_match($pattern, key($parameters))) {
+                $pattern = __('content.programs')[$y]['value'];
+                if ($pattern ===  key($parameters)) {
                     $found = true;
                     $options[key($parameters)] = current($parameters);
                 }

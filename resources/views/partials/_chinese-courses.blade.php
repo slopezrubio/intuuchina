@@ -37,7 +37,7 @@
                 @else
                     <form action="{{ route('register.options') }}" method="POST">
                         @csrf
-                        <input type="hidden" value="study" name="program" id="study">
+                        <input type="hidden" value="study" name="program" id="program">
                         <button type="submit" value="online" name="study" class="cta">{{ __('content.apply for') }}</button>
                     </form>
                 @endauth

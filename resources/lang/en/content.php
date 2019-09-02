@@ -174,6 +174,9 @@ return [
     'subject placeholder' => 'Write down here your issue',
     'offers filter label' => 'Filter by: ',
     'offers filter placeholder' => 'Choose an industry...',
+    'industry' => 'Industry',
+    'duration' => 'Duration',
+    'picture' => 'Picture',
     'offers filter options' => [
         [
             'text' => 'Finance',
@@ -252,11 +255,13 @@ return [
             'value' => 'universty'
         ],
     ],
+    'study chinese' => 'Study Chinese',
+    'in-person' => 'In-person',
+    'online' => 'Online',
     'sign in' => 'Sign In',
     'apply for' => 'Apply for',
     'edit' => 'Editar',
     'delete' => 'Delete',
-    'job description' => 'Job description',
     'also interested' => 'I\'m also interested',
     'offer title label' => 'Title',
     'offer location label' => 'Location',
@@ -264,11 +269,24 @@ return [
     'job position' => 'Job Position',
     'description' => 'Description',
     'agree' => 'Agree',
-    'cancel' => 'Cancel',
     'e-mail address' => 'E-Mail Address',
     'save' => 'Save',
-    'duration' => 'Duration',
     'join also' => 'Join Also',
+    'program' => 'Program',
+    'university checkbox' => [
+        [
+            'value' => 'mba',
+            'text' => 'MBA'
+        ],
+        [
+            'value' => 'mib',
+            'text' => 'M. Intl. Bsns.'
+        ],
+        [
+            'value' => 'other',
+            'text' => 'Other'
+        ]
+    ],
 
 
     /*

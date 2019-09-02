@@ -14,7 +14,8 @@
                     }
                 }
 
-                & > div > label {
+                & > div > label,
+                & > div > div > label{
                     font-weight: 700;
                 }
 

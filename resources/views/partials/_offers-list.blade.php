@@ -85,10 +85,14 @@
                             <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
                             <p class="card-text location">{{ ucfirst($offer->location) }}</p>
                             <p class="card-text duration">Staying: {{ $offer->duration }} {{ $offer->duration > 1 ? 'Months' : 'Month' }}</p>
-                            <div class="offers_buttons">
-                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="{{ route('register') }}">{{ __('content.apply for') }}</a></button>
-                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.job description') }}</a></button>
-                            </div>
+                            <form id="#applyJob" action="{{ route('register.options') }}" method="POST">
+                                @csrf
+                                <input type="hidden" value="internship" name="program" id="program">
+                                <div class="offers_buttons">
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5" type="submit" value="{{ $offer->industry }}" name="internship">{{ __('content.apply for') }}</a></button>
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.job description') }}</a></button>
+                                </div>
+                            </form>
                         </div>
                         <div class="card-footer mb-2">
                             <small class="text-muted">{{ $offer->gone_by }}</small>

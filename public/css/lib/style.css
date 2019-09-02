@@ -13835,7 +13835,8 @@ main.full-viewport .credit a:hover {
   border-color: #C80B0B;
 }
 
-.container .extended-form .card-body form > div > label {
+.container .extended-form .card-body form > div > label,
+.container .extended-form .card-body form > div > div > label {
   font-weight: 700;
 }
 

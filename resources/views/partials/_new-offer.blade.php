@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group row" id="industryOfferFieldset">
-                    <label for="industry" class="col-md-3 col-form-label text-md-left">Industry</label>
+                    <label for="industry" class="col-md-3 col-form-label text-md-left">{{ __('content.industry') }}</label>
                     <div class="col-md-9">
                         <div class="regular-select-wrapper">
                             <select class="form-control" name="industry" id="industry">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="duration" class="col-md-3 col-form-label text-md-left">Duration</label>
+                    <label for="duration" class="col-md-3 col-form-label text-md-left">{{ __('content.duration') }}</label>
                     <div class="col-md-9">
                         <input type="text" id="duration" class="form-control" name="duration" value="{{old('duration')}}" placeholder="{{ __('content.amount of months') }}">
                         @if ($errors->has('duration'))
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="picture" class="col-md-3 col-form-label text-md-left">Picture</label>
+                    <label for="picture" class="col-md-3 col-form-label text-md-left">{{ __('content.picture') }}</label>
                     <div class="col-md-9">
                         <input type="file" id="picture" class="form-control" name="picture"">
                         @if ($errors->has('picture'))
@@ -96,8 +96,8 @@
                 </div>
                 <div class="form-group row">
                     <div class="row justify-content-center col-12 my-4">
-                        <button type="submit" class="shutter-button col-4">Submit</button>
-                        <button type="reset" class="shutter-button col-4 offset-2 dropdown-button">Cancel</button>
+                        <button type="submit" class="shutter-button col-4">{{ __('content.submit') }}</button>
+                        <button type="reset" class="shutter-button col-4 offset-2 dropdown-button">{{ __('content.cancel') }}</button>
                     </div>
                 </div>
             </div>

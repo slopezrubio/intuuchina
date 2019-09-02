@@ -17,17 +17,24 @@
                     </div>
                 </section>
                 <section class="sendable_section">
-                    <div class="offers_buttons">
-                        @auth
+                    @auth
+                        <div class="offers_buttons">
                             @if(Auth::user()->type !== 'admin')
+
                                 <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="#">{{ __('content.join also') }}</a></button>
                             @else
                                 <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="{{ url('/admin/offers/edit/' . $offer->id) }}">{{ __('content.edit') }}</a></button>
                             @endif
-                        @else
-                            <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="{{ route('register') }}">{{ __('content.apply for') }}</a></button>
-                        @endauth
-                    </div>
+                        </div>
+                    @else
+                        <form id="#applyJob" action="{{ route('register.options') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="internship" name="program" id="program">
+                            <div class="offers_buttons">
+                                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0" type="submit" value="{{ $offer->industry }}" name="internship">{{ __('content.apply for') }}</a></button>
+                            </div>
+                        </form>
+                    @endauth
                 </section>
             </div>
         </div>
