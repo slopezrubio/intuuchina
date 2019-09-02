@@ -13501,6 +13501,7 @@ main.full-viewport .credit a:hover {
 .course-descriptions {
   background: black;
   position: relative;
+  overflow: hidden;
 }
 
 .course-descriptions .description-container {

@@ -83,6 +83,7 @@
 .course-descriptions {
   background: $primaryDark;
   position: relative;
+  overflow: hidden;
   .description-container {
     display: -webkit-inline-box;
     //@include prefixed(transition, all ease-in-out .5s);
