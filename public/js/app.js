@@ -64081,8 +64081,8 @@ var ajax = {
 __webpack_require__.r(__webpack_exports__);
 var breakpoints = {
   heights: {
-    smallDevices: 136,
-    mediumDevices: 226,
+    smallDevices: 156,
+    mediumDevices: 146,
     largeDevices: 100
   },
   widths: {

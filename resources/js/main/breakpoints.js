@@ -1,7 +1,7 @@
 let breakpoints = {
     heights: {
-        smallDevices: 136,
-        mediumDevices: 226,
+        smallDevices: 156,
+        mediumDevices: 146,
         largeDevices: 100
     },
     widths: {

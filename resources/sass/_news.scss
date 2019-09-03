@@ -1,22 +1,159 @@
+@media #{$small-devices} {
+  .news {
+    &_container {
+      .section_body {
+        @include prefixed(flex-direction, column);
+        .tv {
+          @include prefixed(display, flex);
+          @include prefixed(flex-wrap, wrap);
+          @include prefixed(align-items, baseline);
+          @include prefixed(justify-content, space-between);
+          a {
+            padding: 0.7em;
+          }
+          img {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media #{$small-and-medium-devices} {
+  main {
+    .news {
+      &::before {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+        bottom: -79%
+      }
+    }
+  }
+}
+
+@media #{$medium-devices} {
+  main {
+    .news {
+      &_container {
+        .section_body div {
+          margin-bottom: 2em;
+        }
+        .section_body {
+          @include prefixed(display, flex);
+          @include prefixed(flex-direction, column);
+          .tv {
+            @include prefixed(display, flex);
+            @include prefixed(flex-wrap, wrap);
+            @include prefixed(align-items, baseline);
+            @include prefixed(justify-content, space-evenly);
+            padding: 5px;
+            a {
+              padding: 1em;
+              text-align: left;
+              margin: 5px;
+              img {
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 45px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media #{$footer-fix} {
+  main {
+    .news {
+      @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 78%)');
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
+      &::before {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+        bottom: -79%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 781px) and (max-width: 991px) {
+  main {
+    .news {
+      &_container {
+        .section_body {
+          .tv {
+            @include prefixed(display, grid);
+            @include prefixed(grid-template-columns, repeat(3, 1fr));
+            @include prefixed(align-items, baseline);
+            @include prefixed(grid-gap, 2em);
+            padding: 5px;
+            a {
+              img {
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media #{$large-devices} {
+  .news {
+    @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 81%)');
+    &::before {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
+      bottom: -295px;
+    }
+
+    &_container {
+      .section_body {
+        .tv {
+          @include prefixed(display, grid);
+          @include prefixed(grid-template-columns, repeat(4, 1fr));
+          @include prefixed(align-items, baseline);
+          @include prefixed(grid-gap, 2em);
+          padding: 5px;
+          a {
+            img {
+              position: relative;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media #{$large-devices_secondary} {
+  .news {
+    &_container {
+      .section_body {
+        padding-right: 10em;
+        padding-left: 10em;
+      }
+    }
+  }
+}
 
 main {
-  //decoration for page
-  .triangulo {
-    position: absolute;
-    color: $neutralColor;
-    width: 0;
-    height: 0;
-    border-right: 200px solid transparent;
-    border-left: 200px solid $neutralColor;
-    border-top: 200px solid $neutralColor;
-    border-bottom: 200px solid transparent;
-    z-index: 2;
-  }
   .news {
     @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 81%)');
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
     background-color: $primaryRed;
-    z-index: 2;
+    z-index: 3;
     position: relative;
 
     &::before {
@@ -87,244 +224,13 @@ main {
         }
 
         .tv {
-          width: auto;
           height: auto;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          grid-template-rows: repeat(2, 1fr);
-          grid-gap: 2em;
-          align-items: baseline;
+
           a {
-            text-align: center;
             width: auto;
-            img {
-              width: 60px;
-            }
           }
         }
       }
     }
   }
 }
-
-@media #{$small-and-medium-devices} {
-  main {
-    .news {
-      &::before {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-        bottom: -79%
-      }
-    }
-  }
-
-}
-
-@media #{$footer-fix} {
-  main {
-    .news {
-      @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 78%)');
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-      &::before {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-        bottom: -555px;
-      }
-      &_container {
-        .section_body div {
-          margin-bottom: 2em;
-        }
-        .section_body {
-          flex-direction: column;
-          align-items: center;
-          .tv {
-            width: 100%;
-            height: auto;
-            grid-template-rows: repeat(2, 1fr);
-            grid-template-columns: repeat(5, 1fr);
-            grid-row-gap: 2em;
-            a {
-              text-align: left;
-              img {
-                position: relative;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 60px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media #{$small-and-medium-devices_secondary} {
-  .news {
-    &_container {
-      .section_body {
-        flex-direction: column;
-        .tv {
-          width: 100%!important;
-          height: auto!important;
-          display: flex!important;
-          flex-wrap: wrap!important;
-          justify-content: center;
-          a {
-            padding: 0.7em;
-          }
-          img {
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-          }
-        }
-      }
-    }
-  }
-}
-
-@media #{$large-devices} {
-  .news {
-    @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 81%)');
-    &::before {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-      bottom: -295px;
-    }
-
-    &_container {
-      .section_body {
-        .tv {
-          a {
-            img {
-              width: 30px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media #{$large-devices_secondary} {
-  .news_container {
-    .section_body {
-      padding-right: 10em;
-      padding-left: 10em;
-    }
-  }
-}
-
-  //.oferts {
-  //  // -webkit-clip-path: polygon(0 0, 100% 55%, 100% 100%, 0% 100%);
-  //  // clip-path: polygon(0 0, 100% 55%, 100% 100%, 0% 100%);
-  //  position: relative;
-  //  //bottom: 225px;
-  //  display: grid;
-  //  grid-template-columns: repeat(3, 1fr);
-  //  grid-template-rows: 321px;
-  //  //grid-gap: 5px;
-  //  .item {
-  //    width: 100%;
-  //    height: 100%;
-  //    filter: grayscale(100%);
-  //  }
-  //  .rect {
-  //    text-align: center;
-  //    position: relative;
-  //    bottom: 23rem;
-  //    color: $white;
-  //    background-color: #00000050;
-  //    width: 300px;
-  //    height: 350px;
-  //    margin-left: 70px;
-  //    border: 5px solid $white;
-  //    border-radius: 20px;
-  //    h3 {
-  //      text-align: center;
-  //      padding-top: 20px;
-  //    }
-  //    hr {
-  //      border: 3px solid $white;
-  //    }
-  //    p {
-  //      text-align: center;
-  //      margin-top: 50px;
-  //    }
-  //    button {
-  //      width: 100px;
-  //      height: 40px;
-  //      border: 3px solid white;
-  //      border-radius: 24px;
-  //      background: white;
-  //      a {
-  //        text-align: center;
-  //        color: $black2;
-  //        margin-top: 30px;
-  //        font-weight: 600;
-  //      }
-  //    }
-  //    a:hover {
-  //      color: $red4;
-  //      cursor: pointer;
-  //    }
-  //  }
-  //}
-  //.border {
-  //  height: 8px;
-  //  background-color: $red5;
-  //  border: $red5;
-  //}
-  ////como trabajamos
-  //#id2 {
-  //  position: relative;
-  //  h2 {
-  //    position: absolute;
-  //    right: 10px;
-  //    width: 453px;
-  //    top: 18px;
-  //    z-index: 100;
-  //    font-size: 30px;
-  //  }
-  //  h4 {
-  //    font-weight: bold;
-  //    font-size: 14px;
-  //    a {
-  //      text-decoration: none;
-  //      color: $black2;
-  //    }
-  //    a:hover {
-  //      color: $red1;
-  //      text-decoration: none;
-  //    }
-  //  }
-  //  //para el paso de registro
-  //  .service-1 {
-  //    position: absolute;
-  //    left: 169px;
-  //    width: 230px;
-  //    top: 400px;
-  //  }
-  //  //busqueda del servicio
-  //  .service-2 {
-  //    position: absolute;
-  //    left: 372px;
-  //    width: 246px;
-  //    top: 200px;
-  //  }
-  //  //asesoramiento
-  //  .service-3 {
-  //    position: absolute;
-  //    right: 440px;
-  //    width: 328px;
-  //    top: 430px;
-  //  }
-  //  //exit
-  //  .service-4 {
-  //    position: absolute;
-  //    left: 990px;
-  //    width: 620px;
-  //    top: 120px;
-  //  }
-  //  img {
-  //    z-index: -100;
-  //  }
-  //}

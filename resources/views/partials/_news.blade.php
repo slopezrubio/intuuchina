@@ -1,4 +1,3 @@
-<div class="triangulo"></div>
 <div class="news">
     <div class="news_container">
         <div class="section_title">
