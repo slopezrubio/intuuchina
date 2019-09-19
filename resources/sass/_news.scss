@@ -112,7 +112,7 @@
     @include prefixed(clip-path, 'polygon(0 0, 100% 0, 100% 100%, 0 81%)');
     &::before {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-      bottom: -295px;
+      bottom: -79%;
     }
 
     &_container {
@@ -181,16 +181,15 @@ main {
       }
 
       .section_body {
-        display: flex;
-        justify-content: space-around;
+        @include prefixed(display, flex);
+        @include prefixed(justify-content, space-around);
         .note_window {
           max-width: 450px;
           overflow: hidden;
           .note_carrousel {
             transition:
               transform 0.5s;
-            display: -webkit-inline-box;
-            display: -moz-inline-box;
+            @include prefixed(display, inline-box);
             .slider_note {
               max-width: 450px;
               a {

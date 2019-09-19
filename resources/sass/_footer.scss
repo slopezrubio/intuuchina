@@ -3,18 +3,18 @@ footer {
   @media #{$large-devices} {
     .footer {
       &_header {
-        display: grid;
-        grid-template-rows: 1fr;
-        grid-template-columns: 1fr 2fr 1fr;
-        grid-column-gap: 5%;
+        @include prefixed(display, grid);
+        @include prefixed(grid-template-rows, 1fr);
+        @include prefixed(grid-template-columns, 1fr 2fr 1fr);
+        @include prefixed(grid-column-gap, 5%);
       }
 
       &_title {
-        display: flex;
+        @include prefixed(display, flex);
       }
 
       &_web-map {
-        justify-content: initial;
+        @include prefixed(justify-content, initial);
       }
     }
   }
@@ -28,9 +28,9 @@ footer {
         }
 
         .text_input {
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: baseline;
+          @include prefixed(flex-direction, row);
+          @include prefixed(justify-content, space-between);
+          @include prefixed(align-items, baseline);
           input {
             width: 85%;
             padding-bottom: 5px;
@@ -38,9 +38,9 @@ footer {
         }
 
         .switch_input {
-          display: grid;
-          grid-template-columns: 60% auto;
-          justify-content: space-between;
+          @include prefixed(display, grid);
+          @include prefixed(grid-template-columns, 60% auto);
+          @include prefixed(justify-content, space-between);
           .switch {
             margin-top: 2em;
           }
@@ -54,8 +54,8 @@ footer {
         }
 
         div:last-of-type {
-          flex-direction: row;
-          justify-content: flex-start;
+          @include prefixed(flex-direction, row);
+          @include prefixed(justify-content, flex-start);
           .footer_submit {
             margin-right: 2em;
           }
@@ -65,7 +65,7 @@ footer {
           color: black;
           &,
           div {
-            flex-direction: column !important;
+            @include prefixed(flex-direction, 'row!important');
           }
         }
 
@@ -73,7 +73,7 @@ footer {
 
       &_social-media {
         .footer_sublist {
-          flex-direction: column;
+          @include prefixed(flex-direction, column);
           li:not(first-of-type) {
             padding: 0 0.9em;
           }
@@ -81,11 +81,11 @@ footer {
       }
 
       &_documentation {
-        flex-direction: row;
-        justify-content: space-between;
+        @include prefixed(flex-direction, row);
+        @include prefixed(justify-content, space-between);
         &_signature {
-          display: flex;
-          align-items: first baseline;
+          @include prefixed(display, flex);
+          @include prefixed(align-items, first baseline);
           a {
             margin-left: .5em;
           }
@@ -98,10 +98,10 @@ footer {
   @media #{$footer-fix} {
     .footer {
       &_header {
-        display: grid;
-        grid-template-rows: auto auto;
-        grid-template-columns: 1fr 2fr;
-        grid-column-gap: 5%;
+        @include prefixed(display, grid);
+        @include prefixed(grid-template-rows, auto auto);
+        @include prefixed(grid-template-columns, 1fr 2fr);
+        @include prefixed(grid-column-gap, 5%);
       }
 
       &_contact_form {
@@ -115,24 +115,24 @@ footer {
       }
 
       &_web-map {
-        justify-content: initial;
+        @include prefixed(justify-content, initial);
       }
 
       &_sublist {
-        flex-direction: column;
+        @include prefixed(flex-direction, column);
         padding-top: 2em;
       }
 
       &_social-media {
-        grid-column: 1 / span 2;
-        justify-content: space-between;
+        @include prefixed(grid-column, '1 / span 2');
+        @include prefixed(justify-content, space-between);
         .footer_title {
-          justify-content: center;
+          @include prefixed(justify-content, center);
         }
 
         ul {
           flex-direction: row;
-          justify-content: space-around;
+          @include prefixed(justify-content, space-around);
         }
       }
     }
