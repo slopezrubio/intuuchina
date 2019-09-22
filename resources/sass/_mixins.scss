@@ -124,6 +124,14 @@
   height: 0;
 }
 
+/* Dropdown button */
+@mixin animation($animationName) {
+  animation: $animationName 1s ease-in-out;
+  -moz-animation: $animationName 1s ease-in-out;
+  -webkit-animation: $animationName 1s ease-in-out;
+  -ms-animation: $animationName 1s ease-in-out;
+}
+
 @mixin switchButton {
   position: relative;
   display: block;

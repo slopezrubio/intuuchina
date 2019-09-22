@@ -63134,16 +63134,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
 
- // Component Events
-
-if (document.querySelector('.toggleMenu') !== null) {
-  document.querySelector('.toggleMenu').addEventListener('click', displayNav);
-} // Component Methods
-
-
-function displayNav(event) {
-  $('.navbar_menu--hidden').toggleClass('navbar_menu--display');
-}
 
 var nav = {
   init: function init() {
@@ -63157,8 +63147,23 @@ var nav = {
 
       ;
     });
+
+    for (var i = 0; i < nav.accordionSubmenus.length; i++) {
+      nav.accordionSubmenus[i].addEventListener('mouseover', nav.highlightItem, true);
+      nav.accordionSubmenus[i].addEventListener('mouseout', nav.highlightItem, true);
+    }
   },
   modalForm: document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null,
+  accordionSubmenus: document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null,
+  highlightItem: function highlightItem(event) {
+    if (window.innerWidth < _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices[0]) {
+      var pattern = /\s?show\s?/;
+
+      if (this.getAttribute('class').match(pattern)) {
+        _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(this.parentElement, 'reverse-colours');
+      }
+    }
+  },
   hasErrorsMessages: function hasErrorsMessages(parent) {
     if ($(parent).find('.is-invalid').length > 0) {
       return true;

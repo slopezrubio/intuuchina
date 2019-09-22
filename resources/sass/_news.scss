@@ -189,7 +189,7 @@ main {
           .note_carrousel {
             transition:
               transform 0.5s;
-            @include prefixed(display, inline-box);
+            @include prefixed(display, inline-flex);
             .slider_note {
               max-width: 450px;
               a {
