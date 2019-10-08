@@ -6,7 +6,7 @@ let motifs = {
     sections: document.getElementsByClassName('motifs') !== null ? document.getElementsByClassName('motifs') : null,
     container: document.querySelector('.mx-width') !== null ? document.querySelector('.mx-width') : null,
     motifs: document.querySelectorAll('.motif_card, .motif_picture') !== null ? document.querySelectorAll('.motif_card, .motif_picture') : null,
-    highestMotif: document.querySelectorAll('.motif_card') !== null ? dom.getHighestElement(document.querySelectorAll('.motif_card')) : null,
+    highestMotif: '',
     init: () => {
       window.addEventListener('load',motifs.setup);
       window.addEventListener('resize', function() {
@@ -20,9 +20,28 @@ let motifs = {
         });
         motifs.setHeight();
     },
+    highest: () => {
+        let element = motifs.highestMotif;
+        if (element === '') {
+            for (let i = 0; i < motifs.motifs.length; i++) {
+                if (getComputedStyle(motifs.motifs[i], null).display !== 'none' && motifs.motifs[i].getAttribute('class') === "motif_card") {
+                    element = motifs.motifs[i].offsetHeight > element.offsetHeight || element === '' ? motifs.motifs[i] : element;
+                }
+            }
+            return element;
+        }
+
+        console.log(element);
+        return element;
+    },
     setHeight: () => {
+        motifs.highestMotif = motifs.highest();
+
         for (let i = 0; i < motifs.motifs.length; i++) {
-            motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? `${motifs.highestMotif.clientHeight}px` : `auto`;
+            if (getComputedStyle(motifs.motifs[i], null).display !== 'none') {
+                motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? motifs.highestMotif.offsetHeight + 'px' : '';
+            }
+            //motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? `${motifs.highestMotif.clientHeight}px` : `auto`;
         }
     },
     preparedFor: {
