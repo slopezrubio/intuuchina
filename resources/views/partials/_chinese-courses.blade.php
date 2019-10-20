@@ -20,7 +20,7 @@
                 @endauth
             </div>
             <p>
-                {{ __('content.courses')['online']['description'][0] }}
+                {{ __('content.courses')['in-person']['description'][0] }}
             </p>
         </div>
         <div class="description-base">

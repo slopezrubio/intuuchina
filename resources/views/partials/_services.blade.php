@@ -1,4 +1,4 @@
-<section>
+    <section>
     <div class="triangle"></div>
     <div class="services">
         <div class="service_card" id="s_internship">
@@ -8,9 +8,7 @@
                 </div>
                 <div class="service_card_body">
                     <p class="service_card_info">
-                        We help you to find an internship in a company that fits within your field
-                        and into your elective position. Take off right now yor future career and set you
-                        apart from the rest by having a labour experiences in China.
+                        {{ __('content.internship service text') }}
                     </p>
                 </div>
                 <div class="service_card_footer">
@@ -26,9 +24,7 @@
                 </div>
                 <div class="service_card_body">
                     <p class="service_card_info">
-                        We help you to find an internship in a company that fits within your field
-                        and into your elective position. Take off right now yor future career and set you
-                        apart from the rest by having a labour experiences in China.
+                        {{ __('content.university service text') }}
                     </p>
                 </div>
                 <div class="service_card_footer">
@@ -44,9 +40,7 @@
                 </div>
                 <div class="service_card_body">
                     <p class="service_card_info">
-                        We help you to find an internship in a company that fits within your field
-                        and into your elective position. Take off right now yor future career and set you
-                        apart from the rest by having a labour experiences in China.
+                        {{ __('content.learn chinese service text') }}
                     </p>
                 </div>
                 <div class="service_card_footer">

@@ -11226,7 +11226,7 @@ main {
  * ----------------
  */
 header#home {
-  background-image: url("/../../storage/images/practicas-1-1.jpg");
+  background-image: url("/../../storage/images/shanghai_internship_skyline.jpg");
   height: 32em;
   text-transform: none;
 }
@@ -13983,7 +13983,7 @@ main .news_container .section_title {
 }
 main .news_container .section_title h2 {
   margin-bottom: 2em;
-  font-size: 20px;
+  font-size: 18px;
   text-align: left;
   color: white;
 }
@@ -14178,7 +14178,7 @@ section .services .service_card#s_learn {
   background-size: cover;
 }
 section .services .service_card {
-  padding: 3em 2em 3em 2em;
+  padding: 1em 1em 1em 1em;
 }
 section .services .service_card:first-of-type {
   padding-top: 10em;

@@ -73,16 +73,16 @@
                                     <div class="regular-select-wrapper">
                                         <select class="form-control" id="inputProgram" name="program">
                                             @for ($i = 0; $i < count(__('content.programs')); $i++)
-                                                @if ($i === 0)
-                                                    @if(empty(session('options')))
-                                                        <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="true" selected>{{ __('content.programs')[$i]['text'] }}</option>
-                                                    @else
-                                                        <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>
-                                                            {{ __('content.programs')[$i]['text'] }}
-                                                        </option>
-                                                    @endif
-                                                @endif
-                                                <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>{{ __('content.programs')[$i]['text'] }}</option>
+{{--                                                @if ($i === 0)--}}
+{{--                                                    @if(empty(session('options')))--}}
+{{--                                                        <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="true" selected>{{ __('content.programs')[$i]['text'] }}</option>--}}
+{{--                                                    @else--}}
+{{--                                                        <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>--}}
+{{--                                                            {{ __('content.programs')[$i]['text'] }}--}}
+{{--                                                        </option>--}}
+{{--                                                    @endif--}}
+{{--                                                @endif--}}
+                                                    <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>{{ __('content.programs')[$i]['text'] }}</option>
                                             @endfor
                                         </select>
                                     </div>

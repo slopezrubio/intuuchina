@@ -19,6 +19,7 @@
                                                                                                    width="100px"></a>
                         <div class="note_quote">
                             <p>{{ __('content.eitb quote') }}</p>
+                            <p class="author">{{ __('content.eitb date') }}</p>
                         </div>
                     </div>
                     <div class="slider_note">

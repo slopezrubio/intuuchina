@@ -18,8 +18,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'homepage title' => 'Apply for an internships in Prime Technological Companies',
-    'what the media think' => 'What <strong>the media</strong> think about',
+    'welcome user page title' => 'Thank you for applying.',
+    'homepage title' => 'Apply for an internship in Startups or Multinationals',
+    'what the media think' => 'What <strong>the media</strong> think about IntuuChina',
     'those who have already tried it says' => 'Those who have already tried it says',
     'internship' => 'Internship',
     'learn chinese' => 'Learn Chinese',
@@ -53,6 +54,7 @@ return [
     'el pais author' => 'Z. Aldama',
     'el pais date' => '08/05/2016',
     'eitb quote' => '"Chinese companies are hiring foreign talent to help them internationalize"',
+    'eitb date' => '05/04/2015',
     'el mundo quote' => '"In just 9 months, an IntuuChina candidate went from being a fellow in a sales department to running that department"',
     'el mundo date' => '26/10/2014',
     'atresmedia quote' => '"They started helping their friends to disembark in the Asian market and ended up making it a successful career"',
@@ -70,6 +72,9 @@ return [
     'abc date' => '09/11/2014',
     'entrepeneur quote' => '"We help talented young people who do not find opportunities in their country, as would be the case in Spain, and we help them develop their career in China"',
     'entrepeneur date' => '21/05/2015',
+    'internship service text' => 'Looking for a professional experience in China? We can place you in Startup or Multinational.',
+    'university service text' => 'We have worked with all major business schools in China placing 100% of our applicants. Let us help you!',
+    'learn chinese service text' => 'Study the most spoken first language in the world. Come to China for a full immersion or join classes on-line',
     'follow us' => 'Follow Us',
     'website map' => 'WebSite Map',
     'contact us' => 'Contact Us!',
@@ -86,7 +91,7 @@ return [
                 'currency' => '€',
                 'value' => '15'
             ],
-            'description' => ['With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible. We have classes for all levels and for all types of learners. Want to study in a group class? With a private tutor? At your office? We have the perfect program for you!', 'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.']
+            'description' => ['Looking for convenience? We can help you through our video conferencing tools. With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible.', 'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.']
         ],
         'in-person' => [
             'en' => [
@@ -128,6 +133,7 @@ return [
         <li><p class="motif_card_text">Comprendedor Award finalist, "Empresa & Sociedad" foundation</p></li>
         <li><p class="motif_card_text">Second prize for best Human Resource IEBS Startup</p></li>
     ',
+    'welcome user text' => 'One of our colleagues will send you an e-mail in the next few minutes. If you don\'t get the e-mail, please contact us promptly at <a href="mailto:hr@intuuchina.com">hr@intuuchina.com</a>',
     'the intuuchina team have chosen the values' => 'The IntuuChina team has chosen the values ​​it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.',
     'this team is committed and dedicated to provide' => 'This team is committed and dedicated to provide a set of personalized services that will add real value and a competitive advantage to the future professional career.',
     'are you sure you want to remove permanently job offer' => 'Are you sure you want to remove permanently :jobOffer offer?',
@@ -199,11 +205,11 @@ return [
             'value' => 'education',
         ],
         [
-            'text' => 'Hostelry',
-            'value' => 'hostelry',
+            'text' => 'Hospitality',
+            'value' => 'hospitality',
         ],
         [
-            'text' => 'It',
+            'text' => 'IT',
             'value' => 'it',
         ],
         [
@@ -211,11 +217,11 @@ return [
             'value' => 'legal',
         ],
         [
-            'text' => 'Logistic',
-            'value' => 'logistic',
+            'text' => 'Other',
+            'value' => 'Other',
         ],
         [
-            'text' => 'Marketing & Business Development',
+            'text' => 'Marketing & Business Dev.',
             'value' => 'marketing_business',
         ],
     ],
@@ -243,11 +249,7 @@ return [
             'value' => 'inter_relocat'
         ],
         [
-            'text' => 'Internship Including Housing',
-            'value' => 'inter_housing'
-        ],
-        [
-            'text' => 'Study Chinese',
+            'text' => 'Chinese language',
             'value' => 'study'
         ],
         [
@@ -255,7 +257,7 @@ return [
             'value' => 'universty'
         ],
     ],
-    'study chinese' => 'Study Chinese',
+    'study chinese' => 'Chinese language',
     'in-person' => 'In-person',
     'online' => 'Online',
     'sign in' => 'Sign In',
