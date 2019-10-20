@@ -11229,6 +11229,13 @@ header#home {
   background-image: url("/../../storage/images/shanghai_internship_skyline.jpg");
   height: 32em;
   text-transform: none;
+  height: calc(14.8727666783vw + 420.7221544421px);
+  background-position-y: 4em;
+}
+@media only screen and (min-width: 1340px) {
+  header#home {
+    background-position-y: 2em;
+  }
 }
 
 header#internship {
