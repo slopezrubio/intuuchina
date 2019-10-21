@@ -63021,29 +63021,34 @@ var motifs = {
     Object.keys(motifs.preparedFor).map(function (key) {
       motifs.preparedFor[key]();
     });
+    motifs.highestMotif = motifs.highestMotif === '' ? motifs.getHighestMotif() : motifs.highestMotif;
     motifs.setHeight();
   },
-  highest: function highest() {
-    var element = motifs.highestMotif;
-
-    if (element === '') {
-      for (var i = 0; i < motifs.motifs.length; i++) {
-        if (getComputedStyle(motifs.motifs[i], null).display !== 'none' && motifs.motifs[i].getAttribute('class') === "motif_card") {
-          element = motifs.motifs[i].offsetHeight > element.offsetHeight || element === '' ? motifs.motifs[i] : element;
-        }
-      }
-
-      return element;
-    }
-
-    return element;
-  },
-  setHeight: function setHeight() {
-    motifs.highestMotif = motifs.highest();
+  getHighestMotif: function getHighestMotif() {
+    var highest = '';
 
     for (var i = 0; i < motifs.motifs.length; i++) {
+      if (getComputedStyle(motifs.motifs[i], null).display !== 'none' && motifs.motifs[i].getAttribute('class') === "motif_card") {
+        highest = highest === '' ? motifs.motifs[i] : highest;
+
+        if (motifs.motifs[i].style.height === '' && motifs.motifs[i].offsetHeight >= highest.offsetHeight) {
+          highest = motifs.motifs[i];
+        }
+      }
+    }
+
+    return highest;
+  },
+  setHeight: function setHeight() {
+    for (var i = 0; i < motifs.motifs.length; i++) {
       if (getComputedStyle(motifs.motifs[i], null).display !== 'none') {
-        motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? motifs.highestMotif.offsetHeight + 'px' : '';
+        if (!motifs.motifs[i].isEqualNode(motifs.highestMotif)) {
+          if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isSmallDevice()) {
+            motifs.motifs[i].style.height = '';
+          } else {
+            motifs.motifs[i].style.height = motifs.highestMotif.offsetHeight + 'px';
+          }
+        }
       } //motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? `${motifs.highestMotif.clientHeight}px` : `auto`;
 
     }
@@ -63054,10 +63059,14 @@ var motifs = {
         return false;
       }
 
+      ;
+
       if (motifs.currentGrid(motifs.container) !== 'grid-sd') {
+        motifs.highestMotif = '';
         _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-sd');
       }
 
+      ;
       motifs.placePicturesAsBackground();
     },
     mediumDevice: function mediumDevice() {
@@ -63065,10 +63074,13 @@ var motifs = {
         return false;
       }
 
+      ;
+
       if (motifs.currentGrid(motifs.container) !== 'grid-md') {
         _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-md');
       }
 
+      ;
       motifs.removePictureAsBackground();
     },
     largeDevice: function largeDevice() {
@@ -63076,10 +63088,13 @@ var motifs = {
         return false;
       }
 
+      ;
+
       if (motifs.currentGrid(motifs.container) !== 'grid-ld') {
         _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-ld');
       }
 
+      ;
       motifs.removePictureAsBackground();
     }
   },
@@ -63091,10 +63106,13 @@ var motifs = {
       }
     }
 
+    ;
+
     if (window.innerWidth < 1382) {
       _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(motifs.container, 'shadow');
     }
 
+    ;
     return true;
   },
   removePictureAsBackground: function removePictureAsBackground() {
@@ -64111,7 +64129,7 @@ var breakpoints = {
     largeDevices: 100
   },
   widths: {
-    smallDevices: [100, 680],
+    smallDevices: [0, 680],
     mediumDevices: [681, 992],
     largeDevices: [993]
   },

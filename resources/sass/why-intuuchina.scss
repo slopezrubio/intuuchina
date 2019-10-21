@@ -3,7 +3,7 @@
   @include prefixed(justify-content, space-evenly);
   @include prefixed(flex-direction, row);
   @include prefixed(align-items, center);
-  margin-top: 4em;
+  height: 100%;
   .facts {
     p {
       color: white;

@@ -11203,12 +11203,16 @@ header {
 header {
   height: 30em;
   text-transform: uppercase;
+  position: relative;
 }
 
 nav {
   height: auto;
   line-height: auto;
   text-transform: none;
+  position: fixed;
+  width: 100%;
+  z-index: 4;
 }
 
 main {
@@ -11915,7 +11919,7 @@ main.full-viewport .credit a:hover {
   -ms-align-items: center;
   -o-align-items: center;
   align-items: center;
-  margin-top: 4em;
+  height: 100%;
 }
 .sensationalism-stats .facts p {
   color: white;
@@ -12174,6 +12178,9 @@ main.full-viewport .credit a:hover {
     -o-grid-column: 1 / 3;
     grid-column: 1 / 3;
   }
+  .container-fluid .motifs > .motif_card, .container-fluid .motifs .motif_picture {
+    height: 363px;
+  }
   .container-fluid .motifs .motif_card {
     -moz-justify-content: flex-start;
     -ms-justify-content: flex-start;
@@ -12184,11 +12191,10 @@ main.full-viewport .credit a:hover {
     margin-bottom: 1em;
   }
   .container-fluid .motifs .motif_picture {
-    height: 100%;
     overflow: hidden;
   }
   .container-fluid .motifs .motif_picture img {
-    height: 500px;
+    height: 100%;
     width: auto;
   }
 }
@@ -12271,6 +12277,9 @@ main.full-viewport .credit a:hover {
     -o-display: flex;
     display: flex;
   }
+  .container-fluid .motifs > .motif_card, .container-fluid .motifs .motif_picture {
+    height: 394px;
+  }
   .container-fluid .motifs .motif_card {
     -moz-justify-content: flex-start;
     -ms-justify-content: flex-start;
@@ -12282,12 +12291,10 @@ main.full-viewport .credit a:hover {
     width: 100%;
   }
   .container-fluid .motifs .motif_picture {
-    height: 100%;
     width: 50%;
     overflow: hidden;
   }
   .container-fluid .motifs .motif_picture img {
-    height: 450px;
     width: auto;
   }
 }

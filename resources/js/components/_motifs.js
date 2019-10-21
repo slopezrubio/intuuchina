@@ -18,27 +18,37 @@ let motifs = {
         Object.keys(motifs.preparedFor).map(function(key) {
           motifs.preparedFor[key]();
         });
+
+        motifs.highestMotif = motifs.highestMotif === '' ? motifs.getHighestMotif() : motifs.highestMotif;
         motifs.setHeight();
+
     },
-    highest: () => {
-        let element = motifs.highestMotif;
-        if (element === '') {
-            for (let i = 0; i < motifs.motifs.length; i++) {
-                if (getComputedStyle(motifs.motifs[i], null).display !== 'none' && motifs.motifs[i].getAttribute('class') === "motif_card") {
-                    element = motifs.motifs[i].offsetHeight > element.offsetHeight || element === '' ? motifs.motifs[i] : element;
+    getHighestMotif: () => {
+        let highest = '';
+        for (let i = 0; i < motifs.motifs.length; i++) {
+            if (getComputedStyle(motifs.motifs[i], null).display !== 'none' && motifs.motifs[i].getAttribute('class') === "motif_card") {
+                highest = highest === '' ? motifs.motifs[i] : highest;
+                if (motifs.motifs[i].style.height === '' && motifs.motifs[i].offsetHeight >= highest.offsetHeight) {
+                    highest = motifs.motifs[i];
                 }
             }
-            return element;
         }
 
-        return element;
+        return highest;
+
     },
     setHeight: () => {
-        motifs.highestMotif = motifs.highest();
-
         for (let i = 0; i < motifs.motifs.length; i++) {
             if (getComputedStyle(motifs.motifs[i], null).display !== 'none') {
-                motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? motifs.highestMotif.offsetHeight + 'px' : '';
+                if (!motifs.motifs[i].isEqualNode(motifs.highestMotif)) {
+                    if (!breakpoints.isSmallDevice()) {
+                        motifs.motifs[i].style.height = '';
+                    } else {
+                        motifs.motifs[i].style.height = motifs.highestMotif.offsetHeight + 'px';
+                    }
+
+
+                }
             }
             //motifs.motifs[i].style.height = !motifs.motifs[i].isEqualNode(motifs.highestMotif) ? `${motifs.highestMotif.clientHeight}px` : `auto`;
         }
@@ -47,32 +57,34 @@ let motifs = {
       smallDevice: () => {
         if (!breakpoints.isSmallDevice()) {
             return false;
-        }
+        };
 
         if (motifs.currentGrid(motifs.container) !== 'grid-sd') {
+            motifs.highestMotif = '';
             dom.toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-sd');
-        }
+        };
 
         motifs.placePicturesAsBackground();
       },
       mediumDevice: () => {
           if (!breakpoints.isMediumDevice()) {
               return false;
-          }
+          };
 
           if (motifs.currentGrid(motifs.container) !== 'grid-md') {
-                dom.toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-md');
-          }
+              dom.toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-md');
+          };
+
           motifs.removePictureAsBackground();
       },
       largeDevice: () => {
           if (!breakpoints.isLargeDevice()) {
               return false;
-          }
+          };
 
           if (motifs.currentGrid(motifs.container) !== 'grid-ld') {
               dom.toggleClass(motifs.container, motifs.currentGrid(motifs.container), 'grid-ld');
-          }
+          };
 
           motifs.removePictureAsBackground();
       },
@@ -83,11 +95,11 @@ let motifs = {
                 dom.toggleSingleClass(motifs.container, 'shadow');
                 return true;
             }
-        }
+        };
 
         if (window.innerWidth < 1382) {
             dom.toggleSingleClass(motifs.container, 'shadow');
-        }
+        };
 
         return true;
     },

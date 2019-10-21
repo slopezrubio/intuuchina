@@ -172,6 +172,10 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
     }
 
     .motifs {
+      & > .motif_card, .motif_picture {
+        height: 363px;
+      }
+
       .motif_card {
         @include prefixed(justify-content, flex-start);
         h5 {
@@ -179,10 +183,9 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
         }
       }
       .motif_picture {
-        height: 100%;
         overflow: hidden;
         img {
-          height: 500px;
+          height: 100%;
           width: auto;
         }
       }
@@ -231,6 +234,10 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 
     .motifs {
       @include prefixed(display, flex);
+      & > .motif_card, .motif_picture {
+        height: 394px;
+      }
+
       .motif_card {
         @include prefixed(justify-content, flex-start);
         h5 {
@@ -240,11 +247,9 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
       }
 
       .motif_picture {
-        height: 100%;
         width: 50%;
         overflow: hidden;
         img {
-          height: 450px;
           width: auto;
         }
       }

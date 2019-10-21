@@ -153,12 +153,16 @@ header {
 header {
   height: 30em;
   text-transform: uppercase;
+  position: relative;
 }
 
 nav {
   height: auto;
   line-height: auto;
   text-transform: none;
+  position: fixed;
+  width: 100%;
+  z-index: 4;
 }
 
 main {
