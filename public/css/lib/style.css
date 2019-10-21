@@ -11975,7 +11975,7 @@ main.full-viewport .credit a:hover {
   color: black;
 }
 .white-section h5 {
-  color: #C80B0B;
+  color: black;
 }
 
 .grey-section {
@@ -11983,7 +11983,7 @@ main.full-viewport .credit a:hover {
   color: black;
 }
 .grey-section h5 {
-  color: white;
+  color: #C80B0B;
 }
 
 .black_and_white {
@@ -12302,7 +12302,7 @@ main.full-viewport .credit a:hover {
   padding: 2rem;
   width: 100%;
   background-color: #00000070;
-  border: 5px solid white;
+  border: 5px solid #fff;
   border-radius: 30px;
   height: 350px;
   box-shadow: 3px 3px 20px #00000080;
@@ -12407,7 +12407,7 @@ main.full-viewport .credit a:hover {
 }
 .course-descriptions .description-container .description-base {
   box-sizing: border-box;
-  color: white;
+  color: #fff;
   padding-bottom: 2em;
 }
 .course-descriptions .description-container .description-base p {
@@ -12429,7 +12429,7 @@ main.full-viewport .credit a:hover {
   font-size: calc(0.6564693413vw + 22.3324813532px);
 }
 .course-descriptions .description-container .description-base .description-header h2 span {
-  color: white;
+  color: #fff;
 }
 .course-descriptions .description-container .description-base .description-header button {
   margin-left: 0px;
@@ -12517,7 +12517,7 @@ main.full-viewport .credit a:hover {
   justify-content: space-around;
   align-items: center;
   padding: 2em;
-  color: white;
+  color: #fff;
 }
 .course-information .course-information_box:not(:last-child) {
   margin-bottom: 2em;

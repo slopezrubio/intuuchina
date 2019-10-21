@@ -1,15 +1,6 @@
 @function get-color($color) {
   @return map-get($colors, $color);
 }
-
-$black: black;
-$red1: #B71C1C;
-$red2:#F44336;
-$red3:#E57373;
-$red4:rgb(59, 53, 53);
-$white: white;
-$black2:#2D2B2E;
-$black3:#161414;
 $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey':$neutralColor);
 
 /******* General Styles for the component *******/
@@ -32,7 +23,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 .white-section {
   background-color: get-color('white');
   h5 {
-    color: $primaryRed;
+    color: $primaryDark;
   }
   color: $primaryDark;
 }
@@ -40,7 +31,7 @@ $colors:( 'red': $primaryRed, 'black':$primaryDark, 'white':$primaryWhite, 'grey
 .grey-section {
   background-color: get-color('grey');
   h5 {
-    color: $primaryWhite;
+    color: $primaryRed;
   }
   color: $primaryDark;
 }

@@ -31,7 +31,6 @@ let motifs = {
             return element;
         }
 
-        console.log(element);
         return element;
     },
     setHeight: () => {
