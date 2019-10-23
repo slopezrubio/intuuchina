@@ -6,6 +6,7 @@ let breakpoints = {
     },
     widths: {
         smallDevices: [0, 680],
+        customerJourney: [0, 460],
         mediumDevices: [681, 992],
         largeDevices: [993]
     },
@@ -16,7 +17,10 @@ let breakpoints = {
         return window.innerWidth >= breakpoints.widths.mediumDevices[0] && window.innerWidth < breakpoints.widths.mediumDevices[1];
     },
     isSmallDevice: () => {
-        return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1]
+        return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1];
+    },
+    isCustomerJourney: () => {
+        return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.customerJourney[1];
     }
 
 };

@@ -11216,7 +11216,8 @@ nav {
 }
 
 main {
-  z-index: 20;
+  z-index: 3;
+  position: relative;
 }
 
 /* Logo */
@@ -14220,9 +14221,14 @@ section .services .service_card_container .service_card_footer .cta {
   text-align: center;
 }
 
-.infographic_picture img {
+.infographic .customer-journey img {
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
+  display: block;
+}
+.infographic .customer-journey--mobile img {
+  width: 60%;
   margin: 0 auto;
   display: block;
 }

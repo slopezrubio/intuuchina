@@ -17,7 +17,7 @@ let news = {
     getBreakpoint: () => {
         let currentWidth = window.innerWidth;
         let breakpointKey = 'largeDevices';
-        Object.keys(breakpoints.widths).map(function(key, index) {
+        Object.keys(breakpoints.widths).map(function(key) {
             if (breakpoints.widths[key][1] > currentWidth && breakpoints.widths[key][0] < currentWidth) {
                 breakpointKey = key;
             }

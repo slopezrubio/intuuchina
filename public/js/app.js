@@ -62803,6 +62803,80 @@ if (document.querySelector('.course-descriptions') !== null) {
 
 /***/ }),
 
+/***/ "./resources/js/components/_customer-journey.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/_customer-journey.js ***!
+  \******************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+/* harmony import */ var _main_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom.js */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/env */ "./resources/js/main/env.js");
+
+
+
+var customerJourney = {
+  init: function init() {
+    if (document.querySelector('.customer-journey')) {
+      window.addEventListener('load', customerJourney.setup);
+      window.addEventListener('resize', customerJourney.setup);
+    }
+  },
+  element: document.querySelector('.customer-journey') !== undefined ? document.querySelector('.customer-journey') : undefined,
+  setup: function setup(event) {
+    customerJourney.setPicture[event.type]();
+  },
+  setPicture: {
+    'load': function load() {
+      var picture = customerJourney.element.querySelector('img');
+
+      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isCustomerJourney()) {
+        var _src = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_vertical.png';
+
+        picture.setAttribute('src', _src);
+        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
+        return true;
+      }
+
+      var src = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_horizontal.png';
+      picture.setAttribute('src', src);
+      return true;
+    },
+    'resize': function resize() {
+      var picture = customerJourney.element.querySelector('img');
+      var classPattern = /customer-journey--mobile(\s+|$)/;
+
+      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isCustomerJourney() && customerJourney.element.getAttribute('class').match(classPattern) === null) {
+        var src = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_vertical.png';
+        picture.setAttribute('src', src);
+        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
+        return true;
+      }
+
+      if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isCustomerJourney() && customerJourney.element.getAttribute('class').match(classPattern)) {
+        console.log("matches");
+
+        var _src2 = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_horizontal.png';
+
+        picture.setAttribute('src', _src2);
+        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
+        return true;
+      }
+
+      return false;
+    }
+  },
+  getLocale: function getLocale() {
+    return document.querySelector('html').getAttribute('lang');
+  }
+};
+customerJourney.init();
+
+/***/ }),
+
 /***/ "./resources/js/components/_edit-offer.js":
 /*!************************************************!*\
   !*** ./resources/js/components/_edit-offer.js ***!
@@ -63248,7 +63322,7 @@ var news = {
   getBreakpoint: function getBreakpoint() {
     var currentWidth = window.innerWidth;
     var breakpointKey = 'largeDevices';
-    Object.keys(_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths).map(function (key, index) {
+    Object.keys(_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths).map(function (key) {
       if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths[key][1] > currentWidth && _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths[key][0] < currentWidth) {
         breakpointKey = key;
       }
@@ -63637,15 +63711,14 @@ var services = {
               'top': containerTopPosition * -1 + 'px'
             });
           }
+          /*if (event.type === 'resize') {
+              $(sections[key]).css({
+                  'top': containerTopPosition * -1 + 'px',
+              });
+          }*/
 
-          if (event.type === 'resize') {
-            $(sections[key]).css({
-              'top': containerTopPosition * -1 + 'px'
-            });
-          }
         }
-      });
-      services.fixPositionRelative(main, containerTopPosition);
+      }); //services.fixPositionRelative(main, containerTopPosition);
     }
   },
   fixPositionRelative: function fixPositionRelative(element, displacedPosition, event) {
@@ -64130,6 +64203,7 @@ var breakpoints = {
   },
   widths: {
     smallDevices: [0, 680],
+    customerJourney: [0, 460],
     mediumDevices: [681, 992],
     largeDevices: [993]
   },
@@ -64141,6 +64215,9 @@ var breakpoints = {
   },
   isSmallDevice: function isSmallDevice() {
     return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1];
+  },
+  isCustomerJourney: function isCustomerJourney() {
+    return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.customerJourney[1];
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (breakpoints);
@@ -64248,9 +64325,9 @@ var messages = {
 /***/ }),
 
 /***/ 0:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_customer-journey.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ./resources/sass/main.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64266,6 +64343,7 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");

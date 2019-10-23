@@ -24,14 +24,14 @@ let services = {
                         });
                     }
 
-                    if (event.type === 'resize') {
+                    /*if (event.type === 'resize') {
                         $(sections[key]).css({
                             'top': containerTopPosition * -1 + 'px',
                         });
-                    }
+                    }*/
                 }
             });
-            services.fixPositionRelative(main, containerTopPosition);
+            //services.fixPositionRelative(main, containerTopPosition);
         }
     },
     fixPositionRelative: (element, displacedPosition, event) => {
