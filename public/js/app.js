@@ -63317,7 +63317,6 @@ var news = {
   currentBreakpoint: null,
   setup: function setup() {
     news.currentBreakpoint = news.getBreakpoint();
-    news.wrapBackground();
   },
   getBreakpoint: function getBreakpoint() {
     var currentWidth = window.innerWidth;
@@ -63328,10 +63327,6 @@ var news = {
       }
     });
     return breakpointKey;
-  },
-  wrapBackground: function wrapBackground() {
-    var toResize = _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].heights[news.currentBreakpoint] + news.polygon.clientHeight;
-    news.polygon.style.height = toResize + 'px';
   }
 };
 
@@ -63705,12 +63700,12 @@ var services = {
       var sections = $('main > section');
       Object.keys(sections).forEach(function (key) {
         if (parseInt(key) || key == 0) {
-          if (event.type === 'load') {
-            $(sections[key]).css({
+          if (event.type === 'load') {}
+          /*$(sections[key]).css({
               'position': 'relative',
-              'top': containerTopPosition * -1 + 'px'
-            });
-          }
+              'top': containerTopPosition * -1 + 'px',
+          });*/
+
           /*if (event.type === 'resize') {
               $(sections[key]).css({
                   'top': containerTopPosition * -1 + 'px',

@@ -12,7 +12,6 @@ let news = {
     currentBreakpoint: null,
     setup: () => {
         news.currentBreakpoint = news.getBreakpoint();
-        news.wrapBackground();
     },
     getBreakpoint: () => {
         let currentWidth = window.innerWidth;
@@ -24,10 +23,6 @@ let news = {
         });
         return breakpointKey;
     },
-    wrapBackground: () => {
-        let toResize = breakpoints.heights[news.currentBreakpoint] + news.polygon.clientHeight;
-        news.polygon.style.height = toResize + 'px';
-    }
 };
 
 if (news.polygon !== null) {

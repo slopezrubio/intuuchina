@@ -13787,222 +13787,40 @@ section .testimonials_container .testim p {
     display: flex !important;
   }
 }
-@media only screen and (max-width: 320px) {
-  .news_container .section_body {
-    -moz-flex-direction: column;
-    -o-flex-direction: column;
-    flex-direction: column;
-  }
-  .news_container .section_body .tv {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
-    display: flex;
-    -o-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -moz-align-items: baseline;
-    -ms-align-items: baseline;
-    -o-align-items: baseline;
-    align-items: baseline;
-    -moz-justify-content: space-between;
-    -ms-justify-content: space-between;
-    -o-justify-content: space-between;
-    justify-content: space-between;
-  }
-  .news_container .section_body .tv a {
-    padding: 0.7em;
-  }
-  .news_container .section_body .tv img {
-    position: relative;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-    width: 45px;
-  }
-}
-@media only screen and (max-width: 992px) {
-  main .news::before {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    bottom: -79%;
-  }
-}
-@media only screen and (min-width: 321px) and (max-width: 780px) {
-  main .news_container .section_body div {
-    margin-bottom: 2em;
-  }
-  main .news_container .section_body {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
-    display: flex;
-    -moz-flex-direction: column;
-    -o-flex-direction: column;
-    flex-direction: column;
-  }
-  main .news_container .section_body .tv {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
-    display: flex;
-    -o-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -moz-align-items: baseline;
-    -ms-align-items: baseline;
-    -o-align-items: baseline;
-    align-items: baseline;
-    -moz-justify-content: space-evenly;
-    -ms-justify-content: space-evenly;
-    -o-justify-content: space-evenly;
-    justify-content: space-evenly;
-    padding: 5px;
-  }
-  main .news_container .section_body .tv a {
-    padding: 1em;
-    text-align: left;
-    margin: 5px;
-  }
-  main .news_container .section_body .tv a img {
-    position: relative;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-    width: 45px;
-  }
-}
-@media only screen and (min-width: 681px) and (max-width: 991px) {
-  main .news {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-    -moz-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-    -ms-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-    -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
-  }
-  main .news::before {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    bottom: -79%;
-  }
-}
-@media only screen and (min-width: 781px) and (max-width: 991px) {
-  main .news_container .section_body .tv {
-    -webkit-display: grid;
-    -moz-display: grid;
-    -ms-display: grid;
-    -o-display: grid;
-    display: grid;
-    -webkit-grid-template-columns: repeat(3, 1fr);
-    -moz-grid-template-columns: repeat(3, 1fr);
-    -ms-grid-template-columns: repeat(3, 1fr);
-    -o-grid-template-columns: repeat(3, 1fr);
-    grid-template-columns: repeat(3, 1fr);
-    -moz-align-items: baseline;
-    -ms-align-items: baseline;
-    -o-align-items: baseline;
-    align-items: baseline;
-    -webkit-grid-gap: 2em;
-    -moz-grid-gap: 2em;
-    -ms-grid-gap: 2em;
-    -o-grid-gap: 2em;
-    grid-gap: 2em;
-    padding: 5px;
-  }
-  main .news_container .section_body .tv a img {
-    position: relative;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-    width: 50px;
-  }
-}
-@media only screen and (min-width: 992px) {
-  .news {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    -moz-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    -ms-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  }
-  .news::before {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-    bottom: -79%;
-  }
-  .news_container .section_body .tv {
-    -webkit-display: grid;
-    -moz-display: grid;
-    -ms-display: grid;
-    -o-display: grid;
-    display: grid;
-    -webkit-grid-template-columns: repeat(4, 1fr);
-    -moz-grid-template-columns: repeat(4, 1fr);
-    -ms-grid-template-columns: repeat(4, 1fr);
-    -o-grid-template-columns: repeat(4, 1fr);
-    grid-template-columns: repeat(4, 1fr);
-    -moz-align-items: baseline;
-    -ms-align-items: baseline;
-    -o-align-items: baseline;
-    align-items: baseline;
-    -webkit-grid-gap: 2em;
-    -moz-grid-gap: 2em;
-    -ms-grid-gap: 2em;
-    -o-grid-gap: 2em;
-    grid-gap: 2em;
-    padding: 5px;
-  }
-  .news_container .section_body .tv a img {
-    position: relative;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-    width: 50px;
-  }
-}
-@media only screen and (min-width: 1340px) {
-  .news_container .section_body {
-    padding-right: 10em;
-    padding-left: 10em;
-  }
-}
-main .news {
-  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  -moz-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  -ms-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  -o-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 81%);
-  background-color: #C80B0B;
-  z-index: 3;
-  position: relative;
-}
-main .news::before {
-  content: "";
+.news {
   width: 100%;
-  height: 100%;
-  position: absolute;
-  background: white;
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+  position: relative;
+  z-index: 3;
+  background-color: transparent;
 }
-main .news_container {
+.news::before {
+  content: "";
+  border-style: inset;
+  border-width: 0px 100vw 100px 0px;
+  border-color: #C80B0B #C80B0B transparent #C80B0B;
+  float: left;
+  z-index: -1;
+  position: absolute;
+  height: calc(100% + 8em);
+}
+.news_container {
   margin-left: 2em;
   margin-right: 2em;
   padding-top: 1.5em;
 }
-main .news_container .section_title {
+.news_container .section_title {
   display: block;
 }
-main .news_container .section_title h2 {
+.news_container .section_title h2 {
   margin-bottom: 2em;
   font-size: 18px;
   text-align: left;
   color: white;
 }
-main .news_container .section_body {
+.news_container .section_body {
+  -moz-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
   -webkit-display: flex;
   -moz-display: flex;
   -ms-display: flex;
@@ -14013,11 +13831,16 @@ main .news_container .section_body {
   -o-justify-content: space-around;
   justify-content: space-around;
 }
-main .news_container .section_body .note_window {
+.news_container .section_body .note_window {
   max-width: 450px;
   overflow: hidden;
 }
-main .news_container .section_body .note_window .note_carrousel {
+@media only screen and (min-width: 1340px) {
+  .news_container .section_body .note_window {
+    max-width: 700px;
+  }
+}
+.news_container .section_body .note_window .note_carrousel {
   transition: -webkit-transform 0.5s;
   transition: transform 0.5s;
   transition: transform 0.5s, -webkit-transform 0.5s;
@@ -14027,37 +13850,179 @@ main .news_container .section_body .note_window .note_carrousel {
   -o-display: inline-flex;
   display: inline-flex;
 }
-main .news_container .section_body .note_window .note_carrousel .slider_note {
+.news_container .section_body .note_window .note_carrousel .slider_note {
   max-width: 450px;
 }
-main .news_container .section_body .note_window .note_carrousel .slider_note a img {
+@media only screen and (min-width: 1340px) {
+  .news_container .section_body .note_window .note_carrousel .slider_note {
+    max-width: 700px;
+  }
+}
+.news_container .section_body .note_window .note_carrousel .slider_note a img {
   width: 70px;
 }
-main .news_container .section_body .note a {
+.news_container .section_body .note a {
   display: inline-block;
   padding: 0;
   margin-bottom: 1em;
 }
-main .news_container .section_body .note_quote {
+.news_container .section_body .note_quote {
   margin-top: 1em;
 }
-main .news_container .section_body .note_quote .author {
+.news_container .section_body .note_quote .author {
   display: block;
 }
-main .news_container .section_body .note_quote p {
+.news_container .section_body .note_quote p {
   height: auto;
   font-size: 13px;
   font-style: italic;
   color: white;
   display: inline-block;
 }
-main .news_container .section_body .tv {
-  height: auto;
+.news_container .section_body .tv {
+  display: block;
 }
-main .news_container .section_body .tv a {
-  width: auto;
+.news_container .section_body .tv a {
+  display: block;
+  width: 65px;
+  margin: 0 auto;
+  height: 60px;
+}
+.news_container .section_body .tv a .helper {
+  height: 100%;
+  vertical-align: middle;
+  display: inline-block;
+}
+.news_container .section_body .tv a img {
+  position: relative;
+  vertical-align: middle;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 65px;
+}
+@media only screen and (min-width: 240px) and (max-width: 320px) {
+  .news_container .section_body .tv a {
+    width: calc(100% / 3);
+    float: left;
+  }
+  .news_container .section_body .tv a:nth-child(3n+4) {
+    clear: both;
+  }
+  .news_container .section_body .tv a img {
+    width: 45px;
+  }
+}
+@media only screen and (min-width: 321px) and (max-width: 780px) {
+  .news_container .section_body .tv a {
+    width: calc(100% / 4);
+    height: 60px;
+    float: left;
+  }
+  .news_container .section_body .tv a:nth-child(4n+5) {
+    clear: both;
+  }
+  .news_container .section_body .tv a img {
+    width: 50px;
+  }
 }
 
+@media only screen and (min-width: 781px) and (max-width: 991px) {
+  .news_container .section_body {
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+  }
+  .news_container .section_body .tv a {
+    width: calc(100% / 3);
+    height: 63px;
+    float: left;
+    padding: 0 1.25em;
+  }
+  .news_container .section_body .tv a:nth-child(3n+4) {
+    clear: both;
+  }
+  .news_container .section_body .tv a img {
+    width: 45px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .news_container .section_body {
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+  }
+  .news_container .section_body .tv a {
+    width: calc(100% / 4);
+    height: 63px;
+    float: left;
+    padding: 0 1.25em;
+  }
+  .news_container .section_body .tv a:nth-child(4n+5) {
+    clear: both;
+  }
+  .news_container .section_body .tv a img {
+    width: 50px;
+  }
+}
+/*@media only screen and (min-width: 321px) and (max-width: 780px) {
+  main {
+    .news {
+      &_container {
+        .section_body div {
+          margin-bottom: 2em;
+        }
+        .section_body {
+          @include prefixed(display, flex);
+          @include prefixed(flex-direction, column);
+          .tv {
+            @include prefixed(display, flex);
+            @include prefixed(flex-wrap, wrap);
+            @include prefixed(align-items, baseline);
+            @include prefixed(justify-content, space-evenly);
+            padding: 5px;
+            a {
+              padding: 1em;
+              text-align: left;
+              margin: 5px;
+              img {
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 45px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}*/
+/*@media only screen and (min-width: 781px) and (max-width: 991px) {
+  main {
+    .news {
+      &_container {
+        .section_body {
+          .tv {
+            @include prefixed(display, grid);
+            @include prefixed(grid-template-columns, repeat(3, 1fr));
+            @include prefixed(align-items, baseline);
+            @include prefixed(grid-gap, 2em);
+            padding: 5px;
+            a {
+              img {
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}*/
 /* Centrar verticalmente (el elemento padre tiene que
  * tener el atributo 'position: relative' para que
  * funcione)

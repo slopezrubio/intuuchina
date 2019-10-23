@@ -83,14 +83,14 @@
             </div>
             <!-- canales de television -->
             <div class="tv">
-                <a href="#"><img src="{{asset('storage/images/eitb.png')}}" alt="{{ __('content.alt eitb') }}" width="100px"></a>
-                <a href="#"><img src="{{asset('storage/images/elmundo.png')}}" alt="{{ __('content.alt el mundo') }}"></a>
-                <a href="#"><img src="{{asset('storage/images/A3_logo.png')}}" alt="{{ __('content.alt atresmedia') }}" width="70px"></a>
-                <a href="#"><img src="{{asset('storage/images/FORTUNE.png')}}" alt="{{ __('content.alt fortune') }}" width="90px"></a>
-                <a href="#"><img src="{{asset('storage/images/TV3.png')}}" alt="{{ __('content.alt tvc') }}" width="60px"></a>
-                <a href="#"><img src="{{asset('storage/images/rtve.png')}}" alt="{{ __('content.alt rtve') }}" width="90px"></a>
-                <a href="#"><img src="{{asset('storage/images/abc.png')}}" alt="{{ __('content.alt abc') }}" width="60px"></a>
-                <a href="#"><img src="{{asset('storage/images/entrepeneur-magazine-white.png')}}" alt="{{ __('content.alt entrepeneur') }}" width="100px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/eitb.png')}}" alt="{{ __('content.alt eitb') }}" width="100px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/elmundo.png')}}" alt="{{ __('content.alt el mundo') }}"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/A3_logo.png')}}" alt="{{ __('content.alt atresmedia') }}" width="70px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/FORTUNE.png')}}" alt="{{ __('content.alt fortune') }}" width="90px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/TV3.png')}}" alt="{{ __('content.alt tvc') }}" width="60px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/rtve.png')}}" alt="{{ __('content.alt rtve') }}" width="90px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/abc.png')}}" alt="{{ __('content.alt abc') }}" width="60px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/entrepeneur-magazine-white.png')}}" alt="{{ __('content.alt entrepeneur') }}" width="100px"></a>
             </div>
         </div>
     </div>

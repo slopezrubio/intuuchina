@@ -18,10 +18,10 @@ let services = {
             Object.keys(sections).forEach(function(key) {
                 if (parseInt(key) || key == 0) {
                     if (event.type === 'load') {
-                        $(sections[key]).css({
+                        /*$(sections[key]).css({
                             'position': 'relative',
                             'top': containerTopPosition * -1 + 'px',
-                        });
+                        });*/
                     }
 
                     /*if (event.type === 'resize') {
