@@ -10,7 +10,7 @@
             @else
                 <button class="cta col-10 col-xs-10 col-sm-8 col-md-8 col-lg-4"><a href="{{ route('offers') }}">{{ __('content.see job offers') }}<i class="fas fa-chevron-right"></i></a></button>
             @endauth
-            <h1 class="title-card-title">{{ __('content.homepage title')  }}</h1>
+            <h1 class="title-card-title">{!!  __('content.homepage title') !!}</h1>
         @elseif(Request::is('register') || Request::is('register/options'))
             <h1 class="title-card-title">{{ __('content.sign in') }}</h1>
         @else

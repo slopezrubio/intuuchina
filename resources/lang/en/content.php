@@ -19,7 +19,7 @@ return [
     */
 
     'welcome user page title' => 'Thank you for applying.',
-    'homepage title' => 'Apply for an internship in Startups or Multinationals',
+    'homepage title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',
     'what the media think' => 'What <strong>the media</strong> think about IntuuChina',
     'those who have already tried it says' => 'Those who have already tried it says',
     'internship' => 'Internship',
@@ -174,7 +174,7 @@ return [
     'submit' => 'Submit',
     'cancel' => 'Cancel',
     'see more' => 'See more',
-    'see job offers' => 'See Job Offers',
+    'see job offers' => 'Internship',
     'name placeholder' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
     'email placeholder' => 'e.g. confucio@confucio.com',
     'subject placeholder' => 'Write down here your issue',
