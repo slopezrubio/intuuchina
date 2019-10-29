@@ -12980,27 +12980,48 @@ body {
 
 .dashboard-panel .toolbox {
   display: flex;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
+  justify-content: center;
+  -webkit-justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 1em 0;
+  max-width: 800px;
 }
-.dashboard-panel .toolbox:not(:last-child) > .toolbox_button {
-  border-radius: 28px;
+@media only screen and (min-width: 440px) {
+  .dashboard-panel .toolbox {
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+  }
+}
+.dashboard-panel .toolbox > .toolbox_button:first-child, .dashboard-panel .toolbox > .toolbox_button:not(:first-child) {
+  margin-left: 0.5em !important;
 }
 .dashboard-panel .toolbox_button {
+  border-radius: 28px !important;
+  margin: 1em 0.5em;
   padding: 0;
-  margin: 0 0.5em;
   border: 2px solid black;
   border-radius: 28px;
   color: black;
+  max-width: 130px;
+  height: auto;
+  transition: all ease-out 0.2s;
+}
+.dashboard-panel .toolbox_button:hover,
+.dashboard-panel .toolbox_button :active {
+  color: white;
+  background: black;
 }
 .dashboard-panel .toolbox_button i {
   font-size: 5em;
-  width: 115px;
-  height: 95px;
+  width: 130px;
+  height: 91px;
   line-height: 100px;
   display: block;
 }
 .dashboard-panel .toolbox_button span {
+  height: 39px;
+  line-height: 39px;
   margin: 0 auto;
   display: block;
 }

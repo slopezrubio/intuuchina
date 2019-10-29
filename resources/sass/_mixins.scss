@@ -15,6 +15,16 @@
   display: flex;
 }
 
+@mixin flex-wrap($value: mowrap) {
+    -webkit-flex-wrap: $value;
+    @if ($value == nowrap) {
+        -ms-flex-wrap: none;
+    } @else {
+        -ms-flex-wrap: $value;
+    }
+    flex-wrap: $value;
+}
+
 @mixin justify-content($value) {
   @if $value == space-between {
     -webkit-box-pack: justify;

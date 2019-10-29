@@ -1,33 +1,54 @@
 @import '_dashboard-options';
 
-  .dashboard-panel {
-  .toolbox {
-    //float: left;
-    @include flexbox();
-    @include justify-content(space-between);
-    &:not(:last-child) > .toolbox_button {
-      border-radius: 28px;
+.dashboard-panel {
+    .toolbox {
+        $items-width: 130px;
+        $items-height: 130px;
+        @include flexbox();
+        @include justify-content(center);
+        @include flex-wrap(wrap);
+        width: 100%;
+        margin: 1em 0;
+        max-width: 800px;
+        @media only screen and (min-width: 440px) {
+            @include justify-content(space-around);
+        }
+
+        & > .toolbox_button:first-child, > .toolbox_button:not(:first-child) {
+            margin-left: 0.5em !important;
+        }
+
+        &_button {
+            border-radius: 28px !important;
+            margin: 1em 0.5em;
+            padding: 0;
+            border: 2px solid $primaryDark;
+            border-radius: 28px;
+            color: $primaryDark;
+            max-width: $items-width;
+            height: auto;
+            @include prefixed(transition, all ease-out .2s);
+
+            &:hover,
+            :active {
+                color: $primaryWhite;
+                background: $primaryDark;
+            }
+
+            i {
+                font-size: 5em;
+                width: $items-width;
+                height: $items-height * 0.7;
+                line-height: 100px;
+                display: block;
+            }
+
+            span {
+                height: $items-height * 0.3;
+                line-height: $items-height * 0.3;
+                margin: 0 auto;
+                display: block;
+            }
+        }
     }
-
-    &_button {
-      padding: 0;
-      margin: 0 0.5em;
-      border: 2px solid $primaryDark;
-      border-radius: 28px;
-      color: $primaryDark;
-
-      i {
-        font-size: 5em;
-        width: 115px;
-        height: 95px;
-        line-height: 100px;
-        display: block;
-      }
-
-      span {
-        margin: 0 auto;
-        display: block;
-      }
-    }
-  }
 }
