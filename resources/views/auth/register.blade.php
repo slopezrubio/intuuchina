@@ -11,7 +11,7 @@
         @include('partials._nav')
 
         {{--Título de la página--}}
-        @include('partials._page-title')
+        @include('partials._header.')
     </header>
     <div class="container">
         <div class="row justify-content-center">

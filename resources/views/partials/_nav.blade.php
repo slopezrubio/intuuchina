@@ -1,5 +1,5 @@
+@include('partials.modal-login')
 <nav>
-    @include('partials.modal-login')
     <div class="navbar">
         <div class="col-12 navbar-expand-lg navbar_container">
             @auth()

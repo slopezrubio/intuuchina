@@ -19,7 +19,6 @@ return [
     */
 
     'welcome user page title' => 'Thank you for applying.',
-    'homepage title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',
     'what the media think' => 'What <strong>the media</strong> think about IntuuChina',
     'those who have already tried it says' => 'Those who have already tried it says',
     'internship' => 'Internship',

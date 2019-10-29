@@ -7,6 +7,24 @@
   #{$property}: #{$value};
 }
 
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin justify-content($value) {
+  @if $value == space-between {
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+  }
+  justify-content: $value;
+  -webkit-justify-content: $value;
+}
+
 @mixin hardwareAccel() {
   // Mejora el rendimiento en dispositivos móvil/tablet de los botones
   // La propiedad 'perspectie(1px)' reduce la borrosidad del texto en Chrome

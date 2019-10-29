@@ -23,13 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /* Datos que se van a entregar a la vista */
-        $params = (object) array(
-            'page' => 'home',
-            'title' => 'Prácticas en primeras empresas del sector tecnológico'
-        );
 
-        return view('home', compact('params'));
+        return view('home');
     }
 
     /**
@@ -39,6 +34,6 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('home');
+        return view('pages/admin/dashboard');
     }
 }

@@ -20,7 +20,7 @@ Route::get('/internship', 'OffersController@index')->name('offers');
 Route::get('/internship/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
 
 /* Job Description */
-Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+');
+Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+')->name('single-offer');
 
 /* Aprende Chino */
 Route::get('/learn/{course}', function($course = 1) {
@@ -60,7 +60,7 @@ Route::post('/register/options','Auth\RegisterController@registerWithOptions')->
 
 /* Administrador */
 Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
-    Route::match(['get', 'post'], '/admin/','HomeController@index');
+    Route::match(['get', 'post'], '/admin/','HomeController@admin');
     Route::get('/admin/offers', 'OffersController@admin')->name('admin.offers');
     Route::post('/admin/offers', 'OffersController@store');
     Route::post('/admin/offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+');

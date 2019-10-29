@@ -12978,6 +12978,33 @@ body {
   font-size: 28px;
 }
 
+.dashboard-panel .toolbox {
+  display: flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+.dashboard-panel .toolbox:not(:last-child) > .toolbox_button {
+  border-radius: 28px;
+}
+.dashboard-panel .toolbox_button {
+  padding: 0;
+  margin: 0 0.5em;
+  border: 2px solid black;
+  border-radius: 28px;
+  color: black;
+}
+.dashboard-panel .toolbox_button i {
+  font-size: 5em;
+  width: 115px;
+  height: 95px;
+  line-height: 100px;
+  display: block;
+}
+.dashboard-panel .toolbox_button span {
+  margin: 0 auto;
+  display: block;
+}
+
 footer {
   background: black;
 }
@@ -14048,6 +14075,13 @@ section .testimonials_container .testim p {
   display: flex;
   flex-direction: column-reverse;
   max-width: 630px;
+}
+.main-section--primary .title-card--secondary {
+  background: transparent;
+  border: 2px solid black;
+}
+.main-section--primary .title-card--secondary .title-card-title {
+  color: black;
 }
 .main-section--primary .title-card .cta {
   border: none;

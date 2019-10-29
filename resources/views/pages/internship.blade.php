@@ -6,9 +6,9 @@
             @include('partials._nav')
 
             {{--Elemento SLIDER--}}
-            @include('partials._page-title')
+            @include('partials._header')
     </header>
 
-    {{--Elemento donde se recogen las ofertas de trabajo--}}
+    {{-- Elemento donde se recogen las ofertas de trabajo --}}
     @include('partials._offers')
 @endsection

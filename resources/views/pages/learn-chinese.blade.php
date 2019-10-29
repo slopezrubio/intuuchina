@@ -6,7 +6,7 @@
         @include('partials._nav')
 
         {{--Elemento SLIDER--}}
-        @include('partials._page-title')
+        @include('partials._header')
     </header>
 
     <main>

@@ -27,6 +27,14 @@
       flex-direction: column-reverse;
       max-width: 630px;
 
+      &--secondary {
+        background: transparent;
+        border: 2px solid $primaryDark;
+        .title-card-title {
+          color: $primaryDark;
+        }
+      }
+
       .cta {
         border: none;
         margin: 2em auto 0 auto;

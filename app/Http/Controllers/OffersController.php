@@ -21,11 +21,6 @@ class OffersController extends Controller
     {
         $offers = $this->all();
 
-        /* Datos adicionales que se van a entregar a la vista */
-        $params = (object) array(
-            'title' => __('job offers')
-        );
-
         return view('pages/offers', compact('offers', 'params'));
     }
 
@@ -37,11 +32,6 @@ class OffersController extends Controller
     public function admin()
     {
         $offers = $this->all();
-
-        /* Datos adicionales que se van a entregar a la vista */
-        $params = (object) array(
-            'title' => __('job offers')
-        );
 
         return view('pages/admin/offers', compact('offers', 'params'));
     }
