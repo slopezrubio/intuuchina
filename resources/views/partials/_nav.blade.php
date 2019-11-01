@@ -36,7 +36,7 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="nav-item" data-target="#university" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="nav-item" data-target="#university" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
                             <div class="toggleOption" >{{ __('links.university') }}<i class="fas fa-angle-right"></i></div>
                         </a>
 

@@ -15,6 +15,34 @@
   display: flex;
 }
 
+@mixin flex-direction($value: row) {
+  @if $value == row-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -moz-box-orient: horizontal;
+  } @else if $value == column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: normal;
+    -moz-box-orient: vertical;
+  } @else if $value == column-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: reverse;
+    -moz-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -moz-box-orient: horizontal;
+  }
+
+  -webkit-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+
 @mixin flex-wrap($value: mowrap) {
     -webkit-flex-wrap: $value;
     @if ($value == nowrap) {
@@ -23,6 +51,25 @@
         -ms-flex-wrap: $value;
     }
     flex-wrap: $value;
+}
+
+@mixin align-items($value: stretch) {
+  @if $value == flex-start {
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -ms-box-align: start;
+  } @else if $value == flex-end {
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    -ms-box-align: end;
+  } @else {
+    -webkit-box-align: $value;
+    -moz-box-align: $value;
+    -ms-box-align: $value;
+  }
+
+  -webkit-align-items: $value;
+  align-items: $value;
 }
 
 @mixin justify-content($value) {
@@ -123,7 +170,7 @@
 }
 
 @mixin squareWithBorder {
-  padding: .5rem .5rem;
+  padding: .3rem .4rem;
   border: 1px solid $primaryDark;
 }
 

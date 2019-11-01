@@ -23,12 +23,8 @@ class Admin
         return $next($request);
     }
 
-    private function isGuest() {
-        return Auth::guest();
-    }
-
     private function isAdmin($request) {
-        if (!$this->isGuest()) {
+        if (!Auth::guest()) {
             if ($request->user()) {
                 return $request->user()->type === 'admin' ? true : false;
             }

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <header id="learn-chinese">
+    <header class="header" id="learn-chinese">
         {{--Elemento NAV--}}
         @include('partials._nav')
 

@@ -4,13 +4,12 @@
 .navbar {
 
   background: $primaryWhite;
-  @inclue prefixed('justify-content', 'center');
-  @inclue prefixed('align-items', 'center');
+  @include justify-content(center);
+  @include align-items(center);
   z-index: 4;
   padding: 0.5em 0;
 
   &_container {
-    @include prefixed(align-items, center);
     padding-left: 0;
     padding-right: 0;
 
@@ -19,7 +18,7 @@
       padding-right: 15px;
       height: 100%;
       img {
-        height: 50px;
+        height: 46px;
       }
     }
 
@@ -35,7 +34,6 @@
     }
 
     #navbarToggler {
-
       width: 100%;
       .navbar_items {
         background: $navbarPrimary;
@@ -69,7 +67,7 @@
           i {
             padding-right: 1em;
             text-align: center;
-            width: 40px;
+            width: 25px;
           }
         }
 
@@ -176,7 +174,7 @@
     }
   }
 
-  @media only screen and (min-width: 993px) {
+  @media only screen and (min-width: 992px) {
     padding: 0.5em 1em;
 
     &_container {
@@ -205,6 +203,7 @@
           padding: 0;
           display: flex;
           align-items: center;
+          width: 100%;
 
           li {
             float: left;
@@ -238,6 +237,10 @@
                 background: none;
               }
             }
+          }
+
+          li:first-of-type, li:last-of-type {
+            margin-left: auto;
           }
 
           li.dropdown {
@@ -322,7 +325,7 @@
       }
     }
   }
-  @media only screen and (min-width: 993px) and (max-width: 1080px) {
+  @media only screen and (min-width: 992px) and (max-width: 1085px) {
     .navbar {
       &_container {
         #navbarToggler {

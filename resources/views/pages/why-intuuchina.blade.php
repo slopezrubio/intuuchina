@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <header id="why-us">
+    <header class="header" id="why-us">
         {{--Elemento NAV--}}
         @include('partials._nav')
 

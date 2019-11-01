@@ -6,7 +6,7 @@
         display: none !important;
       }
     </style>
-    <header id="register">
+    <header class="header--no-background-image" id="register">
         {{--Elemento NAV--}}
         @include('partials._nav')
 

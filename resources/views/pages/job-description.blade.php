@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <header id="job-description" data-content="{{ $offer->picture }}">
+    <header class="header" id="job-description" data-content="{{ $offer->picture }}">
         {{--Elemento NAV--}}
         @include('partials._nav')
 
