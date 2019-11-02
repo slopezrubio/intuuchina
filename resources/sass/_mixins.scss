@@ -99,6 +99,16 @@
   vertical-align: middle;
 }
 
+/* Centrar verticalmente (el elemento padre tiene que
+ * tener el atributo 'position: relative' para que
+ * funcione)
+ */
+@mixin verticalAlign() {
+  position: absolute;
+  top: calc(50% + 32px);
+  @include prefixed(transform, translateY(-50%));
+}
+
 // Arreglos para los botones
 @mixin hacks() {
   @include forceBlockLevel();
@@ -119,6 +129,17 @@
     background: $primaryRed;
     color: $primaryWhite;
   }
+}
+
+// Components
+@mixin title-card {
+  background: $sectionDark;
+  margin: 0 auto;
+  padding: 1.5em;
+  border-radius: 28px;
+  @include flexbox();
+  @include flex-direction(column-reverse);
+  max-width: 630px;
 }
 
 // Login buttons effects

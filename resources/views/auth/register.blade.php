@@ -6,25 +6,25 @@
         display: none !important;
       }
     </style>
-    <header class="header--no-background-image" id="register">
+    <header class="header header--no-background-image" id="register">
         {{--Elemento NAV--}}
         @include('partials._nav')
 
         {{--Título de la página--}}
-        @include('partials._header.')
+        @include('partials._header')
     </header>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="col-md-11 col-lg-8 col-xl-8">
                 <div class="card extended-form">
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group">
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('content.name') }}</label>
+                                    <label for="name" class="col-md-3 col-form-label text-md-left">{{ __('content.name') }}</label>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8 pl-md-0 col-lg-9">
                                         <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                     @if ($errors->has('name'))
@@ -35,9 +35,9 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="surnames" class="offset-md-1 col-md-5 col-form-label text-md-left">{{ __('content.surnames') }}</label>
-                                    <div class="col-md-6">
+                                <div class="form-group row ml-md-auto">
+                                    <label for="surnames" class="col-md-4 col-xl-4 col-form-label text-md-left">{{ __('content.surnames') }}</label>
+                                    <div class="col-md-8 pl-md-0 col-xl-8">
                                         <input id="surnames" type="text" class="form-control{{ $errors->has('surnames') ? ' is-invalid' : '' }}" name="surnames" value="{{ old('surnames') }}" required>
 
                                     @if ($errors->has('surnames'))
