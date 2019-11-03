@@ -1,145 +1,5 @@
-footer {
-  background: $primaryDark;
-  @media #{$large-devices} {
-    .footer {
-      &_header {
-        @include prefixed(display, grid);
-        @include prefixed(grid-template-rows, 1fr);
-        @include prefixed(grid-template-columns, 1fr 2fr 1fr);
-        @include prefixed(grid-column-gap, 5%);
-      }
-
-      &_title {
-        @include prefixed(display, flex);
-      }
-
-      &_web-map {
-        @include prefixed(justify-content, initial);
-      }
-    }
-  }
-
-  @media #{$large-devices} {
-    .footer {
-      &_contact_form {
-
-        #message {
-          height: 130px;
-        }
-
-        .text_input {
-          @include prefixed(flex-direction, row);
-          @include prefixed(justify-content, space-between);
-          @include prefixed(align-items, baseline);
-          input {
-            width: 85%;
-            padding-bottom: 5px;
-          }
-        }
-
-        .switch_input {
-          @include prefixed(display, grid);
-          @include prefixed(grid-template-columns, 60% auto);
-          @include prefixed(justify-content, space-between);
-          .switch {
-            margin-top: 2em;
-          }
-        }
-
-        .checkbox_input {
-          display: block;
-          .switch {
-            float: right;
-          }
-        }
-
-        div:last-of-type {
-          @include prefixed(flex-direction, row);
-          @include prefixed(justify-content, flex-start);
-          .footer_submit {
-            margin-right: 2em;
-          }
-        }
-        .modal {
-          display: none;
-          color: black;
-          &,
-          div {
-            @include prefixed(flex-direction, 'row!important');
-          }
-        }
-
-      }
-
-      &_social-media {
-        .footer_sublist {
-          @include prefixed(flex-direction, column);
-          li:not(first-of-type) {
-            padding: 0 0.9em;
-          }
-        }
-      }
-
-      &_documentation {
-        @include prefixed(flex-direction, row);
-        @include prefixed(justify-content, space-between);
-        &_signature {
-          @include prefixed(display, flex);
-          @include prefixed(align-items, first baseline);
-          a {
-            margin-left: .5em;
-          }
-        }
-      }
-    }
-  }
-
-
-  @media #{$footer-fix} {
-    .footer {
-      &_header {
-        @include prefixed(display, grid);
-        @include prefixed(grid-template-rows, auto auto);
-        @include prefixed(grid-template-columns, 1fr 2fr);
-        @include prefixed(grid-column-gap, 5%);
-      }
-
-      &_contact_form {
-        #message {
-          height: 130px;
-        }
-      }
-
-      &_title {
-        display: flex;
-      }
-
-      &_web-map {
-        @include prefixed(justify-content, initial);
-      }
-
-      &_sublist {
-        @include prefixed(flex-direction, column);
-        padding-top: 2em;
-      }
-
-      &_social-media {
-        @include prefixed(grid-column, '1 / span 2');
-        @include prefixed(justify-content, space-between);
-        .footer_title {
-          @include prefixed(justify-content, center);
-        }
-
-        ul {
-          flex-direction: row;
-          @include prefixed(justify-content, space-around);
-        }
-      }
-    }
-  }
-}
-
 .footer {
+  background: $primaryDark;
   $map: (321: 16, 454: 16, 990: 12, 1553: 12);
   font-size: minimosCuadrados($map);
   color: $primaryWhite;
@@ -167,17 +27,18 @@ footer {
   }
 
   &_header {
-    display: flex;
-    flex-direction: column;
+    //@include flexbox();
+    //@include flex-direction(column);
+    display: block;
     > * {
       padding: 1.5em 0;
     }
   }
 
   &_web-map {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    @include flexbox();
+    @include justify-content(space-between);
+    @include flex-direction(column);
     margin-left: 0px;
     div:not(:first-of-type) {
       margin-top: 1em;
@@ -196,8 +57,8 @@ footer {
       }
     }
     &_items {
-      grid-template-columns: auto;
-      grid-template-rows: auto;
+      @include grid-template-columns(auto);
+      @include grid-template-rows(auto);
       div {
         padding: 0.5em 0;
       }
@@ -205,7 +66,6 @@ footer {
   }
 
   &_contact_form {
-
     div:first-of-type label {
       padding-top: 0px;
     }
@@ -215,8 +75,8 @@ footer {
       display: block;
     }
     .checkbox_input {
-      flex-direction: row;
-      justify-content: space-between;
+      @include flex-direction(row);
+      @include justify-content(space-between);
       label {
         width: 80%;
       }
@@ -331,9 +191,9 @@ footer {
     }
 
     div {
-      display: flex;
-      justify-content: space-around;
-      flex-direction: column;
+      @include flexbox();
+      @include justify-content(space-around);
+      @include flex-direction(column);
 
       label:first-of-type {
         padding-top: 2em;
@@ -376,8 +236,8 @@ footer {
     }
 
     & > div:last-of-type {
-      flex-direction: row;
-      justify-content: flex-start;
+      @include flex-direction(row);
+      @include justify-content(flex-start);
       .footer_submit {
         margin-right: 1.5em;
       }
@@ -388,6 +248,7 @@ footer {
       color: black;
       &,
       div {
+        @include flex-direction(column!important);
         flex-direction: column !important;
       }
     }
@@ -408,27 +269,182 @@ footer {
   }
 
   &_sublist {
-    display: flex;
-    flex-direction: column;
+    @include flexbox();
+    @include flex-direction(column);
     padding-top: 2em;
-    @media only screen and (min-width: 441px) and (max-width: 680px) {
-      flex-direction: row;
-      justify-content: space-between;
+    @media only screen and (min-width: 360px) and (max-width: 680px) {
+      @include flex-direction(row);
+      @include justify-content(space-between);
     }
   }
 
   &_documentation {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 0.8em;
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(flex-start);
+    @include align-items(center);
+    p, a {
+      font-size: 0.8em;
+    }
     padding: 3em 0;
     &_signature {
       text-align: center;
       margin-bottom: 1em;
       img {
         width: 100px;
+      }
+    }
+  }
+}
+
+@media #{$footer-fix} {
+  .footer {
+    &_header {
+      @include grid();
+      @include grid-template-columns(1fr 2fr);
+      @include grid-template-rows(auto auto);
+      @include grid-column-gap(5%);
+      //@include prefixed(grid-column-gap, 5%);
+    }
+
+    &_contact_form {
+      @include grid-child(2,4);
+      @include grid-child-align(start);
+      #message {
+        height: 130px;
+      }
+    }
+
+    &_title {
+      @include flexbox();
+    }
+
+    &_web-map {
+      @include justify-content(intial);
+      @include grid-child(1,2);
+      @include grid-child-align(start);
+    }
+
+    &_sublist {
+      @include flex-direction(column);
+      padding-top: 2em;
+    }
+
+    &_social-media {
+      @include grid-child(1, 3, 2, 3);
+      @include grid-child-align(start);
+      //@include prefixed(grid-column, '1 / span 2');
+      @include justify-content(space-between);
+      .footer_title {
+        @include justify-content(center);
+      }
+
+      ul {
+        @include flex-direction(row);
+        @include justify-content(space-around);
+      }
+    }
+  }
+}
+
+@media #{$large-devices} {
+  .footer {
+
+    &_header {
+      @include grid();
+      @include grid-template-rows(1fr);
+      @include grid-template-columns(1fr 2fr 1fr);
+      //@include prefixed(grid-column-gap, 5%);
+      @include grid-column-gap(5%);
+    }
+
+    &_title {
+      @include flexbox();
+    }
+
+    &_web-map {
+      @include grid-child(1,2);
+      @include grid-child-align(start);
+      @include justify-content(initial);
+    }
+
+    &_contact_form {
+      @include grid-child(2,4);
+      @include grid-child-align(start);
+      #message {
+        height: 130px;
+      }
+
+      .text_input {
+        @include flex-direction(row);
+        @include justify-content(space-between);
+        @include align-items(baseline);
+        input {
+          width: 85%;
+          padding-bottom: 5px;
+        }
+      }
+
+      .switch_input {
+        @include grid();
+        @include grid-template-columns(60% auto);
+        @include justify-content(space-between);
+        & > label {
+          @include grid-child(1,2);
+        }
+
+        & > .switch {
+          @include grid-child(2,3);
+          margin-top: 2em;
+        }
+      }
+
+      .checkbox_input {
+        display: block;
+        .switch {
+          float: right;
+        }
+      }
+
+      div:last-of-type {
+        @include flex-direction(row);
+        @include justify-content(flex-start);
+        .footer_submit {
+          margin-right: 2em;
+        }
+      }
+
+      .modal {
+        display: none;
+        color: black;
+        &,
+        div {
+          @include flex-direction(row !important);
+        }
+      }
+    }
+
+    &_social-media {
+      @include grid-child(4,5);
+      @include grid-child-align(start);
+      width: 100%;
+      .footer_sublist {
+        @include flex-direction(column);
+        li:not(first-of-type) {
+          padding: 0 0.9em;
+        }
+      }
+    }
+
+    &_documentation {
+      @include flex-direction(row);
+      @include justify-content(space-between);
+      &_signature {
+        @include flexbox();
+        @include align-items(first baseline);
+        a {
+          margin-left: .5em;
+        }
       }
     }
   }

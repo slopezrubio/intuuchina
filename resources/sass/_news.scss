@@ -45,7 +45,7 @@
         .note_carrousel {
           transition:
                   transform 0.5s;
-          @include prefixed(display, inline-flex);
+          @include inline-flex();
           .slider_note {
             max-width: 450px;
             @media #{$large-devices-secondary} {

@@ -7,12 +7,69 @@
   #{$property}: #{$value};
 }
 
+@mixin ie10($selector, $map) {
+  @media all and (-ms-high-contrast:none) {
+    *::-ms-backdrop, #{$selector} {
+      @each $property, $value in ($map) {
+        #{$property}: $value;
+      }
+    }
+  }
+}
+
+@mixin grid {
+  display: -ms-grid;
+  display: grid;
+  display: -moz-grid;
+}
+
+@mixin grid-template-rows($value) {
+  -ms-grid-rows: $value;
+  grid-template-rows: $value;
+}
+
+@mixin grid-template-columns($value) {
+  -ms-grid-columns: $value;
+  grid-template-columns: $value;
+}
+
+@mixin grid-child($col-start: 1, $col-end: 2, $row-start: 1, $row-end: 2) {
+  -ms-grid-column: $col-start;
+  -ms-grid-column-span: $col-end - $col-start;
+  -ms-grid-row: $row-start;
+  -ms-grid-row-span: $row-end - $row-start;
+  grid-column: #{$col-start} / #{$col-end};
+  grid-row: #{$row-start} / #{$row-end};
+}
+
+@mixin grid-child-align($columnsAlign: start, $rowsAlign: start) {
+  -ms-grid-column-align: $columnsAlign;
+  -ms-grid-row-align: $rowsAlign;
+  align-self: $rowsAlign;
+  justify-self: $columnsAlign;
+}
+
+@mixin grid-column-gap($value) {
+  grid-column-gap: $value;
+  $width: 100% - $value;
+  $map: (width: #{$width});
+  @include ie10('& > *', $map);
+}
+
 @mixin flexbox {
   display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+}
+
+@mixin inline-flex {
+  display: -webkit-inline-flex;
+  display: -moz-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }
 
 @mixin flex-direction($value: row) {

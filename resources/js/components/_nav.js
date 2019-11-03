@@ -1,6 +1,3 @@
-import breakpoints from '../main/breakpoints';
-import dom from '../main/dom';
-
 let nav = {
     init: () => {
         nav.setup();

@@ -127,7 +127,7 @@
                     <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
                 </span>
                 <p>
-                    <a href="#" data-toggle="modal" data-target="#privacyPolicy">{{ __('links.privacy policy') }}</a> | <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{!! trans('links.terms and conditions') !!}</a>
+                    <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{!! trans('links.terms and conditions') !!}</a>
                 </p>
             </div>
         </div>

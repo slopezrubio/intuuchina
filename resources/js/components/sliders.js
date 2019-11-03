@@ -13,6 +13,7 @@ let press = {
             press.setup();
         }
 
+        press.carrousel.style.width = $(press.pictureHolder).width() * press.pictures.length + 'px';
         $(press.pictures).width(press.pictureHolder.clientWidth);
         press.tvSliderWidth = press.getFirstChildWidth(press.pictures);
 

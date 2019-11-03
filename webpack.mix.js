@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 mix.setPublicPath('public');
 mix.sass('resources/sass/main.scss', 'css/lib/style.css')
-    .babel([
+    .js([
         'resources/js/components/sliders.js',
         'resources/js/components/_register.js',
         'resources/js/components/_nav.js',
@@ -29,7 +29,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/components/_stats.js',
         'resources/js/components/_motifs.js',
         'resources/js/components/_footer.js'
-    ], 'resources/js/app.js', 'js/app.js');
+    ], 'js/app.js');
 
     /*.js('resources/js/app.js', 'js/app.js')
     .js('resources/js/components/sliders.js', 'js/app.js')

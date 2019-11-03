@@ -1200,9 +1200,11 @@ var press = {
       press.setup();
     }
 
-    press.carrousel.style.width = $(press.pictureHolder).width() * press.pictures.length + 'px';
     $(press.pictures).width(press.pictureHolder.clientWidth);
     press.tvSliderWidth = press.getFirstChildWidth(press.pictures);
+    console.log($(press.carrousel.width()));
+    console.log("hola");
+    $(press.carrousel).width(press.pictureHolder * press.pictures.length);
 
     if (event.type === 'resize') {
       press.update();
