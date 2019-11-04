@@ -121,7 +121,7 @@ class RegisterController extends Controller
             return json_encode($array);
         }
 
-        return $value;
+        return is_array($array);
     }
 
     /**

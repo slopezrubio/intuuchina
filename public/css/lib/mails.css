@@ -12,6 +12,15 @@ p {
      line-height: 1.4;
 }
 
+ol li {
+     list-style-type: decimal;
+     margin-bottom: 0.5em;
+}
+
+ol li:last-child {
+    margin-bottom: 0;
+}
+
 footer {
      font-size: .85em;
 }

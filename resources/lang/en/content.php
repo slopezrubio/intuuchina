@@ -253,7 +253,7 @@ return [
         ],
         [
             'text' => 'University',
-            'value' => 'universty'
+            'value' => 'university'
         ],
     ],
     'study chinese' => 'Chinese language',

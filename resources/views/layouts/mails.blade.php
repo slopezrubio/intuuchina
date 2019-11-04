@@ -8,7 +8,7 @@
     <title>{{ $title }}</title>
 
     <!-- Estilos de la aplicación -->
-    <link rel="stylesheet" type="text/css" href="{{asset('css/lib/mails.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/lib/mails.css') }}">
 </head>
 <body>
     <style>
@@ -19,5 +19,7 @@
     <div id="mail">
         @yield('content')
     </div>
+
+    @include('partials.mails._footer')
 </body>
 </html>

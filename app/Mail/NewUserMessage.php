@@ -12,7 +12,8 @@ class NewUserMessage extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $title;
+    public $title = 'Welcome to IntuuChina';
+    public $subject;
 
 
     /**
@@ -23,7 +24,7 @@ class NewUserMessage extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
-        $this->title = "We appreciate your interest and trust in us";
+        $this->subject = __('mails.subjects.new user ' . $user->program, ['name' => $user->name]);
     }
 
     /**
@@ -33,6 +34,6 @@ class NewUserMessage extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.register-email');
+        return $this->view('emails.new-user-confirmation');
     }
 }
