@@ -23,7 +23,7 @@
 }
 
 #loginModal {
-
+  text-transform: none;
   .modal-column {
     flex-direction: column;
     > :not(:first-child) {
@@ -39,6 +39,16 @@
     width: 100%;
     padding: 10px;
     font-size: 20px;
+  }
+
+  .switch {
+    @include switchButton();
+    margin-top: 0;
+    input {
+      opacity: 0;
+      height: 0;
+      width: 0;
+    }
   }
 }
 

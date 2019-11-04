@@ -52,13 +52,24 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+
+
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'surnames' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'nationality' => ['required', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        $validator->after(function($validator) {
+            if ($validator->errors()->has('email')) {
+                $validator->errors()->add('register.email', $validator->errors()->first('email'));
+            }
+        });
+
+        return $validator;
+
     }
 
     /**
@@ -75,7 +86,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'surnames' => $data['surnames'],
-            'email' => $data['email'],
+            'email' => $data['user_email'],
             'nationality' => $data['nationality'],
             'type' => 'user',
             'program' => $data['program'],

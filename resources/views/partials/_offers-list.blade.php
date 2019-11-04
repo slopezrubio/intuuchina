@@ -5,9 +5,6 @@
                 <p class="item_not_found">There are no offers with such characteristic</p>
             </div>
         @else
-            {{--Ventana modal para eliminar ofertas --}}
-            @include('partials.modal-offer')
-
             <div class="container-fluid offers">
                 <div class="card-group offers_list">
                     @foreach($offers as $offer)

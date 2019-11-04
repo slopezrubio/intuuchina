@@ -12,8 +12,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="inputUsername" class="col-form-label">{{ __('auth.e-mail address') }}</label>
-                        <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="inputUsername" name="email" placeholder="{{ __('content.email placeholder') }}" value="{{ old('email') }}" required autofocus>
-                        @if ($errors->has('email'))
+                        <input type="text" class="form-control{{ $errors->has('email') && !$errors->has('register.email') ? ' is-invalid' : '' }}" id="inputUsername" name="email" placeholder="{{ __('content.email placeholder') }}" value="{{ old('email') }}" required autofocus>
+                        @if ($errors->has('email') && !$errors->has('register.email'))
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
@@ -24,10 +24,11 @@
                         <input type="password" class="form-control" id="inputPassword" name="password" required>
                     </div>
                     <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="form-check-label" for="remember">
-                                {{ __('auth.remember me') }}
+                        <div class="form-check pl-0">
+                            <label aria-label="remember">{{ __('auth.remember me') }}</label>
+                            <label class="switch col-form-label" for="remember">
+                                <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                             </label>
                         </div>
                     </div>

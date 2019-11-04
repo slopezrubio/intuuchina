@@ -26,8 +26,7 @@
 
                                     <div class="col-md-8 pl-md-0 col-lg-9">
                                         <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
-
-                                    @if ($errors->has('name'))
+                                        @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
                                             </span>
@@ -53,11 +52,11 @@
                                 <label for="email" class="col-md-3 col-form-label text-md-left">{{ __('content.e-mail address') }}</label>
 
                                 <div class="col-md-9">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('content.email placeholder') }}" required>
+                                    <input id="email" type="email" class="form-control{{ $errors->has('register.email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('content.email placeholder') }}" required>
 
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('register.email'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
+                                            <strong>{{ $errors->first('register.email') }}</strong>
                                         </span>
                                     @endif
                                 </div>

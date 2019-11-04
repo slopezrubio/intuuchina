@@ -1,16 +1,17 @@
 .confirmation {
-  background-image: url('/../../storage/images/confirmation-message.jpg');
-  background-size: cover;
-  background-position-x: 100%;
-  height: 66vh;
+  @include verticalAlign();
   .confirmation_content {
     color: $primaryDark;
     text-align: center;
-    padding: 3em 0 8em 0;
+    padding: 3em 0em 8em 0em;
+    @media only screen and (min-width: 980px) {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
 
     h1 {
-      $map: (425: 26, 812: 26, 1440: 38);
-      font-size: minimosCuadrados($map);
+      font-size: 1.85em;
       color: $secondaryRed;
       margin-bottom: 1em;
     }
@@ -37,7 +38,6 @@
 
 @media #{$footer-fix} {
   .confirmation {
-    background-position-y: 100%;
     &_content {
       width: 70%;
       text-align: left;
@@ -50,7 +50,6 @@
 
 @media #{$large-devices} {
   .confirmation {
-    background-position-y: 100%;
     &_content {
       width: 70%;
       text-align: left;

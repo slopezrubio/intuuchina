@@ -9,7 +9,11 @@
         @include('partials._header')
     </header>
 
+    {{--Ventana modal para eliminar ofertas --}}
+    @include('partials.modal-offer')
+
     <main>
+
         <div class="row align-items-center items_management container-fluid">
             {{-- Filtro de ofertas --}}
             @include('partials._filter-by')

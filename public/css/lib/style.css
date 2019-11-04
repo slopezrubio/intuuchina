@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);/*!
- * Quill Editor v1.3.6
+ * Quill Editor v1.3.7
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -397,7 +397,7 @@
   right: 15px;
 }
 /*!
- * Quill Editor v1.3.6
+ * Quill Editor v1.3.7
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -12220,11 +12220,31 @@ main {
   background-image: url("/../../storage/images/learn1.jpg");
 }
 
-.header #why-us {
-  background: url("/../../storage/images/why2.jpg") no-repeat scroll center;
+.header#why-us {
+  background: url("/../../storage/images/why-us_header.jpg") no-repeat scroll center;
   background-size: cover;
   height: 55vh;
   text-transform: none;
+}
+
+.header#message-confirmation {
+  background-image: url("/../../storage/images/confirmation-message.jpg");
+  background-size: cover;
+  background-position-x: 100%;
+  height: 66vh;
+  text-transform: none;
+}
+
+@media only screen and (min-width: 681px) and (max-width: 991px) {
+  .header#message-confirmation {
+    background-position-y: 100%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .header#message-confirmation {
+    background-position-y: 100%;
+  }
 }
 
 /* ------------------------------------------------------- */
@@ -12233,6 +12253,252 @@ main {
  * - Modals --
  * ----------------
  */
+
+#loginModal .modal-button,
+#offerModal .modal-button,
+#termsAndConditionsModal .modal-button,
+#GDPRModal .modal-button,
+#privacyPolicy .modal-button {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  background: white;
+  transition-property: color;
+  transition-duration: 0.3s;
+  border: 2px solid #C80B0B;
+  border-radius: 22px;
+}
+
+#loginModal .modal-button:before,
+#offerModal .modal-button:before,
+#termsAndConditionsModal .modal-button:before,
+#GDPRModal .modal-button:before,
+#privacyPolicy .modal-button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #C80B0B;
+  border-radius: 20px;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transform-property: transform;
+  -moz-transform-property: transform;
+  -ms-transform-property: transform;
+  -o-transform-property: transform;
+  transform-property: transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+}
+
+#loginModal .modal-button:hover,
+#loginModal .modal-button:focus,
+#loginModal .modal-button:active,
+#offerModal .modal-button:hover,
+#offerModal .modal-button:focus,
+#offerModal .modal-button:active,
+#termsAndConditionsModal .modal-button:hover,
+#termsAndConditionsModal .modal-button:focus,
+#termsAndConditionsModal .modal-button:active,
+#GDPRModal .modal-button:hover,
+#GDPRModal .modal-button:focus,
+#GDPRModal .modal-button:active,
+#privacyPolicy .modal-button:hover,
+#privacyPolicy .modal-button:focus,
+#privacyPolicy .modal-button:active {
+  color: #C80B0B;
+}
+
+#loginModal .modal-button:hover:before,
+#loginModal .modal-button:focus:before,
+#loginModal .modal-button:active:before,
+#offerModal .modal-button:hover:before,
+#offerModal .modal-button:focus:before,
+#offerModal .modal-button:active:before,
+#termsAndConditionsModal .modal-button:hover:before,
+#termsAndConditionsModal .modal-button:focus:before,
+#termsAndConditionsModal .modal-button:active:before,
+#GDPRModal .modal-button:hover:before,
+#GDPRModal .modal-button:focus:before,
+#GDPRModal .modal-button:active:before,
+#privacyPolicy .modal-button:hover:before,
+#privacyPolicy .modal-button:focus:before,
+#privacyPolicy .modal-button:active:before {
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+}
+
+#loginModal .medium-icon,
+#offerModal .medium-icon,
+#termsAndConditionsModal .medium-icon,
+#GDPRModal .medium-icon,
+#privacyPolicy .medium-icon {
+  font-size: 3em;
+}
+
+#loginModal .modal-link,
+#offerModal .modal-link,
+#termsAndConditionsModal .modal-link,
+#GDPRModal .modal-link,
+#privacyPolicy .modal-link {
+  color: #C80B0B;
+}
+
+#loginModal .modal-link:hover,
+#loginModal .modal-link:focus,
+#loginModal .modal-link:active,
+#offerModal .modal-link:hover,
+#offerModal .modal-link:focus,
+#offerModal .modal-link:active,
+#termsAndConditionsModal .modal-link:hover,
+#termsAndConditionsModal .modal-link:focus,
+#termsAndConditionsModal .modal-link:active,
+#GDPRModal .modal-link:hover,
+#GDPRModal .modal-link:focus,
+#GDPRModal .modal-link:active,
+#privacyPolicy .modal-link:hover,
+#privacyPolicy .modal-link:focus,
+#privacyPolicy .modal-link:active {
+  text-decoration: underline;
+}
+
+#loginModal [class^=modal-button],
+#offerModal [class^=modal-button],
+#termsAndConditionsModal [class^=modal-button],
+#GDPRModal [class^=modal-button],
+#privacyPolicy [class^=modal-button] {
+  color: white;
+}
+
+#loginModal {
+  text-transform: none;
+}
+
+#loginModal .modal-column {
+  flex-direction: column;
+}
+
+#loginModal .modal-column > :not(:first-child) {
+  margin: 10px 0;
+}
+
+#loginModal .modal-column > :not(:last-child) {
+  margin: 6px 0;
+}
+
+#loginModal .modal-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+}
+
+#loginModal .switch {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 34px;
+  margin-top: 10px;
+  margin-top: 0;
+}
+
+#loginModal .switch .checkbox_slider {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #d1d1d1;
+  transition: .4s;
+}
+
+#loginModal .switch .checkbox_slider--rounded {
+  border-radius: 34px;
+}
+
+#loginModal .switch .checkbox_slider--rounded::after {
+  font-family: "Montserrat", sans-serif;
+  content: "NO";
+  color: black;
+  top: 12px;
+  position: absolute;
+  font-size: 0.8em;
+  z-index: 1;
+  left: 33px;
+}
+
+#loginModal .switch .checkbox_slider--rounded:before {
+  border-radius: 50%;
+  z-index: 10;
+}
+
+#loginModal .switch .checkbox_slider:before {
+  position: absolute;
+  content: "";
+  width: 26px;
+  height: 26px;
+  background: white;
+  left: 4px;
+  bottom: 4px;
+  transition: .4s;
+}
+
+#loginModal .switch input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+#loginModal .switch input:checked + .checkbox_slider {
+  background: #C80B0B;
+}
+
+#loginModal .switch input:focus + .checkbox_slider {
+  box-shadow: 0 0 1px #C80B0B;
+}
+
+#loginModal .switch input:checked + .checkbox_slider:after {
+  font-family: "Montserrat", sans-serif;
+  content: "YES";
+  left: 4px;
+  top: 12px;
+  color: white;
+}
+
+#loginModal .switch input {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+#offerModal .modal-footer .modal-button {
+  width: 33.333%;
+  height: 3em;
+}
+
+@media only screen and (max-width: 320px) {
+  #offerModal .modal-footer {
+    -moz-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+  }
+
+  #offerModal .modal-footer .modal-button {
+    width: 80%;
+    margin: 0 0 1em 0;
+  }
+
+  #offerModal .modal-footer .modal-button:last-of-type {
+    margin-bottom: 0;
+  }
+}
 
 .info-modal {
   max-width: 600px;
@@ -12474,6 +12740,10 @@ main {
   color: white;
 }
 
+#loginModal {
+  text-transform: none;
+}
+
 #loginModal .modal-column {
   flex-direction: column;
 }
@@ -12490,6 +12760,84 @@ main {
   width: 100%;
   padding: 10px;
   font-size: 20px;
+}
+
+#loginModal .switch {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 34px;
+  margin-top: 10px;
+  margin-top: 0;
+}
+
+#loginModal .switch .checkbox_slider {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #d1d1d1;
+  transition: .4s;
+}
+
+#loginModal .switch .checkbox_slider--rounded {
+  border-radius: 34px;
+}
+
+#loginModal .switch .checkbox_slider--rounded::after {
+  font-family: "Montserrat", sans-serif;
+  content: "NO";
+  color: black;
+  top: 12px;
+  position: absolute;
+  font-size: 0.8em;
+  z-index: 1;
+  left: 33px;
+}
+
+#loginModal .switch .checkbox_slider--rounded:before {
+  border-radius: 50%;
+  z-index: 10;
+}
+
+#loginModal .switch .checkbox_slider:before {
+  position: absolute;
+  content: "";
+  width: 26px;
+  height: 26px;
+  background: white;
+  left: 4px;
+  bottom: 4px;
+  transition: .4s;
+}
+
+#loginModal .switch input:checked + .checkbox_slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+#loginModal .switch input:checked + .checkbox_slider {
+  background: #C80B0B;
+}
+
+#loginModal .switch input:focus + .checkbox_slider {
+  box-shadow: 0 0 1px #C80B0B;
+}
+
+#loginModal .switch input:checked + .checkbox_slider:after {
+  font-family: "Montserrat", sans-serif;
+  content: "YES";
+  left: 4px;
+  top: 12px;
+  color: white;
+}
+
+#loginModal .switch input {
+  opacity: 0;
+  height: 0;
+  width: 0;
 }
 
 #offerModal .modal-footer .modal-button {
@@ -16222,20 +16570,27 @@ main .sendable_section--fixed .offers_buttons .cta {
 }
 
 .confirmation {
-  background-image: url("/../../storage/images/confirmation-message.jpg");
-  background-size: cover;
-  background-position-x: 100%;
-  height: 66vh;
+  position: absolute;
+  top: calc(50% + 32px);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .confirmation .confirmation_content {
   color: black;
   text-align: center;
-  padding: 3em 0 8em 0;
+  padding: 3em 0em 8em 0em;
+}
+
+@media only screen and (min-width: 980px) {
+  .confirmation .confirmation_content {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 
 .confirmation .confirmation_content h1 {
-  font-size: calc(1.2523040845vw + 18.825273219px);
+  font-size: 1.85em;
   color: #F44336;
   margin-bottom: 1em;
 }
@@ -16303,10 +16658,6 @@ main .sendable_section--fixed .offers_buttons .cta {
 }
 
 @media only screen and (min-width: 681px) and (max-width: 991px) {
-  .confirmation {
-    background-position-y: 100%;
-  }
-
   .confirmation_content {
     width: 70%;
     text-align: left;
@@ -16318,10 +16669,6 @@ main .sendable_section--fixed .offers_buttons .cta {
 }
 
 @media only screen and (min-width: 992px) {
-  .confirmation {
-    background-position-y: 100%;
-  }
-
   .confirmation_content {
     width: 70%;
     text-align: left;

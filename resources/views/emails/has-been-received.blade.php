@@ -7,6 +7,5 @@
             We confirm you that we have received your request. As soon as possible we will respond you with an answer.
         </p>
     </main>
-    @include('partials.mails._footer')
 @endsection
 

@@ -16,5 +16,4 @@ Quill.register({
     'formats/header': Header
 });
 
-
 export default Quill;

@@ -1,5 +1,6 @@
 
 window._ = require('lodash');
+require('./quill');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -10,6 +11,7 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    window.Quill = require('Quill');
 
     require('bootstrap');
 } catch (e) {}

@@ -1,6 +1,3 @@
-
-
-
 let stats = {
     init: () => {
         $('.count').each(function () {

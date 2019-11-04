@@ -213,11 +213,26 @@ main {
     background-image: url('/../../storage/images/learn1.jpg');
   }
 
-  #why-us {
-    background: url('/../../storage/images/why2.jpg') no-repeat scroll center;
+  &#why-us {
+    background: url('/../../storage/images/why-us_header.jpg') no-repeat scroll center;
     background-size: cover;
     height: 55vh;
     text-transform: none;
+  }
+
+  &#message-confirmation {
+    background-image: url('/../../storage/images/confirmation-message.jpg');
+    background-size: cover;
+    background-position-x: 100%;
+    height: 66vh;
+    text-transform: none;
+    @media #{$footer-fix} {
+      background-position-y: 100%;
+    }
+
+    @media #{$large-devices} {
+      background-position-y: 100%;
+    }
   }
 }
 
@@ -227,6 +242,9 @@ main {
  * - Modals --
  * ----------------
  */
+
+@import 'modals';
+
 .info-modal {
   max-width: 600px;
   font-size: 16px;
