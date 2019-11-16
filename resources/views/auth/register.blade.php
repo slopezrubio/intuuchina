@@ -52,7 +52,7 @@
                                 <label for="email" class="col-md-3 col-form-label text-md-left">{{ __('content.e-mail address') }}</label>
 
                                 <div class="col-md-9">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('register.email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('content.email placeholder') }}" required>
+                                    <input type="email" class="form-control{{ $errors->has('register.email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('content.email placeholder') }}" required>
 
                                     @if ($errors->has('register.email'))
                                         <span class="invalid-feedback" role="alert">

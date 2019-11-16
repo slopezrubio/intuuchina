@@ -12208,6 +12208,13 @@ main {
   }
 }
 
+.header#welcome {
+  background-image: url("/../../storage/images/welcome-user.jpg");
+  background-size: cover;
+  height: 100vh;
+  text-transform: none;
+}
+
 .header#internship {
   background-image: url("/../../storage/images/practicass.jpg");
 }
@@ -15976,6 +15983,43 @@ section .services .service_card_container .service_card_footer .cta {
   width: 60%;
   margin: 0 auto;
   display: block;
+}
+
+.user-card {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin-left: auto;
+}
+
+.user-card a {
+  color: #C80B0B;
+  font-weight: 500;
+}
+
+.user-card a:hover {
+  text-decoration: underline;
+}
+
+.user-card__action {
+  margin-top: 3em;
+}
+
+.user-card__action .cta {
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: 0;
+  display: block;
+}
+
+.user-card__action .row .cta {
+  margin-right: 15px;
+  margin-left: auto;
+}
+
+.user-card__action a {
+  font-weight: 700;
 }
 
 .grid {

@@ -1,0 +1,34 @@
+.user-card {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: auto;
+  a {
+    color: $primaryRed;
+    font-weight: 500;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__action {
+    margin-top: 3em;
+    .cta {
+      margin-top: 0;
+      margin-left: auto;
+      margin-right: 0;
+      display: block;
+    }
+
+    .row {
+      .cta {
+        margin-right: 15px;
+        margin-left: auto;
+      }
+    }
+
+    a {
+      font-weight: 700;
+    }
+  }
+}

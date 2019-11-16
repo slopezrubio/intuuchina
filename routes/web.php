@@ -77,3 +77,4 @@ Auth::routes();
 
 /* Home */
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/confirm', 'UsersController@confirm')->name('confirm');

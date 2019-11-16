@@ -28,6 +28,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/components/_services.js',
         'resources/js/components/_chinese-courses.js',
         'resources/js/components/_customer-journey.js',
+        'resources/js/components/_welcome-card.js',
         'resources/js/components/_filter-by.js',
         'resources/js/components/_stats.js',
         'resources/js/components/_motifs.js',

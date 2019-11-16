@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Mail\NewUserMessage;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Array_;
 
 class RegisterController extends Controller
@@ -86,12 +88,17 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'surnames' => $data['surnames'],
-            'email' => $data['user_email'],
+            'email' => $data['email'],
             'nationality' => $data['nationality'],
-            'type' => 'user',
             'program' => $data['program'],
             'industry' => $this->checkArrayField($data, 'industry'),
             'university' => $this->checkArrayField($data, 'university'),
+            'type' => 'user',
+            'status_id' => DB::table('states')
+                            ->select(DB::raw('id'))
+                            ->where('name', 'pending_confirmation')
+                            ->get()->first()->id,
+            'email_verified' => now(),
             'password' => Hash::make($data['password']),
         ]);
 
@@ -103,6 +110,36 @@ class RegisterController extends Controller
         Mail::to($user['email'])->queue(new NewUserMessage($user));
 
         return $user;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        return redirect($this->redirectTo)->with('status', 'created');
     }
 
     /**

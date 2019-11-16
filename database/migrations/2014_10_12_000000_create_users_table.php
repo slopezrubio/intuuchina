@@ -19,15 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('surnames');
             $table->string('email', 100)->unique();
             $table->string('nationality');
-            $table->string('program');
+            $table->string('program')->nullable();
             $table->string('industry')->nullable();
             $table->string('study')->nullable();
             $table->string('university')->nullable();
             $table->string('type');
+            $table->unsignedBigInteger('status_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('status_id')->references('id')->on('states');
         });
     }
 

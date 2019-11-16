@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\State;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,8 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        return view('home');
+        $user = Auth::user();
+        $status = State::find($user->status_id)->name;
+        return view('home', compact('status'));
     }
 
     /**

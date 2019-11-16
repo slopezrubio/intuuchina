@@ -15,8 +15,8 @@
                         <input type="text" class="form-control{{ $errors->has('email') && !$errors->has('register.email') ? ' is-invalid' : '' }}" id="inputUsername" name="email" placeholder="{{ __('content.email placeholder') }}" value="{{ old('email') }}" required autofocus>
                         @if ($errors->has('email') && !$errors->has('register.email'))
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
                         @endif
                     </div>
                     <div class="form-group">

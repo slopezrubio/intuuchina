@@ -201,6 +201,13 @@ main {
     }
   }
 
+  &#welcome {
+    background-image: url('/../../storage/images/welcome-user.jpg');
+    background-size: cover;
+    height: 100vh;
+    text-transform: none;
+  }
+
   &#internship {
     background-image: url('/../../storage/images/practicass.jpg');
   }

@@ -15,6 +15,7 @@ return [
     'internship' => 'Internship',
     'learn chinese' => 'Learn Chinese',
     'university' => 'University',
+    'home' => 'Home',
     'whyus' => 'Why Us',
     'master of business administration acronym' => 'MBA',
     'master of international business acronym' => 'M. Intl. Bsns',

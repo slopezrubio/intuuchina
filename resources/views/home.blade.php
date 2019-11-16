@@ -1,22 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('content.welcome user page title') }}</div>
+    <header id="welcome" class="header">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    {!!  __('content.welcome user text') !!}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        {{--Elemento NAV--}}
+        @include('partials._nav')
+
+        {{--Carta de bienvenida del usuario--}}
+        @include('partials._welcome-card')
+
+    </header>
 @endsection
