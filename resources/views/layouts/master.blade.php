@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="{{ asset('fontawesome/css/solid.min.css') }}">
     <script src="{{ asset('fontawesome/js/fontawesome.min.js') }}"></script>
 
+    <!-- Libreria de Stripe -->
+    <script src="https://js.stripe.com/v3"></script>
+
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 

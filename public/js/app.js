@@ -3754,7 +3754,8 @@ if (document.querySelector('.sensationalism-stats') !== null) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
+/* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
+/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3764,58 +3765,215 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 
+
 var welcomeCard = {
   init: function init() {
+    window.addEventListener('DOMContentLoaded', function () {
+      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__["default"])(welcomeCard.dialogContainer.parentElement, welcomeCard.update);
+    });
     welcomeCard.setup();
   },
   dialogContainer: document.querySelector('#dialog') ? document.querySelector('#dialog') : null,
+  update: function update() {
+    welcomeCard.setup();
+  },
   forms: {
     confirm: {
-      el: document.querySelector('#confirm') ? document.querySelector('#confirm') : null
+      el: function el() {
+        return document.querySelector('#confirm') ? document.querySelector('#confirm') : null;
+      }
+    },
+    checkout: {
+      el: function el() {
+        return document.querySelector('#checkout') ? document.querySelector('#checkout') : null;
+      }
     }
   },
   setup: function setup() {
-    console.log(welcomeCard.forms.confirm.el);
-    welcomeCard.forms.confirm.el.addEventListener('submit',
-    /*#__PURE__*/
-    function () {
-      var _ref = _asyncToGenerator(
+    if (welcomeCard.forms.confirm.el() !== null) {
+      welcomeCard.forms.confirm.el().addEventListener('submit',
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
-        var url, data, dialogBox;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                event.preventDefault();
-                url = event.target.getAttribute('action');
-                data = {
-                  _token: welcomeCard.forms.confirm.el.querySelector('input[type="hidden"')
-                };
-                _context.next = 5;
-                return _main_api__WEBPACK_IMPORTED_MODULE_1__["default"].confirm(url, data);
+      function () {
+        var _ref = _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
+          var url, data, dialogBox;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  event.preventDefault();
+                  url = event.target.getAttribute('action');
+                  data = {
+                    _token: welcomeCard.forms.confirm.el().querySelector('input[type="hidden"')
+                  };
+                  _context.next = 5;
+                  return _main_api__WEBPACK_IMPORTED_MODULE_2__["default"].confirm(url, data);
 
-              case 5:
-                dialogBox = _context.sent;
-                welcomeCard.replaceDialog(dialogBox);
+                case 5:
+                  dialogBox = _context.sent;
+                  welcomeCard.replaceDialog(dialogBox);
 
-              case 7:
-              case "end":
-                return _context.stop();
+                case 7:
+                case "end":
+                  return _context.stop();
+              }
             }
-          }
-        }, _callee);
-      }));
+          }, _callee);
+        }));
 
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }());
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
+    }
+
+    if (welcomeCard.forms.checkout.el() !== null) {
+      if (!welcomeCard.isStripeLoaded()) {
+        welcomeCard.setStripeElements();
+      }
+    }
+  },
+  isStripeLoaded: function isStripeLoaded() {
+    return welcomeCard.forms.checkout.el().querySelector('#card-number').childElementCount > 0;
   },
   replaceDialog: function replaceDialog(newDialog) {
     var container = welcomeCard.dialogContainer.parentElement;
     $(welcomeCard.dialogContainer).empty();
     $(container).html(newDialog);
+  },
+  setStripeElements: function setStripeElements() {
+    var elements = stripe.elements({
+      fonts: [{
+        cssSrc: "https://fonts.googleapis.com/css?family=Montserrat"
+      }]
+    }); // Stripe Card Number Element
+
+    var cardNumber = welcomeCard.setStripeCardNumber(elements);
+    cardNumber.mount('#card-number');
+    cardNumber.addEventListener('change', function (_ref2) {
+      var error = _ref2.error;
+      var displayError = document.getElementById('card-errors');
+
+      if (error) {
+        displayError.textContent = error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    }); // Stripe Card Expiry element
+
+    var cardExpiry = welcomeCard.setCardExpiry(elements);
+    cardExpiry.mount('#card-expiry'); // Stripe Card CVC element
+
+    var cvc = welcomeCard.setCVCInputField(elements);
+    cvc.mount('#card-cvc'); // Holdername field
+
+    var cardHolderName = document.getElementById('card-holder-name'); // Stripe Checkout PaymentRequestButton Element
+
+    $('#payment-request-button, #checkout-button').on('click',
+    /*#__PURE__*/
+    function () {
+      var _ref3 = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
+        var _ref4, paymentMethod, error;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return stripe.createPaymentMethod('card', cardNumber, {
+                  billing_details: {
+                    name: cardHolderName.value
+                  }
+                });
+
+              case 2:
+                _ref4 = _context2.sent;
+                paymentMethod = _ref4.paymentMethod;
+                error = _ref4.error;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }());
+    var paymentRequest = stripe.paymentRequest({
+      country: 'ES',
+      currency: 'eur',
+      total: {
+        amount: 20,
+        label: 'Application Fee Payment'
+      },
+      requestPayerPhone: true,
+      requestPayerEmail: true
+    });
+    var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
+    welcomeCard.setCheckoutForm(cardNumber);
+  },
+  setCheckoutForm: function setCheckoutForm(element) {
+    welcomeCard.forms.checkout.el().addEventListener('submit', function (event) {
+      event.preventDefault();
+      stripe.createToken(element, {
+        name: document.getElementById('card-holder-name'),
+        email: document.getElementById('email-payer')
+      }).then(function (result) {});
+    });
+  },
+  setStripeCardNumber: function setStripeCardNumber(elements) {
+    return elements.create('cardNumber', {
+      value: {
+        cardHolder: 'Steve Stifler'
+      }
+    });
+  },
+  setCVCInputField: function setCVCInputField(elements) {
+    return elements.create('cardCvc', {
+      placeholder: '123'
+    });
+  },
+  setCardExpiry: function setCardExpiry(elements) {
+    return elements.create('cardExpiry', {
+      placeholder: 'MM / YY'
+    });
+  },
+  setStripePaymentRequestButton: function setStripePaymentRequestButton(elements, paymentRequest) {
+    var paymentRequestButton = elements.create('paymentRequestButton', {
+      paymentRequest: paymentRequest
+    });
+    paymentRequest.canMakePayment().then(function (result) {
+      if (result) {
+        paymentRequestButton.mount('#payment-request-button');
+      } else {
+        document.getElementById('payment-request-button').style.display = 'none';
+        document.getElementById('checkout-button').parentElement.style.display = 'block';
+      }
+    });
+    paymentRequest.on('paymentmethod', function (e) {
+      stripe.confirmCardPayment(clientSecret, {
+        payment_method: e.paymentMethod.id
+      }, {
+        handleActions: false
+      }).then(function (confirmResult) {
+        if (confirmResult.error) {
+          e.complete('failed');
+        } else {
+          e.complete('success');
+          stripe.confirmCardPayment(clientSecret).then(function (result) {
+            /*if () {
+              }*/
+          });
+        }
+      });
+    });
   }
   /*replace: function(oldElement, newElement) {
       let container = oldElement.parentElement;
@@ -4316,6 +4474,42 @@ var dom = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (dom);
+
+/***/ }),
+
+/***/ "./resources/js/main/domObserver.js":
+/*!******************************************!*\
+  !*** ./resources/js/main/domObserver.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var domObserver = function () {
+  var MutationObserver = window.MutationObserver || window.WebkitMutation.Observer;
+  return function (object, callback) {
+    // Checks if the Object is an nodeType or a DOM element.
+    if (!object || !object.nodeType === 1) return;
+
+    if (MutationObserver) {
+      // Define a new observer
+      var observer = new MutationObserver(function (mutations, observer) {
+        callback(mutations);
+      }); // Adds the DOM element or the nodeType to the list of observed nodes.
+
+      observer.observe(object, {
+        childList: true,
+        subtree: true
+      });
+    } else if (window.addEventListener) {
+      object.addEventListener('DOMNodeInserted', callback, false);
+      object.addEventListener('DOMNodeRemoved', callback, false);
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (domObserver);
 
 /***/ }),
 

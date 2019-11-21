@@ -78,3 +78,5 @@ Auth::routes();
 /* Home */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/confirm', 'UsersController@confirm')->name('confirm');
+Route::get('/checkout/success', 'PaymentsController@checkout')->name('checkout_success');
+Route::get('/checkout/failed', 'PaymentsController@checkout')->name('checkout_failed');

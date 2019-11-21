@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Stripe\Checkout\Session;
 
-class PaymentsController extends Controller
+class CheckoutsController extends Controller
 {
+    protected $session;
+
     /**
      * Create a new controller instance.
      *
@@ -90,5 +93,10 @@ class PaymentsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function checkout() {
+
     }
 }
