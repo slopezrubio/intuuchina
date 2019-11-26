@@ -22,7 +22,7 @@
     </div>
 
     <div class="card-body">
-        <form action="#" id="checkout">
+        <form method="POST" action="{{ route('fee_payment', Auth::id()) }}"  id="checkout">
             @csrf
             <div class="container">
 
@@ -76,13 +76,15 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="payment-method" id="payment-method">
+
                 <div class="is-invalid" id="submit-errors"></div>
                 <div class="form-group row">
                     <div id="payment-request-button" class="col-12">
                         <!-- Stripe Payment Request Button -->
                     </div>
                     <div class="col-12 p-0 col-md-8 col-lg-6 offset-md-2 offset-lg-3" style="display: none">
-                        <button class="cta col-12" type="submit" id="checkout-button">{{ __('content.process fee payment') }}</button>
+                        <button class="cta col-12" type="submit" id="checkout-button-sku_GDHDkOPWtjGF2w">{{ __('content.process fee payment') }}</button>
                     </div>
                 </div>
             </div>

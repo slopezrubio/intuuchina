@@ -125,6 +125,7 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -136,6 +137,22 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ( true &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -150,8 +167,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request.onreadystatechange = function handleLoad() {
-      if (!request || request.readyState !== 4) {
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
         return;
       }
 
@@ -168,8 +185,9 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        status: request.status,
-        statusText: request.statusText,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -982,6 +1000,54 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
+/***/ "./node_modules/axios/lib/helpers/btoa.js":
+/*!************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1396,7 +1462,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1700,10 +1766,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
-/*!************************************************************!*\
-  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
-  \************************************************************/
+/***/ "./node_modules/is-buffer/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1714,9 +1780,19 @@ module.exports = {
  * @license  MIT
  */
 
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
 
@@ -3963,7 +4039,7 @@ var welcomeCard = {
         displayError.textContent = '';
       }
     });
-    $('#payment-request-button, #checkout-button').on('click',
+    $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click',
     /*#__PURE__*/
     function () {
       var _ref5 = _asyncToGenerator(
@@ -3975,7 +4051,9 @@ var welcomeCard = {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                e.preventDefault();
+                welcomeCard.redirectToCheckout();
+                _context3.next = 4;
                 return stripe.createPaymentMethod('card', cardNumber, {
                   billing_details: {
                     name: cardHolderName.value,
@@ -3983,7 +4061,7 @@ var welcomeCard = {
                   }
                 });
 
-              case 2:
+              case 4:
                 _ref6 = _context3.sent;
                 paymentMethod = _ref6.paymentMethod;
                 error = _ref6.error;
@@ -3992,9 +4070,12 @@ var welcomeCard = {
                   /*var displayError = document.getElementById('submit-errors');
                   displayError.textContent = error.message;*/
                   console.log(error);
+                } else {
+                  document.querySelector('#payment-method').value = paymentMethod.id;
+                  welcomeCard.forms.checkout.el().submit();
                 }
 
-              case 6:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -4008,6 +4089,28 @@ var welcomeCard = {
     }());
     var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
     welcomeCard.setCheckoutForm(cardNumber);
+  },
+  redirectToCheckout: function redirectToCheckout() {
+    stripe.redirectToCheckout({
+      items: [{
+        sku: 'sku_GDHDkOPWtjGF2w',
+        quantity: 1
+      }],
+      // Do not rely on the redirect to the successUrl for fulfilling
+      // purchases, customers may not always reach the success_url after
+      // a successful payment.
+      // Instead use one of the strategies described in
+      // https://stripe.com/docs/payments/checkout/fulfillment
+      successUrl: welcomeCard.forms.checkout.el().getAttribute('action'),
+      cancelUrl: 'https://your-website.com/canceled'
+    }).then(function (result) {
+      if (result.error) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer.
+        var displayError = document.getElementById('error-message');
+        displayError.textContent = result.error.message;
+      }
+    });
   },
   setCheckoutForm: function setCheckoutForm(element) {
     welcomeCard.forms.checkout.el().addEventListener('submit', function (event) {
@@ -4040,7 +4143,7 @@ var welcomeCard = {
         paymentRequestButton.mount('#payment-request-button');
       } else {
         document.getElementById('payment-request-button').style.display = 'none';
-        document.getElementById('checkout-button').parentElement.style.display = 'block';
+        document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w').parentElement.style.display = 'block';
       }
     });
     paymentRequest.on('paymentmethod', function (e) {
@@ -4055,7 +4158,7 @@ var welcomeCard = {
           e.complete('success');
           stripe.confirmCardPayment(clientSecret).then(function (result) {
             /*if () {
-              }*/
+             }*/
           });
         }
       });
@@ -4688,23 +4791,23 @@ var messages = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_welcome-card.js */"./resources/js/components/_welcome-card.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");
-module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_edit-offer.js */"./resources/js/components/_edit-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_services.js */"./resources/js/components/_services.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_customer-journey.js */"./resources/js/components/_customer-journey.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_welcome-card.js */"./resources/js/components/_welcome-card.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_stats.js */"./resources/js/components/_stats.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_motifs.js */"./resources/js/components/_motifs.js");
+module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
 
 
 /***/ })

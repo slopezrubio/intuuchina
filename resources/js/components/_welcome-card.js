@@ -151,7 +151,11 @@ let welcomeCard = {
             }
         });
 
-        $('#payment-request-button, #checkout-button').on('click', async (e) => {
+        $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', async (e) => {
+            e.preventDefault();
+
+            welcomeCard.redirectToCheckout();
+
             const { paymentMethod, error } = await stripe.createPaymentMethod(
                 'card', cardNumber, {
                     billing_details: {
@@ -166,12 +170,36 @@ let welcomeCard = {
                 displayError.textContent = error.message;*/
 
                 console.log(error);
+            } else {
+                document.querySelector('#payment-method').value = paymentMethod.id;
+                welcomeCard.forms.checkout.el().submit();
             }
         });
 
         var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
 
         welcomeCard.setCheckoutForm(cardNumber);
+    },
+    redirectToCheckout: function() {
+        stripe.redirectToCheckout({
+            items: [{sku: 'sku_GDHDkOPWtjGF2w', quantity: 1}],
+
+            // Do not rely on the redirect to the successUrl for fulfilling
+            // purchases, customers may not always reach the success_url after
+            // a successful payment.
+            // Instead use one of the strategies described in
+            // https://stripe.com/docs/payments/checkout/fulfillment
+            successUrl: welcomeCard.forms.checkout.el().getAttribute('action'),
+            cancelUrl: 'https://your-website.com/canceled',
+        })
+            .then(function (result) {
+                if (result.error) {
+                    // If `redirectToCheckout` fails due to a browser or network
+                    // error, display the localized error message to your customer.
+                    var displayError = document.getElementById('error-message');
+                    displayError.textContent = result.error.message;
+                }
+            });
     },
     setCheckoutForm: function(element) {
         welcomeCard.forms.checkout.el().addEventListener('submit', function(event) {
@@ -208,7 +236,7 @@ let welcomeCard = {
                 paymentRequestButton.mount('#payment-request-button');
             } else {
                 document.getElementById('payment-request-button').style.display = 'none';
-                document.getElementById('checkout-button').parentElement.style.display = 'block';
+                document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w').parentElement.style.display = 'block';
             }
         });
 

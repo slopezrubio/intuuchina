@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutsController extends Controller
 {
@@ -29,15 +30,7 @@ class CheckoutsController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,19 +40,10 @@ class CheckoutsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $stripeCharge = $user->charge(87478677, $request->get('payment-method'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

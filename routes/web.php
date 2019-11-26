@@ -85,6 +85,9 @@ Route::post('/message','MailMessagesController@send')->name('mail');
 /* Autenticación */
 Auth::routes();
 
+/* Payment */
+Route::post('/{user}/fee-payment', 'CheckoutsController@store')->name('fee_payment');
+
 /* Home */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/confirm', 'UsersController@confirm')->name('confirm');

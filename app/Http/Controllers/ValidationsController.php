@@ -19,9 +19,15 @@ class ValidationsController extends Controller
     }
 
     public function validateField(Request $field) {
-       return v::make($field->all(), [
-           'value' => $field->get('validators')
-       ])->validate();
+        $errors = $field->validate([
+            'value' => $field->get('validators')
+        ]);
+
+        if (empty($errors)) {
+            return "success";
+        }
+
+        return $errors;
     }
 
     /**
