@@ -199,6 +199,47 @@
   max-width: 630px;
 }
 
+@mixin inputText($element: input) {
+  #{$element} {
+    height: calc(1.6em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.6;
+    @include marginBottom;
+    @include prefixed(transition, 'border-color .15s ease-in-out, box-shadow .15s ease-in-out');
+    @if $element == '.StripeElement' {
+      border-bottom: 2px solid #ced4da;
+
+      &--focus, &--invalid {
+        border-color: $primaryRed;
+      }
+    }
+
+    &:focus {
+      border-color: $primaryRed;
+    }
+  }
+}
+
+@mixin select() {
+  .regular--select-wrapper {
+    z-index: 2;
+    position: relative;
+    select {
+      @include resetSelect;
+      @include marginBottom;
+      z-index: -1;
+      cursor: pointer;
+      &:focus {
+        border-color: $primaryRed;
+      }
+    }
+    &::before {
+      @include arrowIcon;
+      top: 5px;
+    }
+  }
+}
+
 // Login buttons effects
 @mixin shutter-in-horizontal {
   @include hacks();

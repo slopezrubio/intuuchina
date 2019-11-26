@@ -5,12 +5,7 @@
         .card-body {
             padding: 0em;
             form {
-                input {
-                    @include marginBottom;
-                    &:focus {
-                        border-color: $primaryRed;
-                    }
-                }
+                @include inputText();
 
                 & > div > label,
                 & > div > div > label{
@@ -81,7 +76,7 @@
             .card-body {
                 form {
                     & > div:last-of-type {
-                        @include prefixed(flex-direction, row);
+                        @include flex-direction(row);
                         .shutter-button {
                             max-width: 100%;
                         }
@@ -98,7 +93,7 @@
             .card-body {
                 form {
                     & > div:first-of-type {
-                        @include prefixed(display, flex);
+                        @include flexbox();
                         margin-bottom: 0px;
 
                         & > div > label {
@@ -116,9 +111,9 @@
     div {
         .sw_input {
             height: 65px;
-            @include prefixed(display, flex);
-            @include prefixed(justify-content, space-between);
-            @include prefixed(align-items, center);
+            @include flexbox();
+            @include justify-content(space-between);
+            @include align-items(center);
 
             label {
                 margin-top: .5em;
@@ -137,9 +132,9 @@
         div {
             .sw_input {
                 height: auto;
-                @include prefixed(flex-direction, column);
-                @include prefixed(justify-content, flex-start);
-                @include prefixed(align-items, flex-start);
+                @include flex-direction(column);
+                @include justify-content(flex-start);
+                @include align-items(flex-start);
                 label:first-of-type {
                     margin-bottom: 0;
                     margin-top: 1em;
@@ -152,9 +147,9 @@
 @media #{$medium_devices_secondary} {
     #industryFieldset, #universityFieldset, #studyFieldset {
         div {
-            @include prefixed(display, grid);
-            @include prefixed(grid-template-columns, '1fr 1fr');
-            @include prefixed(grid-gap, '0 1.5em');
+            @include grid();
+            @include grid-template-columns('1fr 1fr');
+            @include grid-column-gap('0 1.5em');
             .sw_input {
                 label:first-of-type {
                 }
@@ -166,9 +161,9 @@
 @media #{$large-devices} {
     #industryFieldset, #universityFieldset, #studyFieldset {
         div {
-            @include prefixed(display, grid);
-            @include prefixed(grid-template-columns, '1fr 1fr');
-            @include prefixed(grid-gap, '0 1.5em');
+            @include grid();
+            @include grid-template-columns('1fr 1fr');
+            @include grid-column-gap('0 1.5em');
             .sw_input {
                 label:first-of-type {
                 }

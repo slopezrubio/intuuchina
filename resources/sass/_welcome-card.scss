@@ -13,6 +13,28 @@
     }
   }
 
+  #dialog-box {
+    form {
+      @include inputText();
+      @include select();
+      label {
+        font-weight: 700;
+        height: 22px;
+      }
+
+      .is-invalid {
+        border-color: $primaryRed;
+      }
+
+      .invalid-feedback, .invalid-stripe-feedback {
+        font-size: 0.8em;
+        font-weight: 700;
+        color: $secondaryRed;
+        padding-left: 0;
+      }
+    }
+  }
+
   &__action {
     margin-top: 3em;
     .cta {

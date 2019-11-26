@@ -16,8 +16,10 @@ Route::get('/', function () {
 });
 
 /* Ofertas */
-Route::get('/internship', 'OffersController@index')->name('offers');
-Route::get('/internship/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
+Route::prefix('internship')->group(function() {
+    Route::get('/', 'OffersController@index')->name('offers');
+    Route::get('/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
+});
 
 /* Job Description */
 Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+')->name('single-offer');
@@ -59,14 +61,22 @@ Route::get('/login', function() {
 Route::post('/register/options','Auth\RegisterController@registerWithOptions')->name('register.options');
 
 /* Administrador */
-Route::group(['middleware' => 'App\Http\Middleware\Admin'], function(){
+Route::group([
+        'middleware' => 'App\Http\Middleware\Admin', 'prefix' => 'admin'
+    ], function(){
     Route::match(['get', 'post'], '/admin/','HomeController@admin');
-    Route::get('/admin/offers', 'OffersController@admin')->name('admin.offers');
-    Route::post('/admin/offers', 'OffersController@store');
-    Route::post('/admin/offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+');
-    Route::get('/admin/offers/edit/{offer}', 'OffersController@edit')->where('offer', '[0-9]+');
-    Route::get('/admin/offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+');
-    Route::get('/admin/offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
+    Route::get('/offers', 'OffersController@admin')->name('admin.offers');
+    Route::post('/offers', 'OffersController@store');
+    Route::post('/offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+');
+    Route::get('/offers/edit/{offer}', 'OffersController@edit')->where('offer', '[0-9]+');
+    Route::get('/offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+');
+    Route::get('/offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
+});
+
+// Validator
+Route::prefix('validate')->group(function() {
+    Route::post('card-holder-name', 'ValidationsController@validateField');
+    Route::post('email-payer', 'ValidationsController@validateField');
 });
 
 /* Formulario de contacto del pie de página */
@@ -78,5 +88,4 @@ Auth::routes();
 /* Home */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/confirm', 'UsersController@confirm')->name('confirm');
-Route::get('/checkout/success', 'PaymentsController@checkout')->name('checkout_success');
-Route::get('/checkout/failed', 'PaymentsController@checkout')->name('checkout_failed');
+

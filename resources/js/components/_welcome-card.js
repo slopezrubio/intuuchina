@@ -1,16 +1,17 @@
 const axios = require('axios');
 
 import domObserver from "../main/domObserver.js";
+import dom from '../main/dom';
 import api from '../main/api';
 
 let welcomeCard = {
     init: function() {
         window.addEventListener('DOMContentLoaded', function() {
-            domObserver(welcomeCard.dialogContainer.parentElement, welcomeCard.update);
+            domObserver(welcomeCard.dialogBoxContainer.parentElement, welcomeCard.update);
         });
         welcomeCard.setup();
     },
-    dialogContainer: document.querySelector('#dialog') ? document.querySelector('#dialog') : null,
+    dialogBoxContainer: document.querySelector('#dialog-box') ? document.querySelector('#dialog-box') : null,
     update: function() {
         welcomeCard.setup();
     },
@@ -44,10 +45,24 @@ let welcomeCard = {
     isStripeLoaded: function() {
         return welcomeCard.forms.checkout.el().querySelector('#card-number').childElementCount > 0;
     },
-    replaceDialog: function(newDialog) {
-        let container = welcomeCard.dialogContainer.parentElement;
-        $(welcomeCard.dialogContainer).empty();
-        $(container).html(newDialog);
+    replaceDialog: function(newDialogBox) {
+        let container = welcomeCard.dialogBoxContainer.parentElement;
+        $(welcomeCard.dialogBoxContainer).empty();
+        $(container).html(newDialogBox);
+    },
+    handleErrorField: async function(field, element) {
+        let errors = await api.validate(field);
+
+        const displayError =  document.getElementById(field.name + '-errors');
+
+        if (errors !== null) {
+            displayError.style.display = 'block';
+            displayError.textContent = errors['value'][0];
+            element.classList.add('is-invalid')
+        } else {
+            displayError.style.display = 'none';
+            element.classList.remove('is-invalid');
+        }
     },
     setStripeElements: function() {
         var elements = stripe.elements({
@@ -56,17 +71,15 @@ let welcomeCard = {
             }],
         });
 
+        // Holdername Element
+        var cardHolderName = document.getElementById('card-holder-name');
+
+        // Email payer Element
+        var cardEmailPayer = document.getElementById('email-payer');
+
         // Stripe Card Number Element
         var cardNumber = welcomeCard.setStripeCardNumber(elements);
         cardNumber.mount('#card-number');
-        cardNumber.addEventListener('change', ({error}) => {
-            const displayError = document.getElementById('card-errors');
-            if (error) {
-                displayError.textContent = error.message;
-            } else {
-                displayError.textContent = ''
-            }
-        });
 
         // Stripe Card Expiry element
         var cardExpiry = welcomeCard.setCardExpiry(elements);
@@ -76,25 +89,7 @@ let welcomeCard = {
         var cvc = welcomeCard.setCVCInputField(elements);
         cvc.mount('#card-cvc');
 
-        // Holdername field
-        var cardHolderName = document.getElementById('card-holder-name');
-
-
-        // Stripe Checkout PaymentRequestButton Element
-        $('#payment-request-button, #checkout-button').on('click', async (e) => {
-            const { paymentMethod, error } = await stripe.createPaymentMethod(
-                'card', cardNumber, {
-                    billing_details: {
-                        name: cardHolderName.value
-                    }
-                }
-            );
-
-            /*if (error) {
-                var displayError = document.getElementById('submit-errors');
-                displayError.textContent = error.message;
-            }*/
-        });
+        // Payment Request Options
         var paymentRequest = stripe.paymentRequest({
             country: 'ES',
             currency: 'eur',
@@ -105,6 +100,75 @@ let welcomeCard = {
             requestPayerPhone: true,
             requestPayerEmail: true,
         });
+
+        /**
+         * STRIPE ELEMENTS EVENTS
+         */
+        cardHolderName.addEventListener('change', (event) => {
+            let field = {
+                value: event.target.value,
+                name: event.target.getAttribute('name'),
+                validators: 'required|alpha'
+            };
+
+            welcomeCard.handleErrorField(field, event.target)
+        });
+
+        cardEmailPayer.addEventListener('change', (event) => {
+            let field = {
+                value: event.target.value,
+                name: event.target.getAttribute('name'),
+                validators: 'required|email'
+            };
+
+            welcomeCard.handleErrorField(field, event.target);
+        });
+
+        cardNumber.addEventListener('change', ({error}) => {
+            const displayError = document.getElementById('card-number-errors');
+            if (error) {
+                displayError.textContent = error.message;
+            } else {
+                displayError.textContent = ''
+            }
+        });
+
+        cvc.addEventListener('change', ({error}) => {
+            const displayError = document.getElementById('cvc-errors');
+            if (error) {
+                displayError.textContent = error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        cardExpiry.addEventListener('change', ({error}) => {
+            const displayError = document.getElementById('card-expiry-errors');
+            if (error) {
+                displayError.textContent = error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        $('#payment-request-button, #checkout-button').on('click', async (e) => {
+            const { paymentMethod, error } = await stripe.createPaymentMethod(
+                'card', cardNumber, {
+                    billing_details: {
+                        name: cardHolderName.value,
+                        email: document.querySelector('#email-payer').value,
+                    }
+                }
+            );
+
+            if (error) {
+                /*var displayError = document.getElementById('submit-errors');
+                displayError.textContent = error.message;*/
+
+                console.log(error);
+            }
+        });
+
         var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
 
         welcomeCard.setCheckoutForm(cardNumber);
@@ -114,19 +178,15 @@ let welcomeCard = {
             event.preventDefault();
 
             stripe.createToken(element, {
-                name: document.getElementById('card-holder-name'),
-                email: document.getElementById('email-payer')
+                name: document.getElementById('card-holder-name').value,
+                email: document.getElementById('email-payer').value
             }).then(function(result) {
 
             })
         })
     },
     setStripeCardNumber: function(elements) {
-        return elements.create('cardNumber', {
-            value: {
-                cardHolder: 'Steve Stifler'
-            }
-        });
+        return elements.create('cardNumber');
     },
     setCVCInputField: function(elements) {
         return elements.create('cardCvc', {
@@ -171,14 +231,6 @@ let welcomeCard = {
             })
         });
     }
-    /*replace: function(oldElement, newElement) {
-        let container = oldElement.parentElement;
-        $(oldElement).empty();
-
-        if (typeof newElement === 'string') {
-            $(container).html(newElement);
-        }
-    },*/
 }
 
 if (document.querySelector('.user-card')) {

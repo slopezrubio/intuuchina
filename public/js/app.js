@@ -3755,7 +3755,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
-/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3766,14 +3767,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 
 
+
 var welcomeCard = {
   init: function init() {
     window.addEventListener('DOMContentLoaded', function () {
-      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__["default"])(welcomeCard.dialogContainer.parentElement, welcomeCard.update);
+      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__["default"])(welcomeCard.dialogBoxContainer.parentElement, welcomeCard.update);
     });
     welcomeCard.setup();
   },
-  dialogContainer: document.querySelector('#dialog') ? document.querySelector('#dialog') : null,
+  dialogBoxContainer: document.querySelector('#dialog-box') ? document.querySelector('#dialog-box') : null,
   update: function update() {
     welcomeCard.setup();
   },
@@ -3808,7 +3810,7 @@ var welcomeCard = {
                     _token: welcomeCard.forms.confirm.el().querySelector('input[type="hidden"')
                   };
                   _context.next = 5;
-                  return _main_api__WEBPACK_IMPORTED_MODULE_2__["default"].confirm(url, data);
+                  return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].confirm(url, data);
 
                 case 5:
                   dialogBox = _context.sent;
@@ -3837,75 +3839,70 @@ var welcomeCard = {
   isStripeLoaded: function isStripeLoaded() {
     return welcomeCard.forms.checkout.el().querySelector('#card-number').childElementCount > 0;
   },
-  replaceDialog: function replaceDialog(newDialog) {
-    var container = welcomeCard.dialogContainer.parentElement;
-    $(welcomeCard.dialogContainer).empty();
-    $(container).html(newDialog);
+  replaceDialog: function replaceDialog(newDialogBox) {
+    var container = welcomeCard.dialogBoxContainer.parentElement;
+    $(welcomeCard.dialogBoxContainer).empty();
+    $(container).html(newDialogBox);
   },
+  handleErrorField: function () {
+    var _handleErrorField = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(field, element) {
+      var errors, displayError;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].validate(field);
+
+            case 2:
+              errors = _context2.sent;
+              displayError = document.getElementById(field.name + '-errors');
+
+              if (errors !== null) {
+                displayError.style.display = 'block';
+                displayError.textContent = errors['value'][0];
+                element.classList.add('is-invalid');
+              } else {
+                displayError.style.display = 'none';
+                element.classList.remove('is-invalid');
+              }
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function handleErrorField(_x2, _x3) {
+      return _handleErrorField.apply(this, arguments);
+    }
+
+    return handleErrorField;
+  }(),
   setStripeElements: function setStripeElements() {
     var elements = stripe.elements({
       fonts: [{
         cssSrc: "https://fonts.googleapis.com/css?family=Montserrat"
       }]
-    }); // Stripe Card Number Element
+    }); // Holdername Element
+
+    var cardHolderName = document.getElementById('card-holder-name'); // Email payer Element
+
+    var cardEmailPayer = document.getElementById('email-payer'); // Stripe Card Number Element
 
     var cardNumber = welcomeCard.setStripeCardNumber(elements);
-    cardNumber.mount('#card-number');
-    cardNumber.addEventListener('change', function (_ref2) {
-      var error = _ref2.error;
-      var displayError = document.getElementById('card-errors');
-
-      if (error) {
-        displayError.textContent = error.message;
-      } else {
-        displayError.textContent = '';
-      }
-    }); // Stripe Card Expiry element
+    cardNumber.mount('#card-number'); // Stripe Card Expiry element
 
     var cardExpiry = welcomeCard.setCardExpiry(elements);
     cardExpiry.mount('#card-expiry'); // Stripe Card CVC element
 
     var cvc = welcomeCard.setCVCInputField(elements);
-    cvc.mount('#card-cvc'); // Holdername field
+    cvc.mount('#card-cvc'); // Payment Request Options
 
-    var cardHolderName = document.getElementById('card-holder-name'); // Stripe Checkout PaymentRequestButton Element
-
-    $('#payment-request-button, #checkout-button').on('click',
-    /*#__PURE__*/
-    function () {
-      var _ref3 = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
-        var _ref4, paymentMethod, error;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return stripe.createPaymentMethod('card', cardNumber, {
-                  billing_details: {
-                    name: cardHolderName.value
-                  }
-                });
-
-              case 2:
-                _ref4 = _context2.sent;
-                paymentMethod = _ref4.paymentMethod;
-                error = _ref4.error;
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      return function (_x2) {
-        return _ref3.apply(this, arguments);
-      };
-    }());
     var paymentRequest = stripe.paymentRequest({
       country: 'ES',
       currency: 'eur',
@@ -3916,6 +3913,99 @@ var welcomeCard = {
       requestPayerPhone: true,
       requestPayerEmail: true
     });
+    /**
+     * STRIPE ELEMENTS EVENTS
+     */
+
+    cardHolderName.addEventListener('change', function (event) {
+      var field = {
+        value: event.target.value,
+        name: event.target.getAttribute('name'),
+        validators: 'required|alpha'
+      };
+      welcomeCard.handleErrorField(field, event.target);
+    });
+    cardEmailPayer.addEventListener('change', function (event) {
+      var field = {
+        value: event.target.value,
+        name: event.target.getAttribute('name'),
+        validators: 'required|email'
+      };
+      welcomeCard.handleErrorField(field, event.target);
+    });
+    cardNumber.addEventListener('change', function (_ref2) {
+      var error = _ref2.error;
+      var displayError = document.getElementById('card-number-errors');
+
+      if (error) {
+        displayError.textContent = error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    cvc.addEventListener('change', function (_ref3) {
+      var error = _ref3.error;
+      var displayError = document.getElementById('cvc-errors');
+
+      if (error) {
+        displayError.textContent = error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    cardExpiry.addEventListener('change', function (_ref4) {
+      var error = _ref4.error;
+      var displayError = document.getElementById('card-expiry-errors');
+
+      if (error) {
+        displayError.textContent = error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    $('#payment-request-button, #checkout-button').on('click',
+    /*#__PURE__*/
+    function () {
+      var _ref5 = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
+        var _ref6, paymentMethod, error;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return stripe.createPaymentMethod('card', cardNumber, {
+                  billing_details: {
+                    name: cardHolderName.value,
+                    email: document.querySelector('#email-payer').value
+                  }
+                });
+
+              case 2:
+                _ref6 = _context3.sent;
+                paymentMethod = _ref6.paymentMethod;
+                error = _ref6.error;
+
+                if (error) {
+                  /*var displayError = document.getElementById('submit-errors');
+                  displayError.textContent = error.message;*/
+                  console.log(error);
+                }
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x4) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
     var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
     welcomeCard.setCheckoutForm(cardNumber);
   },
@@ -3923,17 +4013,13 @@ var welcomeCard = {
     welcomeCard.forms.checkout.el().addEventListener('submit', function (event) {
       event.preventDefault();
       stripe.createToken(element, {
-        name: document.getElementById('card-holder-name'),
-        email: document.getElementById('email-payer')
+        name: document.getElementById('card-holder-name').value,
+        email: document.getElementById('email-payer').value
       }).then(function (result) {});
     });
   },
   setStripeCardNumber: function setStripeCardNumber(elements) {
-    return elements.create('cardNumber', {
-      value: {
-        cardHolder: 'Steve Stifler'
-      }
-    });
+    return elements.create('cardNumber');
   },
   setCVCInputField: function setCVCInputField(elements) {
     return elements.create('cardCvc', {
@@ -3975,14 +4061,6 @@ var welcomeCard = {
       });
     });
   }
-  /*replace: function(oldElement, newElement) {
-      let container = oldElement.parentElement;
-      $(oldElement).empty();
-        if (typeof newElement === 'string') {
-          $(container).html(newElement);
-      }
-  },*/
-
 };
 
 if (document.querySelector('.user-card')) {
@@ -4383,6 +4461,53 @@ var api = {
     }
 
     return confirm;
+  }(),
+  validate: function () {
+    var _validate = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(field) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              api.setTokenToAxiosHeader();
+              _context2.next = 3;
+              return axios({
+                method: 'post',
+                headers: {
+                  'Content-type': 'application/json'
+                },
+                url: '/validate/' + field.name,
+                data: field
+              }).then(function (response) {
+                return null;
+              })["catch"](function (error) {
+                console.log(error.response);
+                return error.response.data.errors;
+              });
+
+            case 3:
+              response = _context2.sent;
+              _context2.next = 6;
+              return response;
+
+            case 6:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function validate(_x3) {
+      return _validate.apply(this, arguments);
+    }
+
+    return validate;
   }(),
   setTokenToAxiosHeader: function setTokenToAxiosHeader() {
     var token = document.head.querySelector('meta[name="csrf-token"');

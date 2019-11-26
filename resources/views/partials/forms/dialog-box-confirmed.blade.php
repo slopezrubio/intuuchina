@@ -1,4 +1,4 @@
-<div id="dialog">
+<div id="dialog-box">
 {{--    <div class="card-header">--}}
 {{--        {{ __('content.welcome user page title') }}--}}
 {{--    </div>--}}
@@ -25,49 +25,67 @@
         <form action="#" id="checkout">
             @csrf
             <div class="container">
-                <div class="form-group row">
-                    <label for="cardholder">{{ __('content.cardholder name') }}</label>
-                    <input type="text" id="card-holder-name">
+
+                <div class="form-group align-items-end row">
+                    <label class="col-12 col-lg-3 p-0" for="cardholder">{{ __('content.cardholder name') }}</label>
+                    <input class="col-12 col-lg-9 {{ $errors->has('card-holder-name') ? ' is-invalid' : '' }}" name="card-holder-name" type="text" id="card-holder-name">
+                    <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="card-holder-name-errors"></div>
                 </div>
-                <div class="form-group row">
-                    <label for="email-payer">{{ __('content.mail') }}</label>
-                    <input type="text" id="email-payer" value="{{ Auth::user()->email }}">
+
+                <div class="form-group align-items-end row">
+                    <label class="col-12 col-lg-3 p-0" for="email-payer">{{ __('content.mail') }}</label>
+                    <input class="col-12 col-lg-9 {{ $errors->has('email-payer') ? ' is-invalid' : '' }}" name="email-payer" type="text" id="email-payer" value="{{ Auth::user()->email }}">
+                    <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="email-payer-errors"></div>
                 </div>
-                <div class="form-group row">
-                    <label for="card-number">{{ __('content.card number') }}</label>
+
+                <div class="form-group align-items-center row">
+                    <label class="col-12 col-lg-3 p-0" for="card-number">{{ __('content.card number') }}</label>
                     <div class="col-12 col-lg-9" id="card-number">
                         <!-- Stripe Card Number element -->
                     </div>
-                    <div id="card-errors"></div>
+                    <div class="offset-lg-3 invalid-stripe-feedback" id="card-number-errors"></div>
                 </div>
-                <div class="form-group row">
-                    <div class="row col-5">
-                        <label for="card-cvc col-12 col-md-5">{{ __('content.cvc') }}</label>
-                        <div class="col-12 col-md-5" id="card-cvc">
+
+                <div class="form-group justify-content-between row">
+                    <div class="row align-items-start align-content-start col-6 col-lg-4 col-md-6 p-lg-0 offset-lg-3">
+                        <label for="card-cvc" class="col-12 col-lg-3 p-0">{{ __('content.cvc') }}</label>
+                        <div class="col-7 col-lg-5 col-md-5" id="card-cvc">
                             <!-- Stripe Card CVC element -->
                         </div>
+                        <div class="offset-lg-3 col-md-5 col-12 p-0 invalid-stripe-feedback" id="cvc-errors"></div>
                     </div>
-                    <div class="row col-5 offset-2">
-                        <label for="card-expiry col-12 col-md-5">{{ __('content.card expiry') }}</label>
-                        <div class="col-12 col-md-5" id="card-expiry">
+                    <div class="row align-items-center col-6 col-lg-5 col-md-6">
+                        <label class="col-12 col-lg-6 ml-auto p-0" for="card-expiry">{{ __('content.card expiry') }}</label>
+                        <div class="col-12 col-lg-6" id="card-expiry">
                             <!-- Stripe Card Expiry element -->
+                        </div>
+                        <div class="offset-lg-6 col-lg-5 col-12 p-0 invalid-stripe-feedback" id="card-expiry-errors"></div>
+                    </div>
+                </div>
+
+                <div class="form-group align-items-end row">
+                    <label class="col-12 col-lg-3 p-0" for="payment-currency">{{ __('content.currency') }}</label>
+                    <div class="col-12 col-lg-9 p-0">
+                        <div class="regular--select-wrapper">
+                            <select name="payment-currency" id="payment-currency" class="form-control">
+                                @foreach (__('content.payment currency') as $key => $option)
+                                    <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div id="submit-errors">
-                </div>
-                    </div>
+
+                <div class="is-invalid" id="submit-errors"></div>
                 <div class="form-group row">
                     <div id="payment-request-button" class="col-12">
-
+                        <!-- Stripe Payment Request Button -->
                     </div>
-                    <div class="col-8 col-lg-6 offset-2 offset-lg-3" style="display: none">
+                    <div class="col-12 p-0 col-md-8 col-lg-6 offset-md-2 offset-lg-3" style="display: none">
                         <button class="cta col-12" type="submit" id="checkout-button">{{ __('content.process fee payment') }}</button>
                     </div>
                 </div>
             </div>
-            {{ env('STRIPE_KEY') }}
         </form>
     </div>
     <script>

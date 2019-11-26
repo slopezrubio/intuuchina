@@ -195,6 +195,17 @@ return [
     'industry' => 'Industry',
     'duration' => 'Duration',
     'picture' => 'Picture',
+    'currency' => 'Currency',
+    'payment currency' => [
+        'euro' => [
+          'text' => 'EUR / €',
+          'value' => 'eur'
+        ],
+        'us' => [
+            'text' => 'US / $',
+            'value' => 'us'
+        ]
+    ],
     'offers filter options' => [
         [
             'text' => 'Finance',

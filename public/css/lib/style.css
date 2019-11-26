@@ -14312,10 +14312,14 @@ main.full-viewport .credit a:hover {
 }
 
 .container .extended-form .card-body form input {
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.6;
   border-radius: 0px;
   border-width: 0px 0px 2px 0px;
   background: transparent;
   padding-left: 0px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .container .extended-form .card-body form input:focus,
@@ -14530,8 +14534,6 @@ main.full-viewport .credit a:hover {
 
 @media only screen and (max-width: 410px) {
   .container .extended-form .card-body form > div:last-of-type {
-    -moz-flex-direction: row;
-    -o-flex-direction: row;
     flex-direction: row;
   }
 
@@ -14542,10 +14544,6 @@ main.full-viewport .credit a:hover {
 
 @media only screen and (min-width: 768px) {
   .container .extended-form .card-body form > div:first-of-type {
-    -webkit-display: flex;
-    -moz-display: flex;
-    -ms-display: flex;
-    -o-display: flex;
     display: flex;
     margin-bottom: 0px;
   }
@@ -14561,18 +14559,10 @@ main.full-viewport .credit a:hover {
 #universityFieldset div .sw_input,
 #studyFieldset div .sw_input {
   height: 65px;
-  -webkit-display: flex;
-  -moz-display: flex;
-  -ms-display: flex;
-  -o-display: flex;
   display: flex;
-  -moz-justify-content: space-between;
-  -ms-justify-content: space-between;
-  -o-justify-content: space-between;
   justify-content: space-between;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  -o-align-items: center;
+  -webkit-justify-content: space-between;
+  -ms-box-align: center;
   align-items: center;
 }
 
@@ -14594,16 +14584,10 @@ main.full-viewport .credit a:hover {
   #universityFieldset div .sw_input,
   #studyFieldset div .sw_input {
     height: auto;
-    -moz-flex-direction: column;
-    -o-flex-direction: column;
     flex-direction: column;
-    -moz-justify-content: flex-start;
-    -ms-justify-content: flex-start;
-    -o-justify-content: flex-start;
     justify-content: flex-start;
-    -moz-align-items: flex-start;
-    -ms-align-items: flex-start;
-    -o-align-items: flex-start;
+    -webkit-justify-content: flex-start;
+    -ms-box-align: start;
     align-items: flex-start;
   }
 
@@ -14619,21 +14603,23 @@ main.full-viewport .credit a:hover {
   #industryFieldset div,
   #universityFieldset div,
   #studyFieldset div {
-    -webkit-display: grid;
-    -moz-display: grid;
-    -ms-display: grid;
-    -o-display: grid;
+    display: -ms-grid;
     display: grid;
-    -webkit-grid-template-columns: 1fr 1fr;
-    -moz-grid-template-columns: 1fr 1fr;
-    -ms-grid-template-columns: 1fr 1fr;
-    -o-grid-template-columns: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    -webkit-grid-gap: 0 1.5em;
-    -moz-grid-gap: 0 1.5em;
-    -ms-grid-gap: 0 1.5em;
-    -o-grid-gap: 0 1.5em;
-    grid-gap: 0 1.5em;
+    display: -moz-grid;
+    -ms-grid-columns: "1fr 1fr";
+    grid-template-columns: "1fr 1fr";
+    grid-column-gap: "0 1.5em";
+  }
+}
+
+@media only screen and (min-width: 575px) and (max-width: 991px) and (-ms-high-contrast: none) {
+  #industryFieldset div *::-ms-backdrop,
+  #industryFieldset div > *,
+  #universityFieldset div *::-ms-backdrop,
+  #universityFieldset div > *,
+  #studyFieldset div *::-ms-backdrop,
+  #studyFieldset div > * {
+    width: 100%-"0 1.5em";
   }
 }
 
@@ -14641,21 +14627,23 @@ main.full-viewport .credit a:hover {
   #industryFieldset div,
   #universityFieldset div,
   #studyFieldset div {
-    -webkit-display: grid;
-    -moz-display: grid;
-    -ms-display: grid;
-    -o-display: grid;
+    display: -ms-grid;
     display: grid;
-    -webkit-grid-template-columns: 1fr 1fr;
-    -moz-grid-template-columns: 1fr 1fr;
-    -ms-grid-template-columns: 1fr 1fr;
-    -o-grid-template-columns: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    -webkit-grid-gap: 0 1.5em;
-    -moz-grid-gap: 0 1.5em;
-    -ms-grid-gap: 0 1.5em;
-    -o-grid-gap: 0 1.5em;
-    grid-gap: 0 1.5em;
+    display: -moz-grid;
+    -ms-grid-columns: "1fr 1fr";
+    grid-template-columns: "1fr 1fr";
+    grid-column-gap: "0 1.5em";
+  }
+}
+
+@media only screen and (min-width: 992px) and (-ms-high-contrast: none) {
+  #industryFieldset div *::-ms-backdrop,
+  #industryFieldset div > *,
+  #universityFieldset div *::-ms-backdrop,
+  #universityFieldset div > *,
+  #studyFieldset div *::-ms-backdrop,
+  #studyFieldset div > * {
+    width: 100%-"0 1.5em";
   }
 }
 
@@ -15985,26 +15973,30 @@ section .services .service_card_container .service_card_footer .cta {
   display: block;
 }
 
-input,
 .StripeElement {
-  width: 100%;
-  height: 40px;
-  padding: 10px 12px;
-  color: #32325d;
-  background-color: white;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  transition: box-shadow 150ms ease;
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.6;
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  border-bottom: 2px solid #ced4da;
 }
 
-input:focus,
-.StripeElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
+.StripeElement:focus,
+.StripeElement:invalid {
+  box-shadow: none;
 }
 
+.StripeElement--focus,
 .StripeElement--invalid {
-  border-color: #fa755a;
+  border-color: #C80B0B;
+}
+
+.StripeElement:focus {
+  border-color: #C80B0B;
 }
 
 .StripeElement--webkit-autofill {
@@ -16026,6 +16018,87 @@ input:focus,
 
 .user-card a:hover {
   text-decoration: underline;
+}
+
+.user-card #dialog-box form input {
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.6;
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.user-card #dialog-box form input:focus,
+.user-card #dialog-box form input:invalid {
+  box-shadow: none;
+}
+
+.user-card #dialog-box form input:focus {
+  border-color: #C80B0B;
+}
+
+.user-card #dialog-box form .regular--select-wrapper {
+  z-index: 2;
+  position: relative;
+}
+
+.user-card #dialog-box form .regular--select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  padding-left: 0px;
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  z-index: -1;
+  cursor: pointer;
+}
+
+.user-card #dialog-box form .regular--select-wrapper select:focus,
+.user-card #dialog-box form .regular--select-wrapper select:invalid {
+  box-shadow: none;
+}
+
+.user-card #dialog-box form .regular--select-wrapper select:focus {
+  border-color: #C80B0B;
+}
+
+.user-card #dialog-box form .regular--select-wrapper::before {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1.7em);
+  top: 60px;
+  width: 1em;
+  height: 1em;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  z-index: -2;
+  top: 5px;
+}
+
+.user-card #dialog-box form label {
+  font-weight: 700;
+  height: 22px;
+}
+
+.user-card #dialog-box form .is-invalid {
+  border-color: #C80B0B;
+}
+
+.user-card #dialog-box form .invalid-feedback,
+.user-card #dialog-box form .invalid-stripe-feedback {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #F44336;
+  padding-left: 0;
 }
 
 .user-card__action {

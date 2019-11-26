@@ -1,4 +1,4 @@
-<div id="dialog">
+<div id="dialog-box">
     <div class="card-header">
         {{ __('content.welcome user page title') }}
     </div>
