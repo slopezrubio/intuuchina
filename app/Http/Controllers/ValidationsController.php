@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator as v;
@@ -18,10 +19,39 @@ class ValidationsController extends Controller
         //
     }
 
+    /**
+     * Validates the given field with its own validators.
+     *
+     * @param Request $field
+     * @return string
+     */
     public function validateField(Request $field) {
-        $errors = $field->validate([
-            'value' => $field->get('validators')
-        ]);
+        $validators = $field->get('validators');
+
+        if (is_string($validators)) {
+
+            $errors = $field->validate([
+                'value' => $field->get('validators')
+            ]);
+
+        } else if (is_array($validators)) {
+            for ($i = 0; $i < count($validators); $i++) {
+                if (class_exists('\\App\\Rules\\' . $validators[$i])) {
+                    $validatorClass = '\\App\\Rules\\' . $validators[$i];
+                    $errors = $field->validate([
+                        'value' => new $validatorClass()
+                    ]);
+
+                } else {
+
+                    $errors = $field->validate([
+                        'value' => $validators[$i]
+                    ]);
+
+                }
+            }
+
+        }
 
         if (empty($errors)) {
             return "success";

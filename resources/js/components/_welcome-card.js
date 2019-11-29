@@ -108,7 +108,9 @@ let welcomeCard = {
             let field = {
                 value: event.target.value,
                 name: event.target.getAttribute('name'),
-                validators: 'required|alpha'
+                validators: [
+                    'ValidName'
+                ]
             };
 
             welcomeCard.handleErrorField(field, event.target)
@@ -151,36 +153,45 @@ let welcomeCard = {
             }
         });
 
-        $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', async (e) => {
+        $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', (e) => {
             e.preventDefault();
 
-            welcomeCard.redirectToCheckout();
+            welcomeCard.createPaymentMethod();
 
-            const { paymentMethod, error } = await stripe.createPaymentMethod(
-                'card', cardNumber, {
-                    billing_details: {
-                        name: cardHolderName.value,
-                        email: document.querySelector('#email-payer').value,
-                    }
-                }
-            );
+            /**
+             * CHECKOUT PAYMENT PROCESS
+             */
+            /*let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
+            let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
 
-            if (error) {
-                /*var displayError = document.getElementById('submit-errors');
-                displayError.textContent = error.message;*/
-
-                console.log(error);
-            } else {
-                document.querySelector('#payment-method').value = paymentMethod.id;
-                welcomeCard.forms.checkout.el().submit();
-            }
+            welcomeCard.redirectToCheckout(successUrl, cancelUrl);*/
         });
 
         var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
 
-        welcomeCard.setCheckoutForm(cardNumber);
+       // welcomeCard.setCheckoutForm(cardNumber);
     },
-    redirectToCheckout: function() {
+    createPaymentMethod: async function() {
+        const { paymentMethod, error } = await stripe.createPaymentMethod(
+            'card', cardNumber, {
+                billing_details: {
+                    name: cardHolderName.value,
+                    email: document.querySelector('#email-payer').value,
+                }
+            }
+        );
+
+        if (error) {
+            var displayError = document.getElementById('submit-errors');
+            displayError.textContent = error.message;
+
+            console.log(error);
+        } else {
+            document.querySelector('#payment-method').value = paymentMethod.id;
+            welcomeCard.forms.checkout.el().submit();
+        }
+    },
+    redirectToCheckout: function(successUrl, cancelUrl) {
         stripe.redirectToCheckout({
             items: [{sku: 'sku_GDHDkOPWtjGF2w', quantity: 1}],
 
@@ -189,8 +200,8 @@ let welcomeCard = {
             // a successful payment.
             // Instead use one of the strategies described in
             // https://stripe.com/docs/payments/checkout/fulfillment
-            successUrl: welcomeCard.forms.checkout.el().getAttribute('action'),
-            cancelUrl: 'https://your-website.com/canceled',
+            successUrl: successUrl,
+            cancelUrl: cancelUrl
         })
             .then(function (result) {
                 if (result.error) {

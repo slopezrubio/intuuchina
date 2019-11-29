@@ -21,7 +21,7 @@ let api = {
             url: '/validate/' +  field.name,
             data: field
         })
-            .then(function(response) { return null })
+            .then(function(response) { console.log(response.data); return null })
             .catch(error => { console.log(error.response); return error.response.data.errors });
 
         return await response;
