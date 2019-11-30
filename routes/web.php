@@ -77,6 +77,7 @@ Route::group([
 Route::prefix('validate')->group(function() {
     Route::post('card-holder-name', 'ValidationsController@validateField');
     Route::post('email-payer', 'ValidationsController@validateField');
+    Route::post('phone_number', 'ValidationsController@validateField');
 });
 
 /* Formulario de contacto del pie de página */

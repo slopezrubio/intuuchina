@@ -3888,11 +3888,13 @@ var welcomeCard = {
       fonts: [{
         cssSrc: "https://fonts.googleapis.com/css?family=Montserrat"
       }]
-    }); // Holdername Element
+    }); // Holdername element
 
-    var cardHolderName = document.getElementById('card-holder-name'); // Email payer Element
+    var cardHolderName = document.getElementById('card-holder-name'); // Phone Number element
 
-    var cardEmailPayer = document.getElementById('email-payer'); // Stripe Card Number Element
+    var phoneNumber = document.getElementById('phone_number'); // Email payer Element
+
+    var cardEmailPayer = document.getElementById('email-payer'); // Stripe Card Number element
 
     var cardNumber = welcomeCard.setStripeCardNumber(elements);
     cardNumber.mount('#card-number'); // Stripe Card Expiry element
@@ -3922,6 +3924,14 @@ var welcomeCard = {
         value: event.target.value,
         name: event.target.getAttribute('name'),
         validators: ['ValidName']
+      };
+      welcomeCard.handleErrorField(field, event.target);
+    });
+    phoneNumber.addEventListener('change', function (event) {
+      var field = {
+        value: event.target.value,
+        name: event.target.getAttribute('name'),
+        validators: ['required', 'numeric', 'PhoneNumber']
       };
       welcomeCard.handleErrorField(field, event.target);
     });
@@ -3963,65 +3973,64 @@ var welcomeCard = {
         displayError.textContent = '';
       }
     });
-    $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', function (e) {
-      e.preventDefault();
-      welcomeCard.createPaymentMethod();
-      /**
-       * CHECKOUT PAYMENT PROCESS
-       */
+    $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click',
+    /*#__PURE__*/
+    function () {
+      var _ref5 = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
+        var _ref6, paymentMethod, error, displayError;
 
-      /*let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
-      let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
-        welcomeCard.redirectToCheckout(successUrl, cancelUrl);*/
-    });
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                e.preventDefault();
+                _context3.next = 3;
+                return stripe.createPaymentMethod('card', cardNumber, {
+                  billing_details: {
+                    name: cardHolderName.value,
+                    email: document.querySelector('#email-payer').value,
+                    phone: phoneNumber.value
+                  }
+                });
+
+              case 3:
+                _ref6 = _context3.sent;
+                paymentMethod = _ref6.paymentMethod;
+                error = _ref6.error;
+
+                if (error) {
+                  displayError = document.getElementById('submit-errors');
+                  displayError.textContent = error.message;
+                  console.log(error);
+                } else {
+                  document.querySelector('#payment-method').value = paymentMethod.id;
+                  welcomeCard.forms.checkout.el().submit();
+                }
+                /**
+                 * CHECKOUT PAYMENT PROCESS (optional)
+                 */
+
+                /*let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
+                let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
+                  welcomeCard.redirectToCheckout(successUrl, cancelUrl);*/
+
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x4) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
     var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest); // welcomeCard.setCheckoutForm(cardNumber);
   },
-  createPaymentMethod: function () {
-    var _createPaymentMethod = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var _ref5, paymentMethod, error, displayError;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return stripe.createPaymentMethod('card', cardNumber, {
-                billing_details: {
-                  name: cardHolderName.value,
-                  email: document.querySelector('#email-payer').value
-                }
-              });
-
-            case 2:
-              _ref5 = _context3.sent;
-              paymentMethod = _ref5.paymentMethod;
-              error = _ref5.error;
-
-              if (error) {
-                displayError = document.getElementById('submit-errors');
-                displayError.textContent = error.message;
-                console.log(error);
-              } else {
-                document.querySelector('#payment-method').value = paymentMethod.id;
-                welcomeCard.forms.checkout.el().submit();
-              }
-
-            case 6:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    function createPaymentMethod() {
-      return _createPaymentMethod.apply(this, arguments);
-    }
-
-    return createPaymentMethod;
-  }(),
   redirectToCheckout: function redirectToCheckout(successUrl, cancelUrl) {
     stripe.redirectToCheckout({
       items: [{

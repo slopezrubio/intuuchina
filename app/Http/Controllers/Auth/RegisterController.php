@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Rules\PhoneNumber;
 use App\User;
 use App\Mail\NewUserMessage;
 use Illuminate\Auth\Events\Registered;
@@ -60,6 +61,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'surnames' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['required', 'numeric', new PhoneNumber()],
             'nationality' => ['required', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -89,6 +91,10 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'surnames' => $data['surnames'],
             'email' => $data['email'],
+            'phone_number' => json_encode([
+                'prefix' => $data['prefix'],
+                'number' => $data['phone_number']
+            ]),
             'nationality' => $data['nationality'],
             'program' => $data['program'],
             'industry' => $this->checkArrayField($data, 'industry'),

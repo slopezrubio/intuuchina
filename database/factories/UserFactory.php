@@ -24,6 +24,10 @@ $factory->define(User::class, function (Faker $faker) {
         'nationality' => 'chinese',
         'email_verified_at' => now(),
         'type' => 'user',
+        'phone_number' => json_encode([
+            'prefix' => $faker->randomElement(array('fr', 'es', 'slo', 'pr', 'de', 'uk')),
+            'number' => substr($faker->e164PhoneNumber, strlen($faker->e164PhoneNumber) - 9),
+        ]),
         'status_id' => function() {
             return DB::table('states')
                 ->select(DB::raw('id'))

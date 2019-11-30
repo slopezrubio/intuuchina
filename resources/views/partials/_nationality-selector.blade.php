@@ -122,8 +122,6 @@
             <option value="monacan">Monacan</option>
             <option value="mongolian">Mongolian</option>
             <option value="moroccan">Moroccan</option>
-            <option value="mosotho">Mosotho</option>
-            <option value="motswana">Motswana</option>
             <option value="mozambican">Mozambican</option>
             <option value="namibian">Namibian</option>
             <option value="nauruan">Nauruan</option>

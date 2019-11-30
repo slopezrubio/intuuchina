@@ -71,13 +71,16 @@ let welcomeCard = {
             }],
         });
 
-        // Holdername Element
+        // Holdername element
         var cardHolderName = document.getElementById('card-holder-name');
+
+        // Phone Number element
+        var phoneNumber = document.getElementById('phone_number');
 
         // Email payer Element
         var cardEmailPayer = document.getElementById('email-payer');
 
-        // Stripe Card Number Element
+        // Stripe Card Number element
         var cardNumber = welcomeCard.setStripeCardNumber(elements);
         cardNumber.mount('#card-number');
 
@@ -114,6 +117,20 @@ let welcomeCard = {
             };
 
             welcomeCard.handleErrorField(field, event.target)
+        });
+
+        phoneNumber.addEventListener('change', (event) => {
+            let field = {
+                value: event.target.value,
+                name: event.target.getAttribute('name'),
+                validators: [
+                    'required',
+                    'numeric',
+                    'PhoneNumber'
+                ]
+            }
+
+            welcomeCard.handleErrorField(field, event.target);
         });
 
         cardEmailPayer.addEventListener('change', (event) => {
@@ -153,13 +170,31 @@ let welcomeCard = {
             }
         });
 
-        $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', (e) => {
+        $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', async (e) => {
             e.preventDefault();
 
-            welcomeCard.createPaymentMethod();
+            const { paymentMethod, error } = await stripe.createPaymentMethod(
+                'card', cardNumber, {
+                    billing_details: {
+                        name: cardHolderName.value,
+                        email: document.querySelector('#email-payer').value,
+                        phone: phoneNumber.value,
+                    }
+                }
+            );
+
+            if (error) {
+                var displayError = document.getElementById('submit-errors');
+                displayError.textContent = error.message;
+
+                console.log(error);
+            } else {
+                document.querySelector('#payment-method').value = paymentMethod.id;
+                welcomeCard.forms.checkout.el().submit();
+            }
 
             /**
-             * CHECKOUT PAYMENT PROCESS
+             * CHECKOUT PAYMENT PROCESS (optional)
              */
             /*let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
             let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
@@ -170,26 +205,6 @@ let welcomeCard = {
         var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest);
 
        // welcomeCard.setCheckoutForm(cardNumber);
-    },
-    createPaymentMethod: async function() {
-        const { paymentMethod, error } = await stripe.createPaymentMethod(
-            'card', cardNumber, {
-                billing_details: {
-                    name: cardHolderName.value,
-                    email: document.querySelector('#email-payer').value,
-                }
-            }
-        );
-
-        if (error) {
-            var displayError = document.getElementById('submit-errors');
-            displayError.textContent = error.message;
-
-            console.log(error);
-        } else {
-            document.querySelector('#payment-method').value = paymentMethod.id;
-            welcomeCard.forms.checkout.el().submit();
-        }
     },
     redirectToCheckout: function(successUrl, cancelUrl) {
         stripe.redirectToCheckout({

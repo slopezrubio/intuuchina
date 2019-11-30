@@ -63,6 +63,27 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="phone_number" class="col-md-3 col-form-label text-md-left">{{ __('content.phone number') }}</label>
+                                <div class="col-3 col-md-3">
+                                    <div class="regular-select-wrapper">
+                                        <select name="prefix" id="prefix" class="form-control">
+                                            @foreach (__('prefixes') as $key => $value)
+                                                <option value="{{ $key }}">{{ $value['prefix'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    <input id="phone_number" type="tel" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required>
+                                    @if ($errors->has('phone_number'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('phone_number') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 @include('partials._nationality-selector')
                             </div>
 

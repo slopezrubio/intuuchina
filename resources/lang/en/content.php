@@ -195,6 +195,7 @@ return [
     'industry' => 'Industry',
     'duration' => 'Duration',
     'picture' => 'Picture',
+    'phone number' => 'Phone Number',
     'currency' => 'Currency',
     'payment currency' => [
         'euro' => [

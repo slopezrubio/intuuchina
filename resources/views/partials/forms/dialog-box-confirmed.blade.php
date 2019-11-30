@@ -33,6 +33,12 @@
                 </div>
 
                 <div class="form-group align-items-end row">
+                    <label for="phone_number" class="col-12 col-lg-3 p-0">{{ __('content.phone number') }}</label>
+                    <input type="tel" id="phone_number" class="col-12 col-lg-3 p-0 {{ $errors->has('phone_number') ? 'is-invalid' : '' }}" name="phone_number" value="{{ json_decode(Auth::user()->phone_number)->number }}">
+                    <div class="offset-lg-3 invalid-feedback col-12" role="alert" id="phone_number-errors"></div>
+                </div>
+
+                <div class="form-group align-items-end row">
                     <label class="col-12 col-lg-3 p-0" for="email-payer">{{ __('content.mail') }}</label>
                     <input class="col-12 col-lg-9 {{ $errors->has('email-payer') ? ' is-invalid' : '' }}" name="email-payer" type="text" id="email-payer" value="{{ Auth::user()->email }}">
                     <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="email-payer-errors"></div>
