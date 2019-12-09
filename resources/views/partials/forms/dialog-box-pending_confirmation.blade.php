@@ -1,12 +1,12 @@
 <div id="dialog-box">
     <div class="card-header">
-        {{ __('content.welcome user page title') }}
+        <h1>{{ __('dialog-box.thanks you for applying') }}</h1>
     </div>
 
     <div class="card-body">
         <form id="confirm" action="{{ route('confirm') }}" method="post">
             @csrf
-            {!! __('content.you should have received') !!}
+            {!! __('dialog-box.you should have received an email') !!}
             <div class="user-card__action">
                 <button type="submit" class="cta col-6 col-lg-5 col-xl-4">{{ __('content.confirm') }}</button>
             </div>

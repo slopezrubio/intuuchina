@@ -13,6 +13,34 @@ let api = {
             console.error('Unable to connect to the server');
         }
     },
+    getHostName: function() { return window.location.protocol + '//' + window.location.hostname },
+    sendPaymentMethod: async function(data) {
+        api.setTokenToAxiosHeader(data);
+        try {
+            const response = await axios({
+                method: 'post',
+                url: api.getHostName() + '/payment-method',
+                data: data,
+            });
+
+            console.log(response);
+            return response;
+        } catch(error) {
+            console.log(error);
+        }
+    },
+    continue: async function(url) {
+        try {
+            const response = await axios({
+                method: 'get',
+                url: url
+            });
+
+            return await response.data;
+        } catch(error) {
+            console.log(error);
+        }
+    },
     validate: async function(field) {
         api.setTokenToAxiosHeader();
         const response = await axios({
@@ -21,8 +49,21 @@ let api = {
             url: '/validate/' +  field.name,
             data: field
         })
-            .then(function(response) { console.log(response.data); return null })
-            .catch(error => { console.log(error.response); return error.response.data.errors });
+            .then(function(response) { return null })
+            .catch(error => { return error.response.data.errors });
+
+        return await response;
+    },
+    validateObject: async function(object) {
+        api.setTokenToAxiosHeader();
+        const response = await axios({
+            method: 'post',
+            headers: { 'Content-type' : 'application/json' },
+            url: '/validate/' +  object.type,
+            data: object[object.type],
+        })
+            .then(function(response) { return null })
+            .catch(error => { return error.response.data.errors });
 
         return await response;
     },

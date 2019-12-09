@@ -12006,6 +12006,27 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Grid Layout --
+ * ----------------
+ */
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * --- Flexbox ----
+ * ----------------
+ */
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * ---- Hacks -----
+ * ----------------
+ */
+
 /* Centrar verticalmente (el elemento padre tiene que
  * tener el atributo 'position: relative' para que
  * funcione)
@@ -12156,9 +12177,23 @@ header {
   padding-left: 1em;
 }
 
+.cta--secondary a {
+  color: #C80B0B;
+  font-weight: 700;
+}
+
+.downloadable {
+  padding: 0.5em 0.75em;
+  background: #d1d1d1;
+}
+
+.downloadable i {
+  font-size: 2.5em;
+  margin-right: 0.25em;
+}
+
 nav {
   height: auto;
-  line-height: auto;
   text-transform: none;
   position: fixed;
   width: 100%;
@@ -12211,8 +12246,10 @@ main {
 .header#welcome {
   background-image: url("/../../storage/images/welcome-user.jpg");
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   text-transform: none;
+  display: flex;
 }
 
 .header#internship {
@@ -12524,6 +12561,23 @@ main {
 }
 
 /* ------------------------------------------------------- */
+
+/* ----------------
+ * - Alignment --
+ * ----------------
+ */
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.relative-center {
+  position: relative;
+}
 
 /* Menú desplegado */
 
@@ -16004,11 +16058,11 @@ section .services .service_card_container .service_card_footer .cta {
 }
 
 .user-card {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  margin-left: auto;
+  padding: 1em 1em;
+  margin-top: 7em;
+  margin-bottom: 7em;
+  align-self: center;
+  background: transparent;
 }
 
 .user-card a {
@@ -16018,6 +16072,29 @@ section .services .service_card_container .service_card_footer .cta {
 
 .user-card a:hover {
   text-decoration: underline;
+}
+
+.user-card .card {
+  background: transparent;
+}
+
+.user-card .card-header {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
+  border-radius: 28px 28px 0px 0px;
+}
+
+.user-card .card-header h1 {
+  color: white;
+  font-weight: 700;
+  font-size: 1.25em;
+  margin: 0.25em 0;
+  text-uppercase: uppercase;
+}
+
+.user-card .card-body {
+  background: white;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .user-card #dialog-box form input {
@@ -16095,10 +16172,35 @@ section .services .service_card_container .service_card_footer .cta {
 
 .user-card #dialog-box form .invalid-feedback,
 .user-card #dialog-box form .invalid-stripe-feedback {
-  font-size: 0.8em;
+  margin-top: 0.25em;
+  font-size: calc(12.8 * 1px);
   font-weight: 700;
   color: #F44336;
   padding-left: 0;
+  height: calc(2 * (1.6 * calc(12.8 * 1px)));
+  overflow: hidden;
+}
+
+.user-card #dialog-box form .invalid-stripe-feedback {
+  display: none;
+}
+
+.user-card #dialog-box .loading-button {
+  display: flex;
+  -ms-box-align: center;
+  align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+
+.user-card #dialog-box .loading-button .spinner-border.hidden {
+  display: none;
+}
+
+.user-card #dialog-box .loading-button .spinner-border:not(:first-child) {
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: 1em;
 }
 
 .user-card__action {

@@ -94,6 +94,11 @@ a {
   @return calc(#{$slope*100}vw + #{$result}px);
 }
 
+@function emToPx($value) {
+  $valueInPixels: $value * 16;
+  @return calc(#{$valueInPixels} * 1px);
+}
+
 /* ------------------------------------------------------- */
 
 /* -------------
@@ -148,11 +153,27 @@ header {
       padding-left: 1em;
     }
   }
+
+  &--secondary {
+    a {
+      color: $primaryRed;
+      font-weight: 700;
+    }
+  }
+}
+
+.downloadable {
+  padding: 0.5em 0.75em;
+  background: $neutralColor;
+
+  i {
+    font-size: 2.5em;
+    margin-right: 0.25em;
+  }
 }
 
 nav {
   height: auto;
-  line-height: auto;
   text-transform: none;
   position: fixed;
   width: 100%;
@@ -204,8 +225,10 @@ main {
   &#welcome {
     background-image: url('/../../storage/images/welcome-user.jpg');
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     text-transform: none;
+    @include flexbox();
   }
 
   &#internship {
@@ -267,3 +290,18 @@ main {
 }
 
 /* ------------------------------------------------------- */
+
+/* ----------------
+ * - Alignment --
+ * ----------------
+ */
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include prefixed(transform, translate(-50% ,-50%));
+}
+
+.relative-center {
+  position: relative;
+}

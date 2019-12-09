@@ -17,6 +17,13 @@
   }
 }
 
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Grid Layout --
+ * ----------------
+ */
+
 @mixin grid {
   display: -ms-grid;
   display: grid;
@@ -55,6 +62,13 @@
   $map: (width: #{$width});
   @include ie10('& > *', $map);
 }
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * --- Flexbox ----
+ * ----------------
+ */
 
 @mixin flexbox {
   display: -webkit-box;
@@ -138,6 +152,26 @@
   justify-content: $value;
   -webkit-justify-content: $value;
 }
+
+@mixin align-self($value: auto) {
+  // No Webkit Box Fallback.
+  -webkit-align-self: $value;
+  @if $value == flex-start {
+    -ms-flex-item-align: start;
+  } @else if $value == flex-end {
+    -ms-flex-item-align: end;
+  } @else {
+    -ms-flex-item-align: $value;
+  }
+  align-self: $value;
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * ---- Hacks -----
+ * ----------------
+ */
 
 @mixin hardwareAccel() {
   // Mejora el rendimiento en dispositivos móvil/tablet de los botones

@@ -18,7 +18,6 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'welcome user page title' => 'Thank you for applying.',
     'what the media think' => 'What <strong>the media</strong> think about IntuuChina',
     'those who have already tried it says' => 'Those who have already tried it says',
     'internship' => 'Internship',
@@ -40,7 +39,6 @@ return [
     'those who have already tried it' => 'Those <strong>who have already tried it</strong>',
     'job description' => 'Job Description',
     'details' => 'Details',
-    'payment details' => 'Payment Details',
 
 
 
@@ -50,6 +48,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
+    'application fee' => 'Application Fee',
     'el pais quote' => '"The statistics confirmed that IntuuChina hit the spot: They have managed to place 290 people of 46 nationalities ... The highest percentage of success (78%) is among those who arrived in China with the intention of staying"',
     'el pais author' => 'Z. Aldama',
     'el pais date' => '08/05/2016',
@@ -70,8 +69,6 @@ return [
     'abc quote' => '"80% of IntuuChinos continue their career in the country ... Ruben Sanchez got the job after the first 6 months of practice"',
     'abc author' => 'Pablo M. Díez',
     'abc date' => '09/11/2014',
-    'we get 500 people' => '<p>We get 500 people per month asking for our services and in order to ensure we only proceed with those that are really committed we request an application fee of 25 EUR.</p>
-                            <p>Continue to proceed with the payment.</p>',
     'entrepeneur quote' => '"We help talented young people who do not find opportunities in their country, as would be the case in Spain, and we help them develop their career in China"',
     'entrepeneur date' => '21/05/2015',
     'internship service text' => 'Looking for a professional experience in China? We can place you in Startup or Multinational.',
@@ -135,10 +132,6 @@ return [
         <li><p class="motif_card_text">Comprendedor Award finalist, "Empresa & Sociedad" foundation</p></li>
         <li><p class="motif_card_text">Second prize for best Human Resource IEBS Startup</p></li>
     ',
-    'welcome user text' => '<p>One of our colleagues will send you an e-mail in the next few minutes. If you don\'t get the e-mail, please contact us promptly at <a href="mailto:hr@intuuchina.com">hr@intuuchina.com</a></p>
-                            <p>Can you please confirm once you have received an email?</p>',
-    'you should have received' => '<p>You should have received an email from one of our colleagues.</p>
-                                    <p>Please check your email inbox and confirm. Conversely, if you don\'t, please contact us as soon as possible at <a href="mailto:hr@intuuchina.com">hr@intuuchina.com</a></p>',
     'the intuuchina team have chosen the values' => 'The IntuuChina team has chosen the values ​​it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.',
     'this team is committed and dedicated to provide' => 'This team is committed and dedicated to provide a set of personalized services that will add real value and a competitive advantage to the future professional career.',
     'are you sure you want to remove permanently job offer' => 'Are you sure you want to remove permanently :jobOffer offer?',
@@ -182,7 +175,7 @@ return [
     'card number' => 'Card Number',
     'card expiry' => 'Card Expiry',
     'cvc' => 'CVC',
-    'process fee payment' => 'Process Fee Payment',
+    'pay' => 'Pay :value',
     'confirm' => 'Confirm',
     'continue' => 'Continue',
     'see more' => 'See more',
@@ -196,17 +189,9 @@ return [
     'duration' => 'Duration',
     'picture' => 'Picture',
     'phone number' => 'Phone Number',
+    'ok, i got it!' => 'Ok, I got it!',
+    'see your receipt' => 'See your receipt',
     'currency' => 'Currency',
-    'payment currency' => [
-        'euro' => [
-          'text' => 'EUR / €',
-          'value' => 'eur'
-        ],
-        'us' => [
-            'text' => 'US / $',
-            'value' => 'us'
-        ]
-    ],
     'offers filter options' => [
         [
             'text' => 'Finance',

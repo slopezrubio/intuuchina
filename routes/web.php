@@ -75,9 +75,8 @@ Route::group([
 
 // Validator
 Route::prefix('validate')->group(function() {
-    Route::post('card-holder-name', 'ValidationsController@validateField');
-    Route::post('email-payer', 'ValidationsController@validateField');
-    Route::post('phone_number', 'ValidationsController@validateField');
+    Route::post('billing_details', 'CheckoutsController@validateBillingDetails');
+    Route::post('{field}', 'ValidationsController@validateField');
 });
 
 /* Formulario de contacto del pie de página */
@@ -86,10 +85,18 @@ Route::post('/message','MailMessagesController@send')->name('mail');
 /* Autenticación */
 Auth::routes();
 
-/* Payment */
-Route::post('/{user}/fee-payment', 'CheckoutsController@store')->name('fee_payment');
+/* User Guideline */
+Route::group(['middleware' => 'auth'], function() {
+    Route::post('confirm', 'UsersController@confirm')->name('confirm');
+    Route::post('payment-method', 'CheckoutsController@newPaymentIntent')->name('payment_method');
+    Route::get('payment-details', 'CheckoutsController@applicationFeeForm')->name('application_fee_form');
+});
+
+Route::get('payment-successful', 'CheckoutsController@test');
+/* Stripe WebHooks */
+
 
 /* Home */
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/confirm', 'UsersController@confirm')->name('confirm');
+
 

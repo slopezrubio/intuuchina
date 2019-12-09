@@ -11,11 +11,12 @@ class UsersController extends Controller
 {
     public function confirm(Request $request) {
         $user = Auth::user();
-        //$updated = $user->updateStatus('confirmed');
+        $updated = $user->updateStatus('confirmed');
 
-        /*if ($updated) {
+        if ($updated) {
             return $this->view('partials/forms/dialog-box-' . State::find($user->status_id)->name);
-        }*/
+        }
+
         return view('partials/forms/dialog-box-confirmed');
     }
 }

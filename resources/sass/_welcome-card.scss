@@ -1,15 +1,36 @@
 @import './forms/dialog-box-confirmed';
 
 .user-card {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: auto;
+  padding: 1em 1em;
+  margin-top: 7em;
+  margin-bottom: 7em;
+  @include align-self(center);
+  background: transparent;
   a {
     color: $primaryRed;
     font-weight: 500;
     &:hover {
       text-decoration: underline;
+    }
+  }
+  .card {
+    background: transparent;
+    &-header {
+      background: $sectionDark;
+      border: 2px solid $primaryWhite;
+      border-radius: 28px 28px 0px 0px;
+      h1 {
+        color: $primaryWhite;
+        font-weight: 700;
+        font-size: 1.25em;
+        margin: 0.25em 0;
+        text-uppercase: uppercase;
+      }
+    }
+
+    &-body {
+      background: $primaryWhite;
+      border-radius: 0px 0px 5px 5px;
     }
   }
 
@@ -27,10 +48,35 @@
       }
 
       .invalid-feedback, .invalid-stripe-feedback {
-        font-size: 0.8em;
+        $font-size: emToPx(0.8);
+        $line-height: 1.6;
+        margin-top: 0.25em;
+        font-size: $font-size;
         font-weight: 700;
         color: $secondaryRed;
         padding-left: 0;
+        height: calc(2 * (#{$line-height} * #{$font-size}));
+        overflow: hidden;
+      }
+
+      .invalid-stripe-feedback {
+        display: none;
+      }
+    }
+
+    .loading-button {
+      @include flexbox();
+      @include align-items(center);
+      @include justify-content(center);
+
+      .spinner-border.hidden {
+        display: none;
+      }
+
+      .spinner-border:not(:first-child) {
+        width: 1.5em;
+        height: 1.5em;
+        margin-left: 1em;
       }
     }
   }

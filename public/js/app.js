@@ -3771,13 +3771,22 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var welcomeCard = {
   init: function init() {
     window.addEventListener('DOMContentLoaded', function () {
-      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__["default"])(welcomeCard.dialogBoxContainer.parentElement, welcomeCard.update);
+      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__["default"])(welcomeCard.dialogBoxContainer().parentElement, welcomeCard.update);
     });
     welcomeCard.setup();
   },
-  dialogBoxContainer: document.querySelector('#dialog-box') ? document.querySelector('#dialog-box') : null,
+  dialogBoxContainer: function dialogBoxContainer() {
+    return document.querySelector('#dialog-box') ? document.querySelector('#dialog-box') : null;
+  },
   update: function update() {
     welcomeCard.setup();
+  },
+  buttons: {
+    "continue": {
+      el: function el() {
+        return document.querySelector('#continue') ? document.querySelector('#continue') : null;
+      }
+    }
   },
   forms: {
     confirm: {
@@ -3791,130 +3800,236 @@ var welcomeCard = {
       }
     }
   },
-  setup: function setup() {
-    if (welcomeCard.forms.confirm.el() !== null) {
-      welcomeCard.forms.confirm.el().addEventListener('submit',
-      /*#__PURE__*/
-      function () {
-        var _ref = _asyncToGenerator(
-        /*#__PURE__*/
-        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
-          var url, data, dialogBox;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  event.preventDefault();
-                  url = event.target.getAttribute('action');
-                  data = {
-                    _token: welcomeCard.forms.confirm.el().querySelector('input[type="hidden"')
-                  };
-                  _context.next = 5;
-                  return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].confirm(url, data);
+  elements: {
+    header: function header() {
+      return document.querySelector('#welcome') ? document.querySelector('#welcome') : null;
+    },
+    stripe: null
+  },
+  rates: null,
+  paymentAmount: null,
+  changeLoadingState: function changeLoadingState(element, display) {
+    var text = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Loading...';
+    var spinner = element.querySelector('.spinner-border');
 
-                case 5:
-                  dialogBox = _context.sent;
-                  welcomeCard.replaceDialog(dialogBox);
-
-                case 7:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        }));
-
-        return function (_x) {
-          return _ref.apply(this, arguments);
-        };
-      }());
-    }
-
-    if (welcomeCard.forms.checkout.el() !== null) {
-      if (!welcomeCard.isStripeLoaded()) {
-        welcomeCard.setStripeElements();
-      }
+    if (display) {
+      spinner.classList.remove('hidden');
+      spinner.previousElementSibling.textContent = text;
+    } else {
+      spinner.classList.add('hidden');
+      spinner.previousElementSibling.textContent = text;
     }
   },
+  setup: function () {
+    var _setup = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              if (welcomeCard.forms.confirm.el() !== null) {
+                welcomeCard.forms.confirm.el().addEventListener('submit',
+                /*#__PURE__*/
+                function () {
+                  var _ref = _asyncToGenerator(
+                  /*#__PURE__*/
+                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
+                    var url, data, dialogBox;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            event.preventDefault();
+                            url = event.target.getAttribute('action');
+                            data = {
+                              _token: welcomeCard.forms.confirm.el().querySelector('input[type="hidden"')
+                            };
+                            _context.next = 5;
+                            return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].confirm(url, data);
+
+                          case 5:
+                            dialogBox = _context.sent;
+                            welcomeCard.replaceDialog(dialogBox);
+
+                          case 7:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function (_x) {
+                    return _ref.apply(this, arguments);
+                  };
+                }());
+              }
+
+              if (welcomeCard.buttons["continue"].el() !== null) {
+                welcomeCard.buttons["continue"].el().addEventListener('click',
+                /*#__PURE__*/
+                function () {
+                  var _ref2 = _asyncToGenerator(
+                  /*#__PURE__*/
+                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
+                    var defaultText, url, paymentFeeDialog;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            event.preventDefault(); // Get the text inside the button
+
+                            defaultText = event.target.textContent; // Sets the loader inside the button
+
+                            welcomeCard.changeLoadingState(event.target.parentElement, true); // Gets the URL and make a request to the API
+
+                            url = window.location.protocol + '//' + window.location.hostname + '/payment-details';
+                            _context2.next = 6;
+                            return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"]["continue"](url);
+
+                          case 6:
+                            paymentFeeDialog = _context2.sent;
+                            // Hides the loader once again
+                            welcomeCard.changeLoadingState(event.target.parentElement, false, defaultText); // Replace dialog box
+
+                            welcomeCard.replaceDialog(paymentFeeDialog);
+
+                          case 9:
+                          case "end":
+                            return _context2.stop();
+                        }
+                      }
+                    }, _callee2);
+                  }));
+
+                  return function (_x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+              }
+
+              if (!(welcomeCard.forms.checkout.el() !== null)) {
+                _context3.next = 8;
+                break;
+              }
+
+              if (welcomeCard.isStripeLoaded()) {
+                _context3.next = 8;
+                break;
+              }
+
+              welcomeCard.setStripeElements();
+              _context3.next = 7;
+              return welcomeCard.fetchRates();
+
+            case 7:
+              welcomeCard.rates = _context3.sent;
+
+            case 8:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function setup() {
+      return _setup.apply(this, arguments);
+    }
+
+    return setup;
+  }(),
   isStripeLoaded: function isStripeLoaded() {
     return welcomeCard.forms.checkout.el().querySelector('#card-number').childElementCount > 0;
   },
+
+  /**
+   * Replace the existing element with ID #dialog-box
+   * for the one passed as an argument.
+   *
+   * @param newDialogBox
+   */
   replaceDialog: function replaceDialog(newDialogBox) {
-    var container = welcomeCard.dialogBoxContainer.parentElement;
-    $(welcomeCard.dialogBoxContainer).empty();
+    var container = welcomeCard.dialogBoxContainer().parentElement;
+    $(welcomeCard.dialogBoxContainer()).empty();
     $(container).html(newDialogBox);
   },
-  handleErrorField: function () {
-    var _handleErrorField = _asyncToGenerator(
+  handleServerErrorField: function () {
+    var _handleServerErrorField = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(field, element) {
-      var errors, displayError;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(field, element) {
+      var errors;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context2.next = 2;
+              _context4.next = 2;
               return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].validate(field);
 
             case 2:
-              errors = _context2.sent;
-              displayError = document.getElementById(field.name + '-errors');
+              errors = _context4.sent;
 
+              //const displayError =  document.getElementById(field.name + '-errors');
               if (errors !== null) {
-                displayError.style.display = 'block';
-                displayError.textContent = errors['value'][0];
-                element.classList.add('is-invalid');
+                welcomeCard.displayInputFieldError(field.name, errors['value'][0]);
               } else {
-                displayError.style.display = 'none';
-                element.classList.remove('is-invalid');
+                welcomeCard.removeInputFieldError(field.name);
               }
 
-            case 5:
+            case 4:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
         }
-      }, _callee2);
+      }, _callee4);
     }));
 
-    function handleErrorField(_x2, _x3) {
-      return _handleErrorField.apply(this, arguments);
+    function handleServerErrorField(_x3, _x4) {
+      return _handleServerErrorField.apply(this, arguments);
     }
 
-    return handleErrorField;
+    return handleServerErrorField;
   }(),
   setStripeElements: function setStripeElements() {
-    var elements = stripe.elements({
+    welcomeCard.elements.stripe = stripe.elements({
       fonts: [{
         cssSrc: "https://fonts.googleapis.com/css?family=Montserrat"
       }]
     }); // Holdername element
 
-    var cardHolderName = document.getElementById('card-holder-name'); // Phone Number element
+    var cardHolderName = document.getElementById('card_holder_name'); // Phone Number element
 
     var phoneNumber = document.getElementById('phone_number'); // Email payer Element
 
-    var cardEmailPayer = document.getElementById('email-payer'); // Stripe Card Number element
+    var cardEmailPayer = document.getElementById('email'); // Stripe Card Number element
 
-    var cardNumber = welcomeCard.setStripeCardNumber(elements);
+    var cardNumber = welcomeCard.elements.stripe.create('cardNumber');
     cardNumber.mount('#card-number'); // Stripe Card Expiry element
 
-    var cardExpiry = welcomeCard.setCardExpiry(elements);
+    var cardExpiry = welcomeCard.elements.stripe.create('cardExpiry', {
+      placeholder: 'MM / YY'
+    });
     cardExpiry.mount('#card-expiry'); // Stripe Card CVC element
 
-    var cvc = welcomeCard.setCVCInputField(elements);
-    cvc.mount('#card-cvc'); // Payment Request Options
+    var cvc = welcomeCard.elements.stripe.create('cardCvc', {
+      placeholder: '123'
+    });
+    cvc.mount('#card-cvc');
+    var paymentCurrency = document.getElementById('payment-currency');
+    welcomeCard.setPaymentAmount(document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').getAttribute('data-value')); // Payment Request Options
 
     var paymentRequest = stripe.paymentRequest({
       country: 'ES',
-      currency: 'eur',
+      currency: paymentCurrency.value,
       total: {
-        amount: 20,
-        label: 'Application Fee Payment'
+        amount: 3000,
+        label: 'Application Fee'
       },
       requestPayerPhone: true,
       requestPayerEmail: true
     });
+    welcomeCard.setStripePaymentRequestButton(welcomeCard.elements.stripe, paymentRequest);
     /**
      * STRIPE ELEMENTS EVENTS
      */
@@ -3925,7 +4040,7 @@ var welcomeCard = {
         name: event.target.getAttribute('name'),
         validators: ['ValidName']
       };
-      welcomeCard.handleErrorField(field, event.target);
+      welcomeCard.handleServerErrorField(field, event.target);
     });
     phoneNumber.addEventListener('change', function (event) {
       var field = {
@@ -3933,7 +4048,7 @@ var welcomeCard = {
         name: event.target.getAttribute('name'),
         validators: ['required', 'numeric', 'PhoneNumber']
       };
-      welcomeCard.handleErrorField(field, event.target);
+      welcomeCard.handleServerErrorField(field, event.target);
     });
     cardEmailPayer.addEventListener('change', function (event) {
       var field = {
@@ -3941,95 +4056,431 @@ var welcomeCard = {
         name: event.target.getAttribute('name'),
         validators: 'required|email'
       };
-      welcomeCard.handleErrorField(field, event.target);
+      welcomeCard.handleServerErrorField(field, event.target);
     });
-    cardNumber.addEventListener('change', function (_ref2) {
-      var error = _ref2.error;
-      var displayError = document.getElementById('card-number-errors');
-
-      if (error) {
-        displayError.textContent = error.message;
-      } else {
-        displayError.textContent = '';
-      }
-    });
-    cvc.addEventListener('change', function (_ref3) {
+    cardNumber.addEventListener('change', function (_ref3) {
       var error = _ref3.error;
-      var displayError = document.getElementById('cvc-errors');
-
-      if (error) {
-        displayError.textContent = error.message;
-      } else {
-        displayError.textContent = '';
-      }
+      var displayError = document.getElementById('card-number-errors');
+      welcomeCard.displayStripeErrors(displayError, error);
     });
-    cardExpiry.addEventListener('change', function (_ref4) {
+    cvc.addEventListener('change', function (_ref4) {
       var error = _ref4.error;
-      var displayError = document.getElementById('card-expiry-errors');
-
-      if (error) {
-        displayError.textContent = error.message;
-      } else {
-        displayError.textContent = '';
-      }
+      var displayError = document.getElementById('cvc-errors');
+      welcomeCard.displayStripeErrors(displayError, error);
     });
+    cardExpiry.addEventListener('change', function (_ref5) {
+      var error = _ref5.error;
+      var displayError = document.getElementById('card-expiry-errors');
+      welcomeCard.displayStripeErrors(displayError, error);
+    });
+    paymentCurrency.addEventListener('change',
+    /*#__PURE__*/
+    function () {
+      var _ref6 = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(e) {
+        var submitButtonText, text, valueConverted;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                submitButtonText = $('#checkout-button-sku_GDHDkOPWtjGF2w > span')[0]; // Get only the text inside the button without the currency symbol and the value.
+
+                text = $(submitButtonText).text().match(new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/))[0];
+                _context5.next = 4;
+                return welcomeCard.currencyExchange(parseFloat(submitButtonText.getAttribute('data-value')) / 100, e.target.value);
+
+              case 4:
+                valueConverted = _context5.sent;
+                welcomeCard.setPaymentAmount(valueConverted, e.target.value);
+                valueConverted = parseFloat(valueConverted).toLocaleString(document.documentElement.lang, {
+                  style: 'currency',
+                  currency: e.target.value.toUpperCase()
+                });
+                $(submitButtonText).text(text + valueConverted);
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      return function (_x5) {
+        return _ref6.apply(this, arguments);
+      };
+    }());
     $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click',
     /*#__PURE__*/
     function () {
-      var _ref5 = _asyncToGenerator(
+      var _ref7 = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
-        var _ref6, paymentMethod, error, displayError;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(e) {
+        var defaultText, billingDetails, _ref8, paymentMethod, _error, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                e.preventDefault();
-                _context3.next = 3;
-                return stripe.createPaymentMethod('card', cardNumber, {
+                e.preventDefault(); // Saves the text inside the button to reusing it afterwards.
+
+                defaultText = e.target.textContent; // console.log(api.getHostName() + '/payment-successful');
+                // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
+                // welcomeCard.replaceDialog(newDialog);
+                // return;
+                // Sets the loader inside the checkout button.
+
+                welcomeCard.changeLoadingState(e.target.parentElement, true); // Disables all inputs of the form.
+
+                welcomeCard.disableAllInputs('checkout', true);
+                _context6.next = 6;
+                return welcomeCard.validateBillingDetails({
+                  type: 'billing_details',
                   billing_details: {
-                    name: cardHolderName.value,
-                    email: document.querySelector('#email-payer').value,
-                    phone: phoneNumber.value
+                    card_holder_name: cardHolderName.value,
+                    email: document.querySelector('#email').value,
+                    phone_number: phoneNumber.value
                   }
                 });
 
-              case 3:
-                _ref6 = _context3.sent;
-                paymentMethod = _ref6.paymentMethod;
-                error = _ref6.error;
+              case 6:
+                billingDetails = _context6.sent;
 
-                if (error) {
-                  displayError = document.getElementById('submit-errors');
-                  displayError.textContent = error.message;
-                  console.log(error);
-                } else {
-                  document.querySelector('#payment-method').value = paymentMethod.id;
-                  welcomeCard.forms.checkout.el().submit();
+                if (!(billingDetails !== null)) {
+                  _context6.next = 14;
+                  break;
                 }
+
+                _context6.next = 10;
+                return stripe.createPaymentMethod('card', cardNumber, {
+                  billing_details: billingDetails
+                });
+
+              case 10:
+                _ref8 = _context6.sent;
+                paymentMethod = _ref8.paymentMethod;
+                _error = _ref8.error;
+
+                // Check the form for errors.
+                if (_error) {
+                  welcomeCard.displayInputFieldError('submit', _error.message);
+                } else {
+                  /**
+                   * If no errors found it, gathers the information needed to Stripe PHP API
+                   * so the payment can be applied in the server.
+                   */
+                  data = {
+                    _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
+                    payment_method: paymentMethod.id,
+                    card_holder_name: paymentMethod.billing_details.name,
+                    email: paymentMethod.billing_details.email,
+                    phone_number: paymentMethod.billing_details.phone,
+                    currency: document.getElementById('payment-currency').value,
+                    amount: welcomeCard.paymentAmount
+                  };
+                  /*
+                   * Sends the information needed along the Payment Method ID.
+                   */
+
+                  _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].sendPaymentMethod(data).then(function (result) {
+                    var error = result.data.error;
+
+                    if (error) {
+                      /*
+                       * Displays the error coming from the server according to the field or
+                       * parameter the error is related to.
+                       */
+                      welcomeCard.displayInputFieldError(error.field, error.message);
+                    } else {
+                      /*
+                       * If the user do not get redirected by the server means:
+                       *
+                       * 1) The payment has failed and therefore an error response
+                       * has been received from the server.
+                       *
+                       * OR
+                       *
+                       * 2) The Payment Intent needs a step further in the authentication
+                       * process and gives back the Payment Intent Status
+                       * as to let the user handle it. Perhaps their bank account asked
+                       * him for a notification push message through his mobile phone or
+                       * email
+                       */
+                      // In both cases the returned data is sent to a handler.
+                      welcomeCard.handleServerResponse(result.data);
+                    }
+                  }); // Only when JavaScript is disabled
+                  // document.querySelector('#payment-method').value = paymentMethod.id;
+                  // welcomeCard.forms.checkout.el().submit();
+                }
+
+              case 14:
+                // Enables again the inputs of the checkout form.
+                welcomeCard.disableAllInputs('checkout', false); // If not, stops and hides the loader inside the checkout button.
+
+                welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
                 /**
                  * CHECKOUT PAYMENT PROCESS (optional)
                  */
+                // let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
+                // let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
+                //
+                // welcomeCard.redirectToCheckout(successUrl, cancelUrl);
 
-                /*let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
-                let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
-                  welcomeCard.redirectToCheckout(successUrl, cancelUrl);*/
-
-
-              case 7:
+              case 16:
               case "end":
-                return _context3.stop();
+                return _context6.stop();
             }
           }
-        }, _callee3);
+        }, _callee6);
       }));
 
-      return function (_x4) {
-        return _ref5.apply(this, arguments);
+      return function (_x6) {
+        return _ref7.apply(this, arguments);
       };
     }());
-    var paymentRequestButton = welcomeCard.setStripePaymentRequestButton(elements, paymentRequest); // welcomeCard.setCheckoutForm(cardNumber);
+  },
+  disableAllInputs: function disableAllInputs(formId, disabled) {
+    /**
+     * Disables all the inputs of the given form
+     */
+    // Disables the custom inputs of the form (All but the Stripe inputs)
+    $('#' + formId + ' :input:not(.__PrivateStripeElement-input)').each(function () {
+      $(this).attr("disabled", disabled);
+    }); // Disables all the Stripe inputs of the form.
+
+    $(welcomeCard.elements.stripe._elements).each(function () {
+      var stripeInput = $(this)[0];
+      stripeInput.update({
+        disabled: disabled
+      });
+    });
+  },
+  setPaymentAmount: function setPaymentAmount(value) {
+    var currency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'EUR';
+
+    if (welcomeCard.paymentAmount !== null) {
+      // Check if the given currency is a zero-decimal currency
+      var multiplier = currencies[currency].decimal_digits > 0 ? Math.pow(10, currencies[currency].decimal_digits) : 1; // Remove decimals to set the amount in the less unit of measure (cents)
+
+      welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
+      return true;
+    }
+
+    welcomeCard.paymentAmount = value;
+  },
+  displayStripeErrors: function displayStripeErrors(element, error) {
+    if (error) {
+      element.textContent = error.message;
+      element.style.display = 'block';
+    } else {
+      element.textContent = '';
+      element.style.display = 'none';
+    }
+  },
+  handleServerResponse: function handleServerResponse(response) {
+    /*
+     * Gets the server response and checks whether the payment has failed or
+     * else, the Payment Intent needs another step of authentication.
+     */
+    if (response.error) {
+      welcomeCard.displayInputFieldError('submit', error.message);
+    } else if (response.requires_action) {
+      /*
+       * Triggers the next authentication step or action where the user is likely
+       * to be required for a 3D Secure (mandatory by the Strong Customer Authentication)
+       * regulation in Europe.
+       */
+      stripe.handleCardAction(response.payment_intent_client_secret)
+      /*
+           * Sends the response to another handler which will try
+           * to confirm the payment once again.
+           */
+      .then(welcomeCard.handleStripeJsResult);
+    } else {
+      /*
+       * The payment has been successfully created and shows a confirmation dialog to the user.
+       */
+      welcomeCard.replaceDialog(response);
+    }
+  },
+
+  /**
+   * Receives the response of the «stripe.handleCardAction» method. If the Payment Intent
+   * has sent an error it will show the error message just above the submit button. Otherwise
+   * it will sent the Payment Method Intent ID to the server to finally complete and
+   * confirm the payment linked to the Payment Method sent previously.
+   *
+   * @param result
+   */
+  handleStripeJsResult: function handleStripeJsResult(result) {
+    if (result.error) {
+      var displayError = document.getElementById('submit-errors');
+      displayError.textContent = result.error.message;
+      displayError.style.display = 'block';
+    } else {
+      var data = {
+        _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
+        payment_intent_id: result.paymentIntent.id
+      };
+      _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].sendPaymentMethod(data).then(function (confirmResult) {
+        return confirmResult.data;
+      }).then(function (view) {
+        welcomeCard.handleServerResponse(view);
+      });
+    }
+  },
+  fetchRates: function () {
+    var _fetchRates = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      var url, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              url = 'https://api.exchangeratesapi.io/latest?base=EUR';
+              _context7.prev = 1;
+              _context7.next = 4;
+              return axios({
+                method: 'get',
+                url: url
+              });
+
+            case 4:
+              response = _context7.sent;
+              _context7.next = 7;
+              return response.data;
+
+            case 7:
+              return _context7.abrupt("return", _context7.sent);
+
+            case 10:
+              _context7.prev = 10;
+              _context7.t0 = _context7["catch"](1);
+              console.log(_context7.t0);
+
+            case 13:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, null, [[1, 10]]);
+    }));
+
+    function fetchRates() {
+      return _fetchRates.apply(this, arguments);
+    }
+
+    return fetchRates;
+  }(),
+  currencyExchange: function () {
+    var _currencyExchange = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(value, to) {
+      var from,
+          _args8 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              from = _args8.length > 2 && _args8[2] !== undefined ? _args8[2] : 'EUR';
+
+              if (to.toUpperCase() !== 'EUR') {
+                value *= welcomeCard.rates.rates[to.toUpperCase()];
+              }
+
+              return _context8.abrupt("return", value);
+
+            case 3:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }));
+
+    function currencyExchange(_x7, _x8) {
+      return _currencyExchange.apply(this, arguments);
+    }
+
+    return currencyExchange;
+  }(),
+  validateBillingDetails: function () {
+    var _validateBillingDetails = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(billing) {
+      var errors;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.next = 2;
+              return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].validateObject(billing);
+
+            case 2:
+              errors = _context9.sent;
+
+              if (!errors) {
+                _context9.next = 6;
+                break;
+              }
+
+              welcomeCard.handleErrorFields(Object.keys(errors), errors);
+              return _context9.abrupt("return", null);
+
+            case 6:
+              return _context9.abrupt("return", {
+                name: billing.billing_details.card_holder_name,
+                email: billing.billing_details.email,
+                phone: billing.billing_details.phone_number
+              });
+
+            case 7:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
+    }));
+
+    function validateBillingDetails(_x9) {
+      return _validateBillingDetails.apply(this, arguments);
+    }
+
+    return validateBillingDetails;
+  }(),
+
+  /*
+   * Displays the given errors to the given fields.
+   */
+  handleErrorFields: function handleErrorFields(fields, errors) {
+    if (Array.isArray(fields)) {
+      fields.forEach(function (field) {
+        welcomeCard.displayInputFieldError(field, errors[field][0]);
+      });
+    }
+  },
+  displayInputFieldError: function displayInputFieldError(field, error) {
+    var displayError = document.getElementById(field + '-errors') ? document.getElementById(field + '-errors') : 'submit-errors';
+    var input = document.getElementById(field) ? document.getElementById(field) : document.getElementById('card-' + field);
+
+    if (input !== null) {
+      input.classList.add('is-invalid');
+    }
+
+    displayError.style.display = 'block';
+    displayError.textContent = error;
+  },
+  removeInputFieldError: function removeInputFieldError(field) {
+    var displayError = document.getElementById(field + '-errors');
+    var input = document.getElementById(field);
+    displayError.style.display = 'none';
+
+    if (input !== null) {
+      input.classList.remove('is-invalid');
+    }
   },
   redirectToCheckout: function redirectToCheckout(successUrl, cancelUrl) {
     stripe.redirectToCheckout({
@@ -4053,28 +4504,6 @@ var welcomeCard = {
       }
     });
   },
-  setCheckoutForm: function setCheckoutForm(element) {
-    welcomeCard.forms.checkout.el().addEventListener('submit', function (event) {
-      event.preventDefault();
-      stripe.createToken(element, {
-        name: document.getElementById('card-holder-name').value,
-        email: document.getElementById('email-payer').value
-      }).then(function (result) {});
-    });
-  },
-  setStripeCardNumber: function setStripeCardNumber(elements) {
-    return elements.create('cardNumber');
-  },
-  setCVCInputField: function setCVCInputField(elements) {
-    return elements.create('cardCvc', {
-      placeholder: '123'
-    });
-  },
-  setCardExpiry: function setCardExpiry(elements) {
-    return elements.create('cardExpiry', {
-      placeholder: 'MM / YY'
-    });
-  },
   setStripePaymentRequestButton: function setStripePaymentRequestButton(elements, paymentRequest) {
     var paymentRequestButton = elements.create('paymentRequestButton', {
       paymentRequest: paymentRequest
@@ -4087,23 +4516,21 @@ var welcomeCard = {
         document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w').parentElement.style.display = 'block';
       }
     });
-    paymentRequest.on('paymentmethod', function (e) {
-      stripe.confirmCardPayment(clientSecret, {
-        payment_method: e.paymentMethod.id
-      }, {
-        handleActions: false
-      }).then(function (confirmResult) {
-        if (confirmResult.error) {
-          e.complete('failed');
-        } else {
-          e.complete('success');
-          stripe.confirmCardPayment(clientSecret).then(function (result) {
-            /*if () {
-              }*/
-          });
-        }
-      });
-    });
+    /*paymentRequest.on('paymentmethod', function(e) {
+        stripe.confirmCardPayment(
+            clientSecret,
+            {payment_method: e.paymentMethod.id},
+            {handleActions: false}
+        ).then(function(confirmResult) {
+            if (confirmResult.error) {
+                e.complete('failed');
+            } else {
+                e.complete('success')
+                stripe.confirmCardPayment(clientSecret).then(function(result) {
+                  })
+            }
+        })
+    });*/
   }
 };
 
@@ -4506,17 +4933,105 @@ var api = {
 
     return confirm;
   }(),
-  validate: function () {
-    var _validate = _asyncToGenerator(
+  getHostName: function getHostName() {
+    return window.location.protocol + '//' + window.location.hostname;
+  },
+  sendPaymentMethod: function () {
+    var _sendPaymentMethod = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(field) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(data) {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              api.setTokenToAxiosHeader(data);
+              _context2.prev = 1;
+              _context2.next = 4;
+              return axios({
+                method: 'post',
+                url: api.getHostName() + '/payment-method',
+                data: data
+              });
+
+            case 4:
+              response = _context2.sent;
+              console.log(response);
+              return _context2.abrupt("return", response);
+
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](1);
+              console.log(_context2.t0);
+
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[1, 9]]);
+    }));
+
+    function sendPaymentMethod(_x3) {
+      return _sendPaymentMethod.apply(this, arguments);
+    }
+
+    return sendPaymentMethod;
+  }(),
+  "continue": function () {
+    var _continue2 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(url) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios({
+                method: 'get',
+                url: url
+              });
+
+            case 3:
+              response = _context3.sent;
+              _context3.next = 6;
+              return response.data;
+
+            case 6:
+              return _context3.abrupt("return", _context3.sent);
+
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              console.log(_context3.t0);
+
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[0, 9]]);
+    }));
+
+    function _continue(_x4) {
+      return _continue2.apply(this, arguments);
+    }
+
+    return _continue;
+  }(),
+  validate: function () {
+    var _validate = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(field) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
               api.setTokenToAxiosHeader();
-              _context2.next = 3;
+              _context4.next = 3;
               return axios({
                 method: 'post',
                 headers: {
@@ -4525,34 +5040,78 @@ var api = {
                 url: '/validate/' + field.name,
                 data: field
               }).then(function (response) {
-                console.log(response.data);
                 return null;
               })["catch"](function (error) {
-                console.log(error.response);
                 return error.response.data.errors;
               });
 
             case 3:
-              response = _context2.sent;
-              _context2.next = 6;
+              response = _context4.sent;
+              _context4.next = 6;
               return response;
 
             case 6:
-              return _context2.abrupt("return", _context2.sent);
+              return _context4.abrupt("return", _context4.sent);
 
             case 7:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
         }
-      }, _callee2);
+      }, _callee4);
     }));
 
-    function validate(_x3) {
+    function validate(_x5) {
       return _validate.apply(this, arguments);
     }
 
     return validate;
+  }(),
+  validateObject: function () {
+    var _validateObject = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(object) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              api.setTokenToAxiosHeader();
+              _context5.next = 3;
+              return axios({
+                method: 'post',
+                headers: {
+                  'Content-type': 'application/json'
+                },
+                url: '/validate/' + object.type,
+                data: object[object.type]
+              }).then(function (response) {
+                return null;
+              })["catch"](function (error) {
+                return error.response.data.errors;
+              });
+
+            case 3:
+              response = _context5.sent;
+              _context5.next = 6;
+              return response;
+
+            case 6:
+              return _context5.abrupt("return", _context5.sent);
+
+            case 7:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    function validateObject(_x6) {
+      return _validateObject.apply(this, arguments);
+    }
+
+    return validateObject;
   }(),
   setTokenToAxiosHeader: function setTokenToAxiosHeader() {
     var token = document.head.querySelector('meta[name="csrf-token"');
