@@ -240,6 +240,7 @@ let welcomeCard = {
             // Saves the text inside the button to reusing it afterwards.
             let defaultText = e.target.textContent;
 
+            // Only for testing
             // console.log(api.getHostName() + '/payment-successful');
             // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
             // welcomeCard.replaceDialog(newDialog);
@@ -323,6 +324,12 @@ let welcomeCard = {
 
                                 // In both cases the returned data is sent to a handler.
                                 welcomeCard.handleServerResponse(result.data);
+
+                                // Enables again the inputs of the checkout form.
+                                welcomeCard.disableAllInputs('checkout', false);
+
+                                // If not, stops and hides the loader inside the checkout button.
+                                welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
                             }
                         })
 
@@ -331,12 +338,6 @@ let welcomeCard = {
                     // welcomeCard.forms.checkout.el().submit();
                 }
             }
-
-            // Enables again the inputs of the checkout form.
-            welcomeCard.disableAllInputs('checkout', false);
-
-            // If not, stops and hides the loader inside the checkout button.
-            welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
 
             /**
              * CHECKOUT PAYMENT PROCESS (optional)

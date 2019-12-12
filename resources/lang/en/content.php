@@ -37,8 +37,10 @@ return [
     'delete job offer modal' => 'Delete Job Offer',
     'login' => 'Login',
     'those who have already tried it' => 'Those <strong>who have already tried it</strong>',
-    'job description' => 'Job Description',
+    'description' => 'Description',
     'details' => 'Details',
+    'user' => 'User',
+    'user since' => 'User since',
 
 
 
@@ -132,9 +134,16 @@ return [
         <li><p class="motif_card_text">Comprendedor Award finalist, "Empresa & Sociedad" foundation</p></li>
         <li><p class="motif_card_text">Second prize for best Human Resource IEBS Startup</p></li>
     ',
-    'the intuuchina team have chosen the values' => 'The IntuuChina team has chosen the values ​​it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.',
+    'the intuuchina team have chosen the values' => 'The IntuuChina team has chosen the values it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.',
     'this team is committed and dedicated to provide' => 'This team is committed and dedicated to provide a set of personalized services that will add real value and a competitive advantage to the future professional career.',
     'are you sure you want to remove permanently job offer' => 'Are you sure you want to remove permanently :jobOffer offer?',
+    'pending_confirmation status text' => 'Pending register confirmation.',
+    'confirmed status text' => 'Registered.',
+    'paid status text' => 'Application fee paid. You must answer him for the interview.',
+    'accepted status text' => 'Accepted in the program.',
+    'pending_deposit status text' => 'Pending the second deposit.',
+    'done status text' => 'Ready to take off.',
+
 
 
 
@@ -155,6 +164,7 @@ return [
     'alt entrepeneur' => 'Entrepeneur magazine logo',
     'alt awards' => 'Awarded people during the RTVE Emprende Contest',
     'alt what makes us different' => 'A group of IntuuChina applicants',
+    'alt logo' => 'The :brand logo',
 
 
 
@@ -183,8 +193,7 @@ return [
     'name placeholder' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
     'email placeholder' => 'e.g. confucio@confucio.com',
     'subject placeholder' => 'Write down here your issue',
-    'offers filter label' => 'Filter by: ',
-    'offers filter placeholder' => 'Choose an industry...',
+    'filter by:' => 'Filter by:',
     'industry' => 'Industry',
     'duration' => 'Duration',
     'picture' => 'Picture',
@@ -192,47 +201,17 @@ return [
     'ok, i got it!' => 'Ok, I got it!',
     'see your receipt' => 'See your receipt',
     'currency' => 'Currency',
-    'offers filter options' => [
-        [
-            'text' => 'Finance',
-            'value' => 'finance',
-        ],
-        [
-            'text' => 'Design',
-            'value' => 'design',
-        ],
-        [
-            'text' => 'Engineering',
-            'value' => 'engineering',
-        ],
-        [
-            'text' => 'Consultant',
-            'value' => 'consultant',
-        ],
-        [
-            'text' => 'Education',
-            'value' => 'education',
-        ],
-        [
-            'text' => 'Hospitality',
-            'value' => 'hospitality',
-        ],
-        [
-            'text' => 'IT',
-            'value' => 'it',
-        ],
-        [
-            'text' => 'Legal',
-            'value' => 'legal',
-        ],
-        [
-            'text' => 'Other',
-            'value' => 'Other',
-        ],
-        [
-            'text' => 'Marketing & Business Dev.',
-            'value' => 'marketing_business',
-        ],
+    'industries' => [
+        'finance' => 'Finance',
+        'design' => 'Design',
+        'engineering' => 'Engineering',
+        'consultant' => 'Consultant',
+        'education' => 'Education',
+        'hospitality' => 'Hospitality',
+        'it' => 'IT',
+        'legal' => 'Legal',
+        'other' => 'Other',
+        'marketing_business' => 'Marketing & Business Dev.',
     ],
     'offers locations' => [
         [
@@ -249,26 +228,21 @@ return [
         ],
     ],
     'programs' => [
-        [
-            'text' => 'Internship Program',
-            'value' => 'internship'
-        ],
-        [
-            'text' => 'Internship + Relocation Program',
-            'value' => 'inter_relocat'
-        ],
-        [
-            'text' => 'Chinese language',
-            'value' => 'study'
-        ],
-        [
-            'text' => 'University',
-            'value' => 'university'
-        ],
+        'internship' => 'Internship Program',
+        'inter_relocat' => 'Internship + Relocation',
+        'study' => 'Chinese Language',
+        'university' => 'University',
     ],
-    'study chinese' => 'Chinese language',
-    'in-person' => 'In-person',
-    'online' => 'Online',
+    'universities' => [
+        'mba' => 'MBA',
+        'mib' => 'M. Intl. Bsns.',
+        'other' => 'Other',
+    ],
+    'studies' => [
+        'in-person' => 'In-Person',
+        'online' => 'Online',
+    ],
+    'study chinese via' => 'Study Chinese via',
     'sign in' => 'Sign In',
     'apply for' => 'Apply for',
     'edit' => 'Editar',
@@ -284,20 +258,6 @@ return [
     'save' => 'Save',
     'join also' => 'Join Also',
     'program' => 'Program',
-    'university checkbox' => [
-        [
-            'value' => 'mba',
-            'text' => 'MBA'
-        ],
-        [
-            'value' => 'mib',
-            'text' => 'M. Intl. Bsns.'
-        ],
-        [
-            'value' => 'other',
-            'text' => 'Other'
-        ]
-    ],
 
 
     /*

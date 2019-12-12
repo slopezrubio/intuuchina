@@ -22,6 +22,8 @@ $tertiaryRed:#E57373;
 $quaternaryRed:#C80B0B;
 $primaryWhite: white;
 $neutralColor: #d1d1d1;
+$warningColor: linear-gradient(to right, transparent, #f8dcdc 30%, #f5cbcb);
+$okColor: linear-gradient(to right, transparent, #73e5ac);
 
 // Breakpoints
 $small-and-medium-devices: "only screen and (max-width: 992px)";

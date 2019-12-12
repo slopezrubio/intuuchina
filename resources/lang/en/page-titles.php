@@ -6,4 +6,5 @@ return [
     'learn-chinese' => 'Learn Chinese',
     'dashboard' => 'Dashboard',
     'register' => 'Sign In',
+    'users' => 'Users',
 ];

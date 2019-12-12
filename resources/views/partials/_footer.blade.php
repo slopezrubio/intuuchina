@@ -13,33 +13,24 @@
                     <h3>{{ __('content.website map') }}</h3>
                 </div>
                 <div class="footer_web-map_items">
-                    <div>
-                        <h4 class="footer_subtitle">{{ __('content.internship') }}</h4>
-                        <ul class="web-map_list">
-                            <li class="web-map_item"><a href="{{ route('offers') }}">{{ __('links.job offers') }}</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="footer_subtitle">{{ __('content.learn chinese') }}</h4>
-                        <ul class="web-map_list">
-                            <li class="web-map_item"><a href="{{ url('/learn/1') }}">{{ __('links.in-person') }}</a></li>
-                            <li class="web-map_item"><a href="{{ url('/learn/2') }}">{{ __('links.on-line') }}</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="footer_subtitle">{{ __('content.university') }}</h4>
-                        <ul class="web-map_list">
-                            <li class="web-map_item"><a href="#">{{ __('links.master of business administration acronym') }}</a></li>
-                            <li class="web-map_item"><a href="#">{{ __('links.master of international business acronym') }}</a></li>
-                            <li class="web-map_item"><a href="#">{{ __('links.other studies') }}</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="footer_subtitle">{{ __('content.why intuuchina') }}</h4>
-                        <ul class="web-map_list">
-                            <li class="web-map_item"><a href="#">{{ __('links.whyus') }}</a></li>
-                        </ul>
-                    </div>
+                    @if (!empty(__('links.webmap')))
+                        @foreach (__('links.webmap') as $title => $section)
+                            @if (!empty($section))
+                                <div>
+                                    <h4 class="footer_subtitle">{{ $title }}</h4>
+                                    <ul class="web-map-list">
+                                    @foreach ($section as $key => $item)
+                                        <li class="web-map_item">
+                                            <a href="{{ isset($item['parameter']) ? route($item['route'], [ $key => $item['parameter'] ]) : route($item['route']) }}">
+                                                {{ $item['text'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
@@ -101,20 +92,23 @@
 
             {{--Social Media Links--}}
             <div class="footer_social-media col-sm-12">
-                <div class="footer_title">
-                    <h3>{{ __('content.follow us') }}</h3>
-                </div>
-                <ul class="footer_sublist">
-                    <li class="sublist_item">
-                        <label><a href="https://www.facebook.com/intuuchina" target="_blank"><i class="fab fa-facebook-square">{{ __('links.facebook') }}</i></a></label>
-                    </li>
-                    <li class="sublist_item">
-                        <label><a href="https://www.instagram.com/intuuchina/" target="_blank"><i class="fab fa-instagram">{{ __('links.instagram') }}</i></a></label>
-                    </li>
-                    <li class="sublist_item">
-                        <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank"><i class="fab fa-linkedin">{{ __('links.linkedin') }}</i></a></label>
-                    </li>
-                </ul>
+                @if(!empty(__('links.social')))
+                    <div class="footer_title">
+                        <h3>{{ __('content.follow us') }}</h3>
+
+                    </div>
+                    <ul class="footer_sublist">
+                    @foreach(__('links.social') as $key => $media)
+                        <li class="sublist_item">
+                            <label>
+                                <a href="{{ $media['url'] }}" target="_blank">
+                                    <i class="fab fa-{{ $media['square'] ? $key . '-square' : $key }}">{{ $media['text'] }}</i>
+                                </a>
+                            </label>
+                        </li>
+                    @endforeach
+                    </ul>
+                @endif
             </div>
 
         </div>

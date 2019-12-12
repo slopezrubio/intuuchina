@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Faker\Generator as Faker;
 
 class UsersTableSeeder extends Seeder
@@ -20,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'confucio@confucio.es',
             'type' => 'admin',
             'phone_number' => json_encode([
-                'prefix' => 'ch',
+                'prefix' => 'chn',
                 'number' => substr($faker->e164PhoneNumber, strlen($faker->e164PhoneNumber) - 9),
             ]),
             'status_id' => function() {
@@ -32,7 +33,7 @@ class UsersTableSeeder extends Seeder
             'program' => null,
             'industry' => null,
             'university' => null,
-            'password' => hash('**********'),
+            'password' => Hash::make('***********'),
         ]);
 
         $users = factory(App\User::class, 3)->create();

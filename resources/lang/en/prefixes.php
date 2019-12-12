@@ -1,567 +1,933 @@
 <?php
 return [
-    'afghan' => [
+    'afg' => [
+        'code' => 'AFG',
+        'demonym' => 'afghan',
         'prefix' => '+93'
     ],
-    'albanian' => [
+    'alb' => [
+        'code' => 'ALB',
+        'demonym' => 'albanian',
         'prefix' => '+355'
     ],
-    'algerian' => [
+    'dza' => [
+        'code' => 'DZA',
+        'demonym' => 'algerian',
         'prefix' => '+213'
     ],
-    'american' => [
+    'us' => [
+        'code' => 'US',
+        'demonym' => 'american',
         'prefix' => '+1'
     ],
-    'andorran' => [
+    'and' => [
+        'code' => 'AND',
+        'demonym' => 'andorran',
         'prefix' => '+376'
     ],
-    'angolan' => [
+    'ago' => [
+        'code' => 'AGO',
+        'demonym' => 'angolan',
         'prefix' => '+244'
     ],
-    'antiguans' => [
+    'ag' => [
+        'code' => 'ATG',
+        'demonym' => 'antiguans',
         'prefix' => '+1 (268)'
     ],
-    'argentinean' => [
+    'arg' => [
+        'code' => 'ARG',
+        'demonym' => 'argentinean',
         'prefix' => '+54'
     ],
-    'armenian' => [
+    'arm' => [
+        'code' => 'ARM',
+        'demonym' => 'armenian',
         'prefix' => '+374'
     ],
-    'australian' => [
+    'aus' => [
+        'code' => 'AUS',
+        'demonym' => 'australian',
         'prefix' => '+61'
     ],
-    'austrian' => [
+    'aut' => [
+        'code' => 'AUT',
+        'demonym' => 'austrian',
         'prefix' => '+43'
     ],
-    'azerbaijani' => [
+    'AZE' => [
+        'code' => 'AZE',
+        'demonym' => 'azerbaijani',
         'prefix' => '+994'
     ],
-    'bahamian' => [
+    'bhs' => [
+        'code' => 'BHS',
+        'demonym' => 'bahamian',
         'prefix' => '+1 (242)'
     ],
-    'bahraini' => [
+    'bhr' => [
+        'code' => 'BHR',
+        'demonym' => 'bahraini',
         'prefix' => '+973'
     ],
-    'bangladeshi' => [
+    'bgd' => [
+        'code' => 'BGD',
+        'demonym' => 'bangladeshi',
         'prefix' => '+880'
     ],
-    'barbadian' => [
+    'brb' => [
+        'code' => 'BRB',
+        'demonym' => 'barbadian',
         'prefix' => '+1 (246)'
     ],
-    'barbudans' => [
+    'atg' => [
+        'code' => 'ATG',
+        'demonym' => 'barbudans',
         'prefix' => '+93'
     ],
-    'batswana' => [
+    'bwa' => [
+        'code' => 'BWA',
+        'demonym' => 'batswana',
         'prefix' => '+267'
     ],
-    'belarusian' => [
+    'blr' => [
+        'code' => 'BLR',
+        'demonym' => 'belarusian',
         'prefix' => '+375'
     ],
-    'belgian' => [
+    'bel' => [
+        'code' => 'BEL',
+        'demonym' => 'belgian',
         'prefix' => '+32'
     ],
-    'belizean' => [
+    'blz' => [
+        'code' => 'BLZ',
+        'demonym' => 'belizean',
         'prefix' => '+501'
     ],
-    'beninese' => [
+    'ben' => [
+        'code' => 'BEN',
+        'demonym' => 'beninese',
         'prefix' => '+229'
     ],
-    'bhutanese' => [
+    'btn' => [
+        'code' => 'BTN',
+        'demonym' => 'bhutanese',
         'prefix' => '+975'
     ],
-    'bolivian' => [
+    'bol' => [
+        'code' => 'BOL',
+        'demonym' => 'bolivian',
         'prefix' => '+591'
     ],
-    'bosnian' => [
+    'ba' => [
+        'code' => 'BA',
+        'demonym' => 'bosnian',
         'prefix' => '+387'
     ],
-    'brazilian' => [
+    'bra' => [
+        'code' => 'BRA',
+        'demonym' => 'brazilian',
         'prefix' => '+55'
     ],
-    'british' => [
+    'gbr' => [
+        'code' => 'GBR',
+        'demonym' => 'british',
         'prefix' => '+44'
     ],
-    'bruneian' => [
+    'brn' => [
+        'code' => 'BRN',
+        'demonym' => 'bruneian',
         'prefix' => '+673'
     ],
-    'bulgarian' => [
+    'bgr' => [
+        'code' => 'BGR',
+        'demonym' => 'bulgarian',
         'prefix' => '+359'
     ],
-    'burkinabe' => [
+    'bfa' => [
+        'code' => 'BFA',
+        'demonym' => 'burkinabe',
         'prefix' => '+226'
     ],
-    'burmese' => [
+    'bu' => [
+        'code' => 'BU',
+        'demonym' => 'burmese',
         'prefix' => '+95'
     ],
-    'burundian' => [
+    'bdi' => [
+        'code' => 'BDI',
+        'demonym' => 'burundian',
         'prefix' => '+257'
     ],
-    'cambodian' => [
+    'khm' => [
+        'code' => 'KHM',
+        'demonym' => 'cambodian',
         'prefix' => '+855'
     ],
-    'cameroonian' => [
+    'cmr' => [
+        'code' => 'CMR',
+        'demonym' => 'cameroonian',
         'prefix' => '+237'
     ],
-    'canadian' => [
+    'can' => [
+        'code' => 'CAN',
+        'demonym' => 'canadian',
         'prefix' => '+1'
     ],
-    'cape verdean' => [
+    'cpv' => [
+        'code' => 'CPV',
+        'demonym' => 'cape verdean',
         'prefix' => '+238'
     ],
-    'central african' => [
+    'caf' => [
+        'code' => 'CAF',
+        'demonym' => 'central african',
         'prefix' => '+236'
     ],
-    'chadian' => [
+    'tcd' => [
+        'code' => 'TCD',
+        'demonym' => 'chadian',
         'prefix' => '+235'
     ],
-    'chilean' => [
+    'chl' => [
+        'code' => 'CHL',
+        'demonym' => 'chilean',
         'prefix' => '+56'
     ],
-    'chinese' => [
+    'chn' => [
+        'code' => 'CHN',
+        'demonym' => 'chinese',
         'prefix' => '+86'
     ],
-    'colombian' => [
+    'col' => [
+        'code' => 'COL',
+        'demonym' => 'colombian',
         'prefix' => '+57'
     ],
-    'comoran' => [
+    'com' => [
+        'code' => 'COM',
+        'demonym' => 'comoran',
         'prefix' => '+269'
     ],
-    'congolese' => [
+    'cod' => [
+        'code' => 'COD',
+        'demonym' => 'congolese',
         'prefix' => '+243'
     ],
-    'costa rican' => [
+    'cri' => [
+        'code' => 'CRI',
+        'demonym' => 'costa rican',
         'prefix' => '+506'
     ],
-    'croatian' => [
+    'hrv' => [
+        'code' => 'HRV',
+        'demonym' => 'croatian',
         'prefix' => '+385'
     ],
-    'cuban' => [
+    'cub' => [
+        'code' => 'CUB',
+        'demonym' => 'cuban',
         'prefix' => '+53'
     ],
-    'cypriot' => [
+    'cyp' => [
+        'code' => 'CYP',
+        'demonym' => 'cypriot',
         'prefix' => '+357'
     ],
-    'czech' => [
+    'cze' => [
+        'code' => 'CZE',
+        'demonym' => 'czech',
         'prefix' => '+420'
     ],
-    'danish' => [
+    'dnk' => [
+        'code' => 'DNK',
+        'demonym' => 'danish',
         'prefix' => '+45'
     ],
-    'djibouti' => [
+    'dji' => [
+        'code' => 'DJI',
+        'demonym' => 'djibouti',
         'prefix' => '+253'
     ],
-    'dominican' => [
+    'dom' => [
+        'code' => 'DOM',
+        'demonym' => 'dominican',
         'prefix' => '+1 (767)'
     ],
-    'dutch' => [
+    'nld' => [
+        'code' => 'NLD',
+        'demonym' => 'dutch',
         'prefix' => '+31'
     ],
-    'east timorese' => [
+    'tls' => [
+        'code' => 'TLS',
+        'demonym' => 'east timorese',
         'prefix' => '+670'
     ],
-    'ecuadorean' => [
+    'ecu' => [
+        'code' => 'ECU',
+        'demonym' => 'ecuadorean',
         'prefix' => '+593'
     ],
-    'egyptian' => [
+    'egy' => [
+        'code' => 'EGY',
+        'demonym' => 'egyptian',
         'prefix' => '+20'
     ],
-    'emirian' => [
+    'are' => [
+        'code' => 'ARE',
+        'demonym' => 'emirian',
         'prefix' => '+971'
     ],
-    'equatorial guinean' => [
+    'gnq' => [
+        'code' => 'GNQ',
+        'demonym' => 'equatorial guinean',
         'prefix' => '+240'
     ],
-    'eritrean' => [
+    'eri' => [
+        'code' => 'ERI',
+        'demonym' => 'eritrean',
         'prefix' => '+291'
     ],
-    'estonian' => [
+    'est' => [
+        'code' => 'EST',
+        'demonym' => 'estonian',
         'prefix' => '+372'
     ],
-    'ethiopian' => [
+    'eth' => [
+        'code' => 'ETH',
+        'demonym' => 'ethiopian',
         'prefix' => '+251'
     ],
-    'fijian' => [
+    'fji' => [
+        'code' => 'FJI',
+        'demonym' => 'fijian',
         'prefix' => '+679'
     ],
-    'filipino' => [
+    'phl' => [
+        'code' => 'PHL',
+        'demonym' => 'filipino',
         'prefix' => '+63'
     ],
-    'finnish' => [
+    'fin' => [
+        'code' => 'FIN',
+        'demonym' => 'finnish',
         'prefix' => '+358'
     ],
-    'french' => [
+    'fra' => [
+        'code' => 'FRA',
+        'demonym' => 'french',
         'prefix' => '+33'
     ],
-    'gabonese' => [
+    'gab' => [
+        'code' => 'GAB',
+        'demonym' => 'gabonese',
         'prefix' => '+241'
     ],
-    'gambian' => [
+    'gmb' => [
+        'code' => 'GMB',
+        'demonym' => 'gambian',
         'prefix' => '+220'
     ],
-    'georgian' => [
+    'geo' => [
+        'code' => 'GEO',
+        'demonym' => 'georgian',
         'prefix' => '+995'
     ],
-    'german' => [
+    'deu' => [
+        'code' => 'DEU',
+        'demonym' => 'german',
         'prefix' => '+49'
     ],
-    'ghanaian' => [
+    'gha' => [
+        'code' => 'GHA',
+        'demonym' => 'ghanaian',
         'prefix' => '+233'
     ],
-    'greek' => [
+    'grc' => [
+        'code' => 'GRC',
+        'demonym' => 'greek',
         'prefix' => '+30'
     ],
-    'grenadian' => [
+    'grd' => [
+        'code' => 'GRD',
+        'demonym' => 'grenadian',
         'prefix' => '+1 (473)'
     ],
-    'guatemalan' => [
+    'gtm' => [
+        'code' => 'GTM',
+        'demonym' => 'guatemalan',
         'prefix' => '+502'
     ],
-    'guinea-bissauan' => [
+    'gnb' => [
+        'code' => 'GNB',
+        'demonym' => 'guinea-bissauan',
         'prefix' => '+245'
     ],
-    'guinean' => [
+    'gin' => [
+        'code' => 'GIN',
+        'demonym' => 'guinean',
         'prefix' => '+224'
     ],
-    'guyanese' => [
+    'guy' => [
+        'code' => 'GUY',
+        'demonym' => 'guyanese',
         'prefix' => '+592'
     ],
-    'haitian' => [
+    'hti' => [
+        'code' => 'HTI',
+        'demonym' => 'haitian',
         'prefix' => '+509'
     ],
-    'herzegovinian' => [
+    'bih' => [
+        'code' => 'BIH',
+        'demonym' => 'herzegovinian',
         'prefix' => '+387'
     ],
-    'honduran' => [
+    'hnd' => [
+        'code' => 'HND',
+        'demonym' => 'honduran',
         'prefix' => '+504'
     ],
-    'hungarian' => [
+    'hun' => [
+        'code' => 'HUN',
+        'demonym' => 'hungarian',
         'prefix' => '+36'
     ],
-    'icelander' => [
+    'isl' => [
+        'code' => 'ISL',
+        'demonym' => 'icelander',
         'prefix' => '+354'
     ],
-    'indian' => [
+    'ind' => [
+        'code' => 'IND',
+        'demonym' => 'indian',
         'prefix' => '+91'
     ],
-    'indonesian' => [
+    'idn' => [
+        'code' => 'IDN',
+        'demonym' => 'indonesian',
         'prefix' => '+62'
     ],
-    'iranian' => [
+    'irn' => [
+        'code' => 'IRN',
+        'demonym' => 'iranian',
         'prefix' => '+98'
     ],
-    'iraqi' => [
+    'irq' => [
+        'code' => 'IRQ',
+        'demonym' => 'iraqi',
         'prefix' => '+964'
     ],
-    'irish' => [
+    'irl' => [
+        'code' => 'IRL',
+        'demonym' => 'irish',
         'prefix' => '+353'
     ],
-    'israeli' => [
+    'isr' => [
+        'code' => 'ISR',
+        'demonym' => 'israeli',
         'prefix' => '+972'
     ],
-    'italian' => [
+    'ita' => [
+        'code' => 'ITA',
+        'demonym' => 'italian',
         'prefix' => '+39'
     ],
-    'jamaican' => [
+    'jam' => [
+        'code' => 'JAM',
+        'demonym' => 'jamaican',
         'prefix' => '+1 (876)'
     ],
-    'japanese' => [
+    'jpn' => [
+        'code' => 'JPN',
+        'demonym' => 'japanese',
         'prefix' => '+81'
     ],
-    'jordanian' => [
+    'jor' => [
+        'code' => 'JOR',
+        'demonym' => 'jordanian',
         'prefix' => '+962'
     ],
-    'kazakhstani' => [
+    'kaz' => [
+        'code' => 'KAZ',
+        'demonym' => 'kazakhstani',
         'prefix' => '+7'
     ],
-    'kenyan' => [
+    'ken' => [
+        'code' => 'KEN',
+        'demonym' => 'kenyan',
         'prefix' => '+254'
     ],
-    'kittian and nevisian' => [
+    'kna' => [
+        'code' => 'KNA',
+        'demonym' => 'kittian and nevisian',
         'prefix' => '+1 (869)'
     ],
-    'kuwaiti' => [
+    'kwt' => [
+        'code' => 'KWT',
+        'demonym' => 'kuwaiti',
         'prefix' => '+965'
     ],
-    'kyrgyz' => [
+    'kgz' => [
+        'code' => 'KGZ',
+        'demonym' => 'kyrgyz',
         'prefix' => '+996'
     ],
-    'laotian' => [
+    'lao' => [
+        'code' => 'LAO',
+        'demonym' => 'laotian',
         'prefix' => '+856'
     ],
-    'latvian' => [
+    'lva' => [
+        'code' => 'LVA',
+        'demonym' => 'latvian',
         'prefix' => '+371'
     ],
-    'lebanese' => [
+    'lbn' => [
+        'code' => 'LBN',
+        'demonym' => 'lebanese',
         'prefix' => '+961'
     ],
-    'liberian' => [
+    'lbr' => [
+        'code' => 'LBR',
+        'demonym' => 'liberian',
         'prefix' => '+231'
     ],
-    'libyan' => [
+    'lby' => [
+        'code' => 'LBY',
+        'demonym' => 'libyan',
         'prefix' => '+218'
     ],
-    'liechtensteiner' => [
+    'lie' => [
+        'code' => 'LIE',
+        'demonym' => 'liechtensteiner',
         'prefix' => '+423'
     ],
-    'lithuanian' => [
+    'ltu' => [
+        'code' => 'LTU',
+        'demonym' => 'lithuanian',
         'prefix' => '+370'
     ],
-    'luxembourger' => [
+    'lux' => [
+        'code' => 'LUX',
+        'demonym' => 'luxembourger',
         'prefix' => '+352'
     ],
-    'macedonian' => [
+    'mkd' => [
+        'code' => 'MKD',
+        'demonym' => 'macedonian',
         'prefix' => '+389'
     ],
-    'malagasy' => [
+    'mdg' => [
+        'code' => 'MDG',
+        'demonym' => 'malagasy',
         'prefix' => '+261'
     ],
-    'malawian' => [
+    'mwi' => [
+        'code' => 'MWI',
+        'demonym' => 'malawian',
         'prefix' => '+265'
     ],
-    'malaysian' => [
+    'mys' => [
+        'code' => 'MYS',
+        'demonym' => 'malaysian',
         'prefix' => '+60'
     ],
-    'maldivan' => [
+    'mdv' => [
+        'code' => 'MDV',
+        'demonym' => 'maldivan',
         'prefix' => '+960'
     ],
-    'malian' => [
+    'mli' => [
+        'code' => 'MLI',
+        'demonym' => 'malian',
         'prefix' => '+223'
     ],
-    'maltese' => [
+    'mlt' => [
+        'code' => 'MLT',
+        'demonym' => 'maltese',
         'prefix' => '+356'
     ],
-    'marshallese' => [
+    'mhl' => [
+        'code' => 'MHL',
+        'demonym' => 'marshallese',
         'prefix' => '+692'
     ],
-    'mauritanian' => [
+    'mrt' => [
+        'code' => 'MRT',
+        'demonym' => 'mauritanian',
         'prefix' => '+222'
     ],
-    'mexican' => [
+    'mex' => [
+        'code' => 'MEX',
+        'demonym' => 'mexican',
         'prefix' => '+52'
     ],
-    'micronesian' => [
+    'fsm' => [
+        'code' => 'FSM',
+        'demonym' => 'micronesian',
         'prefix' => '+691'
     ],
-    'moldovan' => [
+    'mda' => [
+        'code' => 'MDA',
+        'demonym' => 'moldovan',
         'prefix' => '+373'
     ],
-    'monacan' => [
+    'mco' => [
+        'code' => 'MCO',
+        'demonym' => 'monacan',
         'prefix' => '+377'
     ],
-    'mongolian' => [
+    'mng' => [
+        'code' => 'MNG',
+        'demonym' => 'mongolian',
         'prefix' => '+976'
     ],
-    'moroccan' => [
+    'mar' => [
+        'code' => 'MAR',
+        'demonym' => 'moroccan',
         'prefix' => '+212'
     ],
-    'mozambican' => [
+    'moz' => [
+        'code' => 'MOZ',
+        'demonym' => 'mozambican',
         'prefix' => '+258'
     ],
-    'namibian' => [
+    'nam' => [
+        'code' => 'NAM',
+        'demonym' => 'namibian',
         'prefix' => '+264'
     ],
-    'nauruan' => [
+    'nru' => [
+        'code' => 'NRU',
+        'demonym' => 'nauruan',
         'prefix' => '+674'
     ],
-    'nepalese' => [
+    'npl' => [
+        'code' => 'NPL',
+        'demonym' => 'nepalese',
         'prefix' => '+977'
     ],
-    'new zealander' => [
+    'nzl' => [
+        'code' => 'NZL',
+        'demonym' => 'new zealander',
         'prefix' => '+64'
     ],
-    'ni-vanuatu' => [
+    'vut' => [
+        'code' => 'VUT',
+        'demonym' => 'ni-vanuatu',
         'prefix' => '+678'
     ],
-    'nicaraguan' => [
+    'nic' => [
+        'code' => 'NIC',
+        'demonym' => 'nicaraguan',
         'prefix' => '+505'
     ],
-    'nigerien' => [
+    'nga' => [
+        'code' => 'NGA',
+        'demonym' => 'nigerien',
         'prefix' => '+234'
     ],
-    'north korean' => [
+    'prk' => [
+        'code' => 'PRK',
+        'demonym' => 'north korean',
         'prefix' => '+850'
     ],
-    'northern irish' => [
+    'nrl' => [
+        'code' => 'GBR',
+        'demonym' => 'northern irish',
         'prefix' => '+353'
     ],
-    'norwegian' => [
+    'nor' => [
+        'code' => 'NOR',
+        'demonym' => 'norwegian',
         'prefix' => '+47'
     ],
-    'omani' => [
+    'omn' => [
+        'code' => 'OMN',
+        'demonym' => 'omani',
         'prefix' => '+968'
     ],
-    'pakistani' => [
+    'pak' => [
+        'code' => 'PAK',
+        'demonym' => 'pakistani',
         'prefix' => '+92'
     ],
-    'palauan' => [
+    'plw' => [
+        'code' => 'PLW',
+        'demonym' => 'palauan',
         'prefix' => '+68'
     ],
-    'panamanian' => [
+    'pan' => [
+        'code' => 'PAN',
+        'demonym' => 'panamanian',
         'prefix' => '+507'
     ],
-    'papua new guinean' => [
+    'png' => [
+        'code' => 'PNG',
+        'demonym' => 'papua new guinean',
         'prefix' => '+675'
     ],
-    'paraguayan' => [
+    'pry' => [
+        'code' => 'PRY',
+        'demonym' => 'paraguayan',
         'prefix' => '+595'
     ],
-    'peruvian' => [
+    'per' => [
+        'code' => 'PER',
+        'demonym' => 'peruvian',
         'prefix' => '+51'
     ],
-    'polish' => [
+    'pol' => [
+        'code' => 'POL',
+        'demonym' => 'polish',
         'prefix' => '+48'
     ],
-    'portuguese' => [
+    'prt' => [
+        'code' => 'PRT',
+        'demonym' => 'portuguese',
         'prefix' => '+351'
     ],
-    'qatari' => [
+    'qat' => [
+        'code' => 'QAT',
+        'demonym' => 'qatari',
         'prefix' => '+974'
     ],
-    'romanian' => [
+    'rou' => [
+        'code' => 'ROU',
+        'demonym' => 'romanian',
         'prefix' => '+40'
     ],
-    'russian' => [
+    'rus' => [
+        'code' => 'RUS',
+        'demonym' => 'russian',
         'prefix' => '+7'
     ],
-    'rwandan' => [
+    'rwa' => [
+        'code' => 'RWA',
+        'demonym' => 'rwandan',
         'prefix' => '+250'
     ],
-    'saint lucian' => [
+    'lca' => [
+        'code' => 'LCA',
+        'demonym' => 'saint lucian',
         'prefix' => '+1 (758)'
     ],
-    'salvadoran' => [
+    'slv' => [
+        'code' => 'SLV',
+        'demonym' => 'salvadoran',
         'prefix' => '+503'
     ],
-    'samoan' => [
+    'wsm' => [
+        'code' => 'WSM',
+        'demonym' => 'samoan',
         'prefix' => '+685'
     ],
-    'san marinese' => [
+    'smr' => [
+        'code' => 'SMR',
+        'demonym' => 'san marinese',
         'prefix' => '+378'
     ],
-    'sao tomean' => [
+    'stp' => [
+        'code' => 'STP',
+        'demonym' => 'sao tomean',
         'prefix' => '+239'
     ],
-    'saudi' => [
+    'sau' => [
+        'code' => 'SAU',
+        'demonym' => 'saudi',
         'prefix' => '+966'
     ],
-    'scottish' => [
-        'prefix' => '+44'
-    ],
-    'senegalese' => [
+    'sen' => [
+        'code' => 'SEN',
+        'demonym' => 'senegalese',
         'prefix' => '+221'
     ],
-    'serbian' => [
+    'srb' => [
+        'code' => 'SRB',
+        'demonym' => 'serbian',
         'prefix' => '+381'
     ],
-    'seychellois' => [
+    'syc' => [
+        'code' => 'SYC',
+        'demonym' => 'seychellois',
         'prefix' => '+248'
     ],
-    'sierra leonean' => [
+    'sle' => [
+        'code' => 'SLE',
+        'demonym' => 'sierra leonean',
         'prefix' => '+232'
     ],
     'singaporean' => [
+        'code' => 'SGP',
+        'demonym' => 'singaporean',
         'prefix' => '+65'
     ],
-    'solomon islander' => [
+    'slb' => [
+        'code' => 'SLB',
+        'demonym' => 'solomon islander',
         'prefix' => '+677'
     ],
-    'slovenian' => [
+    'svn' => [
+        'code' => 'SVN',
+        'demonym' => 'slovenian',
         'prefix' => '+386'
     ],
-    'slovakia' => [
+    'slo' => [
+        'code' => 'SVK',
+        'demonym' => 'slovakia',
         'prefix' => '+421'
     ],
-    'somali' => [
+    'som' => [
+        'code' => 'SOM',
+        'demonym' => 'somali',
         'prefix' => '+252'
     ],
-    'south african' => [
+    'zaf' => [
+        'code' => 'ZAF',
+        'demonym' => 'south african',
         'prefix' => '+27'
     ],
-    'south korean' => [
+    'kor' => [
+        'code' => 'KOR',
+        'demonym' => 'south korean',
         'prefix' => '+82'
     ],
-    'spanish' => [
+    'esp' => [
+        'code' => 'ESP',
+        'demonym' => 'spanish',
         'prefix' => '+34'
     ],
-    'sri lankan' => [
+    'lka' => [
+        'code' => 'LKA',
+        'demonym' => 'sri lanka',
         'prefix' => '+94'
     ],
-    'sudanese' => [
+    'sdn' => [
+        'code' => 'SDN',
+        'demonym' => 'sudanese',
         'prefix' => '+249'
     ],
-    'surinamer' => [
+    'sur' => [
+        'code' => 'SUR',
+        'demonym' => 'surinamer',
         'prefix' => '+597'
     ],
-    'swazi' => [
+    'swz' => [
+        'code' => 'SWZ',
+        'demonym' => 'swazi',
         'prefix' => '+268'
     ],
-    'swedish' => [
+    'swe' => [
+        'code' => 'SWE',
+        'demonym' => 'swedish',
         'prefix' => '+46'
     ],
-    'swiss' => [
+    'che' => [
+        'code' => 'CHE',
+        'demonym' => 'swiss',
         'prefix' => '+41'
     ],
-    'syrian' => [
+    'syr' => [
+        'code' => 'SYR',
+        'demonym' => 'syrian',
         'prefix' => '+963'
     ],
-    'taiwanese' => [
+    'twn' => [
+        'code' => 'TWN',
+        'demonym' => 'taiwanese',
         'prefix' => '+886'
     ],
-    'tajik' => [
+    'tjk' => [
+        'code' => 'TJK',
+        'demonym' => 'tajik',
         'prefix' => '+992'
     ],
-    'tanzanian' => [
+    'tza' => [
+        'code' => 'TZA',
+        'demonym' => 'tanzanian',
         'prefix' => '+255'
     ],
-    'thai' => [
+    'tha' => [
+        'code' => 'THA',
+        'demonym' => 'thai',
         'prefix' => '+66'
     ],
-    'togolese' => [
+    'tgo' => [
+        'code' => 'TGO',
+        'demonym' => 'togolese',
         'prefix' => '+228'
     ],
-    'tongan' => [
+    'ton' => [
+        'code' => 'TON',
+        'demonym' => 'tongan',
         'prefix' => '+676'
     ],
-    'trinidadian or tobagonian' => [
+    'tto' => [
+        'code' => 'TTO',
+        'demonym' => 'trinidadian or tobagonian',
         'prefix' => '+1 (868)'
     ],
-    'tunisian' => [
+    'tun' => [
+        'code' => 'TUN',
+        'demonym' => 'tunisian',
         'prefix' => '+216'
     ],
-    'turkish' => [
+    'tur' => [
+        'code' => 'TUR',
+        'demonym' => 'turkish',
         'prefix' => '+90'
     ],
     'tuvaluan' => [
+        'code' => 'TUV',
+        'demonym' => 'tuvaluan',
         'prefix' => '+688'
     ],
-    'ugandan' => [
+    'uga' => [
+        'code' => 'UGA',
+        'demonym' => 'ugandan',
         'prefix' => '+256'
     ],
-    'ukrainian' => [
+    'ukr' => [
+        'code' => 'UKR',
+        'demonym' => 'ukrainian',
         'prefix' => '+980'
     ],
     'uruguayan' => [
+        'code' => 'URY',
+        'demonym' => 'uruguayan',
         'prefix' => '+598'
     ],
-    'uzbekistani' => [
+    'uzb' => [
+        'code' => 'UZB',
+        'demonym' => 'uzbekistani',
         'prefix' => '+998'
     ],
-    'venezuelan' => [
+    'ven' => [
+        'code' => 'VEN',
+        'demonym' => 'venezuelan',
         'prefix' => '+58'
     ],
-    'vietnamese' => [
+    'vnm' => [
+        'code' => 'VNM',
+        'demonym' => 'vietnamese',
         'prefix' => '+84'
     ],
-    'welsh' => [
-        'prefix' => '+44'
-    ],
-    'yemenite' => [
+    'yem' => [
+        'code' => 'YEM',
+        'demonym' => 'yemenite',
         'prefix' => '+967'
     ],
-    'zambian' => [
+    'zmb' => [
+        'code' => 'ZMB',
+        'demonym' => 'zambian',
         'prefix' => '+260'
     ],
     'zimbabwean' => [
+        'code' => 'ZWE',
+        'demonym' => 'zimbabwean',
         'prefix' => '+263'
     ],
 ];

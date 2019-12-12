@@ -5,7 +5,7 @@
                 <i class="fas fa-user-md"></i>
                 <span>Job offers</span>
             </a>
-            <a class="btn toolbox_button" href="{{ route('admin.offers') }}">
+            <a class="btn toolbox_button" href="{{ route('admin.users') }}">
                 <i class="fas fa-users"></i>
                 <span>Users</span>
             </a>

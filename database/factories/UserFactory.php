@@ -18,14 +18,14 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'surnames' => $faker->lastName,
+        'name' => $faker->lastName,
+        'surnames' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'nationality' => 'chinese',
         'email_verified_at' => now(),
         'type' => 'user',
         'phone_number' => json_encode([
-            'prefix' => $faker->randomElement(array('fr', 'es', 'slo', 'pr', 'de', 'uk')),
+            'prefix' => $faker->randomElement(array('fra', 'esp', 'svn', 'prt', 'deu', 'gbr')),
             'number' => substr($faker->e164PhoneNumber, strlen($faker->e164PhoneNumber) - 9),
         ]),
         'status_id' => function() {

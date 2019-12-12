@@ -66,6 +66,8 @@ return [
                                     </ol>
                                     <p>We get  500 people per month asking for our services and in order to ensure we only proceed with those that are                                      really committed we request an application fee of 25 EUR: <a href='#'>Enlace stripe</a></p>
                                     <p>Once that payment is done, I will get in touch to schedule the next step.</p>
-                                    <p>Kind regards, <br/>Patrick</p>"
+                                    <p>Kind regards, <br/>Patrick</p>",
+        'user payment notification' => "<h2>NOTIFICATION MESSAGE</h2>
+                                        <p>:user has recently paid :amount from the :concept_of_payment settled. You should answer him in order to let him know the next coming steps.</p>"
     ]
 ];

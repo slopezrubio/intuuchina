@@ -28,7 +28,7 @@ class MailMessagesController extends Controller
             'terms.required' => 'You must agree with our terms and conditions and GDPR'
         ]);
 
-        Mail::to('recmanvideos@gmail.com')->queue(new ReceivedMessage($msg));
+        Mail::to('hr@intuuchina.com')->queue(new ReceivedMessage($msg));
 
         return view('pages.message-confirmation');
     }

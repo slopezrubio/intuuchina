@@ -20,9 +20,20 @@ return [
     'forgot your password?' => 'Forgot Your Password ?',
     'password' => 'Password',
     'cancel' => 'Cancel',
+    'register' => 'Register',
+    'back to home' => 'Back to Home',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Navbar
+    |--------------------------------------------------------------------------
+    |
+    | Contains an array with the applications available locales.
+    |
+    */
     'logout' => 'Logout',
     'login' => 'Login',
     'change pass' => 'Change Password',
-    'register' => 'Register',
-    'back to home' => 'Back to Home',
+    'dashboard' => 'Dashboard',
+    'profile' => 'Profile',
 ];

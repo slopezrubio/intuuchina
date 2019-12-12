@@ -56,7 +56,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
 
-
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'surnames' => ['string', 'max:255'],
@@ -97,8 +96,9 @@ class RegisterController extends Controller
             ]),
             'nationality' => $data['nationality'],
             'program' => $data['program'],
-            'industry' => $this->checkArrayField($data, 'industry'),
-            'university' => $this->checkArrayField($data, 'university'),
+            'industry' => isset($data['industry']) ? json_encode($data['industry']) : null,
+            'study' => isset($data['study']) ? json_encode($data['study']) : null,
+            'university' => isset($data['university']) ? json_encode($data['university']) : null,
             'type' => 'user',
             'status_id' => DB::table('states')
                             ->select(DB::raw('id'))
@@ -146,36 +146,6 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         return redirect($this->redirectTo)->with('status', 'created');
-    }
-
-    /**
-     * Checks array field is not empty and parse it into a JSON format to be introduced
-     * to the database as a tuple (tupla).
-     *
-     * @param $data
-     * @param $field
-     * @return User|null
-     */
-    protected function checkArrayField($data, $field) {
-        if (isset($data[$field])) {
-            return $this->prepareArray($data[$field]);
-        }
-
-        return null;
-    }
-
-    /**
-     * Checks if the given argument is an Array and parse it passed into a JSON format.
-     *
-     * @param $value
-     * @return false|string
-     */
-    protected function prepareArray($array) {
-        if (is_array($array)) {
-            return json_encode($array);
-        }
-
-        return is_array($array);
     }
 
     /**

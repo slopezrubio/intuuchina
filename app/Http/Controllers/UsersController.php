@@ -10,13 +10,17 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
     public function confirm(Request $request) {
-        $user = Auth::user();
-        $updated = $user->updateStatus('confirmed');
 
-        if ($updated) {
-            return $this->view('partials/forms/dialog-box-' . State::find($user->status_id)->name);
-        }
+        // Gets the authenticated user and updates his status.
+        $user = User::find(Auth::id());
+        $user = $user->updateStatus('confirmed');
 
-        return view('partials/forms/dialog-box-confirmed');
+        $currentStatus = State::find($user->status_id)->name;
+
+        return view('partials/forms/dialog-box-' . $currentStatus);
+    }
+
+    public function single($id) {
+
     }
 }

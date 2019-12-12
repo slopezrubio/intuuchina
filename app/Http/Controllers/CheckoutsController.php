@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use App\Rules as Assert;
+use App\Mail\PaymentNotification;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 use Stripe\Charge;
@@ -35,7 +37,7 @@ class CheckoutsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the «Application Fee» payment form to the user.
      *
      * @return Response
      * @throws \Stripe\Exception\ApiErrorException
@@ -98,6 +100,8 @@ class CheckoutsController extends Controller
 
             // Check if the Payment Intent has been sent.
             if ($payment_intent_id != null) {
+                return $intent;
+                die();
                 // Gets the Payment Intent ID and confirms the payment.
                 $intent = PaymentIntent::retrieve($payment_intent_id);
                 $intent->confirm();
@@ -159,8 +163,18 @@ class CheckoutsController extends Controller
             // Handle post-payment fulfillment
 
             // Now the user has paid and his state must be updated.
-//            Auth::user()->updateStatus('paid');
+            //Auth::user()->updateStatus('paid');
             $receipt_url =  $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
+
+            $user =  Auth::user();
+
+            try {
+                // Sends an email to hr@intuuchina.com to report current payment.
+                Mail::to('hr@intuuchina.com')->queue(new PaymentNotification($user, $intent));
+            } catch(\Exception $e) {
+                return $e->getMessage();
+            }
+
 
             // Redirects the user to the paid dialog box to report the user about
             // the successful payment.

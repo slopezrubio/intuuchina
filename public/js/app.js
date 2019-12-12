@@ -3135,14 +3135,24 @@ if (document.querySelector('.motifs') !== null) {
 /*!*****************************************!*\
   !*** ./resources/js/components/_nav.js ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+/* harmony import */ var _main_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom.js */ "./resources/js/main/dom.js");
+
 
 var nav = {
   init: function init() {
     nav.setup();
   },
   setup: function setup() {
+    /*
+     * Loads the login modal when there is some error coming
+     * from the form inside.
+     */
     window.addEventListener('load', function () {
       if (nav.hasErrorsMessages(nav.modalForm)) {
         nav.showModal();
@@ -3151,19 +3161,36 @@ var nav = {
       ;
     });
 
+    var _loop = function _loop(i) {
+      var dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
+      dropdown.addEventListener('mouseover', function (e) {
+        var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+        $(targetId).dropdown('show');
+      });
+      dropdown.addEventListener('mouseout', function (e) {
+        var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+        $(targetId).dropdown('hide');
+      });
+    };
+
+    for (var i = 0; i < nav.navbar.querySelectorAll('.dropdown').length; i++) {
+      _loop(i);
+    }
+
     for (var i = 0; i < nav.accordionSubmenus.length; i++) {
       nav.accordionSubmenus[i].addEventListener('mouseover', nav.highlightItem, true);
       nav.accordionSubmenus[i].addEventListener('mouseout', nav.highlightItem, true);
     }
   },
+  navbar: document.querySelector('.navbar') ? document.querySelector('.navbar') : null,
   modalForm: document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null,
   accordionSubmenus: document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null,
   highlightItem: function highlightItem(event) {
-    if (window.innerWidth < breakpoints.widths.largeDevices[0]) {
+    if (window.innerWidth < _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices[0]) {
       var pattern = /\s?show\s?/;
 
       if (this.getAttribute('class').match(pattern)) {
-        dom.toggleSingleClass(this.parentElement, 'reverse-colours');
+        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(this.parentElement, 'reverse-colours');
       }
     }
   },
@@ -4125,7 +4152,8 @@ var welcomeCard = {
               case 0:
                 e.preventDefault(); // Saves the text inside the button to reusing it afterwards.
 
-                defaultText = e.target.textContent; // console.log(api.getHostName() + '/payment-successful');
+                defaultText = e.target.textContent; // Only for testing
+                // console.log(api.getHostName() + '/payment-successful');
                 // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
                 // welcomeCard.replaceDialog(newDialog);
                 // return;
@@ -4208,7 +4236,11 @@ var welcomeCard = {
                        * email
                        */
                       // In both cases the returned data is sent to a handler.
-                      welcomeCard.handleServerResponse(result.data);
+                      welcomeCard.handleServerResponse(result.data); // Enables again the inputs of the checkout form.
+
+                      welcomeCard.disableAllInputs('checkout', false); // If not, stops and hides the loader inside the checkout button.
+
+                      welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
                     }
                   }); // Only when JavaScript is disabled
                   // document.querySelector('#payment-method').value = paymentMethod.id;
@@ -4216,19 +4248,6 @@ var welcomeCard = {
                 }
 
               case 14:
-                // Enables again the inputs of the checkout form.
-                welcomeCard.disableAllInputs('checkout', false); // If not, stops and hides the loader inside the checkout button.
-
-                welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
-                /**
-                 * CHECKOUT PAYMENT PROCESS (optional)
-                 */
-                // let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
-                // let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
-                //
-                // welcomeCard.redirectToCheckout(successUrl, cancelUrl);
-
-              case 16:
               case "end":
                 return _context6.stop();
             }
@@ -4956,20 +4975,19 @@ var api = {
 
             case 4:
               response = _context2.sent;
-              console.log(response);
               return _context2.abrupt("return", response);
 
-            case 9:
-              _context2.prev = 9;
+            case 8:
+              _context2.prev = 8;
               _context2.t0 = _context2["catch"](1);
               console.log(_context2.t0);
 
-            case 12:
+            case 11:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[1, 9]]);
+      }, _callee2, null, [[1, 8]]);
     }));
 
     function sendPaymentMethod(_x3) {

@@ -87,7 +87,7 @@
                                 <input type="hidden" value="internship" name="program" id="program">
                                 <div class="offers_buttons">
                                     <button class="cta col-12 col-xs-5 col-sm-12 col-md-5" type="submit" value="{{ $offer->industry }}" name="internship">{{ __('content.apply for') }}</a></button>
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.job description') }}</a></button>
+                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.description') }}</a></button>
                                 </div>
                             </form>
                         </div>

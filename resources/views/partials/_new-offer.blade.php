@@ -43,13 +43,13 @@
                     <div class="col-md-9">
                         <div class="regular-select-wrapper">
                             <select class="form-control" name="industry" id="industry">
-                                @for ($i = 0; $i < count(__('content.offers filter options')); $i++)
-                                    @if ($i === 0)
-                                        <option value="{{ __('content.offers filter options')[$i]['value'] }}" selected aria-selected="true">{{ __('content.offers filter options')[$i]['text'] }}</option>
+                                @foreach (__('content.industries') as $key => $industry)
+                                    @if ($loop->first)
+                                        <option value="{{ $key }}" selected aria-selected="true">{{ $industry }}</option>
                                     @else
-                                        <option value="{{ __('content.offers filter options')[$i]['value'] }}">{{ __('content.offers filter options')[$i]['text'] }}</option>
+                                        <option value="{{ $key }}">{{ $industry }}</option>
                                     @endif
-                                @endfor
+                                @endforeach
                             </select>
                         </div>
                         @if ($errors->has('industry'))
@@ -86,7 +86,7 @@
                 <div class="form-group row">
                     <label for="picture" class="col-md-3 col-form-label text-md-left">{{ __('content.picture') }}</label>
                     <div class="col-md-9">
-                        <input type="file" id="picture" class="form-control" name="picture"">
+                        <input type="file" id="picture" class="form-control" name="picture">
                         @if ($errors->has('picture'))
                             <div class="alert alert-danger" role="alert">
                                 {{ $errors->first('picture') }}

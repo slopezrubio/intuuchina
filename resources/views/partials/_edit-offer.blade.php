@@ -42,13 +42,13 @@
                         <div class="col-md-9">
                             <div class="regular-select-wrapper">
                                 <select class="form-control" name="industry" id="industry">
-                                    @for ($i = 0; $i < count(__('content.offers filter options')); $i++)
-                                        @if(__('content.offers filter options')[$i]['value'] !== $offer->industry)
-                                            <option value="{{ __('content.offers filter options')[$i]['value'] }}">{{ __('content.offers filter options')[$i]['text'] }}</option>
+                                    @foreach (__('content.industries') as $key => $industry)
+                                        @if($key !== $offer->industry)
+                                            <option value="{{ $key }}">{{ $industry }}</option>
                                         @else
-                                            <option value="{{ __('content.offers filter options')[$i]['value'] }}" selected="true">{{ __('content.offers filter options')[$i]['text'] }}</option>
+                                            <option value="{{ $key }}" selected="true">{{ $industry }}</option>
                                         @endif
-                                    @endfor
+                                    @endforeach
                                 </select>
                             </div>
                             @if ($errors->has('industry'))
@@ -86,7 +86,7 @@
                         <label for="picture" class="col-md-3 col-form-label text-md-left">Picture</label>
                         <div class="col-md-9">
                             <img src="{{ asset('storage/images/' . $offer->picture) }}" class="img-preview" alt="Current picture of the job offer">
-                            <input type="file" id="picture" class="form-control" name="picture"">
+                            <input type="file" id="picture" class="form-control" name="picture">
                             @if ($errors->has('picture'))
                                 <div class="alert alert-danger" role="alert">
                                     {{ $errors->first('picture') }}

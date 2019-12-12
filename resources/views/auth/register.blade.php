@@ -22,9 +22,9 @@
                             @csrf
                             <div class="form-group">
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-3 col-form-label text-md-left">{{ __('content.name') }}</label>
+                                    <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('content.name') }}</label>
 
-                                    <div class="col-md-8 pl-md-0 col-lg-9">
+                                    <div class="col-md-8 pl-md-0">
                                         <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
                                 <div class="col-md-9">
                                     <div class="regular-select-wrapper">
                                         <select class="form-control" id="inputProgram" name="program">
-                                            @for ($i = 0; $i < count(__('content.programs')); $i++)
+                                            @foreach (__('content.programs') as $key => $program)
 {{--                                                @if ($i === 0)--}}
 {{--                                                    @if(empty(session('options')))--}}
 {{--                                                        <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="true" selected>{{ __('content.programs')[$i]['text'] }}</option>--}}
@@ -102,8 +102,8 @@
 {{--                                                        </option>--}}
 {{--                                                    @endif--}}
 {{--                                                @endif--}}
-                                                    <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>{{ __('content.programs')[$i]['text'] }}</option>
-                                            @endfor
+                                                    <option value="{{ $key }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === $key ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === $key ? 'selected' : '' }}>{{ $program }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -112,65 +112,55 @@
                             <div class="form-group row" id="industryFieldset">
                                 <label for="inputIndustry" class="col-md-3 col-form-label text-md-left">{{ __('content.industry') }}</label>
                                 <div class="col-md-9">
-                                @for($i = 0;$i <  count(__('content.offers filter options')); $i++)
+                                @foreach (__('content.industries') as $key => $industry)
                                     <div class="sw_input">
-                                        <label aria-label="{{ __('content.offers filter options')[$i]['value'] }}">{{ __('content.offers filter options')[$i]['text'] }}</label>
-                                        <label for="{{ __('content.offers filter options')[$i]['value'] }}" class="switch">
-                                            @if(isset(session('options')['internship']) && session('options')['internship'] === __('content.offers filter options')[$i]['value'])
-                                                <input id="{{ __('content.offers filter options')[$i]['value'] }}" type="checkbox" value="{{ __('content.offers filter options')[$i]['value'] }}" name="industry[]" aria-checked="true" checked="true">
+                                        <label aria-label="{{ $key }}">{{ $industry }}</label>
+                                        <label for="{{ $key }}" class="switch">
+                                            @if(isset(session('options')['internship']) && session('options')['internship'] === $key)
+                                                <input id="{{ $industry }}" type="checkbox" value="{{ $key }}" name="industry[]" aria-checked="true" checked="true">
                                             @else
-                                                <input id="{{ __('content.offers filter options')[$i]['value'] }}" type="checkbox" value="{{ __('content.offers filter options')[$i]['value'] }}" name="industry[]">
+                                                <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="industry[]">
                                             @endif
                                             <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                                         </label>
                                     </div>
-                                @endfor
+                                @endforeach
                                 </div>
                             </div>
 
                             <div class="form-group row" id="studyFieldset">
-                                <label for="inputStudy" class="col-md-3 col-form-label text-md-left">{{ __('content.study chinese') }}</label>
+                                <label for="inputStudy" class="col-md-3 col-form-label text-md-left">{{ __('content.study chinese via') }}</label>
                                 <div class="col-md-9">
-                                    <div class="sw_input">
-                                        <label aria-label="online">{{ __('content.online') }}</label>
-                                        <label for="online" class="switch">
-                                            @if(isset(session('options')['study']) && session('options')['study'] === 'online')
-                                                <input id="online" type="checkbox" value="online" name="study[]" aria-checked="true" checked="true">
-                                            @else
-                                                <input id="online" type="checkbox" value="online" name="study[]">
-                                            @endif
-                                            <i class="checkbox_slider fas checkbox_slider--rounded"></i>
-                                        </label>
-                                    </div>
-                                    <div class="sw_input">
-                                        <label aria-label="presencial">{{ __('content.in-person') }}</label>
-                                        <label for="presencial" class="switch">
 
-                                            @if(isset(session('options')['study']) && session('options')['study'] === 'presencial')
-                                                <input id="presencial" type="checkbox" value="presencial" name="study[]" aria-checked="true" checked="true">
-                                            @else
-                                                <input id="presencial" type="checkbox" value="presencial" name="study[]">
-                                            @endif
-
-                                            <i class="checkbox_slider fas checkbox_slider--rounded"></i>
-                                        </label>
-                                    </div>
+                                    @foreach(__('content.studies') as $key => $study)
+                                        <div class="sw_input">
+                                            <label aria-label="{{ $key }}">{{ $study }}</label>
+                                            <label for="{{ $key }}" class="switch">
+                                                @if(isset(session('options')['study']) && session('options')['study'] === $key)
+                                                    <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="study[]" aria-checked="true" checked="true">
+                                                @else
+                                                    <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="study[]">
+                                                @endif
+                                                <i class="checkbox_slider fas checkbox_slider--rounded"></i>
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
 
                             <div class="form-group row" id="universityFieldset">
-                                <label for="inputUniversity" class="col-md-3 col-form-label text-md-left">{{ __('content.university') }}</label>
+                                <label for="inputUniversity" class="col-md-3 col-form-label text-md-left">{{ __('content.programs.university') }}</label>
                                 <div class="col-md-9">
 
-                                @for($i = 0;$i <  count(__('content.university checkbox')); $i++)
+                                @foreach(__('content.universities') as $key => $degree)
                                     <div class="sw_input">
-                                        <label aria-label="{{ __('content.university checkbox')[$i]['value'] }}">{{ __('content.university checkbox')[$i]['text'] }}</label>
-                                        <label for="{{ __('content.university checkbox')[$i]['value'] }}" class="switch">
-                                            <input id="{{ __('content.university checkbox')[$i]['value'] }}" type="checkbox" value="{{ __('content.university checkbox')[$i]['value'] }}" name="university[]">
+                                        <label aria-label="{{ $key }}">{{ $degree }}</label>
+                                        <label for="{{ $key }}" class="switch">
+                                            <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="university[]">
                                             <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                                         </label>
                                     </div>
-                                @endfor
+                                @endforeach
 
                                 </div>
                             </div>

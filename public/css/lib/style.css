@@ -12080,6 +12080,14 @@ a:hover {
   color: #E57373;
 }
 
+.text--success {
+  color: green;
+}
+
+.text--inactive {
+  color: #d1d1d1;
+}
+
 .number_list > li {
   list-style-type: symbols;
   margin: 1em 0;
@@ -12209,6 +12217,71 @@ main {
 
 .navbar-brand img {
   height: 55px;
+}
+
+table.table thead th {
+  vertical-align: middle;
+}
+
+table.table thead th i::before {
+  font-size: 2.35em;
+}
+
+table.table thead th:not(:first-child) {
+  text-align: center;
+  display: none;
+}
+
+table.table thead th:last-child {
+  display: table-cell;
+}
+
+@media only screen and (min-width: 575px) {
+  table.table thead th:not(:first-child) {
+    display: table-cell;
+  }
+}
+
+table.table tbody tr td:not(:first-child) {
+  text-align: center;
+  position: relative;
+  display: none;
+}
+
+table.table tbody tr td:last-child {
+  display: table-cell;
+}
+
+@media only screen and (min-width: 575px) {
+  table.table tbody tr td:not(:first-child) {
+    display: table-cell;
+  }
+}
+
+table.table tbody tr td ul + p {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  color: #d1d1d1;
+}
+
+table.table tbody tr td i {
+  width: 100%;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+table.table tbody tr.status td {
+  border: none;
+}
+
+table.table tbody tr.status td p {
+  padding: 1em 0.75em;
+  text-align: right;
+}
+
+table.table tbody tr.status--warning td p {
+  border-radius: 0px 28px 28px 0px;
+  background: linear-gradient(to right, transparent, #f8dcdc 30%, #f5cbcb);
 }
 
 /* ------------------------------------------------------- */
@@ -12576,7 +12649,10 @@ main {
 }
 
 .relative-center {
+  top: 50%;
   position: relative;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 /* Menú desplegado */
@@ -12997,14 +13073,12 @@ main {
 .navbar_container #navbarToggler .navbar_items .media span,
 .navbar_container #navbarToggler .navbar_items .media i {
   line-height: 40px;
-  padding-left: 1em;
 }
 
 .navbar_container #navbarToggler .navbar_items a i,
 .navbar_container #navbarToggler .navbar_items .media i {
-  padding-right: 1em;
   text-align: center;
-  width: 25px;
+  width: 30px;
 }
 
 .navbar_container #navbarToggler .navbar_items li:hover {
@@ -13061,7 +13135,7 @@ main {
 }
 
 .navbar_container #navbarToggler .navbar_items li.dropdown .accordion_submenu {
-  width: 100%;
+  width: auto;
   position: static;
   margin: 0;
   float: none;
@@ -13192,8 +13266,8 @@ main {
   }
 
   .navbar_container #navbarToggler .navbar_items li.dropdown {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .navbar_container #navbarToggler .navbar_items li.dropdown a div.toggleOption {
@@ -13252,7 +13326,7 @@ main {
 
   .navbar_container #navbarToggler .navbar_items .social-media-nav a {
     padding: 0;
-    margin-left: 1em;
+    margin-left: 0.25em;
   }
 
   .navbar_container #navbarToggler .navbar_items .social-media-nav a i {

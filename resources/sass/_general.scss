@@ -33,6 +33,16 @@ a {
   }
 }
 
+.text {
+  &--success {
+    color: green;
+  }
+
+  &--inactive {
+    color: $neutralColor;
+  }
+}
+
 .number_list {
   & > li {
     list-style-type: symbols;
@@ -192,6 +202,88 @@ main {
   }
 }
 
+table.table {
+  thead {
+    th {
+      vertical-align: middle;
+      i {
+        &::before {
+          font-size: 2.35em;
+        }
+      }
+      &:not(:first-child) {
+        text-align: center;
+        display: none;
+      }
+
+      &:last-child {
+        display: table-cell;
+      }
+
+      @media only screen and (min-width: 575px) {
+        &:not(:first-child) {
+          display: table-cell;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        &:not(:first-child) {
+          text-align: center;
+          position: relative;
+          display: none;
+        }
+
+        &:last-child {
+          display: table-cell;
+        }
+
+        @media only screen and (min-width: 575px) {
+          &:not(:first-child) {
+            display: table-cell;
+          }
+        }
+
+        ul + p {
+          margin-top: 1em;
+          margin-bottom: 0.5em;
+          color: $neutralColor;
+        }
+
+        i {
+          width: 100%;
+          text-align: center;
+          font-size: 2.5em;
+        }
+      }
+
+      &.status {
+        td {
+          border: none;
+
+          p {
+            padding: 1em 0.75em;
+            text-align: right;
+          }
+
+        }
+
+        &--warning {
+          td {
+            p {
+              border-radius: 0px 28px 28px 0px;
+              background: $warningColor;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 /* ------------------------------------------------------- */
 
 /* ----------------
@@ -303,5 +395,7 @@ main {
 }
 
 .relative-center {
+  top: 50%;
   position: relative;
+  @include prefixed(transform, translateY(-50%));
 }

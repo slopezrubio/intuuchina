@@ -27,6 +27,11 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if ($user->type === 'admin') {
+            return redirect('/admin');
+        }
+
         $status = State::find($user->status_id)->name;
         return view('home', compact('status'));
     }
