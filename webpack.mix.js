@@ -32,7 +32,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/components/_filter-by.js',
         'resources/js/components/_stats.js',
         'resources/js/components/_motifs.js',
-        'resources/js/components/_footer.js'
+        'resources/js/components/_footer.js',
     ], 'js/app.js');
 
 

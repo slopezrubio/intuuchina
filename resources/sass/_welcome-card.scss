@@ -73,16 +73,38 @@
         display: none;
       }
 
-      .spinner-border:not(:first-child) {
+      .spinner-border {
         width: 1.5em;
         height: 1.5em;
-        margin-left: 1em;
+        margin-left: 0.25em;
       }
     }
   }
 
   &__action {
-    margin-top: 3em;
+    margin-top: 1em;
+    @media only screen and (min-width: 768px) {
+      margin-top: 3em;
+    }
+
+    .breadcrumb-link {
+      button, a {
+        font-weight: 700;
+        background: none;
+        border: none;
+        color: $primaryRed;
+      }
+
+      button:hover,
+      a:hover {
+        text-decoration: underline;
+      }
+
+      button[type=submit] {
+        @include prefixed(appearance, none);
+      }
+    }
+
     .cta {
       margin-top: 0;
       margin-left: auto;
@@ -90,15 +112,8 @@
       display: block;
     }
 
-    .row {
-      .cta {
-        margin-right: 15px;
-        margin-left: auto;
-      }
-    }
-
-    a {
-      font-weight: 700;
+    .cta:not(:first-of-type) {
+      margin-left: 1em;
     }
   }
 }

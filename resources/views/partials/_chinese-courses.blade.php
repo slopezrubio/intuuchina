@@ -1,64 +1,65 @@
-<section class="course-descriptions">
-    <div class="description-container">
-        <div class="description-base">
-            <div class="description-header">
-                <h2 id="presencial">{!! trans('content.in-person course') !!}</h2>
-                @auth
-                    @if(Auth::user()->type !== 'admin')
-                        <form action="#" method="POST">
-                            @csrf
-                            <input type="hidden" value="study" name="program" id="study">
-                            <button type="submit" value="presencial" name="study" class="cta">{{ __('content.also interested') }}</button>
-                        </form>
-                    @endif
+<section class="arrow-slider arrow-slider__holder">
+    <div class="arrow-slider__carousel">
+        @foreach (__('content.courses') as $key => $course)
+            @if (Browser::isDesktop())
+                @if (isset($slider))
+                    @switch($key)
+                        @case($slider['next']['key'])
+                            <div class="arrow-slider__slide--right">
+                            @break
+                        @case($slider['previous']['key'])
+                            <div class="arrow-slider__slide--left">
+                            @break
+                        @case($slider['current']['key'])
+                            <div class="arrow-slider__slide--current">
+                            @break
+                        @default
+                            <div class="arrow-slider__slide">
+                            @break
+                    @endswitch
                 @else
-                    <form action="{{ route('register.options') }}" method="POST">
-                        @csrf
-                        <input type="hidden" value="study" name="program" id="study">
-                        <button type="submit" value="presencial" name="study" class="cta">{{ __('content.apply for') }}</button>
-                    </form>
-                @endauth
-            </div>
-            <p>
-                {{ __('content.courses')['in-person']['description'][0] }}
-            </p>
-        </div>
-        <div class="description-base">
-            <div class="description-header">
-                <h2 id="online">{!! trans('content.online course') !!}</h2>
-                @auth
-                    @if(Auth::user()->type !== 'admin')
-                    <form action="#" method="POST">
-                        @csrf
-                        <input type="hidden" value="study" name="program" id="study">
-                        <button type="submit" value="online" name="study" class="cta">{{ __('content.also interested') }}</button>
-                    </form>
+                    @if ($loop->first)
+                        <div class="arrow-slider__slide--current">
                     @endif
-                @else
-                    <form action="{{ route('register.options') }}" method="POST">
-                        @csrf
-                        <input type="hidden" value="study" name="program" id="program">
-                        <button type="submit" value="online" name="study" class="cta">{{ __('content.apply for') }}</button>
-                    </form>
-                @endauth
-            </div>
-            <p>
-                {{ __('content.courses')['online']['description'][0] }}
-            </p>
-        </div>
-    </div>
-    <div class="description-options">
-        @if ($params->currentCourse == 1)
-            <a class="selected" href="#"><span>{{ __('links.in-person') }}</span></a>
-        @else
-            <a href="#"><span>{{ __('links.in-person') }}</span></a>
-        @endif
 
-        @if ($params->currentCourse == 2)
-            <a class="selected" href="#"><span>{{ __('links.on-line') }}</span></a>
-        @else
-            <a href="#"><span>{{ __('links.on-line') }}</span></a>
-        @endif
+                    @if ($loop->iteration === 2)
+                        <div class="arrow-slider__slide--right">
+                    @endif
+                @endif
+            @endif
+                <div class="arrow-slider__slide-header">
+                    <h2>{{ $course['text'] }} {!! $course['slider'] !!}</h2>
+                    @auth
+                        @if(Auth::user()->type !== 'admin')
+                            <form action="{{ route('update.program') }}" method="POST">
+                                @csrf
+                                <input type="hidden" value="learn-chinese" name="program">
+                                <input type="hidden" value="{{ $key }}" name="course" id="study">
+                                <button type="submit" class="cta">{{ __('content.also interested') }}</button>
+                            </form>
+                        @endif
+                    @else
+                        <form action="{{ route('register') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="learn-chinese" name="program">
+                            <input type="hidden" value="{{ $key }}" name="course" id="study">
+                            <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                        </form>
+                    @endauth
+                </div>
+                <p>
+                    {{ $course['description'] }}
+                </p>
+            </div>
+        @endforeach
+    </div>
+    <div class="arrow-slider__controllers">
+        @foreach (__('content.courses') as $key => $course)
+            @if (isset($slider))
+                <a href="#" class="{{ $key === $slider['current']['key'] ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
+            @else
+                <a href="#" class="{{ $key === array_key_first(__('content.courses')) ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
+            @endif
+        @endforeach
     </div>
 </section>
-@include('partials._price-course-info')

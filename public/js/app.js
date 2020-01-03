@@ -2654,6 +2654,249 @@ try {
 
 /***/ }),
 
+/***/ "./resources/js/components/ArrowSlider.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/ArrowSlider.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+
+
+
+var ArrowSlider = function () {
+  var instance;
+
+  function ArrowSliderClass(options) {
+    var _this = this;
+
+    // Private properties
+    var holder = options.holder;
+    var offset = 1;
+    var currentSlideIndex = options.slide ? options.slide + offset : 1;
+    var carousel = options.holder.children[0];
+    var colors = options.colors;
+    var slides = carousel.children;
+    var controllers = addControllers(options.controllers);
+    var controllersCallback = options.controllersCallback ? options.controllersCallback : null;
+    var currentSlide = slides[currentSlideIndex - offset];
+
+    function init() {
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].autoWidth = function () {
+          autoWidth(this);
+        };
+      }
+
+      ; // Make the slider responsive according to the screen resolution.
+
+      setResponsive();
+      /* ---------- RESIZE ------------*/
+
+      window.addEventListener('resize', setResponsive);
+    }
+
+    function addControllers(controllers) {
+      var sliderControllers = [];
+
+      for (var i = 0; i < controllers.length; i++) {
+        sliderControllers.push(controllers[i]);
+      }
+
+      return sliderControllers;
+    }
+
+    function runAutoWidths() {
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].autoWidth();
+      }
+
+      ;
+    }
+
+    function autoWidth(slide) {
+      $(slide).width(holder.clientWidth);
+
+      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isLargeDevice()) {
+        if (isCurrentSlide(slide)) {
+          $(slide).removeClass();
+          _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(slide, 'arrow-slider__slide--current');
+
+          if (isFirstSlide(slide)) {
+            _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(slide, 'first');
+          }
+
+          if (isLastSlide(slide)) {
+            _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(slide, 'last');
+          }
+        }
+
+        if (isPreviousSlide(slide)) {
+          $(slide).removeClass();
+          _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(slide, 'arrow-slider__slide--left');
+        }
+
+        if (isNextSlide(slide)) {
+          $(slide).removeClass();
+          _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(slide, 'arrow-slider__slide--right');
+        }
+      } else {
+        $(slide).removeClass();
+        _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(slide, 'arrow-slider__slide');
+      }
+    }
+
+    function resetControllers() {
+      if (slides.length < controllers.length) {
+        for (var i = slides.length; i < controllers.length; i++) {
+          controllers.pop();
+        }
+      }
+    }
+
+    function updateController(e) {
+      e.preventDefault();
+
+      for (var x = 0; x < controllers.length; x++) {
+        if (e.target.isEqualNode(controllers[x]) || e.target.parentElement.isEqualNode(controllers[x])) {
+          if (currentSlideIndex !== x + offset) {
+            // Update controllers.
+            _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(controllers[currentSlideIndex - offset], 'selected');
+
+            if (x >= slides.length) {
+              setCurrentSlide(isNextSlide(controllers[x]) ? currentSlideIndex : currentSlideIndex - offset * 2);
+            } else {
+              setCurrentSlide(x);
+            }
+
+            _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(controllers[currentSlideIndex - offset], 'selected'); // Update the sliders.
+
+            runAutoWidths();
+            moveCarouselTo(currentSlideIndex);
+            paint();
+
+            if (controllersCallback !== null) {
+              controllersCallback(currentSlide);
+            }
+
+            setControllers();
+          }
+        }
+      }
+    }
+
+    function setControllers() {
+      resetControllers();
+
+      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isLargeDevice()) {
+        if (!isFirstSlide(slides[currentSlideIndex - offset]) && !isLastSlide(slides[currentSlideIndex - offset])) {
+          controllers.push(slides[currentSlideIndex]);
+          controllers.push(slides[currentSlideIndex - offset * 2]);
+        } else {
+          controllers.push(isFirstSlide(slides[currentSlideIndex - offset]) ? slides[currentSlideIndex] : slides[currentSlideIndex - offset * 2]);
+        }
+      }
+
+      for (var i = 0; i < controllers.length; i++) {
+        controllers[i].removeEventListener('click', updateController);
+        controllers[i].addEventListener('click', updateController);
+      }
+    }
+
+    function setCurrentSlide(value) {
+      currentSlideIndex = value + offset;
+      currentSlide = slides[value];
+    }
+
+    function isCurrentSlide(slide) {
+      return slide.isEqualNode(currentSlide);
+    }
+
+    function isNextSlide(slide) {
+      return slide.isEqualNode(slides[currentSlideIndex]);
+    }
+
+    function isPreviousSlide(slide) {
+      return slide.isEqualNode(slides[currentSlideIndex - offset * 2]);
+    }
+
+    function isFirstSlide(slide) {
+      return slide.isEqualNode(slides[0]);
+    }
+
+    function isLastSlide(slide) {
+      return slide.isEqualNode(slides[slides.length - offset]);
+    }
+
+    function setResponsive() {
+      var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      setControllers(); // Update holder width
+
+      $(carousel).width(holder.clientWidth * slides.length); // Update Slides autowidth
+
+      runAutoWidths(); // Move carousel to the current slide once the screen has been resized.
+
+      moveCarouselTo(currentSlideIndex);
+      paint();
+    }
+
+    function paint() {
+      // Change carousel background to the proper color given
+      carousel.style.background = colors[currentSlideIndex - offset];
+      var isWhite = /^(white|#FFFFFF)\b|\s(white|#FFFFFF)\b/;
+      var controllersContainer = controllers[currentSlideIndex - offset].parentElement;
+
+      if (carousel.style.background.match(isWhite)) {
+        if (!$(controllersContainer).hasClass('dark')) {
+          _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(controllersContainer, 'dark');
+        }
+      } else {
+        if ($(controllersContainer).hasClass('dark')) {
+          _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(controllersContainer, 'dark');
+        }
+      }
+    }
+
+    function moveCarouselTo(slideIndex) {
+      slideIndex -= offset;
+      $(carousel).css({
+        "-webkit-transform": "translateX(-" + holder.clientWidth * slideIndex + "px)",
+        "transform": "translateX(-" + holder.clientWidth * slideIndex + "px)",
+        "-moz-transform": "translateX(-" + holder.clientWidth * slideIndex + "px)",
+        "-o-transform": "translateX(-" + holder.clientWidth * slideIndex + "px)"
+      });
+    }
+
+    init();
+    return {
+      get: function get(key) {
+        return _this[key];
+      },
+      set: function set(key, value) {
+        _this[key] = value;
+      }
+    };
+  }
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = ArrowSliderClass;
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (ArrowSlider.getInstance());
+
+/***/ }),
+
 /***/ "./resources/js/components/_chinese-courses.js":
 /*!*****************************************************!*\
   !*** ./resources/js/components/_chinese-courses.js ***!
@@ -2664,32 +2907,46 @@ try {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
-
 
 var chineseCourses = {
   init: function init() {
-    window.addEventListener('load', chineseCourses.setup);
-    window.addEventListener('resize', chineseCourses.setup);
+    var _this = this;
+
+    window.addEventListener('load', function (e) {
+      _this[e.type + 'Listeners']();
+
+      _this.loadCoursesHolder();
+    });
+    window.addEventListener('resize', function (e) {
+      _this.loadCoursesHolder();
+    });
   },
   courses: document.querySelectorAll('.description-base'),
   cta: document.querySelectorAll('.cta'),
   coursesHolder: document.querySelector('.course-descriptions'),
-  setup: function setup(event) {
-    if (event.type === 'load') {
-      for (var i = 0; i < chineseCourses.cta.length; i++) {
-        chineseCourses.cta[i].addEventListener('click', function (event) {
-          event.stopPropagation();
-        });
-      }
+  loadListeners: function loadListeners() {
+    for (var i = 0; i < this.cta.length; i++) {
+      this.cta[i].addEventListener('click', function (event) {
+        event.stopPropagation();
+      });
     }
-
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.coursesHolder);
-    chineseCourses.setSizeCourses();
   },
+  loadCoursesHolder: function loadCoursesHolder() {
+    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.coursesHolder);
+    this.setSizeCourses();
+  },
+  // if (event.type === 'load') {
+  //     for (let i = 0; i < chineseCourses.cta.length; i++) {
+  //         chineseCourses.cta[i].addEventListener('click', function(event) {
+  //             event.stopPropagation();
+  //         })
+  //     }
+  // }
+  // DOM.expandToViewport(chineseCourses.coursesHolder);
+  // this.setSizeCourses();
   setSizeCourses: function setSizeCourses() {
-    for (var i = 0; i < chineseCourses.courses.length; i++) {
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.courses[i]);
+    for (var i = 0; i < this.courses.length; i++) {
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(this.courses[i]);
     }
   }
 };
@@ -2710,64 +2967,52 @@ if (document.querySelector('.course-descriptions') !== null) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
-/* harmony import */ var _main_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom.js */ "./resources/js/main/dom.js");
-/* harmony import */ var _main_env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/env */ "./resources/js/main/env.js");
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
 
 
 
 var customerJourney = {
   init: function init() {
+    var _this = this;
+
     if (document.querySelector('.customer-journey')) {
-      window.addEventListener('load', customerJourney.setup);
-      window.addEventListener('resize', customerJourney.setup);
+      window.addEventListener('load', function (e) {
+        _this.setPictures();
+      });
+      window.addEventListener('resize', function (e) {
+        _this.setPictures();
+      });
     }
   },
-  element: document.querySelector('.customer-journey') !== undefined ? document.querySelector('.customer-journey') : undefined,
-  setup: function setup(event) {
-    customerJourney.setPicture[event.type]();
+  el: document.querySelector('.customer-journey') !== undefined ? document.querySelector('.customer-journey') : null,
+  currentPicture: null,
+  pictures: {
+    horizontal: null,
+    vertical: null
   },
-  setPicture: {
-    'load': function load() {
-      var picture = customerJourney.element.querySelector('img');
+  setPictures: function setPictures() {
+    this.currentPicture = this.el.querySelector('img');
 
-      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isCustomerJourney()) {
-        var _src = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_vertical.png';
-
-        picture.setAttribute('src', _src);
-        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
-        return true;
-      }
-
-      var src = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_horizontal.png';
-      picture.setAttribute('src', src);
-      return true;
-    },
-    'resize': function resize() {
-      var picture = customerJourney.element.querySelector('img');
-      var classPattern = /customer-journey--mobile(\s+|$)/;
-
-      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isCustomerJourney() && customerJourney.element.getAttribute('class').match(classPattern) === null) {
-        var src = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_vertical.png';
-        picture.setAttribute('src', src);
-        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
-        return true;
-      }
-
-      if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isCustomerJourney() && customerJourney.element.getAttribute('class').match(classPattern)) {
-        console.log("matches");
-
-        var _src2 = _main_env__WEBPACK_IMPORTED_MODULE_2__["default"].paths["public"] + 'storage/images/infography_' + customerJourney.getLocale() + '_horizontal.png';
-
-        picture.setAttribute('src', _src2);
-        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
-        return true;
-      }
-
-      return false;
+    if (this.pictures.horizontal === null) {
+      this.pictures.horizontal = this.currentPicture.getAttribute('src').match(_main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getPattern('horizontalCustomerJourney')) ? this.currentPicture.getAttribute('src') : this.currentPicture.getAttribute('src').replace(/vertical/, 'horizontal');
     }
+
+    if (this.pictures.vertical === null) {
+      this.pictures.vertical = this.currentPicture.getAttribute('src').match(_main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getPattern('verticalCustomerJourney')) ? this.currentPicture.getAttribute('src') : this.currentPicture.getAttribute('src').replace(/horizontal/, 'vertical');
+    }
+
+    this.loadPicture();
   },
-  getLocale: function getLocale() {
-    return document.querySelector('html').getAttribute('lang');
+  loadPicture: function loadPicture() {
+    var newCustomerJourneyPicture = _main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getCustomerJourneyPicture(this.el);
+
+    if (newCustomerJourneyPicture !== null) {
+      _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(this.el, newCustomerJourneyPicture.className);
+      this.currentPicture.setAttribute('src', this.pictures[newCustomerJourneyPicture.src]);
+    }
+
+    ;
   }
 };
 customerJourney.init();
@@ -2778,12 +3023,8 @@ customerJourney.init();
 /*!************************************************!*\
   !*** ./resources/js/components/_edit-offer.js ***!
   \************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/ajax */ "./resources/js/main/ajax.js");
+/*! no static exports found */
+/***/ (function(module, exports) {
 
 var editOffer = {
   init: function init() {
@@ -2887,13 +3128,15 @@ if (document.querySelector('.custom-select-wrapper') !== null) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+
 
 
 var footer = {
   init: function init() {
     window.addEventListener('load', footer.setup);
     window.addEventListener('resize', function () {
-      footer.setSwitch();
+      footer.toggleSwitch();
     });
   },
   form: document.querySelector('.footer_contact_form'),
@@ -2902,27 +3145,26 @@ var footer = {
       footer.setViewport();
     }
 
-    footer.setSwitch();
+    footer.toggleSwitch();
   },
-  getScreenSize: function getScreenSize() {
-    var screenSize = [];
-    screenSize.push(window.innerWidth, window.innerHeight);
-    return screenSize;
-  },
-  setSwitch: function setSwitch() {
-    var switchInput = document.querySelector('.switch_input') !== null ? document.querySelector('.switch_input') : document.querySelector('.checkbox_input');
+  toggleSwitch: function toggleSwitch() {
+    var switchInput = document.querySelector('#terms').parentElement.parentElement !== null ? document.querySelector('#terms').parentElement.parentElement : null;
+    var className = _main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getInputClass(switchInput);
 
-    if (footer.getScreenSize()[0] > _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices) {
-      if (document.querySelector('.checkbox_input') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(switchInput, 'switch_input', 'checkbox_input');
-      }
-    }
+    if (className !== null) {
+      _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(switchInput, className);
+    } // if (footer.getScreenSize()[0] > breakpoints.widths.largeDevices) {
+    //     if (document.querySelector('.checkbox_input') === null) {
+    //         dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
+    //     }
+    // }
+    //
+    // if (footer.getScreenSize()[0] <= breakpoints.widths.largeDevices) {
+    //     if (document.querySelector('.switch_input') === null) {
+    //         dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
+    //     }
+    // }
 
-    if (footer.getScreenSize()[0] <= _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices) {
-      if (document.querySelector('.switch_input') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleClass(switchInput, 'switch_input', 'checkbox_input');
-      }
-    }
   },
   hasErrorsMessages: function hasErrorsMessages(parent) {
     if ($(parent).find('.invalid-feedback', '.is-invalid').length > 0) {
@@ -3164,12 +3406,27 @@ var nav = {
     var _loop = function _loop(i) {
       var dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
       dropdown.addEventListener('mouseover', function (e) {
-        var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-        $(targetId).dropdown('show');
+        if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
+          var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+          $(targetId).dropdown('show');
+        }
+      });
+      dropdown.addEventListener('click', function (e) {
+        /*if (!MediaQueries.isNavbarBreakpoint()) {
+            let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+            if ($(targetId.querySelector('ul')).hasClass('show')) {
+                console.log("hola");
+                $(targetId).dropdown('hide');
+            } else {
+                $(targetId).dropdown('show');
+            }
+        }*/
       });
       dropdown.addEventListener('mouseout', function (e) {
-        var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-        $(targetId).dropdown('hide');
+        if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
+          var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+          $(targetId).dropdown('hide');
+        }
       });
     };
 
@@ -3186,7 +3443,7 @@ var nav = {
   modalForm: document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null,
   accordionSubmenus: document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null,
   highlightItem: function highlightItem(event) {
-    if (window.innerWidth < _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths.largeDevices[0]) {
+    if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isLargeDevice()) {
       var pattern = /\s?show\s?/;
 
       if (this.getAttribute('class').match(pattern)) {
@@ -3233,18 +3490,17 @@ var news = {
   },
   polygon: document.querySelector('.news'),
   currentBreakpoint: null,
-  setup: function setup() {
-    news.currentBreakpoint = news.getBreakpoint();
+  setup: function setup() {//news.currentBreakpoint = news.getBreakpoint();
   },
   getBreakpoint: function getBreakpoint() {
     var currentWidth = window.innerWidth;
     var breakpointKey = 'largeDevices';
-    Object.keys(_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths).map(function (key) {
-      if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths[key][1] > currentWidth && _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].widths[key][0] < currentWidth) {
-        breakpointKey = key;
-      }
+    /*Object.keys(breakpoints.widths).map(function(key) {
+        if (breakpoints.widths[key][1] > currentWidth && breakpoints.widths[key][0] < currentWidth) {
+            breakpointKey = key;
+        }
     });
-    return breakpointKey;
+    return breakpointKey;*/
   }
 };
 
@@ -3539,7 +3795,6 @@ var register = {
     switch (selectorValue) {
       case 'internship':
       case 'inter_relocat':
-      case 'inter_housing':
         register.showElement(register.industryFieldset);
         register.hideElement(register.studyFieldset);
         register.hideElement(register.universityFieldset);
@@ -3781,9 +4036,11 @@ if (document.querySelector('.sensationalism-stats') !== null) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
+/* harmony import */ var _main_Forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/Forms */ "./resources/js/main/Forms.js");
+/* harmony import */ var _main_Money__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/Money */ "./resources/js/main/Money.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+/* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
+/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3795,10 +4052,12 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 
 
+
+
 var welcomeCard = {
   init: function init() {
     window.addEventListener('DOMContentLoaded', function () {
-      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_1__["default"])(welcomeCard.dialogBoxContainer().parentElement, welcomeCard.update);
+      Object(_main_domObserver_js__WEBPACK_IMPORTED_MODULE_4__["default"])(welcomeCard.dialogBoxContainer().parentElement, welcomeCard.update);
     });
     welcomeCard.setup();
   },
@@ -3816,9 +4075,9 @@ var welcomeCard = {
     }
   },
   forms: {
-    confirm: {
+    payment: {
       el: function el() {
-        return document.querySelector('#confirm') ? document.querySelector('#confirm') : null;
+        return document.querySelector('#payment') ? document.querySelector('#payment') : null;
       }
     },
     checkout: {
@@ -3835,51 +4094,55 @@ var welcomeCard = {
   },
   rates: null,
   paymentAmount: null,
-  changeLoadingState: function changeLoadingState(element, display) {
-    var text = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Loading...';
-    var spinner = element.querySelector('.spinner-border');
-
-    if (display) {
-      spinner.classList.remove('hidden');
-      spinner.previousElementSibling.textContent = text;
-    } else {
-      spinner.classList.add('hidden');
-      spinner.previousElementSibling.textContent = text;
-    }
+  minimumHours: null,
+  minimumStaying: null,
+  getPricePerUnit: function getPricePerUnit() {
+    return document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').getAttribute('data-value') / 100;
+  },
+  setPricePerUnit: function setPricePerUnit(price) {
+    price = (price * 100).toString();
+    document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').setAttribute('data-value', price);
+  },
+  set: function set(property, value) {
+    welcomeCard[property] = value;
   },
   setup: function () {
     var _setup = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              if (welcomeCard.forms.confirm.el() !== null) {
-                welcomeCard.forms.confirm.el().addEventListener('submit',
+              if (welcomeCard.forms.payment.el() !== null) {
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].preventDoubleClick(welcomeCard.forms.payment.el());
+                welcomeCard.forms.payment.el().addEventListener('submit',
                 /*#__PURE__*/
                 function () {
                   var _ref = _asyncToGenerator(
                   /*#__PURE__*/
                   _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
-                    var url, data, dialogBox;
+                    var urlPaymentForm, paymentFeeDialog;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            event.preventDefault();
-                            url = event.target.getAttribute('action');
-                            data = {
-                              _token: welcomeCard.forms.confirm.el().querySelector('input[type="hidden"')
-                            };
+                            event.preventDefault(); // Sets the loader inside the button
+
+                            _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Gets the URL and make a request to the API
+
+                            urlPaymentForm = event.target.getAttribute('action');
                             _context.next = 5;
-                            return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].confirm(url, data);
+                            return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].getDialog(urlPaymentForm, _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].getFormToken(event.target));
 
                           case 5:
-                            dialogBox = _context.sent;
-                            welcomeCard.replaceDialog(dialogBox);
+                            paymentFeeDialog = _context.sent;
+                            // Hides the loader once again
+                            _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Replace dialog box
 
-                          case 7:
+                            welcomeCard.replaceDialog(paymentFeeDialog);
+
+                          case 8:
                           case "end":
                             return _context.stop();
                         }
@@ -3893,72 +4156,29 @@ var welcomeCard = {
                 }());
               }
 
-              if (welcomeCard.buttons["continue"].el() !== null) {
-                welcomeCard.buttons["continue"].el().addEventListener('click',
-                /*#__PURE__*/
-                function () {
-                  var _ref2 = _asyncToGenerator(
-                  /*#__PURE__*/
-                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
-                    var defaultText, url, paymentFeeDialog;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-                      while (1) {
-                        switch (_context2.prev = _context2.next) {
-                          case 0:
-                            event.preventDefault(); // Get the text inside the button
-
-                            defaultText = event.target.textContent; // Sets the loader inside the button
-
-                            welcomeCard.changeLoadingState(event.target.parentElement, true); // Gets the URL and make a request to the API
-
-                            url = window.location.protocol + '//' + window.location.hostname + '/payment-details';
-                            _context2.next = 6;
-                            return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"]["continue"](url);
-
-                          case 6:
-                            paymentFeeDialog = _context2.sent;
-                            // Hides the loader once again
-                            welcomeCard.changeLoadingState(event.target.parentElement, false, defaultText); // Replace dialog box
-
-                            welcomeCard.replaceDialog(paymentFeeDialog);
-
-                          case 9:
-                          case "end":
-                            return _context2.stop();
-                        }
-                      }
-                    }, _callee2);
-                  }));
-
-                  return function (_x2) {
-                    return _ref2.apply(this, arguments);
-                  };
-                }());
-              }
-
               if (!(welcomeCard.forms.checkout.el() !== null)) {
-                _context3.next = 8;
+                _context2.next = 7;
                 break;
               }
 
               if (welcomeCard.isStripeLoaded()) {
-                _context3.next = 8;
+                _context2.next = 7;
                 break;
               }
 
               welcomeCard.setStripeElements();
-              _context3.next = 7;
+              _context2.next = 6;
               return welcomeCard.fetchRates();
 
-            case 7:
-              welcomeCard.rates = _context3.sent;
+            case 6:
+              welcomeCard.rates = _context2.sent;
 
-            case 8:
+            case 7:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, _callee3);
+      }, _callee2);
     }));
 
     function setup() {
@@ -3967,6 +4187,9 @@ var welcomeCard = {
 
     return setup;
   }(),
+  isCourseSelected: function isCourseSelected() {
+    return document.getElementById('study');
+  },
   isStripeLoaded: function isStripeLoaded() {
     return welcomeCard.forms.checkout.el().querySelector('#card-number').childElementCount > 0;
   },
@@ -3985,39 +4208,50 @@ var welcomeCard = {
   handleServerErrorField: function () {
     var _handleServerErrorField = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(field, element) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(field, element) {
       var errors;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context4.next = 2;
-              return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].validate(field);
+              _context3.next = 2;
+              return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].validate(field);
 
             case 2:
-              errors = _context4.sent;
+              errors = _context3.sent;
 
-              //const displayError =  document.getElementById(field.name + '-errors');
               if (errors !== null) {
                 welcomeCard.displayInputFieldError(field.name, errors['value'][0]);
               } else {
                 welcomeCard.removeInputFieldError(field.name);
               }
 
-            case 4:
+              return _context3.abrupt("return", errors);
+
+            case 5:
             case "end":
-              return _context4.stop();
+              return _context3.stop();
           }
         }
-      }, _callee4);
+      }, _callee3);
     }));
 
-    function handleServerErrorField(_x3, _x4) {
+    function handleServerErrorField(_x2, _x3) {
       return _handleServerErrorField.apply(this, arguments);
     }
 
     return handleServerErrorField;
   }(),
+  updatePaymentButton: function updatePaymentButton(value, currency) {
+    var submitButtonText = $('#checkout-button-sku_GDHDkOPWtjGF2w > span')[0]; // Get only the text inside the button without the currency symbol and the value.
+
+    var text = $(submitButtonText).text().match(new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/))[0];
+    value = parseFloat(value).toLocaleString(document.documentElement.lang, {
+      style: 'currency',
+      currency: currency
+    });
+    $(submitButtonText).text(text + value);
+  },
   setStripeElements: function setStripeElements() {
     welcomeCard.elements.stripe = stripe.elements({
       fonts: [{
@@ -4044,7 +4278,147 @@ var welcomeCard = {
     });
     cvc.mount('#card-cvc');
     var paymentCurrency = document.getElementById('payment-currency');
-    welcomeCard.setPaymentAmount(document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').getAttribute('data-value')); // Payment Request Options
+
+    if (welcomeCard.isCourseSelected()) {
+      welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit()); // Course Selector element
+
+      var courseSelector = document.getElementById('study');
+      courseSelector.addEventListener('change',
+      /*#__PURE__*/
+      function () {
+        var _ref2 = _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(event) {
+          var selectedCourse;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleInputs(event.target.value, {
+                    'in-person': $('#staying').parents().eq(2),
+                    'online': $('#hours').parents().eq(2)
+                  });
+                  _context4.next = 3;
+                  return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', {
+                    course: event.target.value
+                  });
+
+                case 3:
+                  selectedCourse = _context4.sent;
+                  welcomeCard.setPricePerUnit(selectedCourse.price.eur);
+                  welcomeCard.setPaymentAmount(selectedCourse.price.eur, paymentCurrency.value);
+
+                case 6:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        }));
+
+        return function (_x4) {
+          return _ref2.apply(this, arguments);
+        };
+      }()); // Duration and Staying Inputs
+
+      var staying = document.getElementById('staying');
+      staying.addEventListener('change',
+      /*#__PURE__*/
+      function () {
+        var _ref3 = _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(event) {
+          var field, errors;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+            while (1) {
+              switch (_context5.prev = _context5.next) {
+                case 0:
+                  field = {
+                    value: event.target.value,
+                    name: event.target.getAttribute('name'),
+                    validators: ['required', 'integer', 'InPersonCoursesScope']
+                  };
+                  _context5.next = 3;
+                  return welcomeCard.handleServerErrorField(field, event.target);
+
+                case 3:
+                  errors = _context5.sent;
+
+                  if (!errors) {
+                    _context5.next = 7;
+                    break;
+                  }
+
+                  event.target.value = welcomeCard.minimumStaying;
+                  return _context5.abrupt("return", false);
+
+                case 7:
+                  welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), paymentCurrency.value);
+
+                case 8:
+                case "end":
+                  return _context5.stop();
+              }
+            }
+          }, _callee5);
+        }));
+
+        return function (_x5) {
+          return _ref3.apply(this, arguments);
+        };
+      }());
+      var hours = document.getElementById('hours');
+      hours.addEventListener('change',
+      /*#__PURE__*/
+      function () {
+        var _ref4 = _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(event) {
+          var field, errors;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  field = {
+                    value: event.target.value,
+                    name: event.target.getAttribute('name'),
+                    validators: ['required', 'integer', 'OnlineCoursesScope']
+                  };
+                  _context6.next = 3;
+                  return welcomeCard.handleServerErrorField(field, event.target);
+
+                case 3:
+                  errors = _context6.sent;
+
+                  if (!errors) {
+                    _context6.next = 7;
+                    break;
+                  }
+
+                  event.target.value = welcomeCard.minimumHours;
+                  return _context6.abrupt("return", false);
+
+                case 7:
+                  welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), paymentCurrency.value);
+
+                case 8:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6);
+        }));
+
+        return function (_x6) {
+          return _ref4.apply(this, arguments);
+        };
+      }()); // Set values to estimate the final price when the user changes
+      // the course duration.
+
+      welcomeCard.set('minimumHours', hours.value);
+      welcomeCard.set('minimumStaying', staying.value);
+    } // Payment Request Options
+
 
     var paymentRequest = stripe.paymentRequest({
       country: 'ES',
@@ -4085,209 +4459,295 @@ var welcomeCard = {
       };
       welcomeCard.handleServerErrorField(field, event.target);
     });
-    cardNumber.addEventListener('change', function (_ref3) {
-      var error = _ref3.error;
+    cardNumber.addEventListener('change', function (_ref5) {
+      var error = _ref5.error;
       var displayError = document.getElementById('card-number-errors');
       welcomeCard.displayStripeErrors(displayError, error);
     });
-    cvc.addEventListener('change', function (_ref4) {
-      var error = _ref4.error;
+    cvc.addEventListener('change', function (_ref6) {
+      var error = _ref6.error;
       var displayError = document.getElementById('cvc-errors');
       welcomeCard.displayStripeErrors(displayError, error);
     });
-    cardExpiry.addEventListener('change', function (_ref5) {
-      var error = _ref5.error;
+    cardExpiry.addEventListener('change', function (_ref7) {
+      var error = _ref7.error;
       var displayError = document.getElementById('card-expiry-errors');
       welcomeCard.displayStripeErrors(displayError, error);
     });
     paymentCurrency.addEventListener('change',
     /*#__PURE__*/
     function () {
-      var _ref6 = _asyncToGenerator(
+      var _ref8 = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(e) {
-        var submitButtonText, text, valueConverted;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(e) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                submitButtonText = $('#checkout-button-sku_GDHDkOPWtjGF2w > span')[0]; // Get only the text inside the button without the currency symbol and the value.
+                welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), e.target.value);
 
-                text = $(submitButtonText).text().match(new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/))[0];
-                _context5.next = 4;
-                return welcomeCard.currencyExchange(parseFloat(submitButtonText.getAttribute('data-value')) / 100, e.target.value);
-
-              case 4:
-                valueConverted = _context5.sent;
-                welcomeCard.setPaymentAmount(valueConverted, e.target.value);
-                valueConverted = parseFloat(valueConverted).toLocaleString(document.documentElement.lang, {
-                  style: 'currency',
-                  currency: e.target.value.toUpperCase()
-                });
-                $(submitButtonText).text(text + valueConverted);
-
-              case 8:
+              case 1:
               case "end":
-                return _context5.stop();
+                return _context7.stop();
             }
           }
-        }, _callee5);
+        }, _callee7);
       }));
 
-      return function (_x5) {
-        return _ref6.apply(this, arguments);
+      return function (_x7) {
+        return _ref8.apply(this, arguments);
       };
     }());
-    $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click',
+    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].preventDoubleClick(welcomeCard.forms.checkout.el());
+    $(welcomeCard.forms.checkout.el()).on('submit',
     /*#__PURE__*/
     function () {
-      var _ref7 = _asyncToGenerator(
+      var _ref9 = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(e) {
-        var defaultText, billingDetails, _ref8, paymentMethod, _error, data;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(event) {
+        var paymentDetails, validation, _ref10, paymentMethod, error, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                e.preventDefault(); // Saves the text inside the button to reusing it afterwards.
-
-                defaultText = e.target.textContent; // Only for testing
+                event.preventDefault(); // Only for testing
                 // console.log(api.getHostName() + '/payment-successful');
                 // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
                 // welcomeCard.replaceDialog(newDialog);
                 // return;
                 // Sets the loader inside the checkout button.
 
-                welcomeCard.changeLoadingState(e.target.parentElement, true); // Disables all inputs of the form.
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Disables all inputs of the form.
 
-                welcomeCard.disableAllInputs('checkout', true);
-                _context6.next = 6;
-                return welcomeCard.validateBillingDetails({
-                  type: 'billing_details',
-                  billing_details: {
-                    card_holder_name: cardHolderName.value,
-                    email: document.querySelector('#email').value,
-                    phone_number: phoneNumber.value
-                  }
-                });
+                welcomeCard.disableCheckoutInputs(event.target, true);
+                paymentDetails = {
+                  card_holder_name: cardHolderName.value,
+                  email: document.querySelector('#email').value,
+                  phone_number: phoneNumber.value
+                };
 
-              case 6:
-                billingDetails = _context6.sent;
-
-                if (!(billingDetails !== null)) {
-                  _context6.next = 14;
+                if (!welcomeCard.isCourseSelected()) {
+                  _context8.next = 13;
                   break;
                 }
 
-                _context6.next = 10;
-                return stripe.createPaymentMethod('card', cardNumber, {
-                  billing_details: billingDetails
-                });
+                paymentDetails[courseSelector.getAttribute('name')] = courseSelector.value;
+                _context8.t0 = courseSelector.value;
+                _context8.next = _context8.t0 === 'in-person' ? 9 : _context8.t0 === 'online' ? 11 : 13;
+                break;
 
-              case 10:
-                _ref8 = _context6.sent;
-                paymentMethod = _ref8.paymentMethod;
-                _error = _ref8.error;
+              case 9:
+                paymentDetails['staying'] = document.getElementById('staying').value;
+                return _context8.abrupt("break", 13);
 
-                // Check the form for errors.
-                if (_error) {
-                  welcomeCard.displayInputFieldError('submit', _error.message);
-                } else {
-                  /**
-                   * If no errors found it, gathers the information needed to Stripe PHP API
-                   * so the payment can be applied in the server.
-                   */
-                  data = {
-                    _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
-                    payment_method: paymentMethod.id,
-                    card_holder_name: paymentMethod.billing_details.name,
-                    email: paymentMethod.billing_details.email,
-                    phone_number: paymentMethod.billing_details.phone,
-                    currency: document.getElementById('payment-currency').value,
-                    amount: welcomeCard.paymentAmount
-                  };
-                  /*
-                   * Sends the information needed along the Payment Method ID.
-                   */
+              case 11:
+                paymentDetails['hours'] = document.getElementById('hours').value;
+                return _context8.abrupt("break", 13);
 
-                  _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].sendPaymentMethod(data).then(function (result) {
-                    var error = result.data.error;
+              case 13:
+                _context8.next = 15;
+                return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].validateFields('payment-details', paymentDetails);
 
-                    if (error) {
-                      /*
-                       * Displays the error coming from the server according to the field or
-                       * parameter the error is related to.
-                       */
-                      welcomeCard.displayInputFieldError(error.field, error.message);
-                    } else {
-                      /*
-                       * If the user do not get redirected by the server means:
-                       *
-                       * 1) The payment has failed and therefore an error response
-                       * has been received from the server.
-                       *
-                       * OR
-                       *
-                       * 2) The Payment Intent needs a step further in the authentication
-                       * process and gives back the Payment Intent Status
-                       * as to let the user handle it. Perhaps their bank account asked
-                       * him for a notification push message through his mobile phone or
-                       * email
-                       */
-                      // In both cases the returned data is sent to a handler.
-                      welcomeCard.handleServerResponse(result.data); // Enables again the inputs of the checkout form.
+              case 15:
+                validation = _context8.sent;
 
-                      welcomeCard.disableAllInputs('checkout', false); // If not, stops and hides the loader inside the checkout button.
-
-                      welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
-                    }
-                  }); // Only when JavaScript is disabled
-                  // document.querySelector('#payment-method').value = paymentMethod.id;
-                  // welcomeCard.forms.checkout.el().submit();
+                if (!validation.errors) {
+                  _context8.next = 21;
+                  break;
                 }
 
-              case 14:
+                welcomeCard.handleErrorFields(Object.keys(validation.errors), validation.errors); // Hides the loader inside the checkout button.
+
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target);
+                return _context8.abrupt("return", false);
+
+              case 21:
+                _context8.next = 23;
+                return stripe.createPaymentMethod('card', cardNumber, {
+                  billing_details: validation
+                });
+
+              case 23:
+                _ref10 = _context8.sent;
+                paymentMethod = _ref10.paymentMethod;
+                error = _ref10.error;
+
+                if (!error) {
+                  _context8.next = 32;
+                  break;
+                }
+
+                welcomeCard.displayInputFieldError('submit', error.message);
+                /*
+                 * Resets the event that prevents the double click when pressing
+                 * the submit button.
+                 */
+
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target); // Hides the loader inside the checkout button.
+
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
+                _context8.next = 43;
+                break;
+
+              case 32:
+                /**
+                 * If no errors found it, gathers the information needed to Stripe PHP API
+                 * so the payment can be applied in the server.
+                 */
+                data = {
+                  _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
+                  currency: document.getElementById('payment-currency').value,
+                  card_holder_name: paymentMethod.billing_details.name,
+                  email: paymentMethod.billing_details.email,
+                  phone_number: paymentMethod.billing_details.phone,
+                  payment_method: paymentMethod.id
+                };
+
+                if (!welcomeCard.isCourseSelected()) {
+                  _context8.next = 42;
+                  break;
+                }
+
+                data.study = courseSelector.value;
+                _context8.t1 = data.study;
+                _context8.next = _context8.t1 === 'in-person' ? 38 : _context8.t1 === 'online' ? 40 : 42;
+                break;
+
+              case 38:
+                data.staying = document.getElementById('staying').value;
+                return _context8.abrupt("break", 42);
+
+              case 40:
+                data.hours = document.getElementById('hours').value;
+                return _context8.abrupt("break", 42);
+
+              case 42:
+                /*
+                 * Sends the information needed along the Payment Method ID.
+                 */
+                _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].sendPaymentMethod(data).then(function (result) {
+                  var error = result.data.error;
+
+                  if (error) {
+                    /*
+                     * Displays the error coming from the server according to the field or
+                     * parameter the error is related to.
+                     */
+                    welcomeCard.displayInputFieldError(error.field, error.message);
+                    /*
+                     * Resets the event that prevents the double click when pressing
+                     * the submit button.
+                     */
+
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target); // Hides the loader inside the checkout button.
+
+                    _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
+                  } else {
+                    /*
+                     * If the user do not get redirected by the server means:
+                     *
+                     * 1) The payment has failed and therefore an error response
+                     * has been received from the server.
+                     *
+                     * OR
+                     *
+                     * 2) The Payment Intent needs a step further in the authentication
+                     * process and gives back the Payment Intent Status
+                     * as to let the user handle it. Perhaps their bank account asked
+                     * him for a notification push message through his mobile phone or
+                     * email
+                     */
+                    // In both cases the returned data is sent to a handler.
+                    welcomeCard.handleServerResponse(result.data); // Enables again the inputs of the checkout form.
+
+                    welcomeCard.disableCheckoutInputs(welcomeCard.forms.checkout.el(), false); // Hides the loader inside the checkout button.
+
+                    _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target);
+                  }
+                }); // Only when JavaScript is disabled
+                // document.querySelector('#payment-method').value = paymentMethod.id;
+                // welcomeCard.forms.checkout.el().submit();
+
+              case 43:
               case "end":
-                return _context6.stop();
+                return _context8.stop();
             }
           }
-        }, _callee6);
+        }, _callee8);
       }));
 
-      return function (_x6) {
-        return _ref7.apply(this, arguments);
+      return function (_x8) {
+        return _ref9.apply(this, arguments);
       };
     }());
   },
-  disableAllInputs: function disableAllInputs(formId, disabled) {
-    /**
-     * Disables all the inputs of the given form
-     */
-    // Disables the custom inputs of the form (All but the Stripe inputs)
-    $('#' + formId + ' :input:not(.__PrivateStripeElement-input)').each(function () {
-      $(this).attr("disabled", disabled);
-    }); // Disables all the Stripe inputs of the form.
+  getCourseDuration: function getCourseDuration() {
+    var courseSelector = document.querySelector('#study');
 
-    $(welcomeCard.elements.stripe._elements).each(function () {
-      var stripeInput = $(this)[0];
-      stripeInput.update({
-        disabled: disabled
-      });
-    });
-  },
-  setPaymentAmount: function setPaymentAmount(value) {
-    var currency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'EUR';
+    if (welcomeCard.isCourseSelected()) {
+      switch (courseSelector.value) {
+        case 'in-person':
+          return document.getElementById('staying').value;
 
-    if (welcomeCard.paymentAmount !== null) {
-      // Check if the given currency is a zero-decimal currency
-      var multiplier = currencies[currency].decimal_digits > 0 ? Math.pow(10, currencies[currency].decimal_digits) : 1; // Remove decimals to set the amount in the less unit of measure (cents)
-
-      welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
-      return true;
+        case 'online':
+          return document.getElementById('hours').value;
+      }
     }
 
-    welcomeCard.paymentAmount = value;
+    return 1;
+  },
+  setPaymentAmount: function () {
+    var _setPaymentAmount = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(value) {
+      var currency,
+          _args9 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              currency = _args9.length > 1 && _args9[1] !== undefined ? _args9[1] : 'eur';
+              _context9.next = 3;
+              return welcomeCard.currencyExchange(value, currency);
+
+            case 3:
+              value = _context9.sent;
+              value *= welcomeCard.getCourseDuration();
+              welcomeCard.updatePaymentButton(value, currency);
+
+            case 6:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
+    }));
+
+    function setPaymentAmount(_x9) {
+      return _setPaymentAmount.apply(this, arguments);
+    }
+
+    return setPaymentAmount;
+  }(),
+  // setPaymentAmount: function(value, currency = 'eur') {
+  //     if (welcomeCard.paymentAmount !== null) {
+  //         // Check if the given currency is a zero-decimal currency
+  //         let multiplier = currencies[currency].decimal_digits > 0
+  //             ? Math.pow(10, currencies[currency].decimal_digits) : 1;
+  //
+  //         // Remove decimals to set the amount in the less unit of measure (cents)
+  //         welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
+  //         return true;
+  //     }
+  //
+  //     welcomeCard.paymentAmount = value;
+  // },
+  disableCheckoutInputs: function disableCheckoutInputs(form, disabled) {
+    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(form, disabled);
+    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs(form, disabled);
   },
   displayStripeErrors: function displayStripeErrors(element, error) {
     if (error) {
@@ -4343,7 +4803,7 @@ var welcomeCard = {
         _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
         payment_intent_id: result.paymentIntent.id
       };
-      _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].sendPaymentMethod(data).then(function (confirmResult) {
+      _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].sendPaymentMethod(data).then(function (confirmResult) {
         return confirmResult.data;
       }).then(function (view) {
         welcomeCard.handleServerResponse(view);
@@ -4353,39 +4813,39 @@ var welcomeCard = {
   fetchRates: function () {
     var _fetchRates = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
       var url, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context10.prev = _context10.next) {
             case 0:
               url = 'https://api.exchangeratesapi.io/latest?base=EUR';
-              _context7.prev = 1;
-              _context7.next = 4;
+              _context10.prev = 1;
+              _context10.next = 4;
               return axios({
                 method: 'get',
                 url: url
               });
 
             case 4:
-              response = _context7.sent;
-              _context7.next = 7;
+              response = _context10.sent;
+              _context10.next = 7;
               return response.data;
 
             case 7:
-              return _context7.abrupt("return", _context7.sent);
+              return _context10.abrupt("return", _context10.sent);
 
             case 10:
-              _context7.prev = 10;
-              _context7.t0 = _context7["catch"](1);
-              console.log(_context7.t0);
+              _context10.prev = 10;
+              _context10.t0 = _context10["catch"](1);
+              console.log(_context10.t0);
 
             case 13:
             case "end":
-              return _context7.stop();
+              return _context10.stop();
           }
         }
-      }, _callee7, null, [[1, 10]]);
+      }, _callee10, null, [[1, 10]]);
     }));
 
     function fetchRates() {
@@ -4397,78 +4857,34 @@ var welcomeCard = {
   currencyExchange: function () {
     var _currencyExchange = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(value, to) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(value, to) {
       var from,
-          _args8 = arguments;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          _args11 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
         while (1) {
-          switch (_context8.prev = _context8.next) {
+          switch (_context11.prev = _context11.next) {
             case 0:
-              from = _args8.length > 2 && _args8[2] !== undefined ? _args8[2] : 'EUR';
+              from = _args11.length > 2 && _args11[2] !== undefined ? _args11[2] : 'EUR';
 
               if (to.toUpperCase() !== 'EUR') {
                 value *= welcomeCard.rates.rates[to.toUpperCase()];
               }
 
-              return _context8.abrupt("return", value);
+              return _context11.abrupt("return", value);
 
             case 3:
             case "end":
-              return _context8.stop();
+              return _context11.stop();
           }
         }
-      }, _callee8);
+      }, _callee11);
     }));
 
-    function currencyExchange(_x7, _x8) {
+    function currencyExchange(_x10, _x11) {
       return _currencyExchange.apply(this, arguments);
     }
 
     return currencyExchange;
-  }(),
-  validateBillingDetails: function () {
-    var _validateBillingDetails = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(billing) {
-      var errors;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              _context9.next = 2;
-              return _main_api__WEBPACK_IMPORTED_MODULE_3__["default"].validateObject(billing);
-
-            case 2:
-              errors = _context9.sent;
-
-              if (!errors) {
-                _context9.next = 6;
-                break;
-              }
-
-              welcomeCard.handleErrorFields(Object.keys(errors), errors);
-              return _context9.abrupt("return", null);
-
-            case 6:
-              return _context9.abrupt("return", {
-                name: billing.billing_details.card_holder_name,
-                email: billing.billing_details.email,
-                phone: billing.billing_details.phone_number
-              });
-
-            case 7:
-            case "end":
-              return _context9.stop();
-          }
-        }
-      }, _callee9);
-    }));
-
-    function validateBillingDetails(_x9) {
-      return _validateBillingDetails.apply(this, arguments);
-    }
-
-    return validateBillingDetails;
   }(),
 
   /*
@@ -4482,7 +4898,8 @@ var welcomeCard = {
     }
   },
   displayInputFieldError: function displayInputFieldError(field, error) {
-    var displayError = document.getElementById(field + '-errors') ? document.getElementById(field + '-errors') : 'submit-errors';
+    var displayError = document.getElementById(field + '-errors') !== null ? document.getElementById(field + '-errors') : document.getElementById('submit-errors');
+    console.log(displayError);
     var input = document.getElementById(field) ? document.getElementById(field) : document.getElementById('card-' + field);
 
     if (input !== null) {
@@ -4570,6 +4987,10 @@ if (document.querySelector('.user-card')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
 /* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
+/* harmony import */ var _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ArrowSlider */ "./resources/js/components/ArrowSlider.js");
+/* harmony import */ var _main_api_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../main/api.js */ "./resources/js/main/api.js");
+
+
 
 
 var press = {
@@ -4626,223 +5047,48 @@ var press = {
     window.scrollBy(0, 0);
   }
 };
-var courses = {
-  currentSlide: 0,
-  carrousel: document.querySelector('.description-container'),
-  defaultSelectedCourse: 1,
-  pictureHolder: document.querySelector('.course-descriptions'),
-  pictures: document.getElementsByClassName('description-base'),
-  courseLinks: document.querySelector('.description-options') !== null ? document.querySelector('.description-options').getElementsByTagName('a') : null,
-  requestedCourseURL: null,
-  init: function init(event) {
-    courses.setup(event);
 
-    if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].widths.largeDevices[0] > window.innerWidth) {
-      $(courses.pictures).width(courses.pictureHolder.clientWidth);
-    }
-  },
-  setup: function setup(event) {
-    courses.courseSliderWidth = courses.pictureHolder.clientWidth; // Sets the courses slider UI according to the current device used
+var coursesSlider = function () {
+  var arrowSlider = null;
 
-    if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
-      // Compatibility with all the browsers
+  function replaceCourseInfoSection(newCourseInfoSection) {
+    $('.course-information').remove();
+    $('section.arrow-slider').after(newCourseInfoSection);
+  }
 
-      /*
-       * Checks while resizing to watch or tail whether the UI needs to alter so that can fit
-       * with the device used or simply keep the same.
-       */
-      if (event.type === 'resize') {
-        courses.update();
+  function getCurrentSlide() {
+    var controllers = document.querySelector('.arrow-slider__controllers').children;
 
-        if (document.querySelector('.left-slide') !== null || document.querySelector('.right-slide') !== null) {
-          courses.resetDesktopSliders();
-        }
+    for (var i = 0; i < controllers.length; i++) {
+      if ($(controllers[i]).hasClass('selected')) {
+        return i;
       }
-
-      if (event.type === 'load') {
-        // Slides the carrousel according to the controller (Presencial or Online) selected
-        courses.moveTo(courses.checkSelectedController() - 1); // Changes the background according to the slide requested in the server
-
-        courses.changeSliderBackground[courses.checkSelectedController() - 1](courses.carrousel);
-        /*
-         * Add transition to the carrousel so that the next time a course is selected it moves himself
-         * smoothly to reach the corresponding slide. The timeout is set in order to prevent the slide
-         * from applying the transition the first time the page is loaded by a request so it could be
-         * loaded faster.
-         */
-
-        setTimeout(courses.addTransition, 100);
-      }
-    } else {
-      var _elementCount = courses.pictures.length; // Events arranged to the clickable elements in the courses slider
-
-      var _loop = function _loop(i) {
-        courses.pictures[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          /*
-           * Makes a GET request to the server ({ROOT_FOLDER}/learn/course=${course-number})
-           * to retrieve the fitting information for each course displayed
-           */
-
-          if (courses.requestedCourseURL !== "/learn/course=".concat(i + 1)) {
-            courses.requestedCourseURL = "/learn/course=".concat(i + 1);
-            courses.getCourseInfo(courses.requestedCourseURL);
-          }
-
-          var elementIndex = $(this).index();
-          courses.setDesktopSliders[i + 1]();
-          courses.toggleControllers(elementIndex);
-          courses.changeSliderBackground[elementIndex](courses.carrousel);
-        });
-      };
-
-      for (var i = 0; i < _elementCount; i++) {
-        _loop(i);
-      } // Sets the course slider UI ready to be displayed in desktop devices
-
-
-      courses.changeSliderBackground[courses.checkSelectedController() - 1](courses.carrousel);
-      courses.setDesktopSliders[courses.checkSelectedController()]();
-      courses.resetResponsiveSliders();
     }
+  }
 
-    var elementCount = courses.courseLinks.length; // Events arranged to the slider controllers
-
-    var _loop2 = function _loop2(i) {
-      courses.courseLinks[i].addEventListener('click', function (e) {
-        e.preventDefault();
-
-        if (courses.requestedCourseURL !== "/learn/course=".concat(i + 1)) {
-          courses.requestedCourseURL = "/learn/course=".concat(i + 1);
-          courses.getCourseInfo(courses.requestedCourseURL);
-        }
-
-        var elementIndex = $(this).index();
-
-        if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice()) {
-          courses.moveTo(elementIndex);
-        } else {
-          courses.setDesktopSliders[i + 1]();
-        }
-
-        if (!$(this).hasClass('selected')) {
-          courses.toggleControllers(elementIndex);
-          courses.changeSliderBackground[elementIndex](courses.carrousel);
+  return {
+    init: function init() {
+      arrowSlider = new _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        holder: document.querySelector('.arrow-slider__holder'),
+        slide: getCurrentSlide(),
+        colors: ['black', '\#C80B0B'],
+        controllers: document.querySelector('.arrow-slider__controllers').children,
+        controllersCallback: function controllersCallback(slider) {
+          var course = slider.querySelector('#study').getAttribute('value');
+          var courseInfoSection = _main_api_js__WEBPACK_IMPORTED_MODULE_3__["default"].getCourseInfo(course, replaceCourseInfoSection);
         }
       });
-    };
-
-    for (var i = 0; i < elementCount; i++) {
-      _loop2(i);
     }
-  },
-  getCourseInfo: function getCourseInfo(path) {
-    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    $.get({
-      url: path,
-      cache: false,
-      data: data,
-      dataType: 'html',
-      error: function error(xhr, status, _error) {
-        console.log(_error);
-      },
-      success: function success(data, status, xhr) {
-        $('.course-information').remove();
-        $('.course-descriptions').after(data);
-      }
+  };
+}();
+
+var universitySlider = {
+  init: function init() {
+    var arrowSlider = new _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      holder: document.querySelector('.arrow-slider__holder'),
+      colors: ['white', 'black', '\#E57373'],
+      controllers: document.querySelector('.arrow-slider__controllers').children
     });
-  },
-  addTransition: function addTransition() {
-    courses.carrousel.classList.add('transition');
-  },
-  resetResponsiveSliders: function resetResponsiveSliders() {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', 'translate(0px)');
-  },
-  keepSliderPositionWhenResponsive: function keepSliderPositionWhenResponsive() {
-    return courses.currentSlide === 0 ? 0 : courses.courseSliderWidth;
-  },
-  resetDesktopSliders: function resetDesktopSliders() {
-    for (var i = 0; i < courses.pictures.length; i++) {
-      $(courses.pictures[i]).attr('class', 'description-base');
-    }
-  },
-  setDesktopSliders: {
-    1: function _() {
-      courses.currentSlide = 0;
-
-      if (document.querySelector('.left-slide') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide');
-      }
-
-      if (document.querySelector('.left-slide--none') !== null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'left-slide--none');
-      }
-
-      if (document.querySelector('.right-slide') !== null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide');
-      }
-
-      if (document.querySelector('.right-slide--none') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide + 1], 'right-slide--none');
-      }
-    },
-    2: function _() {
-      courses.currentSlide = 1;
-
-      if (document.querySelector('.right-slide') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'right-slide');
-      }
-
-      if (document.querySelector('.right-slide--none') !== null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide], 'right-slide--none');
-      }
-
-      if (document.querySelector('.left-slide') !== null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide - 1], 'left-slide');
-      }
-
-      if (document.querySelector('.left-slide--none') === null) {
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(courses.pictures[courses.currentSlide - 1], 'left-slide--none');
-      }
-    }
-  },
-  checkSelectedController: function checkSelectedController() {
-    var controllerSelected = courses.defaultSelectedCourse;
-    var elementsCount = courses.courseLinks.length;
-
-    for (var i = 0; i < elementsCount; i++) {
-      if ($(courses.courseLinks[i]).hasClass('selected')) {
-        controllerSelected = i + 1;
-      }
-    }
-
-    return controllerSelected;
-  },
-  update: function update() {
-    var value = 'translateX(' + 50 * -courses.currentSlide + '%)';
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
-  },
-  toggleControllers: function toggleControllers(selectedController) {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass($('.description-options > .selected'), 'selected');
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass($(courses.courseLinks[selectedController]), 'selected');
-  },
-  changeSliderBackground: [function (element) {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#000000');
-  }, function (element) {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(element, 'background', '#C80B0B');
-  }],
-  setSize: function setSize(element, type, value) {
-    element.style[type] = "".concat(value, "px");
-  },
-  courseSliderWidth: 0,
-  getFirstChildWidth: function getFirstChildWidth(element) {
-    var indexFirstElement = 0;
-    return element[indexFirstElement].offsetWidth;
-  },
-  moveTo: function moveTo(elementIndex) {
-    courses.currentSlide = elementIndex;
-    var value = 'translateX(' + 50 * -courses.currentSlide + '%)';
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].setProperty(courses.carrousel, 'transform', value);
   }
 };
 
@@ -4851,41 +5097,360 @@ if (document.querySelector('.note_carrousel') !== null) {
   $(window).resize(press.init);
 }
 
-if (document.querySelector('.course-descriptions') !== null) {
-  window.addEventListener('load', courses.init);
-  $(window).resize(courses.init);
+if (document.querySelector('header#learn-chinese') !== null) {
+  window.addEventListener('load', coursesSlider.init);
+}
+
+if (document.querySelector('header#university') !== null) {
+  window.addEventListener('load', universitySlider.init);
 }
 
 /***/ }),
 
-/***/ "./resources/js/main/ajax.js":
-/*!***********************************!*\
-  !*** ./resources/js/main/ajax.js ***!
-  \***********************************/
+/***/ "./resources/js/main/Forms.js":
+/*!************************************!*\
+  !*** ./resources/js/main/Forms.js ***!
+  \************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var ajax = {
-  setAjax: function setAjax() {
-    try {
-      return new XMLHttpRequest();
-    } catch (e) {
-      try {
-        return new ActiveXObject("Msxml12.XMLHTTP");
-      } catch (e) {
-        try {
-          return new ActiveXObject("Microsoft.XMLHTTP");
-        } catch (e) {
-          alert("Your browser can't support a picture preview");
-          return false;
-        }
+var Forms = function () {
+  var instance;
+
+  function init() {
+    var _preventInputFocus = function _preventInputFocus(event) {
+      if (!window.__cfRLUnblockHandlers) return false;
+    };
+
+    return {
+      // Disables the custom inputs of the form (All but the Stripe inputs)
+      disableFormInputs: function disableFormInputs(form) {
+        var disabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+        $(form).filter(':input:not(.__PrivateStripeElement-input)').each(function () {
+          $(this).attr("disabled", disabled);
+        });
+      },
+      showElement: function showElement(element) {
+        element.classList.remove('hidden');
+        element.setAttribute('aria-hidden', false);
+      },
+      hideElement: function hideElement(element) {
+        element.classList.add('hidden');
+        element.setAttribute('aria-hidden', true);
+      },
+      // Disables all the Stripe inputs of the form.
+      disableStripeInputs: function disableStripeInputs(stripeElements) {
+        var disabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+        $(stripeElements._elements).each(function () {
+          var stripeInput = $(this)[0];
+          stripeInput.update({
+            disabled: disabled
+          });
+        });
+      },
+      getFormToken: function getFormToken(form) {
+        return form.querySelector('input[type="hidden"');
+      },
+      toggleDisablingForm: function toggleDisablingForm(form) {
+        var _this = this;
+
+        var submitButton = form.querySelector('button[type=submit]');
+        console.log(submitButton);
+        console.log(form);
+        $(submitButton).one('click', function (event) {
+          if (submitButton.getAttribute('disabled') !== true) {
+            $(_this).prop('disabled', true);
+            $(form).submit(false);
+          } else {
+            $(_this).prop('disabled', false);
+            $(form).submit(true);
+          }
+        });
+      },
+      preventDoubleClick: function preventDoubleClick(form) {
+        var submitButton = form.querySelector('button[type=submit]');
+        $(submitButton).one('click', function (event) {
+          var _this2 = this;
+
+          $(this).prop('disabled', true);
+          setTimeout(function () {
+            $(_this2).prop('disabled', false);
+          }, 1000);
+        });
+      },
+      toggleInputs: function toggleInputs(value, elements) {
+        var _this3 = this;
+
+        Object.keys(elements).forEach(function (key) {
+          var element = elements[key][0];
+          var input = element.localName !== 'input' ? element.querySelector('input') : element;
+          $(input).prop('disabled', true);
+
+          _this3.hideElement(element);
+
+          if (key === value) {
+            $(input).prop('disabled', false);
+
+            _this3.showElement(element);
+          }
+        });
       }
-    }
+    };
   }
-};
-/* harmony default export */ __webpack_exports__["default"] = (ajax);
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = init();
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Forms.getInstance());
+
+/***/ }),
+
+/***/ "./resources/js/main/Money.js":
+/*!************************************!*\
+  !*** ./resources/js/main/Money.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/main/api.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var Money = function () {
+  var instance;
+
+  function MoneyClass(currencies) {
+    // Private properties
+    var _ratesURL = 'https://reqres.in/api/users?page=2';
+    var rates = null;
+
+    function init() {
+      return _init.apply(this, arguments);
+    }
+
+    function _init() {
+      _init = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _getRates().then(function (response) {
+                  console.log(response.data);
+                })["catch"](function (error) {
+                  console.log(error.response);
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+      return _init.apply(this, arguments);
+    }
+
+    function _getRates() {
+      return _getRates2.apply(this, arguments);
+    }
+
+    function _getRates2() {
+      _getRates2 = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get(_ratesURL, {
+                  crossDomain: true
+                });
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+      return _getRates2.apply(this, arguments);
+    }
+
+    ;
+    init();
+    return {
+      currencies: currencies,
+      rates: rates,
+      currencyExchange: function currencyExchange(value, to) {
+        var from = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'EUR';
+        to = to.upperCase();
+
+        if (to !== from) {
+          value *= this.rates[to];
+        }
+
+        return value;
+      }
+    };
+  }
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = MoneyClass;
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Money.getInstance());
+
+/***/ }),
+
+/***/ "./resources/js/main/UI.js":
+/*!*********************************!*\
+  !*** ./resources/js/main/UI.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./breakpoints */ "./resources/js/main/breakpoints.js");
+
+
+
+var UI = function () {
+  var instance;
+
+  function init() {
+    // Private properties
+    var patterns = {
+      verticalCustomerJourney: /vertical.(png|jpg|gif)$/g,
+      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g // Private methods
+
+    };
+    return {
+      get: function get(key) {
+        return eval(key);
+      },
+      getPattern: function getPattern(name) {
+        return patterns[name];
+      },
+      getLocale: function getLocale() {
+        return document.querySelector('html').getAttribute('lang');
+      },
+      getCustomerJourneyPicture: function getCustomerJourneyPicture(customerJourney) {
+        if (_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isCustomerJourney() && !$(customerJourney).hasClass('customer-journey')) {
+          _dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(customerJourney, 'customer-journey--mobile');
+          return {
+            className: 'customer-journey',
+            src: 'horizontal'
+          };
+        }
+
+        if (!_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isCustomerJourney() && !$(customerJourney).hasClass('customer-journey--mobile')) {
+          _dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(customerJourney, 'customer-journey');
+          return {
+            className: 'customer-journey--mobile',
+            src: 'vertical'
+          };
+        }
+
+        return null;
+      },
+      getInputClass: function getInputClass(input) {
+        if ($(input).has('.switch')) {
+          if (_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice() && !$(input).hasClass('checkbox_input')) {
+            return 'checkbox_input';
+          }
+
+          if (!_breakpoints__WEBPACK_IMPORTED_MODULE_1__["default"].isLargeDevice() && !$(input).hasClass('switch_input')) {
+            return 'switch_input';
+          }
+
+          return null;
+        }
+
+        ; // if (MediaQueries.isLargeDevice()) {
+        //
+        //     // Transforms the switch input into a checkbox
+        //     if (!$(input).hasClass('switch_input')) {
+        //         DOM.toggleClass(input,'switch_input', 'checkbox_input');
+        //     }
+        //
+        // } else {
+        //     console.log($(input).hasClass('switch_input'));
+        //
+        //     // Transforms the checkbox input into a switch button
+        //     if ($(input).hasClass('checkbox_input')) {
+        //         DOM.toggleClass(input, 'switch_input', 'checkbox_input');
+        //     }
+        //
+        // }
+      },
+      // Sets the loader in the submit button of the given form.
+      changeLoadingButtonState: function changeLoadingButtonState(form) {
+        if (form.querySelector('.loading-button') !== null) {
+          var spinner = form.querySelector('.spinner-border');
+          $(spinner).hasClass('hidden') ? spinner.classList.remove('hidden') : spinner.classList.add('hidden');
+
+          if (!$(spinner).hasClass('hidden')) {
+            spinner.parentElement.previousElementSibling.style.display = "none";
+            spinner.parentElement.style.display = "block";
+          } else {
+            spinner.parentElement.previousElementSibling.style.display = "block";
+            spinner.parentElement.style.display = "none";
+          }
+
+          return true;
+        }
+
+        return false;
+      }
+    };
+  }
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = init();
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (UI.getInstance());
 
 /***/ }),
 
@@ -4952,21 +5517,64 @@ var api = {
 
     return confirm;
   }(),
+  getResource: function () {
+    var _getResource = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(resource, parameters) {
+      var requestURL, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              requestURL = api.getHostName() + '/api/' + resource;
+              Object.keys(parameters).forEach(function (key) {
+                requestURL += '/' + parameters[key];
+              });
+              _context2.prev = 2;
+              _context2.next = 5;
+              return axios({
+                method: 'GET',
+                url: requestURL
+              });
+
+            case 5:
+              response = _context2.sent;
+              return _context2.abrupt("return", response.data);
+
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](2);
+              console.log(_context2.t0);
+
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[2, 9]]);
+    }));
+
+    function getResource(_x3, _x4) {
+      return _getResource.apply(this, arguments);
+    }
+
+    return getResource;
+  }(),
   getHostName: function getHostName() {
     return window.location.protocol + '//' + window.location.hostname;
   },
   sendPaymentMethod: function () {
     var _sendPaymentMethod = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(data) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(data) {
       var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              api.setTokenToAxiosHeader(data);
-              _context2.prev = 1;
-              _context2.next = 4;
+              api.setTokenToAxiosHeader();
+              _context3.prev = 1;
+              _context3.next = 4;
               return axios({
                 method: 'post',
                 url: api.getHostName() + '/payment-method',
@@ -4974,121 +5582,76 @@ var api = {
               });
 
             case 4:
-              response = _context2.sent;
-              return _context2.abrupt("return", response);
+              response = _context3.sent;
+              return _context3.abrupt("return", response);
 
             case 8:
-              _context2.prev = 8;
-              _context2.t0 = _context2["catch"](1);
-              console.log(_context2.t0);
+              _context3.prev = 8;
+              _context3.t0 = _context3["catch"](1);
+              console.log(_context3.t0.response);
 
             case 11:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2, null, [[1, 8]]);
+      }, _callee3, null, [[1, 8]]);
     }));
 
-    function sendPaymentMethod(_x3) {
+    function sendPaymentMethod(_x5) {
       return _sendPaymentMethod.apply(this, arguments);
     }
 
     return sendPaymentMethod;
   }(),
-  "continue": function () {
-    var _continue2 = _asyncToGenerator(
+  getDialog: function () {
+    var _getDialog = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(url) {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return axios({
-                method: 'get',
-                url: url
-              });
-
-            case 3:
-              response = _context3.sent;
-              _context3.next = 6;
-              return response.data;
-
-            case 6:
-              return _context3.abrupt("return", _context3.sent);
-
-            case 9:
-              _context3.prev = 9;
-              _context3.t0 = _context3["catch"](0);
-              console.log(_context3.t0);
-
-            case 12:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 9]]);
-    }));
-
-    function _continue(_x4) {
-      return _continue2.apply(this, arguments);
-    }
-
-    return _continue;
-  }(),
-  validate: function () {
-    var _validate = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(field) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(url, token) {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              api.setTokenToAxiosHeader();
+              _context4.prev = 0;
               _context4.next = 3;
               return axios({
                 method: 'post',
-                headers: {
-                  'Content-type': 'application/json'
-                },
-                url: '/validate/' + field.name,
-                data: field
-              }).then(function (response) {
-                return null;
-              })["catch"](function (error) {
-                return error.response.data.errors;
+                url: url,
+                data: token
               });
 
             case 3:
               response = _context4.sent;
               _context4.next = 6;
-              return response;
+              return response.data;
 
             case 6:
               return _context4.abrupt("return", _context4.sent);
 
-            case 7:
+            case 9:
+              _context4.prev = 9;
+              _context4.t0 = _context4["catch"](0);
+              console.log(_context4.t0.response);
+
+            case 12:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4);
+      }, _callee4, null, [[0, 9]]);
     }));
 
-    function validate(_x5) {
-      return _validate.apply(this, arguments);
+    function getDialog(_x6, _x7) {
+      return _getDialog.apply(this, arguments);
     }
 
-    return validate;
+    return getDialog;
   }(),
-  validateObject: function () {
-    var _validateObject = _asyncToGenerator(
+  validate: function () {
+    var _validate = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(object) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(field) {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
@@ -5101,8 +5664,8 @@ var api = {
                 headers: {
                   'Content-type': 'application/json'
                 },
-                url: '/validate/' + object.type,
-                data: object[object.type]
+                url: '/validate/' + field.name,
+                data: field
               }).then(function (response) {
                 return null;
               })["catch"](function (error) {
@@ -5125,15 +5688,77 @@ var api = {
       }, _callee5);
     }));
 
-    function validateObject(_x6) {
-      return _validateObject.apply(this, arguments);
+    function validate(_x8) {
+      return _validate.apply(this, arguments);
     }
 
-    return validateObject;
+    return validate;
+  }(),
+  validateFields: function () {
+    var _validateFields = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(type, object) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              api.setTokenToAxiosHeader();
+              _context6.next = 3;
+              return axios({
+                method: 'post',
+                headers: {
+                  'Content-type': 'application/json'
+                },
+                url: '/validate/' + type,
+                data: object
+              }).then(function (response) {
+                return response.data;
+              })["catch"](function (error) {
+                return error.response.data;
+              });
+
+            case 3:
+              response = _context6.sent;
+              _context6.next = 6;
+              return response;
+
+            case 6:
+              return _context6.abrupt("return", _context6.sent);
+
+            case 7:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    function validateFields(_x9, _x10) {
+      return _validateFields.apply(this, arguments);
+    }
+
+    return validateFields;
   }(),
   setTokenToAxiosHeader: function setTokenToAxiosHeader() {
     var token = document.head.querySelector('meta[name="csrf-token"');
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  },
+  getCourseInfo: function getCourseInfo() {
+    var course = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var callback = arguments.length > 1 ? arguments[1] : undefined;
+    $.get({
+      url: '/learn/' + course,
+      cache: false,
+      data: course,
+      dataType: 'html',
+      error: function error(xhr, status, _error) {
+        console.log(_error);
+      },
+      success: function success(data, status, xhr) {
+        callback(data);
+      }
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (api);
@@ -5149,32 +5774,80 @@ var api = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var breakpoints = {
-  heights: {
-    smallDevices: 156,
-    mediumDevices: 146,
-    largeDevices: 100
-  },
-  widths: {
-    smallDevices: [0, 680],
-    customerJourney: [0, 460],
-    mediumDevices: [681, 992],
-    largeDevices: [993]
-  },
-  isLargeDevice: function isLargeDevice() {
-    return window.innerWidth >= breakpoints.widths.largeDevices[0];
-  },
-  isMediumDevice: function isMediumDevice() {
-    return window.innerWidth >= breakpoints.widths.mediumDevices[0] && window.innerWidth < breakpoints.widths.mediumDevices[1];
-  },
-  isSmallDevice: function isSmallDevice() {
-    return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1];
-  },
-  isCustomerJourney: function isCustomerJourney() {
-    return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.customerJourney[1];
+var MediaQueries = function () {
+  var instance;
+
+  function init() {
+    // Private properties
+    var smallDevices = '(max-width: 680px)';
+    var customerJourney = '(min-width: 460px)';
+    var mediumDevices = '(min-width: 681px)';
+    var largeDevices = '(min-width: 993px)';
+    var navbarBreakpoint = '(min-width: 992px)'; // Private methods
+
+    return {
+      // Public properties
+      // Public methods
+      get: function get(key) {
+        return eval(key);
+      },
+      isNavbarBreakpoint: function isNavbarBreakpoint() {
+        return window.matchMedia(this.get('navbarBreakpoint')).matches;
+      },
+      isSmallDevice: function isSmallDevice() {
+        return window.matchMedia(this.get('smallDevices')).matches;
+      },
+      isMediumDevice: function isMediumDevice() {
+        return window.matchMedia(this.get('mediumDevices')).matches;
+      },
+      isCustomerJourney: function isCustomerJourney() {
+        return window.matchMedia(this.get('customerJourney')).matches;
+      },
+      isLargeDevice: function isLargeDevice() {
+        return window.matchMedia(this.get('largeDevices')).matches;
+      }
+    };
   }
-};
-/* harmony default export */ __webpack_exports__["default"] = (breakpoints);
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = init();
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (MediaQueries.getInstance()); // let breakpoints = {
+//     heights: {
+//         smallDevices: 156,
+//         mediumDevices: 146,
+//         largeDevices: 100
+//     },
+//     widths: {
+//         smallDevices: [0, 680],
+//         customerJourney: [0, 460],
+//         mediumDevices: [681, 992],
+//         largeDevices: [993]
+//     },
+//     isLargeDevice: () => {
+//         return window.innerWidth >= breakpoints.widths.largeDevices[0];
+//     },
+//     isMediumDevice: () => {
+//         return window.innerWidth >= breakpoints.widths.mediumDevices[0] && window.innerWidth < breakpoints.widths.mediumDevices[1];
+//     },
+//     isSmallDevice: () => {
+//         return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.smallDevices[1];
+//     },
+//     isCustomerJourney: () => {
+//         return window.innerWidth >= 0 && window.innerWidth < breakpoints.widths.customerJourney[1];
+//     }
+//
+// };
+//
+// export default breakpoints;
 
 /***/ }),
 
@@ -5187,40 +5860,62 @@ var breakpoints = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var dom = {
-  setProperty: function setProperty(element, property, value) {
-    element.style[property] = value;
-  },
-  getProperty: function getProperty(element, property) {
-    return element.style.getPropertyValue(property);
-  },
-  resetProperty: function resetProperty(element, property) {
-    element.style[property] = '';
-  },
-  toggleClass: function toggleClass(element, firstClassName, secondClassName) {
-    $(element).toggleClass(firstClassName);
-    $(element).toggleClass(secondClassName);
-  },
-  removeSingleClass: function removeSingleClass(element, className) {
-    $(element).removeClass(className);
-  },
-  toggleSingleClass: function toggleSingleClass(element, className) {
-    $(element).toggleClass(className);
-  },
-  expandToViewport: function expandToViewport(element) {
-    $(element).width(document.body.clientWidth);
-  },
-  getHighestElement: function getHighestElement(elements) {
-    var elementsHeight = [];
+var DOM = function () {
+  var instance;
 
-    for (var i = 0; i < elements.length; i++) {
-      elementsHeight.push(elements[i].clientHeight);
-    }
+  function init() {
+    // Private properties
+    // Private methods
+    return {
+      // Public properties
+      // Public methods
+      setProperty: function setProperty(element, property, value) {
+        element.style[property] = value;
+      },
+      getProperty: function getProperty(element, property) {
+        return element.style.getPropertyValue(property);
+      },
+      resetProperty: function resetProperty(element, property) {
+        element.style[property] = '';
+      },
+      toggleClass: function toggleClass(element, firstClassName, secondClassName) {
+        $(element).toggleClass(firstClassName);
+        $(element).toggleClass(secondClassName);
+      },
+      removeSingleClass: function removeSingleClass(element, className) {
+        $(element).removeClass(className);
+      },
+      expandToViewport: function expandToViewport(element) {
+        $(element).width(document.body.clientWidth);
+      },
+      toggleSingleClass: function toggleSingleClass(element, className) {
+        $(element).toggleClass(className);
+      },
+      getHighestElement: function getHighestElement(elements) {
+        var elementsHeight = [];
 
-    return elements[elementsHeight.indexOf(Math.max.apply(null, elementsHeight))];
+        for (var i = 0; i < elements.length; i++) {
+          elementsHeight.push(elements[i].clientHeight);
+        }
+
+        return elements[elementsHeight.indexOf(Math.max.apply(null, elementsHeight))];
+      }
+    };
   }
-};
-/* harmony default export */ __webpack_exports__["default"] = (dom);
+
+  ;
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = init();
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (DOM.getInstance());
 
 /***/ }),
 

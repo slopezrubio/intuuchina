@@ -1,6 +1,6 @@
 <div id="dialog-box">
     <div class="card-header">
-        <h1>{{ __('dialog-box.payment details') }}</h1>
+        <h1>{{ __('dialog.payment details') }}</h1>
     </div>
 
     <div class="card-body">
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-group align-items-end row">
-                    <label class="col-12 col-lg-3 p-0" for="email">{{ __('content.mail') }}</label>
+                    <label class="col-12 col-lg-3 p-0" for="email">{{ __('content.e-mail address') }}</label>
                     <input class="col-12 col-lg-9 {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="text" id="email" value="{{ Auth::user()->email }}">
                     <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="email-errors">
                         <!-- Stripe Email errors -->
@@ -104,7 +104,7 @@
                         <div class="col-12 p-0 col-md-8 col-lg-6 offset-md-2 offset-lg-3" style="display: none">
                             <button class="cta col-12 loading-button" type="submit" data-stripe="{{ $intent->client_secret }}" id="checkout-button-sku_GDHDkOPWtjGF2w">
                                 <span data-value="{{ $intent->amount }}">{{ __('content.pay', ['value' => numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($intent->amount / 100, 2), Config::get('services.stripe.cashier_currency'))]) }}</span>
-                                <div class="spinner-border hidden" id="spinner"></div>
+                                <span style="display: none">{{ __('content.loading...') }}<i class="spinner-border hidden" id="spinner"></i></span>
                             </button>
                         </div>
                     </div>

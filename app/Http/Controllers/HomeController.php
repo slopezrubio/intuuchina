@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\State;
 use Illuminate\Support\Facades\Auth;
-use Stripe\Stripe;
 
 class HomeController extends Controller
 {
@@ -16,11 +15,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application welcome dialog or the user home.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -32,7 +31,6 @@ class HomeController extends Controller
             return redirect('/admin');
         }
 
-        $status = State::find($user->status_id)->name;
         return view('home', compact('status'));
     }
 
@@ -43,6 +41,6 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('pages/admin/dashboard');
+        return view('pages.admin.dashboard');
     }
 }

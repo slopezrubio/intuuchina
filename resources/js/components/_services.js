@@ -1,5 +1,5 @@
 import news from '../components/_news';
-import breakpoints from '../main/breakpoints';
+import MediaQueries from '../main/breakpoints';
 
 let services = {
     container: document.querySelector('.services'),
@@ -39,7 +39,7 @@ let services = {
         $(element).height($(element).height() - displacedPosition);
     },
     getContainerPosition: () => {
-        let percentage = breakpoints.isMediumDevice() ? 0.22 : 0.19;
+        let percentage = MediaQueries.isMediumDevice() ? 0.22 : 0.19;
         return news.polygon.clientHeight * percentage;
     }
 }

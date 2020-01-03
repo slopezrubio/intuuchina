@@ -21,6 +21,7 @@ return [
     'password' => 'Password',
     'cancel' => 'Cancel',
     'register' => 'Register',
+    'allowed cv document formats' => 'Only .PDF, .DOC, .DOCX, and .ODT documents are allowed',
     'back to home' => 'Back to Home',
 
     /*
@@ -36,4 +37,5 @@ return [
     'change pass' => 'Change Password',
     'dashboard' => 'Dashboard',
     'profile' => 'Profile',
+    'application status' => 'Application Status',
 ];

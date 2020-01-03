@@ -1,61 +1,49 @@
-import breakpoints from "../main/breakpoints";
-import dom from "../main/dom.js";
-import env from '../main/env'
+import MediaQueries from "../main/breakpoints";
+import DOM from "../main/dom";
+import UI from '../main/UI';
 
-let customerJourney = {
+var customerJourney = {
     init: function() {
         if (document.querySelector('.customer-journey')) {
-            window.addEventListener('load', customerJourney.setup);
-            window.addEventListener('resize', customerJourney.setup);
+            window.addEventListener('load', (e) => {
+                this.setPictures();
+            });
+            window.addEventListener('resize', (e) => {
+                this.setPictures();
+            });
         }
     },
-    element: document.querySelector('.customer-journey') !== undefined ? document.querySelector('.customer-journey') : undefined,
-    setup: function(event) {
-        customerJourney.setPicture[event.type]();
+    el: document.querySelector('.customer-journey') !== undefined ? document.querySelector('.customer-journey') : null,
+    currentPicture: null,
+    pictures: {
+        horizontal: null,
+        vertical: null
     },
-    setPicture: {
-        'load': function() {
-            let picture = customerJourney.element.querySelector('img');
+    setPictures: function() {
+        this.currentPicture = this.el.querySelector('img');
 
-            if (breakpoints.isCustomerJourney()) {
-                let src = env.paths.public + 'storage/images/infography_' + customerJourney.getLocale() + '_vertical.png';
-                picture.setAttribute('src', src);
-                dom.toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
-                return true;
-            }
-
-            let src = env.paths.public + 'storage/images/infography_' + customerJourney.getLocale() + '_horizontal.png';
-            picture.setAttribute('src', src);
-            return true;
-        },
-        'resize': function() {
-            let picture = customerJourney.element.querySelector('img');
-            let classPattern = /customer-journey--mobile(\s+|$)/;
-
-            if (breakpoints.isCustomerJourney() && customerJourney.element.getAttribute('class').match(classPattern) === null) {
-                let src = env.paths.public + 'storage/images/infography_' + customerJourney.getLocale() + '_vertical.png';
-                picture.setAttribute('src', src);
-                dom.toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
-
-                return true;
-            }
-
-            if (!breakpoints.isCustomerJourney() && customerJourney.element.getAttribute('class').match(classPattern)) {
-                console.log("matches");
-                let src = env.paths.public + 'storage/images/infography_' + customerJourney.getLocale() + '_horizontal.png';
-                picture.setAttribute('src', src);
-                dom.toggleClass(customerJourney.element, 'customer-journey--mobile', 'customer-journey');
-
-                return true;
-            }
-
-            return false;
+        if (this.pictures.horizontal === null) {
+            this.pictures.horizontal = this.currentPicture.getAttribute('src').match(UI.getPattern('horizontalCustomerJourney'))
+                ? this.currentPicture.getAttribute('src')
+                : this.currentPicture.getAttribute('src').replace(/vertical/, 'horizontal');
         }
+
+        if (this.pictures.vertical === null) {
+            this.pictures.vertical = this.currentPicture.getAttribute('src').match(UI.getPattern('verticalCustomerJourney'))
+                ? this.currentPicture.getAttribute('src')
+                : this.currentPicture.getAttribute('src').replace(/horizontal/, 'vertical')
+        }
+
+        this.loadPicture();
     },
-    getLocale: function() {
-        return document.querySelector('html').getAttribute('lang');
+    loadPicture: function() {
+        let newCustomerJourneyPicture = UI.getCustomerJourneyPicture(this.el);
+
+        if (newCustomerJourneyPicture !== null) {
+            DOM.toggleSingleClass(this.el, newCustomerJourneyPicture.className);
+            this.currentPicture.setAttribute('src', this.pictures[newCustomerJourneyPicture.src]);
+        };
     }
-
 };
 
 

@@ -25,7 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('study')->nullable();
             $table->string('university')->nullable();
             $table->string('type');
-            $table->unsignedBigInteger('status_id');
+            $table->longText('cv')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

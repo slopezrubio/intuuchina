@@ -21,9 +21,25 @@
                                     <ul class="web-map-list">
                                     @foreach ($section as $key => $item)
                                         <li class="web-map_item">
-                                            <a href="{{ isset($item['parameter']) ? route($item['route'], [ $key => $item['parameter'] ]) : route($item['route']) }}">
-                                                {{ $item['text'] }}
-                                            </a>
+                                        @switch($item['method'])
+                                            @case('POST')
+                                                <form action="{{ route($item['route']) }}" method="{{ $item['method'] }}">
+                                                    @csrf
+                                                    <input type="hidden" name="{{ $title }}" value="{{ $key }}">
+                                                    <a href="#">
+                                                        <input type="submit" value="{{ $item['text'] }}">
+                                                    </a>
+                                                </form>
+                                                @break
+                                            @case('GET')
+                                                <a href="{{ route($item['route']) }}">
+                                                    {{ $item['text'] }}
+                                                </a>
+                                                @break
+                                        @endswitch
+                                        </li>
+                                        <li class="web-map_item">
+
                                         </li>
                                     @endforeach
                                     </ul>
@@ -63,7 +79,7 @@
 {{--                        </span>--}}
 {{--                    @endif--}}
 {{--                </div>--}}
-                <div class="col-xs-10 switch_input">
+                <div class="col-xs-10">
                     <label aria-label="terms">{!! trans('content.i accept the') !!}</label>
 
                     <label for="terms" class="switch">

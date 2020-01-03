@@ -1,11 +1,12 @@
-import breakpoints from '../main/breakpoints';
-import dom from '../main/dom';
+import MediaQueries from '../main/breakpoints';
+import DOM from '../main/dom';
+import UI from '../main/UI';
 
 let footer = {
     init: function() {
         window.addEventListener('load', footer.setup);
         window.addEventListener('resize', function() {
-            footer.setSwitch();
+            footer.toggleSwitch();
         });
     },
     form: document.querySelector('.footer_contact_form'),
@@ -13,29 +14,31 @@ let footer = {
         if (footer.hasErrorsMessages(footer.form)) {
             footer.setViewport();
         }
-        footer.setSwitch();
+        footer.toggleSwitch();
     },
-    getScreenSize: () => {
-        let screenSize = [];
-        screenSize.push(window.innerWidth, window.innerHeight);
-        return screenSize;
-    },
-    setSwitch: () => {
-        let switchInput = document.querySelector('.switch_input') !== null
-            ? document.querySelector('.switch_input')
-            : document.querySelector('.checkbox_input');
+    toggleSwitch: () => {
+        let switchInput = document.querySelector('#terms').parentElement.parentElement !== null
+            ? document.querySelector('#terms').parentElement.parentElement
+            : null;
 
-        if (footer.getScreenSize()[0] > breakpoints.widths.largeDevices) {
-            if (document.querySelector('.checkbox_input') === null) {
-                dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
-            }
+        let className = UI.getInputClass(switchInput);
+
+        if (className !== null) {
+            DOM.toggleSingleClass(switchInput, className);
         }
 
-        if (footer.getScreenSize()[0] <= breakpoints.widths.largeDevices) {
-            if (document.querySelector('.switch_input') === null) {
-                dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
-            }
-        }
+
+        // if (footer.getScreenSize()[0] > breakpoints.widths.largeDevices) {
+        //     if (document.querySelector('.checkbox_input') === null) {
+        //         dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
+        //     }
+        // }
+        //
+        // if (footer.getScreenSize()[0] <= breakpoints.widths.largeDevices) {
+        //     if (document.querySelector('.switch_input') === null) {
+        //         dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
+        //     }
+        // }
     },
     hasErrorsMessages: function(parent) {
         if ($(parent).find('.invalid-feedback', '.is-invalid').length > 0) {

@@ -27,8 +27,6 @@
   }
 
   &_header {
-    //@include flexbox();
-    //@include flex-direction(column);
     display: block;
     > * {
       padding: 1.5em 0;
@@ -108,8 +106,8 @@
       }
 
       input:checked + .checkbox_slider:after {
-        font-family: 'Font Awesome 5 Free';
-        font-size: 30px;
+        font-family: 'Font Awesome 5 Free', Arial, serif;
+        font-size: 0.8em;
         content: "\f00c";
       }
     }
@@ -249,7 +247,6 @@
       &,
       div {
         @include flex-direction(column!important);
-        flex-direction: column !important;
       }
     }
   }

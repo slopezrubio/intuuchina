@@ -14,19 +14,19 @@
   border-radius: 30px;
   height: 350px;
   box-shadow: 3px 3px 20px #00000080;
-  @include prefixed(display, flex);
-  @include prefixed(flex-direction, column);
-  @include prefixed(justify-content, center);
+  @include flexbox();
+  @include flex-direction(column);
+  @include justify-content(center);
   .prices {
     margin: 0.5em 0.5em 0 0.5em;
-    @include prefixed(display, flex);
-    @include prefixed(flex-direction, column);
-    @include prefixed(justify-content, center);
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
     .price-tag {
-      @include prefixed(display, flex);
-      @include prefixed(flex-direction, column);
+      @include flexbox();
+      @include flex-direction(column);
       $map: (295: 32, 389: 66, 688: 70, 1875: 70);
-      font-size: 64px;
+      font-size: 3.3em;
       font-weight: 700;
       text-align: center;
       i.currency {
@@ -39,17 +39,18 @@
     }
   }
 
-  @media only screen and (min-width: 550px) {
+  @media only screen and (min-width: 675px) {
     .prices {
-      @include prefixed(display, inline-flex);
-      @include prefixed(flex-direction, row);
+      @include inline-flex();
+      @include flex-direction(row);
       .price-tag {
+        font-size: 4em;
         &:first-of-type {
           margin-right: 1em;
         }
 
         &:last-of-type {
-          float: right-;
+          float: right;
         }
       }
 
@@ -58,8 +59,8 @@
 
   p {
     margin-bottom: 0px;
-    @include prefixed(display, flex);
-    @include prefixed(flex-direction, column);
+    @include flexbox();
+    @include flex-direction(column);
 
     & > *:not(.advice) {
       width: auto;
@@ -77,136 +78,26 @@
 %price-box {
   height: auto;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
 }
-
-.course-descriptions {
-  background: $primaryDark;
-  position: relative;
-  overflow: hidden;
-  .description-container {
-    display: -webkit-inline-box;
-    //@include prefixed(transition, all ease-in-out .5s);
-    .description-base {
-      box-sizing: border-box;
-      color: $white;
-      padding-bottom: 2em;
-      p {
-        margin-bottom: 3em;
-      }
-      & > * {
-        padding: 1em 2em;
-      }
-      .description-header {
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        & > * {
-          margin-top: 1em;
-        }
-        h2 {
-          color: $primaryRed;
-          $map: (278: 24, 820: 28, 1492: 32);
-          font-size: minimosCuadrados($map);
-          span{
-            color: $white;
-          }
-        }
-        button {
-          margin-left: 0px;
-          //$map: (320: 14, 824: 18, 1903: 18);
-          //font-size: minimosCuadrados($map);
-          font-size: 1.2em;
-          padding: 0.5rem 2rem;
-          border-radius: 2rem;
-          text-decoration: none;
-          transition-duration: 0.3s;
-          &:active{
-            text-decoration: none;
-          }
-          &:visited{
-            text-decoration: none;
-          }
-          &:hover{
-            opacity: 0.9;
-          }
-        }
-
-        #online {
-          color: $primaryDark;
-          span {
-            color: $primaryWhite;
-          }
-        }
-
-        #online ~ form > .cta {
-          background: $sectionDark;
-          &:hover {
-            background: $primaryDark;
-          }
-        }
-      }
-    }
-
-    .online-description {
-      .description-header{
-        h2 {
-          color: #000000;
-        }
-      }
-    }
-    .description-disabled {
-      transition: all 0.9s ease;
-      .description-header {
-        h2 {
-          cursor: pointer;
-        }
-        a {
-          width: 0;
-          padding: 0;
-          font-size: 0;
-        }
-      }
-    }
-  }
-
-  .description-options {
-    left: 0%;
-    bottom: 30px;
-    width: 100%;
-    @include prefixed(display, flex);
-    @include prefixed(justify-content, center);
-    position: absolute;
-    color: $primaryWhite;
-    font-weight: 700;
-    a {
-      padding: .5em 1em;
-      @include prefixed(border-radius, 25px);
-      $map: (320: 16, 996: 12);
-      font-size: 1em;
-      &:hover,
-      &:active,
-      &.selected {
-        //@include prefixed(transition, all ease-in-out 0.5s);
-        background: rgba(255, 255, 255, 0.4);
-        color: $primaryWhite;
-      }
-    }
-
-    a:last-of-type {
-      margin-left: 1.5em;
-    }
-  }
+#bg-classroom-course{
+  background-image: url('/../../storage/images/student.jpg');
+  @include prefixed(filter, grayscale(100%));
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: 30%;
+  @include prefixed(filter, grayscale(100%));
+  transition: all 0.8s ease;
 }
 
 .course-information {
   width: 100%;
-  @include prefixed(display, flex);
-  @include prefixed(flex-direction, column);
-  justify-content: space-around;
-  align-items: center;
+  @include flexbox();
+  @include flex-direction(column);
+  @include justify-content(space-around);
+  @include align-items(center);
   padding: 2em;
-  color: $white;
+  color: $primaryWhite;
   .course-information_box {
     @extend %default-info-box;
   }
@@ -218,136 +109,24 @@
   }
 }
 
-@media #{$small-devices} {
-  .course-information {
-    .price-box {
-      height: auto;
-    }
-  }
-}
+$first-slide: (
+        background-color: $primaryDark,
+        primary-title-color: $primaryRed,
+        secondary-title-color: $primaryWhite,
+        primary-text-color: $primaryWhite,
+        primary-button-color: $tertiaryRed,
+        secondary-button-color: $primaryRed
+);
 
-/*.bg-online-course{
-  background-image: url('https://s3-alpha.figma.com/img/d553/6263/72e53597dc1fe926e95f230dcaca0dd9');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-x: right;
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-  transition: all 0.8s ease;
-}*/
-#bg-classroom-course{
-  background-image: url('/../../storage/images/student.jpg');
-  @include prefixed(filter, grayscale(100%));
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: 30%;
-  @include prefixed(filter, greyscale(100%));
-  transition: all 0.8s ease;
-}
+$second-slide: (
+        background-color: $primaryRed,
+        primary-title-color: $primaryWhite,
+        secondary-title-color: $primaryDark,
+        primary-text-color: $primaryWhite,
+        primary-button-color: $sectionDark,
+        secondary-button-color: $primaryDark
+);
 
-@media #{$large-devices} {
-  .course-descriptions {
-    overflow: hidden;
-    .description-container {
-      display: flex;
-      height: 456px;
-      .right-slide, .left-slide {
-        width: auto;
-        transition:
-            width 0.5s;
-        p {
-          width: 60%;
-          opacity: 1;
-          transition: opacity 0.2s 0.5s;
-        }
-      }
-
-      .right-slide {
-        padding-right: 8%;
-        .description-header {
-          @include prefixed(align-items, flex-end);
-          button {
-            margin-right: 0;
-            margin-left: auto;
-          }
-        }
-
-        p {
-          text-align: right;
-          float: right;
-        }
-      }
-
-      .left-slide {
-        padding-left: 8%;
-      }
-
-      .right-slide--none, .left-slide--none {
-        width: 150px !important;
-        position: relative;
-        cursor: pointer;
-        z-index: 0;
-        @include prefixed(display, flex);
-        @include prefixed(align-items, center);
-        transition:
-          width 0.5s;
-        .description-header {
-          .cta {
-            display: none;
-          }
-        }
-        p {
-          opacity: 0;
-          height: 0;
-        }
-
-        &:before {
-          content: "";
-          width: 407px;
-          height: 407px;
-          position: absolute;
-          z-index: -1;
-          border-radius: 25px;
-          top: 26px;
-        }
-
-        &:after {
-          position: absolute;
-          color: white;
-          font-size: 80px;
-          top: 169px;
-          font-weight: 900;
-          font-family: "Font Awesome 5 Free";
-        }
-      }
-
-      .left-slide--none {
-        &:before {
-          right: -102px;
-          background: $primaryDark;
-          @include prefixed(transform, rotate(-45deg));
-          border-left: 50px solid $primaryDark;
-        }
-
-        &:after {
-          content: "\f101";
-          right: -158px;
-        }
-      }
-
-      .right-slide--none {
-        &:before {
-          left: -102px;
-          background: $primaryRed;
-          @include prefixed(transform, rotate(45deg));
-          border-left: 50px solid $primaryRed;
-        }
-
-        &:after {
-          content: "\f100";
-          left: -158px;
-        }
-      }
-    }
-  }
+header#learn-chinese + main {
+  @include arrow-slider($first-slide, $second-slide);
 }

@@ -153,6 +153,19 @@
   -webkit-justify-content: $value;
 }
 
+@mixin align-content($value: stretch) {
+  // No Webkit Box Fallback.
+  -webkit-align-content: $value;
+  @if $value == flex-start {
+    -ms-flex-line-pack: start;
+  } @else if $value == flex-end {
+    -ms-flex-line-pack: end;
+  } @else {
+    -ms-flex-line-pack: $value;
+  }
+  align-content: $value;
+}
+
 @mixin align-self($value: auto) {
   // No Webkit Box Fallback.
   -webkit-align-self: $value;

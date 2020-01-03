@@ -32,9 +32,9 @@
     }
 
     .section_body {
-      @include prefixed(flex-direction, column);
-      @include prefixed(display, flex);
-      @include prefixed(justify-content, space-around);
+      @include flexbox();
+      @include flex-direction(column);
+      @include justify-content(space-around);
 
       .note_window {
         max-width: 450px;
@@ -140,7 +140,7 @@
   .news {
     &_container {
       .section_body {
-        @include prefixed(flex-direction, row);
+        @include flex-direction(row);
         .tv {
           a {
             width: calc(100% / 3);
@@ -166,7 +166,7 @@
   .news {
     &_container {
       .section_body {
-        @include prefixed(flex-direction, row);
+        @include flex-direction(row);
         .tv {
           a {
             width: calc(100% / 4);
@@ -187,75 +187,3 @@
     }
   }
 }
-
-
-/*@media #{$medium-devices} {
-  main {
-    .news {
-      &_container {
-        .section_body div {
-          margin-bottom: 2em;
-        }
-        .section_body {
-          @include prefixed(display, flex);
-          @include prefixed(flex-direction, column);
-          .tv {
-            @include prefixed(display, flex);
-            @include prefixed(flex-wrap, wrap);
-            @include prefixed(align-items, baseline);
-            @include prefixed(justify-content, space-evenly);
-            padding: 5px;
-            a {
-              padding: 1em;
-              text-align: left;
-              margin: 5px;
-              img {
-                position: relative;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 45px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}*/
-
-/*@media only screen and (min-width: 781px) and (max-width: 991px) {
-  main {
-    .news {
-      &_container {
-        .section_body {
-          .tv {
-            @include prefixed(display, grid);
-            @include prefixed(grid-template-columns, repeat(3, 1fr));
-            @include prefixed(align-items, baseline);
-            @include prefixed(grid-gap, 2em);
-            padding: 5px;
-            a {
-              img {
-                position: relative;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 50px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}*/
-
-//@media #{$large-devices_secondary} {
-//  .news {
-//    &_container {
-//      .section_body {
-//        padding-right: 10em;
-//        padding-left: 10em;
-//      }
-//    }
-//  }
-//}

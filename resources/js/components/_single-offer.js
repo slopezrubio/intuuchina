@@ -1,4 +1,4 @@
-import dom from '../main/dom';
+import DOM from '../main/dom';
 
 let singleOffer = {
     init: () => {
@@ -45,7 +45,7 @@ let singleOffer = {
         if (singleOffer.theViewportPassedOverHere(position)) {
             if (document.querySelector('.sendable_section--fixed')) {
                 let applyNowButton = document.querySelector('.sendable_section--fixed');
-                dom.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
+                DOM.toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
                 if (event.type === 'scroll') {
                     position = window.scrollY + (applyNowButton.clientHeight * 2);
                     singleOffer.scrollTo(position);
@@ -54,7 +54,7 @@ let singleOffer = {
         } else {
             if (document.querySelector('.sendable_section')) {
                 let applyNowButton = document.querySelector('.sendable_section');
-                dom.toggleClass(applyNowButton, 'sendable_section', 'sendable_section--fixed');
+                DOM.toggleClass(applyNowButton, 'sendable_section', 'sendable_section--fixed');
             }
         }
     },

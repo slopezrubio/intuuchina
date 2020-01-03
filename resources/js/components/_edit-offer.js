@@ -1,5 +1,3 @@
-import ajax from '../main/ajax';
-
 let editOffer = {
     init: () => {
         editOffer.setup();

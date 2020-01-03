@@ -26,8 +26,6 @@ return [
     'why intuuchina' => 'Why IntuuChina',
     'job offers' => 'Job Offers',
     'new offer' => 'New Offer',
-    'online course' => '<span>Online</span> Course',
-    'in-person course' => 'In-person Course <span>in China</span>',
     'mission & vision' => 'Mission and Vision',
     'awards & honours' => 'Awards and Honours',
     'values' => 'Values',
@@ -82,32 +80,6 @@ return [
     'no offers found' => 'There are no offers which fulfill the filter criteria',
     'hourly price' => 'Hourly price',
     'from' => 'From',
-    'courses' => [
-        'online' => [
-            'en' => [
-                'currency' => 'USD',
-                'value' => '18'
-            ],
-            'es' => [
-                'currency' => '€',
-                'value' => '15'
-            ],
-            'description' => ['Looking for convenience? We can help you through our video conferencing tools. With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible.', 'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.']
-        ],
-        'in-person' => [
-            'en' => [
-                'currency' => 'USD',
-                'value' => '499',
-            ],
-            'es' => [
-                'currency' => '€',
-                'value' => '470',
-            ],
-            'description' => ['With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible. We have classes for all levels and for all types of learners. Want to study in a group class? With a private tutor? At your office? We have the perfect program for you!','At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.']
-        ]
-    ],
-    'in-person course notice' => 'The price above corresponds to the minimum staying of one month. Visa fees are not included.',
-    'online course notice' => 'A minimum number of 40 hours in order to apply for this course.',
     'please note' => 'Please note',
     'per hour symbol' => '/h',
     'facts' => [
@@ -174,33 +146,44 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'name' => 'Name',
-    'surnames' => 'Surnames',
-    'mail' => 'Email',
-    'subject' => 'Subject',
-    'i accept the' => 'I accept the ' . __('links.terms and conditions') . ' as well as the '  . __('links.general data protection regulation'),
-    'submit' => 'Submit',
+    'also interested' => 'I\'m also interested',
+    'agree' => 'Agree',
+    'amount received' => 'Amount Received',
+    'amount of months' => 'Amount of months roughly',
+    'apply for' => 'Apply for',
+    'back to home' => 'Back to Home',
     'cancel' => 'Cancel',
     'cardholder name' => 'Cardholder Name',
     'card number' => 'Card Number',
     'card expiry' => 'Card Expiry',
-    'cvc' => 'CVC',
-    'pay' => 'Pay :value',
     'confirm' => 'Confirm',
     'continue' => 'Continue',
+    'currency' => 'Currency',
+    'cvc' => 'CVC',
+    'cv' => 'CV',
+    'delete' => 'Delete',
+    'decline' => 'Decline',
+    'duration' => 'Duration',
+    'e-mail address' => 'E-Mail Address',
+    'email placeholder' => 'e.g. confucio@confucio.com',
+    'home' => 'Home',
+    'issue' => 'Issue',
+    'i accept the' => 'I accept the ' . __('links.terms and conditions') . ' as well as the '  . __('links.general data protection regulation'),
+    'industry' => 'Industry',
+    'join also' => 'Join Also',
+    'job position' => 'Job Position',
+    'loading...' => 'Loading...',
+    'pay' => 'Pay :value',
+    'pay now' => 'Pay Now',
     'see more' => 'See more',
     'see job offers' => 'Internship',
     'name placeholder' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
-    'email placeholder' => 'e.g. confucio@confucio.com',
     'subject placeholder' => 'Write down here your issue',
     'filter by:' => 'Filter by:',
-    'industry' => 'Industry',
-    'duration' => 'Duration',
     'picture' => 'Picture',
     'phone number' => 'Phone Number',
     'ok, i got it!' => 'Ok, I got it!',
     'see your receipt' => 'See your receipt',
-    'currency' => 'Currency',
     'industries' => [
         'finance' => 'Finance',
         'design' => 'Design',
@@ -210,53 +193,106 @@ return [
         'hospitality' => 'Hospitality',
         'it' => 'IT',
         'legal' => 'Legal',
-        'other' => 'Other',
+        'other_industries' => 'Other',
         'marketing_business' => 'Marketing & Business Dev.',
     ],
-    'offers locations' => [
-        [
-            'text' => 'Honk Kong',
-            'value' => 'honk-kong'
+    'jobs' => [
+        'text' => 'Jobs',
+        'locations' => [
+            'honk-kong' => [
+                'key' => 'honk-kong',
+                'text' => 'Honk Kong',
+            ],
+            'shanghai' => [
+                'key' => 'shanghai',
+                'text' => 'Shanghai',
+            ],
+            'beijing' => [
+                'key' => 'beijing',
+                'text' => 'Beijing',
+            ],
+            'shenzen' => [
+                'key' => 'shenzhen',
+                'text' => 'Shenzhen',
+            ]
+        ]
+    ],
+    'invoice' => [
+        'internship' => [
+            'description' => 'Internship Application Fee',
         ],
-        [
-            'text' => 'Beijing',
-            'value' => 'beijing'
+        'inter_relocat' => [
+            'description' => 'Internship + Relocation Application Fee'
         ],
-        [
-            'text' => 'Shanghai',
-            'value' => 'shanghai'
+        'university' => [
+            'description' => 'Chinese University Application Fee'
+        ],
+        'study' => [
+            'description' => 'Chinese Language Course Payment',
         ],
     ],
     'programs' => [
-        'internship' => 'Internship Program',
+        'internship' => 'Internship',
         'inter_relocat' => 'Internship + Relocation',
-        'study' => 'Chinese Language',
+        'study' => 'Chinese Studies',
         'university' => 'University',
     ],
     'universities' => [
-        'mba' => 'MBA',
-        'mib' => 'M. Intl. Bsns.',
-        'other' => 'Other',
+        'mba' => [
+            'heading' => 'MBA',
+            'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.'
+        ],
+        'mib' => [
+            'heading' => 'M. Intl. Bsns.',
+            'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
+        ],
+        'other' => [
+            'heading' => 'Other',
+            'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.'
+        ],
     ],
-    'studies' => [
-        'in-person' => 'In-Person',
-        'online' => 'Online',
+    'courses' => [
+        'in-person' => [
+            'text' => 'In-Person',
+            'slider' => '<span>in China</span>',
+            'price' => [
+                'eur' => '470.00',
+                'usd' => '499.00',
+            ],
+            'scope' => [
+                'min' => '1',
+                'max' => '24',
+            ],
+            'key' => 'in-person',
+            'description' => 'With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible. We have classes for all levels and for all types of learners. Want to study in a group class? With a private tutor? At your office? We have the perfect program for you!\',\'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.',
+            'warning' => 'The price above corresponds to the minimum staying of one month. Visa fees are not included.',
+        ],
+        'online' => [
+            'text' => 'Online',
+            'slider' => 'Course',
+            'price' => [
+                'eur' => '15.00',
+                'usd' => '18.00',
+            ],
+            'scope' => [
+                'min' => '40',
+                'max' => '500',
+            ],
+            'key' => 'online',
+            'description' => 'Looking for convenience? We can help you through our video conferencing tools. With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible.', 'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.',
+            'warning' => 'A minimum number of 40 hours in order to apply for this course.'
+        ]
     ],
+    'name' => 'Name',
+    'surnames' => 'Surnames',
+    'subject' => 'Subject',
+    'submit' => 'Submit',
     'study chinese via' => 'Study Chinese via',
     'sign in' => 'Sign In',
-    'apply for' => 'Apply for',
     'edit' => 'Editar',
-    'delete' => 'Delete',
-    'also interested' => 'I\'m also interested',
     'offer title label' => 'Title',
     'offer location label' => 'Location',
-    'amount of months' => 'Amount of months roughly',
-    'job position' => 'Job Position',
-    'description' => 'Description',
-    'agree' => 'Agree',
-    'e-mail address' => 'E-Mail Address',
     'save' => 'Save',
-    'join also' => 'Join Also',
     'program' => 'Program',
 
 

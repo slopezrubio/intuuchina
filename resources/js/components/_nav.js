@@ -1,5 +1,5 @@
-import breakpoints from '../main/breakpoints';
-import dom from '../main/dom.js';
+import MediaQueries from '../main/breakpoints';
+import DOM from '../main/dom.js';
 
 let nav = {
     init: () => {
@@ -19,13 +19,29 @@ let nav = {
         for (let i=0; i < nav.navbar.querySelectorAll('.dropdown').length; i++) {
             let dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
             dropdown.addEventListener('mouseover', (e) => {
-                let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-                $(targetId).dropdown('show');
-
+                if (MediaQueries.isNavbarBreakpoint()) {
+                    let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+                    $(targetId).dropdown('show');
+                }
             });
+
+            dropdown.addEventListener('click', (e) => {
+                /*if (!MediaQueries.isNavbarBreakpoint()) {
+                    let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+                    if ($(targetId.querySelector('ul')).hasClass('show')) {
+                        console.log("hola");
+                        $(targetId).dropdown('hide');
+                    } else {
+                        $(targetId).dropdown('show');
+                    }
+                }*/
+            });
+
             dropdown.addEventListener('mouseout', function(e) {
-                let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-                $(targetId).dropdown('hide');
+                if (MediaQueries.isNavbarBreakpoint()) {
+                    let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+                    $(targetId).dropdown('hide');
+                }
             });
         }
 
@@ -38,10 +54,10 @@ let nav = {
     modalForm: document.querySelector('.modal__form') !== null ?  document.querySelector('.modal__form') : null,
     accordionSubmenus:  document.querySelectorAll('.accordion_submenu') !== null ?  document.querySelectorAll('.accordion_submenu') : null,
     highlightItem: function(event) {
-        if (window.innerWidth < breakpoints.widths.largeDevices[0]) {
+        if (!MediaQueries.isLargeDevice()) {
             let pattern = /\s?show\s?/;
             if (this.getAttribute('class').match(pattern)) {
-                dom.toggleSingleClass(this.parentElement, 'reverse-colours');
+                DOM.toggleSingleClass(this.parentElement, 'reverse-colours');
             }
         }
     },

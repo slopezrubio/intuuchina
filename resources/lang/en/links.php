@@ -19,20 +19,31 @@ return [
     */
 
     'navbar' => [
+        'home' => [
+            'text' => 'Home',
+            'route' => 'home',
+            'method' => 'GET',
+        ],
         'internship' => [
             'text' => 'Internship',
             'route' => 'internship',
+            'method' => 'GET',
         ],
         'learn chinese' => [
             'text' => 'Learn Chinese',
-            'route' => 'course',
-            'parameter' => 1
+            'route' => 'learn',
+            'method' => 'POST',
         ],
         'university' => [
             'text' => 'University',
             'route' => 'university',
             'options' => function() {
-                return array_values(__('content.universities'));
+                $options = [];
+
+                foreach (__('content.universities') as $study) {
+                    array_push($options, $study['heading']);
+                }
+                return $options;
             }
         ],
         'whyus' => [
@@ -52,41 +63,43 @@ return [
             'job offers' => [
                 'text' => 'Job Offers',
                 'route' => 'internship',
+                'method' => 'GET',
             ],
         ],
-        'learn chinese' => [
+        'learn-chinese' => [
             'in-person' => [
                 'text' => 'In-Person',
-                'route' => 'course',
-                'parameter' => 1,
+                'route' => 'learn',
+                'method' => 'POST'
             ],
             'online' => [
                 'text' => 'Online',
-                'route' => 'course',
-                'parameter' => 2,
+                'route' => 'learn',
+                'method' => 'POST',
             ]
         ],
         'university' => [
             'mba' => [
                 'text' => 'MBA',
                 'route' => 'university',
-                'parameter' => 1
+                'method' => 'POST'
             ],
             'mib' => [
                 'text' => 'M. Intl. Bsns.',
                 'route' => 'university',
-                'parameter' => 2
+                'method' => 'POST'
             ],
             'others' => [
                 'text' => 'Others Studies',
                 'route' => 'university',
-                'parameter' => 3
+                'method' => 'POST'
             ]
         ],
         'why intuuchina' => [
             'why us' => [
                 'text' => 'Why Us',
                 'route' => 'whyus',
+                'method' => 'GET',
             ]
         ]
     ],

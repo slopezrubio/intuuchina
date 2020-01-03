@@ -3,10 +3,11 @@
         <h2>{{ $header }}</h2>
     </div>
     <div class="notification-card__body">
+        {!! $body!!}
         <table class="details">
             @foreach($fields as $fieldName => $field)
                 <tr>
-                    <th><p>{{ $fieldName }}</p></th>
+                    <th><p>{{ ucfirst($fieldName) }}</p></th>
                     <td><p>{{ $field }}</p></td>
                 </tr>
             @endforeach

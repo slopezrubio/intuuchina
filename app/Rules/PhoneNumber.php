@@ -38,6 +38,6 @@ class PhoneNumber implements Rule
      */
     public function message()
     {
-        return __('validations.invalid phone number');
+        return __('validation.custom.invalid', ['field' => 'phone number']);
     }
 }

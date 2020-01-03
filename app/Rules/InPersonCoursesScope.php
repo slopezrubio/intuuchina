@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class OnlineCoursesScope implements Rule
+class InPersonCoursesScope implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,10 +25,7 @@ class OnlineCoursesScope implements Rule
      */
     public function passes($attribute, $value)
     {
-        // Pattern for valid phone numbers
-        $pattern = '/^\d{4,15}$/';
-
-        return preg_match($pattern, $value);
+        return $value >= intval(__('content.courses.in-person.scope.min'));
     }
 
     /**
@@ -38,6 +35,8 @@ class OnlineCoursesScope implements Rule
      */
     public function message()
     {
-        return __('validations.invalid phone number');
+        $minimumStaying = __('content.courses.in-person.scope.min');
+
+        return trans_choice('validation.custom.minimum_staying', $minimumStaying, ['value' => $minimumStaying]);
     }
 }

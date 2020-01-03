@@ -1,4 +1,4 @@
-import breakpoints from '../main/breakpoints';
+import MediaQueries from '../main/breakpoints';
 
 let news = {
     init: () => {
@@ -11,17 +11,17 @@ let news = {
     polygon: document.querySelector('.news'),
     currentBreakpoint: null,
     setup: () => {
-        news.currentBreakpoint = news.getBreakpoint();
+        //news.currentBreakpoint = news.getBreakpoint();
     },
     getBreakpoint: () => {
         let currentWidth = window.innerWidth;
         let breakpointKey = 'largeDevices';
-        Object.keys(breakpoints.widths).map(function(key) {
+        /*Object.keys(breakpoints.widths).map(function(key) {
             if (breakpoints.widths[key][1] > currentWidth && breakpoints.widths[key][0] < currentWidth) {
                 breakpointKey = key;
             }
         });
-        return breakpointKey;
+        return breakpointKey;*/
     },
 };
 

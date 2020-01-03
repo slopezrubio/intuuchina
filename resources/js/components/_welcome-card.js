@@ -1,7 +1,9 @@
 const axios = require('axios');
 
-import domObserver from "../main/domObserver.js";
-import dom from '../main/dom';
+import Forms from '../main/Forms';
+import Money from "../main/Money";
+import UI from '../main/UI';
+import domObserver from '../main/domObserver.js';
 import api from '../main/api';
 
 let welcomeCard = {
@@ -21,8 +23,8 @@ let welcomeCard = {
         }
     },
     forms: {
-        confirm: {
-            el: function() { return document.querySelector('#confirm') ? document.querySelector('#confirm') : null }
+        payment: {
+            el: function() { return document.querySelector('#payment') ? document.querySelector('#payment') : null }
         },
         checkout: {
             el: function() { return document.querySelector('#checkout') ? document.querySelector('#checkout') : null }
@@ -34,45 +36,36 @@ let welcomeCard = {
     },
     rates: null,
     paymentAmount: null,
-    changeLoadingState: function(element, display, text = 'Loading...') {
-        let spinner = element.querySelector('.spinner-border');
-
-        if (display) {
-            spinner.classList.remove('hidden')
-            spinner.previousElementSibling.textContent = text;
-        } else {
-            spinner.classList.add('hidden');
-            spinner.previousElementSibling.textContent = text;
-        }
+    minimumHours: null,
+    minimumStaying: null,
+    getPricePerUnit: function() {
+        return document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').getAttribute('data-value') / 100;
+    },
+    setPricePerUnit: function(price) {
+        price = (price * 100).toString();
+        document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').setAttribute('data-value', price);
+    },
+    set: function(property, value) {
+        welcomeCard[property] = value;
     },
     setup: async function() {
-        if (welcomeCard.forms.confirm.el() !== null) {
-            welcomeCard.forms.confirm.el().addEventListener('submit', async function (event) {
-                event.preventDefault();
-                let url = event.target.getAttribute('action');
-                let data = {
-                    _token : welcomeCard.forms.confirm.el().querySelector('input[type="hidden"')
-                };
-                let dialogBox = await api.confirm(url, data);
-                welcomeCard.replaceDialog(dialogBox);
-            });
-        }
+        if (welcomeCard.forms.payment.el() !== null) {
 
-        if (welcomeCard.buttons.continue.el() !== null) {
-            welcomeCard.buttons.continue.el().addEventListener('click', async function (event) {
+            Forms.preventDoubleClick(welcomeCard.forms.payment.el());
+
+            welcomeCard.forms.payment.el().addEventListener('submit', async function (event) {
                 event.preventDefault();
-                // Get the text inside the button
-                let defaultText = event.target.textContent;
 
                 // Sets the loader inside the button
-                welcomeCard.changeLoadingState(event.target.parentElement, true);
+                UI.changeLoadingButtonState(event.target);
 
                 // Gets the URL and make a request to the API
-                let url = window.location.protocol + '//' + window.location.hostname + '/payment-details';
-                let paymentFeeDialog = await api.continue(url);
+                let urlPaymentForm = event.target.getAttribute('action');
+
+                let paymentFeeDialog = await api.getDialog(urlPaymentForm, Forms.getFormToken(event.target));
 
                 // Hides the loader once again
-                welcomeCard.changeLoadingState(event.target.parentElement, false, defaultText);
+                UI.changeLoadingButtonState(event.target);
 
                 // Replace dialog box
                 welcomeCard.replaceDialog(paymentFeeDialog);
@@ -83,13 +76,16 @@ let welcomeCard = {
             if (!welcomeCard.isStripeLoaded()) {
                 welcomeCard.setStripeElements();
                 welcomeCard.rates = await welcomeCard.fetchRates();
-
             }
         }
+    },
+    isCourseSelected: function() {
+        return document.getElementById('study');
     },
     isStripeLoaded: function() {
         return welcomeCard.forms.checkout.el().querySelector('#card-number').childElementCount > 0;
     },
+
     /**
      * Replace the existing element with ID #dialog-box
      * for the one passed as an argument.
@@ -104,13 +100,26 @@ let welcomeCard = {
     handleServerErrorField: async function(field, element) {
         let errors = await api.validate(field);
 
-        //const displayError =  document.getElementById(field.name + '-errors');
-
         if (errors !== null) {
             welcomeCard.displayInputFieldError(field.name, errors['value'][0]);
         } else {
             welcomeCard.removeInputFieldError(field.name);
         }
+
+        return errors;
+    },
+    updatePaymentButton: function(value, currency) {
+        var submitButtonText = $('#checkout-button-sku_GDHDkOPWtjGF2w > span')[0];
+
+        // Get only the text inside the button without the currency symbol and the value.
+        var text = $(submitButtonText).text().match(new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/))[0];
+
+        value = parseFloat(value).toLocaleString(document.documentElement.lang, {
+            style: 'currency',
+            currency: currency
+        });
+
+        $(submitButtonText).text(text + value)
     },
     setStripeElements: function() {
         welcomeCard.elements.stripe = stripe.elements({
@@ -146,7 +155,75 @@ let welcomeCard = {
 
         var paymentCurrency = document.getElementById('payment-currency');
 
-        welcomeCard.setPaymentAmount(document.querySelector('#checkout-button-sku_GDHDkOPWtjGF2w').querySelector('span').getAttribute('data-value'));
+        if (welcomeCard.isCourseSelected()) {
+            welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit());
+
+            // Course Selector element
+            var courseSelector = document.getElementById('study');
+            courseSelector.addEventListener('change', async (event) => {
+                Forms.toggleInputs(event.target.value, {
+                    'in-person': $('#staying').parents().eq(2),
+                    'online': $('#hours').parents().eq(2)
+                });
+
+                let selectedCourse = await api.getResource('courses',{
+                    course: event.target.value
+                });
+
+                welcomeCard.setPricePerUnit(selectedCourse.price.eur);
+                welcomeCard.setPaymentAmount(selectedCourse.price.eur, paymentCurrency.value);
+            });
+
+            // Duration and Staying Inputs
+            var staying = document.getElementById('staying');
+            staying.addEventListener('change', async function(event) {
+                let field = {
+                    value: event.target.value,
+                    name: event.target.getAttribute('name'),
+                    validators: [
+                        'required',
+                        'integer',
+                        'InPersonCoursesScope'
+                    ]
+                };
+
+                let errors = await welcomeCard.handleServerErrorField(field, event.target);
+
+                if (errors) {
+                    event.target.value = welcomeCard.minimumStaying;
+                    return false;
+                }
+
+                welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), paymentCurrency.value);
+            });
+
+            var hours = document.getElementById('hours');
+            hours.addEventListener('change', async function(event) {
+                let field = {
+                    value: event.target.value,
+                    name: event.target.getAttribute('name'),
+                    validators: [
+                        'required',
+                        'integer',
+                        'OnlineCoursesScope'
+                    ]
+                }
+
+                let errors = await welcomeCard.handleServerErrorField(field, event.target);
+
+                if (errors) {
+                    event.target.value = welcomeCard.minimumHours;
+                    return false;
+                }
+
+                welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), paymentCurrency.value);
+            });
+
+            // Set values to estimate the final price when the user changes
+            // the course duration.
+            welcomeCard.set('minimumHours', hours.value);
+            welcomeCard.set('minimumStaying', staying.value);
+        }
 
         // Payment Request Options
         var paymentRequest = stripe.paymentRequest({
@@ -188,7 +265,7 @@ let welcomeCard = {
                 ]
             }
 
-            welcomeCard.handleServerErrorField(field, event.target);
+           welcomeCard.handleServerErrorField(field, event.target);
         });
 
         cardEmailPayer.addEventListener('change', (event) => {
@@ -216,29 +293,14 @@ let welcomeCard = {
             welcomeCard.displayStripeErrors(displayError, error)
         });
 
-
         paymentCurrency.addEventListener('change', async (e) => {
-            var submitButtonText = $('#checkout-button-sku_GDHDkOPWtjGF2w > span')[0];
-
-            // Get only the text inside the button without the currency symbol and the value.
-            var text = $(submitButtonText).text().match(new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/))[0];
-
-            var valueConverted = await welcomeCard.currencyExchange(parseFloat(submitButtonText.getAttribute('data-value'))  / 100, e.target.value);
-
-            welcomeCard.setPaymentAmount(valueConverted, e.target.value);
-            valueConverted = parseFloat(valueConverted).toLocaleString(document.documentElement.lang, {
-                style: 'currency',
-                currency: e.target.value.toUpperCase()
-            });
-
-            $(submitButtonText).text(text + valueConverted)
+            welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), e.target.value);
         });
 
-        $('#checkout-button-sku_GDHDkOPWtjGF2w').on('click', async (e) => {
-            e.preventDefault();
+        Forms.preventDoubleClick(welcomeCard.forms.checkout.el());
 
-            // Saves the text inside the button to reusing it afterwards.
-            let defaultText = e.target.textContent;
+        $(welcomeCard.forms.checkout.el()).on('submit', async (event) => {
+            event.preventDefault();
 
             // Only for testing
             // console.log(api.getHostName() + '/payment-successful');
@@ -247,96 +309,156 @@ let welcomeCard = {
             // return;
 
             // Sets the loader inside the checkout button.
-            welcomeCard.changeLoadingState(e.target.parentElement, true);
+            UI.changeLoadingButtonState(event.target);
 
             // Disables all inputs of the form.
-            welcomeCard.disableAllInputs('checkout', true);
+            welcomeCard.disableCheckoutInputs(event.target, true);
 
-            const billingDetails = await welcomeCard.validateBillingDetails({
-                type : 'billing_details',
-                billing_details : {
-                    card_holder_name: cardHolderName.value,
-                    email: document.querySelector('#email').value,
-                    phone_number: phoneNumber.value,
+            let paymentDetails = {
+                card_holder_name: cardHolderName.value,
+                email: document.querySelector('#email').value,
+                phone_number: phoneNumber.value,
+            };
+
+            if (welcomeCard.isCourseSelected()) {
+                paymentDetails[courseSelector.getAttribute('name')] = courseSelector.value;
+                switch(courseSelector.value) {
+                    case 'in-person':
+                        paymentDetails['staying'] = document.getElementById('staying').value;
+                        break;
+                    case 'online':
+                        paymentDetails['hours'] = document.getElementById('hours').value;
+                        break;
                 }
-            });
+            }
 
-            // Check if the billing details have been validated.
-            if (billingDetails !== null) {
+            /*
+             * If the validation succeeds returns an object with the billing
+             * details.
+             */
+            const validation = await api.validateFields('payment-details', paymentDetails);
+
+            /*
+             * If errors have been encountered display the corresponding
+             * messages.
+             */
+            if (validation.errors) {
+                welcomeCard.handleErrorFields(Object.keys(validation.errors), validation.errors);
+
+                // Hides the loader inside the checkout button.
+                UI.changeLoadingButtonState(event.target);
+
+                Forms.toggleDisablingForm(event.target);
+
+                return false;
+            }
+
+            /*
+             * Creates a paymentMethod to send its ID to the server so that
+             * the user can be charged by the Stripe PHP API.
+             */
+            const { paymentMethod, error } = await stripe.createPaymentMethod(
+                'card', cardNumber, {
+                    billing_details: validation
+                }
+            );
+
+            // Check the form for errors.
+            if (error) {
+                welcomeCard.displayInputFieldError('submit', error.message);
+
                 /*
-                 * Creates a paymentMethod to send its ID to the server so that
-                 * the user can be charged by the Stripe PHP API.
+                 * Resets the event that prevents the double click when pressing
+                 * the submit button.
                  */
-                const { paymentMethod, error } = await stripe.createPaymentMethod(
-                    'card', cardNumber, {
-                        billing_details: billingDetails
+                Forms.toggleDisablingForm(event.target);
+
+                // Hides the loader inside the checkout button.
+                UI.changeLoadingButtonState(event.target);
+            } else {
+                /**
+                 * If no errors found it, gathers the information needed to Stripe PHP API
+                 * so the payment can be applied in the server.
+                 */
+                let data = {
+                    _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
+                    currency: document.getElementById('payment-currency').value,
+                    card_holder_name: paymentMethod.billing_details.name,
+                    email: paymentMethod.billing_details.email,
+                    phone_number: paymentMethod.billing_details.phone,
+                    payment_method: paymentMethod.id,
+                };
+
+                if (welcomeCard.isCourseSelected()) {
+                    data.study = courseSelector.value;
+
+                    switch(data.study) {
+                        case 'in-person':
+                            data.staying = document.getElementById('staying').value;
+                            break;
+                        case 'online':
+                            data.hours = document.getElementById('hours').value;
+                            break;
                     }
-                );
-
-                // Check the form for errors.
-                if (error) {
-                    welcomeCard.displayInputFieldError('submit', error.message);
-                } else {
-                    /**
-                     * If no errors found it, gathers the information needed to Stripe PHP API
-                     * so the payment can be applied in the server.
-                     */
-                    let data = {
-                        _token: welcomeCard.forms.checkout.el().querySelector('input[type="hidden"').value,
-                        payment_method: paymentMethod.id,
-                        card_holder_name: paymentMethod.billing_details.name,
-                        email: paymentMethod.billing_details.email,
-                        phone_number: paymentMethod.billing_details.phone,
-                        currency: document.getElementById('payment-currency').value,
-                        amount: welcomeCard.paymentAmount,
-                    };
-
-                    /*
-                     * Sends the information needed along the Payment Method ID.
-                     */
-                    api.sendPaymentMethod(data)
-                        .then(function(result) {
-                            let error = result.data.error;
-                            if (error) {
-
-                                /*
-                                 * Displays the error coming from the server according to the field or
-                                 * parameter the error is related to.
-                                 */
-                                welcomeCard.displayInputFieldError(error.field, error.message);
-
-                            } else {
-
-                                /*
-                                 * If the user do not get redirected by the server means:
-                                 *
-                                 * 1) The payment has failed and therefore an error response
-                                 * has been received from the server.
-                                 *
-                                 * OR
-                                 *
-                                 * 2) The Payment Intent needs a step further in the authentication
-                                 * process and gives back the Payment Intent Status
-                                 * as to let the user handle it. Perhaps their bank account asked
-                                 * him for a notification push message through his mobile phone or
-                                 * email
-                                 */
-
-                                // In both cases the returned data is sent to a handler.
-                                welcomeCard.handleServerResponse(result.data);
-
-                                // Enables again the inputs of the checkout form.
-                                welcomeCard.disableAllInputs('checkout', false);
-
-                                // If not, stops and hides the loader inside the checkout button.
-                                welcomeCard.changeLoadingState(e.target.parentElement, false, defaultText);
-                            }
-                        })
-
-                    // Only when JavaScript is disabled
-                    // document.querySelector('#payment-method').value = paymentMethod.id;
-                    // welcomeCard.forms.checkout.el().submit();
                 }
+
+                /*
+                 * Sends the information needed along the Payment Method ID.
+                 */
+                api.sendPaymentMethod(data)
+                    .then(function(result) {
+                        let error = result.data.error;
+
+                        if (error) {
+
+                            /*
+                             * Displays the error coming from the server according to the field or
+                             * parameter the error is related to.
+                             */
+                            welcomeCard.displayInputFieldError(error.field, error.message);
+
+                            /*
+                             * Resets the event that prevents the double click when pressing
+                             * the submit button.
+                             */
+                            Forms.toggleDisablingForm(event.target);
+
+                            // Hides the loader inside the checkout button.
+                            UI.changeLoadingButtonState(event.target);
+
+                        } else {
+
+                            /*
+                             * If the user do not get redirected by the server means:
+                             *
+                             * 1) The payment has failed and therefore an error response
+                             * has been received from the server.
+                             *
+                             * OR
+                             *
+                             * 2) The Payment Intent needs a step further in the authentication
+                             * process and gives back the Payment Intent Status
+                             * as to let the user handle it. Perhaps their bank account asked
+                             * him for a notification push message through his mobile phone or
+                             * email
+                             */
+
+                            // In both cases the returned data is sent to a handler.
+                            welcomeCard.handleServerResponse(result.data);
+
+                            // Enables again the inputs of the checkout form.
+                            welcomeCard.disableCheckoutInputs(welcomeCard.forms.checkout.el(), false);
+
+                            // Hides the loader inside the checkout button.
+                            UI.changeLoadingButtonState(event.target);
+
+                            Forms.toggleDisablingForm(event.target);
+                        }
+                    })
+
+                // Only when JavaScript is disabled
+                // document.querySelector('#payment-method').value = paymentMethod.id;
+                // welcomeCard.forms.checkout.el().submit();
             }
 
             /**
@@ -348,37 +470,41 @@ let welcomeCard = {
             // welcomeCard.redirectToCheckout(successUrl, cancelUrl);
         });
     },
-    disableAllInputs: (formId, disabled) => {
-        /**
-         * Disables all the inputs of the given form
-         */
+    getCourseDuration: function() {
+        var courseSelector = document.querySelector('#study');
 
-        // Disables the custom inputs of the form (All but the Stripe inputs)
-        $('#' + formId + ' :input:not(.__PrivateStripeElement-input)').each(function() {
-            $(this).attr("disabled", disabled);
-        });
-
-        // Disables all the Stripe inputs of the form.
-        $(welcomeCard.elements.stripe._elements).each(function() {
-            let stripeInput = $(this)[0];
-            stripeInput.update({
-                disabled: disabled
-            });
-        });
-    },
-    setPaymentAmount: function(value, currency = 'EUR') {
-
-        if (welcomeCard.paymentAmount !== null) {
-            // Check if the given currency is a zero-decimal currency
-            let multiplier = currencies[currency].decimal_digits > 0
-                ? Math.pow(10, currencies[currency].decimal_digits) : 1;
-
-            // Remove decimals to set the amount in the less unit of measure (cents)
-            welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
-            return true;
+        if (welcomeCard.isCourseSelected()) {
+            switch(courseSelector.value) {
+                case 'in-person':
+                    return document.getElementById('staying').value;
+                case 'online':
+                    return document.getElementById('hours').value;
+            }
         }
 
-        welcomeCard.paymentAmount = value;
+        return 1;
+    },
+    setPaymentAmount: async function(value, currency = 'eur') {
+        value = await welcomeCard.currencyExchange(value, currency);
+        value *= welcomeCard.getCourseDuration();
+        welcomeCard.updatePaymentButton(value, currency);
+    },
+    // setPaymentAmount: function(value, currency = 'eur') {
+    //     if (welcomeCard.paymentAmount !== null) {
+    //         // Check if the given currency is a zero-decimal currency
+    //         let multiplier = currencies[currency].decimal_digits > 0
+    //             ? Math.pow(10, currencies[currency].decimal_digits) : 1;
+    //
+    //         // Remove decimals to set the amount in the less unit of measure (cents)
+    //         welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
+    //         return true;
+    //     }
+    //
+    //     welcomeCard.paymentAmount = value;
+    // },
+    disableCheckoutInputs: (form, disabled) => {
+        Forms.disableFormInputs(form, disabled);
+        Forms.disableStripeInputs(form, disabled);
     },
     displayStripeErrors: function(element, error) {
         if (error) {
@@ -395,7 +521,6 @@ let welcomeCard = {
          * else, the Payment Intent needs another step of authentication.
          */
         if (response.error) {
-
             welcomeCard.displayInputFieldError('submit', error.message);
 
         } else if (response.requires_action) {
@@ -467,20 +592,7 @@ let welcomeCard = {
 
         return value;
     },
-    validateBillingDetails: async function(billing) {
-        const errors = await api.validateObject(billing);
 
-        if (errors) {
-            welcomeCard.handleErrorFields(Object.keys(errors), errors);
-            return null
-        }
-
-        return {
-            name: billing.billing_details.card_holder_name,
-            email: billing.billing_details.email,
-            phone: billing.billing_details.phone_number
-        }
-    },
     /*
      * Displays the given errors to the given fields.
      */
@@ -492,7 +604,8 @@ let welcomeCard = {
         }
     },
     displayInputFieldError: function(field, error) {
-        var displayError = document.getElementById(field + '-errors') ? document.getElementById(field + '-errors') : 'submit-errors';
+        var displayError = document.getElementById(field + '-errors') !== null ? document.getElementById(field + '-errors') : document.getElementById('submit-errors');
+        console.log(displayError);
         var input = document.getElementById(field) ? document.getElementById(field) : document.getElementById('card-' + field);
         if (input !== null) {
             input.classList.add('is-invalid');

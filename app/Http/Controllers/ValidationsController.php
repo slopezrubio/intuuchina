@@ -29,7 +29,6 @@ class ValidationsController extends Controller
         $validators = $field->get('validators');
 
         if (is_string($validators)) {
-
             $errors = $field->validate([
                 'value' => $field->get('validators')
             ]);
@@ -41,9 +40,7 @@ class ValidationsController extends Controller
                     $errors = $field->validate([
                         'value' => new $validatorClass()
                     ]);
-
                 } else {
-
                     $errors = $field->validate([
                         'value' => $validators[$i]
                     ]);

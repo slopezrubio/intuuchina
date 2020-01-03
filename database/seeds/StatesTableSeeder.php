@@ -11,13 +11,12 @@ class StatesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
         $states = factory(App\State::class, 1)->create([
-            'name' => 'pending_confirmation',
+            'name' => 'unverified',
         ]);
 
         $states = factory(App\State::class, 1)->create([
-            'name' => 'confirmed',
+            'name' => 'verified',
         ]);
 
         $states = factory(App\State::class, 1)->create([
@@ -26,10 +25,6 @@ class StatesTableSeeder extends Seeder
 
         $states = factory(App\State::class, 1)->create([
             'name' => 'accepted',
-        ]);
-
-        $states = factory(App\State::class, 1)->create([
-            'name' => 'pending_deposit',
         ]);
 
         $states = factory(App\State::class, 1)->create([

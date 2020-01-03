@@ -1,28 +1,41 @@
-import dom from '../main/dom';
-import breakpoints from '../main/breakpoints';
+import DOM from '../main/dom';
 
-let chineseCourses = {
-    init: () => {
-        window.addEventListener('load', chineseCourses.setup);
-        window.addEventListener('resize',chineseCourses.setup);
+var chineseCourses = {
+    init: function() {
+        window.addEventListener('load', (e) => {
+            this[e.type + 'Listeners']();
+            this.loadCoursesHolder();
+        });
+        window.addEventListener('resize',(e) => {
+            this.loadCoursesHolder();
+        });
     },
     courses: document.querySelectorAll('.description-base'),
     cta: document.querySelectorAll('.cta'),
     coursesHolder: document.querySelector('.course-descriptions'),
-    setup: (event) => {
-        if (event.type === 'load') {
-            for (let i = 0; i < chineseCourses.cta.length; i++) {
-                chineseCourses.cta[i].addEventListener('click', function(event) {
-                    event.stopPropagation();
-                })
-            }
+    loadListeners: function() {
+        for (let i = 0; i < this.cta.length; i++) {
+            this.cta[i].addEventListener('click', function(event) {
+                event.stopPropagation();
+            })
         }
-        dom.expandToViewport(chineseCourses.coursesHolder);
-        chineseCourses.setSizeCourses();
     },
-    setSizeCourses: () => {
-        for (let i = 0; i < chineseCourses.courses.length; i++) {
-            dom.expandToViewport(chineseCourses.courses[i]);
+    loadCoursesHolder: function() {
+        DOM.expandToViewport(chineseCourses.coursesHolder);
+        this.setSizeCourses();
+    },
+        // if (event.type === 'load') {
+        //     for (let i = 0; i < chineseCourses.cta.length; i++) {
+        //         chineseCourses.cta[i].addEventListener('click', function(event) {
+        //             event.stopPropagation();
+        //         })
+        //     }
+        // }
+        // DOM.expandToViewport(chineseCourses.coursesHolder);
+        // this.setSizeCourses();
+    setSizeCourses: function() {
+        for (let i = 0; i < this.courses.length; i++) {
+            DOM.expandToViewport(this.courses[i]);
         }
     },
 };

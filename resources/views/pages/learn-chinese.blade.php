@@ -12,6 +12,8 @@
     <main>
         {{--Incluye los tipos de cursos ofrecidos--}}
         @include('partials._chinese-courses')
+
+        @include('partials._price-course-info')
     </main>
     @include('partials._footer')
 @endsection

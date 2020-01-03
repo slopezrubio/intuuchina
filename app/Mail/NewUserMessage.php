@@ -2,16 +2,19 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Hash;
 
-class NewUserMessage extends Mailable
+class NewUserNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
+    public $checkout_url;
     public $title = 'Welcome to IntuuChina';
     public $subject;
 
@@ -19,12 +22,13 @@ class NewUserMessage extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User $user
+     * @param Checkout $stripeSession
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->subject = __('mails.subjects.new user ' . $user->program, ['name' => $user->name]);
+        $this->subject = __('mails.subjects.new user ' . $user->program, ['name' => $user->name ]);
     }
 
     /**

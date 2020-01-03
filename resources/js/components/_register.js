@@ -30,7 +30,6 @@ let register = {
     switch (selectorValue) {
       case 'internship':
       case 'inter_relocat':
-      case 'inter_housing':
         register.showElement(register.industryFieldset)
         register.hideElement(register.studyFieldset)
         register.hideElement(register.universityFieldset)

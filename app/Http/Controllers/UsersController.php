@@ -13,7 +13,7 @@ class UsersController extends Controller
 
         // Gets the authenticated user and updates his status.
         $user = User::find(Auth::id());
-        $user = $user->updateStatus('confirmed');
+        $user = $user->updateStatus('verified');
 
         $currentStatus = State::find($user->status_id)->name;
 

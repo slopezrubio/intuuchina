@@ -136,6 +136,10 @@ header {
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
 .cta {
   border: none;
   margin: 2em auto 0 auto;
@@ -143,7 +147,6 @@ header {
   padding: 0;
   cursor: pointer;
   background: $tertiaryRed;
-  border: none;
   @include fade();
   border-radius: 34px;
   a {
@@ -329,6 +332,10 @@ table.table {
 
   &#job-description {
     border-bottom: none;
+  }
+
+  &#university {
+    background-image: url('/../../storage/images/headers/university.jpg');
   }
 
   &#learn-chinese {

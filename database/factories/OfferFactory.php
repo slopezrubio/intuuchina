@@ -3,8 +3,7 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Offer::class, function (Faker $faker) {
-    $randomLocation = __('content.offers locations')[$faker->numberBetween($min = 0, $max = count(__('content.offers locations')) - 1)]['value'];
-    $randomIndustry =  __('content.offers filter options')[$faker->numberBetween($min = 0, $max = count(__('content.offers filter options')) - 1)]['value'];
+    $randomIndustry =  $faker->randomElement(array_keys(__('content.industries')));
 
     return [
         // A latin sentence
@@ -13,13 +12,13 @@ $factory->define(App\Offer::class, function (Faker $faker) {
         // Whatever date earlier than one year ago from today's date with the UTC+01:00
         'created_at' => $faker->dateTimeBetween('-1 year', 'now', 'Europe/Paris'),
 
-        // Current date
+        // Current date.
         'updated_at' => $faker->dateTime('now'),
 
-        // Whatever of the elements in the location selector
-        'location' => $randomLocation,
+        // Whatever of the jobs locations translation.
+        'location' => $faker->randomElement(__('content.jobs.locations'))['key'],
 
-        // Whatever of the elements comprises in the industry selector
+        // Whatever of the elements comprises in the industry translation.
         'industry' => $randomIndustry,
 
         // A number between 1 Month and 24 Month
