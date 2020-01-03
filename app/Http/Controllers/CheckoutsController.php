@@ -1,21 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
 use App\Rules as Assert;
 use App\Mail\PaymentNotification;
+use App\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Stripe\Checkout\Session as Checkout;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 use Stripe\Charge;
 use Stripe\Invoice;
 use Stripe\InvoiceItem;
-use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Exception\CardException;
 use Stripe\Stripe;
@@ -23,8 +27,18 @@ use Stripe\Stripe;
 class CheckoutsController extends Controller
 {
     const APPLICATION_FEE = 3000;
+    const CHINESE_COURSE = 599000;
+
+    use VerifiesEmails;
 
     protected $session;
+
+    /**
+     * Where to redirect users after verification.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/payment-details';
 
     /**
      * Create a new controller instance.
@@ -34,13 +48,40 @@ class CheckoutsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('signed')->only('verify');
+        $this->middleware('throttle:6,1')->only('verify');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function verify(Request $request)
+    {
+        if ($request->route('id') != $request->user()->getKey()) {
+            throw new AuthorizationException;
+        }
+
+        if ($request->user()->hasVerifiedEmail()) {
+
+            try {
+                $this->applicationFeeForm();
+            } catch(ApiErrorException $e) {
+                throwException($e->getMessage());
+            }
+        }
+
+        if ($request->user()->markEmailAsVerified()) {
+            event(new Verified($request->user()));
+        }
     }
 
     /**
      * Display the «Application Fee» payment form to the user.
      *
-     * @return Response
-     * @throws \Stripe\Exception\ApiErrorException
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws ApiErrorException
      */
     public function applicationFeeForm()
     {
@@ -130,6 +171,35 @@ class CheckoutsController extends Controller
         }
     }
 
+    public function newCheckout($id, $hashedProperty) {
+        $user = User::find($id);
+
+        // Set Stripe API key to proceed with the Checkout Session.
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        /**
+         * Creates a Checkout Session according to the chosen program.
+         */
+        $stripeSession = Checkout::create([
+            'cancel_url' => route('home'),
+            'customer' => $user->stripe_id,
+            'line_items' => [
+                [
+                    'name' => 'Application Fee',
+                    'amount' => 3000,
+                    'currency' => 'eur',
+                    'description' => 'Application Fee for ' . $user->name . ' ' . $user->surnames,
+                    'quantity' => '1',
+                ]
+            ],
+            'locale' => config('app.locale'),
+            'mode' => 'payment',
+            'payment_method_types' => ['card'],
+            'submit_type' => 'pay',
+            'success_url' => route('home'),
+        ]);
+    }
+
     /**
      * Validates the billing details for a Payment Method.
      *
@@ -163,14 +233,14 @@ class CheckoutsController extends Controller
             // Handle post-payment fulfillment
 
             // Now the user has paid and his state must be updated.
-            //Auth::user()->updateStatus('paid');
+            // Auth::user()->updateStatus('paid');
             $receipt_url =  $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
 
             $user =  Auth::user();
 
             try {
-                // Sends an email to hr@intuuchina.com to report current payment.
-                Mail::to('hr@intuuchina.com')->queue(new PaymentNotification($user, $intent));
+                // Sends an email to fernando.zavala@intuuchina.com to report current payment.
+                Mail::to('fernando.zavala@intuuchina.com')->queue(new PaymentNotification($user, $intent));
             } catch(\Exception $e) {
                 return $e->getMessage();
             }
