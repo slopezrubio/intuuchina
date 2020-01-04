@@ -74,11 +74,11 @@ class NewUserNotification extends Notification
     {
         return [
             'email' => URL::temporarySignedRoute('verification.email',
-                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
                 ['id' => $notifiable->getKey()]
             ),
             'checkout' => URL::temporarySignedRoute('verification.email',
-                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
                 ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true ]
             ),
         ];
