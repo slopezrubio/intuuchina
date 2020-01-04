@@ -1,67 +1,344 @@
 
+@import 'modals';
+
 .navbar {
-  background: rgba(0,0,0,0.3);
-  .logo {
+  background: $primaryWhite;
+  @include justify-content(center);
+  @include align-items(center);
+  z-index: 4;
+  padding: 0.5em 0;
 
-  }
-  @media #{$small-and-medium-devices} {
-    &_menu {
-      padding-bottom: 3px;
-      justify-content: flex-start;
-      &--hidden {
-        display: none;
-        li {
-          padding-bottom: 10px;
-          padding-top: 15px;
-        }
-      }
+  &_container {
+    padding-left: 0;
+    padding-right: 0;
 
-      .toggleMenu {
-        background: rgba(0,0,0,0);
-        border: 1px solid $primaryWhite;
-        padding: 10px 15px;
-        i {
-          font-size: 2.3em;
-          color: $primaryWhite;
-        }
-      }
-
-      &--display {
-        display: block;
-        padding: 0px;
-        animation: easy 1s ease-in-out;
-        -moz-animation: easy 1s ease-in-out;
-        -webkit-animation: easy 1s ease-in-out;
-        -ms-animation: easy 1s ease-in-out;
-      }
-
+    .logo {
+      padding-left: 15px;
+      padding-right: 15px;
+      height: 100%;
       img {
-        height: 55px;
+        height: 46px;
+      }
+    }
+
+    button.navbar-toggler {
+      margin-right: 15px;
+      margin-left: 15px;
+      float: right;
+      color: $primaryDark;
+      .fa-bars::before {
+        vertical-align: middle;
+        font-size: 1.875em;
+      }
+    }
+
+    #navbarToggler {
+      width: 100%;
+      .navbar_items {
+        background: $navbarPrimary;
+        padding: 0.5em 0;
+
+        li {
+          padding-left: 15px;
+          padding-right: 15px;
+          cursor: pointer;
+          a {
+            div.toggleOption {
+              padding-top: 0.7em;
+              padding-bottom: 0.7em;
+              font-weight: 500;
+              i {
+                padding: 0;
+                position: absolute;
+                top: 1px;
+              }
+            }
+          }
+        }
+
+        a, .media {
+          color: $primaryDark;
+          span, i {
+            line-height: 40px;
+          }
+
+          i {
+            text-align: center;
+            width: 30px;
+          }
+        }
+
+        li:hover {
+          background: $primaryDark;
+          color: $primaryWhite;
+          > a {
+            background: none;
+            color: $primaryWhite;
+          }
+        }
+
+        .social-media-nav {
+          &:hover {
+            background: initial;
+            color: initial;
+          }
+
+          .social-media-nav-links:hover {
+            background: $primaryDark;
+            color: $primaryWhite;
+          }
+        }
+
+        li.dropdown.reverse-colours {
+          background: $primaryWhite;
+          > a {
+            color: $primaryDark;
+          }
+        }
+
+        li.dropdown {
+
+          padding-left: 0;
+          padding-right: 0;
+
+          a[aria-expanded="true"] + a[aria-expanded="true"]:not(:hover) {
+            color: $primaryDark;
+          }
+
+          a[aria-expanded="true"] + a[aria-expanded="true"]:hover {
+            color: $primaryWhite;
+          }
+
+          a {
+            div.toggleOption {
+              padding-left: 15px;
+              padding-right: 15px;
+              i {
+                padding: 0;
+                position: absolute;
+                top: 3px;
+                right: 0;
+              }
+            }
+          }
+
+          .accordion_submenu {
+            width: auto;
+            position: static;
+            margin: 0;
+            float: none;
+            padding: 0;
+            border: none;
+            border-radius: 0px;
+            @include prefixed(border-radius, 0);
+            li {
+              a {
+                padding: 0;
+              }
+              &:hover {
+                a {
+                  color: $primaryWhite;
+                }
+              }
+            }
+          }
+        }
+
+        li.inline-items {
+          background: none;
+          padding-left: 15px;
+          padding-right: 15px;
+
+          div.toggleOption {
+            padding: 1.25em 0;
+            a {
+              padding: .5em;
+              border-radius: 10px;
+              border: solid 1px $primaryDark;
+            }
+          }
+
+          a:hover, a.selected {
+            background: $primaryDark;
+            color: $primaryWhite;
+          }
+
+          a[data-target="#language"], #language {
+            display: none;
+          }
+        }
       }
     }
   }
 
-  @media #{$large-devices} {
-    &_menu {
-      padding-bottom: 3px;
-      justify-content: flex-start;
-      ul {
+  @media only screen and (min-width: 992px) {
+    padding: 0.5em 1em;
+
+    &_container {
+      @include prefixed(display, flex);
+
+      #navbarToggler {
+        @include prefixed(justify-content, center);
+        width: auto;
+
         li {
-          float: left;
-          padding-bottom: 10px;
-          padding-top: 15px;
-          padding-left: 20px;
+          div[data-toggle="dropdown"] {
+            color: $primaryDark;
+            &:hover {
+              color: $primaryWhite;
+            }
+          }
+        }
+
+        a {
+          cursor: pointer;
+          color: $primaryDark;
+        }
+
+        .navbar_items {
+          background: $navbarPrimary;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          width: 100%;
+
+          li {
+            float: left;
+            & > a > .toggleOption {
+              position: relative;
+              &::before {
+                @include prefixed(transform, 'translateX(-100%)');
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                bottom: 1px;
+                content: '';
+                opacity: 0;
+              }
+            }
+
+            & > a:hover {
+              & > .toggleOption::before {
+                content: '';
+                background: $primaryDark;
+                @include prefixed(transform, 'translateX(0%)');
+                opacity: 1;
+                @include prefixed(transition, all ease-in 300ms);
+              }
+            }
+
+            &:hover {
+              background: none;
+              > a:hover, > a {
+                color: $primaryDark;
+                background: none;
+              }
+            }
+          }
+
+          li:first-of-type, li:last-of-type {
+            margin-left: auto;
+          }
+
+          li.dropdown {
+
+            padding-left: 10px;
+            padding-right: 10px;
+            a {
+              div.toggleOption {
+                padding: 0;
+                i {
+                  position: initial;
+                }
+              }
+            }
+
+            .accordion_submenu {
+              position: absolute;
+              left: 14px;
+              padding-bottom: 0.5em;
+              li {
+                width: 100%;
+                padding: 0;
+                a {
+                  padding: 0 1em;
+                  .toggleOption {
+                    padding: 0.5em 0em;
+                  }
+                }
+                &:hover {
+                  a {
+                    color: $primaryDark;
+                  }
+                }
+              }
+            }
+          }
+
+          .inline-items {
+            a {
+              padding: 0;
+              border: none;
+              display: block;
+            }
+            & > div.toggleOption {
+              display: none;
+            }
+
+            a[data-target="#language"] {
+              display: initial !important;
+            }
+
+            #language.show {
+              display: initial;
+            }
+          }
+
+          .social-media-nav {
+            cursor: auto;
+            margin-left: auto;
+            a {
+              padding: 0;
+              margin-left: 0.25em;
+              i {
+                width: 43px;
+              }
+
+              &:hover {
+                background-color: $primaryDark;
+                @include prefixed(transition, 'background-color 500ms linear');
+                i::before {
+                  color: $primaryWhite;
+                }
+              }
+
+              i::before {
+                display: block;
+                text-align: center;
+              }
+            }
+          }
         }
       }
+    }
+  }
+  @media only screen and (min-width: 992px) and (max-width: 1085px) {
+    .navbar {
+      &_container {
+        #navbarToggler {
+          .navbar_items {
+            li {
+              padding: 0 0.5em;
+            }
 
-      .toggleMenu {
-        display: none;
-      }
-
-      img {
-        height: 55px;
+            li.dropdown {
+              .accordion_submenu {
+                left: 8px;
+              }
+            }
+          }
+        }
       }
     }
   }
 }
-

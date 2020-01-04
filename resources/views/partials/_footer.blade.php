@@ -1,48 +1,144 @@
 <footer>
-    <!-- all footer -->
-    <div class="container-all">
-        <!-- hight footer -->
-        <div class="container-footer">
-            <!-- contact for phone or mail -->
-            <div class="column1">
-                <h4>Contactanos</h4>
-                <div class="row1">
-                    <i class="fas fa-phone"></i>
-                    <label> &#40;+34&#41; 931 77 75 46</label>
-                </div>
-                <div class="row1">
-                    <i class="far fa-envelope"></i>
-                    <label><a href="mailto:info@intuuchina.com">info@intuuchina.com</a></label>
-                </div>
-            </div>
-            <!-- contact phone or mail end -->
+    @include('partials._terms-and-conditions')
 
-            <!-- social media -->
-            <div class="column2">
-                <h4>Redes Sociales</h4>
-                <div class="row2">
-                    <i class="fab fa-facebook-f"></i>
-                    <label><a href="https://www.facebook.com/intuuchina" target="_blank">Siguenos en Facebook</a></label>
+    @include('partials._gdpr')
+
+    @include('partials._privacy-policy')
+
+    <div class="container-fluid footer">
+        <div class="footer_header">
+            {{--Web Map--}}
+            <div class="footer_web-map col-sm-12">
+                <div class="footer_title">
+                    <h3>{{ __('content.website map') }}</h3>
                 </div>
-                <div class="row2">
-                    <i class="fab fa-twitter"></i>
-                    <label><a href="https://twitter.com/intuuchina" target="_blank">Siguenos en Twitter</a></label>
-                </div>
-                <div class="row2">
-                    <i class="fab fa-linkedin-in"></i>
-                    <label><a href="https://www.linkedin.com/company/intuuchina" target="_blank">Siguenos en Linkedin</a></label>
+                <div class="footer_web-map_items">
+                    @if (!empty(__('links.webmap')))
+                        @foreach (__('links.webmap') as $title => $section)
+                            @if (!empty($section))
+                                <div>
+                                    <h4 class="footer_subtitle">{{ $title }}</h4>
+                                    <ul class="web-map-list">
+                                    @foreach ($section as $key => $item)
+                                        <li class="web-map_item">
+                                        @switch($item['method'])
+                                            @case('POST')
+                                                <form action="{{ route($item['route']) }}" method="{{ $item['method'] }}">
+                                                    @csrf
+                                                    <input type="hidden" name="{{ $title }}" value="{{ $key }}">
+                                                    <a href="#">
+                                                        <input type="submit" value="{{ $item['text'] }}">
+                                                    </a>
+                                                </form>
+                                                @break
+                                            @case('GET')
+                                                <a href="{{ route($item['route']) }}">
+                                                    {{ $item['text'] }}
+                                                </a>
+                                                @break
+                                        @endswitch
+                                        </li>
+                                        <li class="web-map_item">
+
+                                        </li>
+                                    @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
+
+            {{--Contact form--}}
+            <form action="{{ route('mail') }}" method="post" class="footer_contact_form col-sm-12">
+                @csrf
+
+                <div class="footer_title">
+                    <h3>{{ __('content.contact us') }}</h3>
+                </div>
+                <div class="col-xs-10 text_input">
+                    <label for="name">{{ __('content.name') }}</label>
+                    <input type="text" name="name" id="name" placeholder="{{ $errors->has('name') ? $errors->first('name') : __('content.name placeholder') }}" class="{{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}">
+                </div>
+                <div class="col-xs-10 text_input">
+                    <label for="email">{{ __('content.mail') }}</label>
+                    <input type="text" name="email" id="email" placeholder="{{ $errors->has('email') ? $errors->first('email') : __('content.email placeholder') }}" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}">
+                </div>
+                <div class="col-xs-10 text_input">
+                    <label for="subject">{{ __('content.subject') }}</label>
+                    <input type="text" name="subject" placeholder="{{ $errors->has('subject') ? $errors->first('subject') : __('content.subject placeholder') }}" id="subject" class="{{ $errors->has('subject') ? 'is-invalid' : ''}}" value="{{ old('subject') }}">
+                </div>
+{{--                Campo de mensaje--}}
+{{--                <div class="col-xs-10">--}}
+{{--                    <label for="message">Mensaje</label>--}}
+{{--                    <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu consulta" class="{{ $errors->has('message') ? 'is-invalid' : '' }}">{{ old('message') }}</textarea>--}}
+{{--                    @if ($errors->has('message'))--}}
+{{--                        <span class="invalid-feedback" role="alert">--}}
+{{--                            <strong>{{ $errors->first('message') }}</strong>--}}
+{{--                        </span>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+                <div class="col-xs-10">
+                    <label aria-label="terms">{!! trans('content.i accept the') !!}</label>
+
+                    <label for="terms" class="switch">
+                        <input id="terms" name="terms" type="checkbox">
+                        <i class="checkbox_slider fas checkbox_slider--rounded"></i>
+                    </label>
+                    @if ($errors->has('terms'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('terms') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-xs-10">
+                    <div class="g-recaptcha" data-sitekey="6LcIhqIUAAAAAPPWaly2yJAAadIjMISICA_9rQy3"></div>
+                    @if ($errors->has('g-recaptcha-response'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-xs-10">
+                    <button type="submit" class="footer_submit">{{ __('content.submit') }}</button>
+                    <button type="reset" class="footer_reset">{{ __('content.cancel') }}</button>
+                </div>
+            </form>
+
+            {{--Social Media Links--}}
+            <div class="footer_social-media col-sm-12">
+                @if(!empty(__('links.social')))
+                    <div class="footer_title">
+                        <h3>{{ __('content.follow us') }}</h3>
+
+                    </div>
+                    <ul class="footer_sublist">
+                    @foreach(__('links.social') as $key => $media)
+                        <li class="sublist_item">
+                            <label>
+                                <a href="{{ $media['url'] }}" target="_blank">
+                                    <i class="fab fa-{{ $media['square'] ? $key . '-square' : $key }}">{{ $media['text'] }}</i>
+                                </a>
+                            </label>
+                        </li>
+                    @endforeach
+                    </ul>
+                @endif
+            </div>
+
         </div>
-        <!-- social media end -->
-
-        <!-- last footer, final -->
-        <div class="footer">
-            <div class="copyright">
-                <p>IntuuChina Copyright © 2019 All Rights Reserved. Powered by <a href="http://factoriaf5.org/">factoriaf5.org</a></p>
-            </div>
-            <div class="info">
-                <a href="">Política de Privacidad</a> | <a href="">Terminos y Condiciones</a>
+        <div class="footer_footer">
+            {{--Terms and conditions & Signatures--}}
+            <div class="footer_documentation col-sm-12">
+                <p>{{ __('content.copyright') }}</p>
+                <span class="footer_documentation_signature">
+                    <p>{{ __('content.made with love by ') }}<a href="http://factoriaf5.org"></p>
+                    <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
+                </span>
+                <p>
+                    <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{!! trans('links.terms and conditions') !!}</a>
+                </p>
             </div>
         </div>
     </div>

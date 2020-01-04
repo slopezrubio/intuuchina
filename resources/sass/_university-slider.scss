@@ -1,0 +1,30 @@
+$first-slide: (
+        background-color: $primaryWhite,
+        primary-title-color: $primaryRed,
+        secondary-title-color: $primaryWhite,
+        primary-text-color: $primaryDark,
+        primary-button-color: $tertiaryRed,
+        secondary-button-color: $primaryRed
+);
+
+$second-slide: (
+        background-color: $primaryDark,
+        primary-title-color: $primaryWhite,
+        secondary-title-color: $primaryDark,
+        primary-text-color: $primaryWhite,
+        primary-button-color: $tertiaryRed,
+        secondary-button-color: $primaryRed
+);
+
+$third-slide: (
+        background-color: $tertiaryRed,
+        primary-title-color: $primaryWhite,
+        secondary-title-color: $primaryDark,
+        primary-text-color: $primaryWhite,
+        primary-button-color: $sectionDark,
+        secondary-button-color: $primaryDark
+);
+
+header#university + main {
+  @include arrow-slider($first-slide, $second-slide, $third-slide)
+}

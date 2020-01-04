@@ -1,23 +1,19 @@
 @extends('layouts.master')
 
-<header>
-    <div class="img">
+@section('content')
+    <header class="header" id="learn-chinese">
         {{--Elemento NAV--}}
         @include('partials._nav')
 
         {{--Elemento SLIDER--}}
-        @include('partials._slider')
+        @include('partials._header')
+    </header>
 
-        <div class="box">
-            <h1>Aprende <strong>Chino</strong></h1>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit laboriosam unde.</p>
-        </div>
-    </div>
-</header>
+    <main>
+        {{--Incluye los tipos de cursos ofrecidos--}}
+        @include('partials._chinese-courses')
 
-<main>
-    {{--Incluye los tipos de cursos ofrecidos--}}
-    @include('partials._chinese-courses')
-</main>
-
-<script src="assets/chinesecourses.js"></script>
+        @include('partials._price-course-info')
+    </main>
+    @include('partials._footer')
+@endsection

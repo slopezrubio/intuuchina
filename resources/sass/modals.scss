@@ -1,0 +1,75 @@
+#loginModal, #offerModal, #termsAndConditionsModal, #GDPRModal, #privacyPolicy {
+  .modal-button {
+    @include shutter-in-horizontal();
+  }
+
+  .medium-icon {
+    font-size: 3em;
+  }
+
+  .modal-link {
+    color: $primaryRed;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+
+  [class^="modal-button"] {
+    color: $primaryWhite;
+  }
+}
+
+#loginModal {
+  text-transform: none;
+  .modal-column {
+    flex-direction: column;
+    > :not(:first-child) {
+      margin: 10px 0;
+    }
+
+    > :not(:last-child) {
+      margin: 6px 0;
+    }
+  }
+
+  .modal-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .switch {
+    @include switchButton();
+    margin-top: 0;
+    input {
+      opacity: 0;
+      height: 0;
+      width: 0;
+    }
+  }
+}
+
+#offerModal {
+  .modal-footer {
+    .modal-button {
+      width: 33.333%;
+      height: 3em;
+    }
+  }
+
+  @media #{$small-devices} {
+    .modal-footer {
+      @include prefixed(flex-direction, column);
+      .modal-button {
+        width: 80%;
+        margin: 0 0 1em 0;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,86 +1,97 @@
-<main>
-    <div class="triangulo"></div>
-    <div class="news">
-        <h2>Somos referentes y hemos aparecido <br>en los <strong> medios más importantes</strong></h2>
-        <section class="note">
-            <!-- noticias -->
-            <a href="https://www.youtube.com/watch?v=oFpAvIT0vjg" target="_blank"><img src="{{asset('storage/images/el-pais.png')}}" alt="antena3"
-                                                                                       width="100px"></a>
-            <div class="cosita">
-                <p>“Fernando estudió en España, EEUU, Nueva Zelanda y <br>
-                    China. Trabajó en Ernst & Young, J.P. Morgan, <br>
-                    L'Oreal... Defiende el valor de vivir fuera y el aprendizaje de idiomas... <br>
-                    Lección para los que quieran ir dirección Pekín...”</p>
-                <p class="autor"><strong>M. MUCHA</strong><br>26/10/2014</p>
+<div class="news">
+    <div class="news_container">
+        <div class="section_title">
+            <h2>{!! trans('content.what the media think') !!}</h2>
+        </div>
+        <div class="section_body">
+            <div class="note_window">
+                <div class="note_carrousel">
+                    <div class="slider_note">
+                        <a href="https://elpais.com/economia/2016/05/05/actualidad/1462462986_888570.html" target="_blank"><img src="{{asset('storage/images/el-pais.png')}}" alt="{{ __('content.alt el pais') }}"
+                                                                                                   width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.el pais quote') }}</p>
+                            <p class="author"><strong>{{ __('content.el pais author') }}</strong><br>{{ __('content.el pais date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="https://www.youtube.com/watch?v=8dsj6xTclco" target="_blank"><img src="{{asset('storage/images/eitb.png')}}" alt="{{ __('content.alt eitb') }}"
+                                                                                                   width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.eitb quote') }}</p>
+                            <p class="author">{{ __('content.eitb date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="https://www.elmundo.es/cronica/2014/10/26/544b4edee2704e68668b456e.html" target="_blank"><img src="{{asset('storage/images/elmundo.png')}}" alt="{{ __('content.alt el mundo') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.el mundo quote') }}</p>
+                            <p class="author">{{ __('content.el mundo date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="https://www.youtube.com/watch?v=oFpAvIT0vjg" target="_blank"><img src="{{asset('storage/images/A3_logo.png')}}" alt="{{ __('content.alt atresmedia') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.atresmedia quote') }}</p>
+                            <p class="author"><strong>{{ __('content.atresmedia author') }}</strong><br>{{ __('content.atresmedia date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="https://fortune.com/2015/12/01/spain-job-market/" target="_blank"><img src="{{asset('storage/images/FORTUNE.png')}}" alt="{{ __('content.alt fortune') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.fortune quote') }}</p>
+                            <p class="author"><strong>{{ __('content.fortune author') }}</strong><br/>{{ __('content.fortune date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="http://www.ccma.cat/tv3/alacarta/telenoticies-cap-de-setmana/buscar-feina-a-la-xina/video/5540176/" target="_blank"><img src="{{asset('storage/images/TV3.png')}}" alt="{{ __('content.alt tvc') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.tvc quote') }}</p>
+                            <p class="author">{{ __('content.tvc date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="http://www.rtve.es/rtve/20161123/ii-premios-rtve-emprende-reconocen-intuuchina-clicars-sociograph-languing-walden-medical/1446483.shtml" target="_blank"><img src="{{asset('storage/images/rtve.png')}}" alt="{{ __('content.alt rtve') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.rtve quote') }}</p>
+                            <p class="author">{{ __('content.rtve date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <a href="https://www.bambooventures.org/foto" target="_blank"><img src="{{asset('storage/images/abc.png')}}" alt="{{ __('content.alt abc') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.abc quote') }}</p>
+                            <p class="author"><strong>{{ __('content.abc author') }}</strong><br>{{ __('content.abc date') }}</p>
+                        </div>
+                    </div>
+                    <div class="slider_note">
+                        <!-- noticias -->
+                        <a href="https://www.emprendedores.es/ideas-de-negocio/a49898/intuuchina/" target="_blank"><img src="{{asset('storage/images/entrepeneur-magazine-white.png')}}" alt="{{ __('content.alt entrepeneur') }}"
+                                                         width="100px"></a>
+                        <div class="note_quote">
+                            <p>{{ __('content.entrepeneur quote') }}</p>
+                            <p class="author">{{ __('content.entrepeneur date') }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-        <!-- canales de television -->
-        <section class="tv">
-            <a href="https://www.youtube.com/watch?v=8dsj6xTclco" target="_blank"><img src="{{asset('storage/images/eitb.png')}}" alt="eitb" width="100px"></a>
-            <a href="http://www.elmundo.es/cronica/2014/10/26/544b4edee2704e68668b456e.html" target="_blank"><img src="{{asset('storage/images/elmundo.png')}}"
-                                                                                                                  alt="el-mundo"></a>
-            <a href="https://www.youtube.com/watch?v=oFpAvIT0vjg" target="_blank"><img src="{{asset('storage/images/A3_logo.png')}}" alt="antena3"
-                                                                                       width="70px"></a>
-            <a href="http://fortune.com/2015/12/01/spain-job-market/" target="_blank"><img src="{{asset('storage/images/FORTUNE.png')}}" alt="fortune"
-                                                                                           width="90px"></a>
-            <a href="http://www.ccma.cat/tv3/alacarta/telenoticies-cap-de-setmana/buscar-feina-a-la-xina/video/5540176/" target="_blank"><img
-                        src="{{asset('storage/images/TV3.png')}}" alt="TV3" width="60px"></a>
-            <a href="http://www.rtve.es/rtve/20161123/ii-premios-rtve-emprende-reconocen-intuuchina-clicars-sociograph-languing-walden-medical/1446483.shtml"
-               target="_blank"><img src="{{asset('storage/images/rtve.png')}}" alt="rtve" width="90px"></a>
-            <a href="https://www.youtube.com/watch?v=9-s7s2NFMQo" target="_blank"><img src="{{asset('storage/images/image_8.png')}}" alt="shanghai media group"
-                                                                                       width="60px"></a>
-            <a href="https://www.bambooventures.org/foto" target="_blank"><img src="{{asset('storage/images/abc.png')}}" alt="abc" width="60px"></a>
-            <a href="https://www.bambooventures.org/foto-entrepreneur-ii" target="_blank"><img src="{{asset('storage/images/image_7.png')}}" alt="emprendedores"
-                                                                                               width="100px"></a>
-        </section>
+            <!-- canales de television -->
+            <div class="tv">
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/eitb.png')}}" alt="{{ __('content.alt eitb') }}" width="100px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/elmundo.png')}}" alt="{{ __('content.alt el mundo') }}"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/A3_logo.png')}}" alt="{{ __('content.alt atresmedia') }}" width="70px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/FORTUNE.png')}}" alt="{{ __('content.alt fortune') }}" width="90px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/TV3.png')}}" alt="{{ __('content.alt tvc') }}" width="60px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/rtve.png')}}" alt="{{ __('content.alt rtve') }}" width="90px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/abc.png')}}" alt="{{ __('content.alt abc') }}" width="60px"></a>
+                <a href="#"><span class="helper"></span><img src="{{asset('storage/images/entrepeneur-magazine-white.png')}}" alt="{{ __('content.alt entrepeneur') }}" width="100px"></a>
+            </div>
+        </div>
     </div>
-    <!-- los servicios-->
-    <section class="oferts">
-        <div class="ofert-1">
-            <img src="{{asset('storage/images/team.jpg')}}" class="item" alt="practice">
-            <div class="rect">
-                <h3>Prácticas</h3>
-                <hr>
-                <p>Lorem ipsum dolor sit amet consectetur <br> adipisicing elit.
-                    Ipsum, <br> quidem iusto adipisci nemo</p>
-                <section>
-                    <button><a href="#">Ver más</a></button>
-                </section>
-            </div>
-        </div>
-        <div class="ofert-2">
-            <img src="{{asset('storage/images/service-1.jpg')}}" class="item" alt="sevice">
-            <div class="rect">
-                <h3>Servicios</h3>
-                <hr>
-                <p>Lorem ipsum dolor sit amet consectetur <br> adipisicing elit.
-                    Ipsum, <br> quidem iusto adipisci nemo</p>
-                <section>
-                    <button><a href="#">Ver más</a></button>
-                </section>
-            </div>
-        </div>
-        <div class="ofert-3">
-            <img src="{{asset('storage/images/student.jpg')}}" class="item" alt="studies">
-            <div class="rect">
-                <h3>Educación</h3>
-                <hr>
-                <p>Lorem ipsum dolor sit amet consectetur <br> adipisicing elit.
-                    Ipsum, <br> quidem iusto adipisci nemo</p>
-                <section>
-                    <button><a href="#">Ver más</a></button>
-                </section>
-            </div>
-        </div>
-    </section>
-    <div class="border"></div>
-    <section id="id2">
-        <h2><strong>Como</strong> Trabajamos</h2>
-        <h4 class="service-1"><a href="">REGISTRATE</a></h4>
-        <h4 class="service-2"><a href="">SELECCIONA<br>UN SERVICIO</a></h4>
-        <h4 class="service-3"><a href="">RECIBE EL MEJOR<br>ASESORAMIENTO</a></h4>
-        <h4 class="service-4"><a href="">EMPIEZA TU PROYECTO EN CHINA</a></h4>
-        <img src="{{asset('storage/images/como-trabj.png')}}" alt="como funcionamos">
-
-    </section>
-</main>
+</div>

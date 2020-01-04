@@ -1,28 +1,65 @@
-<section class="course-descriptions">
-    <div class="description-base classroom-description">
-        <div class="description-header">
-            <h2 onclick="toggleDescription()">CURSO PRESENCIAL<br>EN <span>CHINA</span></h2>
-            <a href="#course-information">+ INFO</a>
-        </div>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
-            aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat
-            ipsa quia ullam consequatur sequi quidem, dolore recusandae odit maiores iste harum ipsam?
-        </p>
+<section class="arrow-slider arrow-slider__holder">
+    <div class="arrow-slider__carousel">
+        @foreach (__('content.courses') as $key => $course)
+            @if (Browser::isDesktop())
+                @if (isset($slider))
+                    @switch($key)
+                        @case($slider['next']['key'])
+                            <div class="arrow-slider__slide--right">
+                            @break
+                        @case($slider['previous']['key'])
+                            <div class="arrow-slider__slide--left">
+                            @break
+                        @case($slider['current']['key'])
+                            <div class="arrow-slider__slide--current">
+                            @break
+                        @default
+                            <div class="arrow-slider__slide">
+                            @break
+                    @endswitch
+                @else
+                    @if ($loop->first)
+                        <div class="arrow-slider__slide--current">
+                    @endif
+
+                    @if ($loop->iteration === 2)
+                        <div class="arrow-slider__slide--right">
+                    @endif
+                @endif
+            @endif
+                <div class="arrow-slider__slide-header">
+                    <h2>{{ $course['text'] }} {!! $course['slider'] !!}</h2>
+                    @auth
+                        @if(Auth::user()->type !== 'admin')
+                            <form action="{{ route('update.program') }}" method="POST">
+                                @csrf
+                                <input type="hidden" value="learn-chinese" name="program">
+                                <input type="hidden" value="{{ $key }}" name="course" id="study">
+                                <button type="submit" class="cta">{{ __('content.also interested') }}</button>
+                            </form>
+                        @endif
+                    @else
+                        <form action="{{ route('register') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="learn-chinese" name="program">
+                            <input type="hidden" value="{{ $key }}" name="course" id="study">
+                            <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                        </form>
+                    @endauth
+                </div>
+                <p>
+                    {{ $course['description'] }}
+                </p>
+            </div>
+        @endforeach
     </div>
-    <div class="description-base online-description description-disabled">
-        <div class="description-header">
-            <h2 onclick="toggleDescription()">CURSO<br><span>ONLINE</span></h2>
-            <a href="#course-information">+ INFO</a>
-        </div>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fugit doloribus praesentium nam quas,
-            aliquid nulla beatae officiis velit. Nemo sint nihil consectetur dolor nam debitis repellat
-            ipsa quia ullam consequatur sequi quidem, dolore recusandae odit maiores iste harum ipsam?
-        </p>
-    </div>
-</section>
-<section id="course-information" class="bg-classroom-course">
-    <div class="course-first-box">
-    </div>
-    <div class="course-second-box">
+    <div class="arrow-slider__controllers">
+        @foreach (__('content.courses') as $key => $course)
+            @if (isset($slider))
+                <a href="#" class="{{ $key === $slider['current']['key'] ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
+            @else
+                <a href="#" class="{{ $key === array_key_first(__('content.courses')) ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
+            @endif
+        @endforeach
     </div>
 </section>

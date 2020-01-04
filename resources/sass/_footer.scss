@@ -1,135 +1,446 @@
-$black: black;
-$red1: #B71C1C;
-$red2:#F44336;
-$red3:#E57373;
-$red4:#C80B0B;
-$white: white;
-$black2:#2D2B2E;
-$black3:#161414;
-footer {
-  background-color: $black3;
-  color: $white;
-  //all footer
-  .container-all {
-    width: 100%;
-    max-width: 1600px;
-    margin: auto;
-    //high footer
-    .container-footer {
-      display: flex;
-      justify-content: space-evenly;
-      padding: 25px;
-      //contact by phone and mail
-      .column1 {
-        max-width: 400px;
-        h4 {
-          color: $red4;
-          font: {
-            size: 18px;
+.footer {
+  background: $primaryDark;
+  $map: (321: 16, 454: 16, 990: 12, 1553: 12);
+  font-size: minimosCuadrados($map);
+  color: $primaryWhite;
+  a {
+    font-size: minimosCuadrados($map);
+  }
+
+  .is-invalid {
+    &::placeholder,
+    &::-moz-placeholder,
+    &::-webkit-input-placeholder {
+      color: $primaryRed;
+      font-weight: 700;
+      opacity: 1;
+    }
+  }
+
+  h3 {
+    font-size: 1.5em;
+  }
+
+  h4 {
+    color: $primaryRed;
+    font-size: 1.2em;
+  }
+
+  &_header {
+    display: block;
+    > * {
+      padding: 1.5em 0;
+    }
+  }
+
+  &_web-map {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include flex-direction(column);
+    margin-left: 0px;
+    div:not(:first-of-type) {
+      margin-top: 1em;
+    }
+    .footer_subtitle {
+      text-transform: uppercase;
+    }
+    div {
+      .web-map_list {
+        li {
+          a {
+            $map: (642: 12, 984: 12);
+            font-size: minimosCuadrados($map);
           }
-        }
-        .row1 {
-          margin-top: 20px;
-          i {
-            font-size: 20px;
-          }
-          label {
-            margin-top: 10px;
-            margin-left: 20px;
-            max-width: 140px;
-            font-size: 15px;
-            a {
-              text-decoration: none;
-              color: $white;
-            }
-            a:hover {
-              color: $red4;
-              transition: 0.2s;
-            }
-          }
-        }
-        .row1:hover {
-          color: $red4;
-          transition: 0.2s;
-        }
-      }
-      // social media
-      .column2 {
-        max-width: 400px;
-        h4 {
-          font-size: 18px;
-          color: $red4;
-        }
-        .row2 {
-          margin-top: 5px;
-          display: flex;
-          padding: 4.5px;
-          i {
-            font-size: 20px;
-          }
-          label {
-            a {
-              margin-top: 10px;
-              margin-left: 20px;
-              color: $white;
-              text-decoration: none;
-              font-size: 15px;
-            }
-            a:hover {
-              color: $red4;
-              transition: 0.2s;
-            }
-          }
-        }
-        .row2:hover {
-          color: $red4;
-          transition: 0.2s;
         }
       }
     }
-    //part final
-    .footer {
-      max-width: 1100px;
-      margin-left: 50px;
-      padding: 0;
-      display: flex;
-      justify-content: space-between;
-      .copyright {
-        color: $white;
-        p {
-          font-size: 15px;
-          a {
-            text-decoration: none;
-            color: #c24c15;
-            font-weight: 600;
-            font-size: 15px;
+    &_items {
+      @include grid-template-columns(auto);
+      @include grid-template-rows(auto);
+      div {
+        padding: 0.5em 0;
+      }
+    }
+  }
+
+  &_contact_form {
+    div:first-of-type label {
+      padding-top: 0px;
+    }
+
+    // Error messages
+    .invalid-feedback {
+      display: block;
+    }
+    .checkbox_input {
+      @include flex-direction(row);
+      @include justify-content(space-between);
+      label {
+        width: 80%;
+      }
+      .switch {
+        position: relative;
+        margin-top: 2em;
+        width: 28px;
+        height: 28px;
+        border: solid 1px $primaryWhite;
+      }
+
+      input[type^=checkbox] {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .checkbox_slider {
+        position: absolute;
+        cursor: pointer;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+      }
+
+      input:checked + .checkbox_slider {
+        background: $primaryRed;
+      }
+
+      input:checked + .checkbox_slider:after {
+        font-family: 'Font Awesome 5 Free', Arial, serif;
+        font-size: 0.8em;
+        content: "\f00c";
+      }
+    }
+
+    .switch_input {
+      .switch {
+        position: relative;
+        display: block;
+        width: 60px;
+        height: 34px;
+        margin-top: 10px;
+        .checkbox_slider {
+          position: absolute;
+          cursor: pointer;
+          right: 0;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          background: $neutralColor;
+          @include prefixed('transition','.4s');
+          &--rounded {
+            border-radius: 34px;
           }
-          a:hover {
-            color: $red4;
+
+          &--rounded::after {
+            font-family: 'Montserrat', sans-serif;
+            content: "NO";
+            color: $primaryDark;
+            top: 12px;
+            position: absolute;
+            font-size: 0.8em;
+            z-index: 1;
+            left: 33px;
+          }
+
+          &--rounded:before {
+            border-radius: 50%;
+            z-index: 10;
+          }
+
+          &:before {
+            position: absolute;
+            content:"";
+            width: 26px;
+            height: 26px;
+            background: $primaryWhite;
+            left: 4px;
+            bottom: 4px;
+            @include prefixed('transition','.4s');
           }
         }
       }
-      .info {
-        a {
-          text-decoration: none;
-          color: $white;
-          font-size: 15px;
+
+      input:focus + .checkbox_slider {
+        box-shadow: 0 0 1px $primaryRed;
+      }
+
+      input:checked + .checkbox_slider {
+        background: $primaryRed;
+      }
+
+      input:checked + .checkbox_slider:before {
+        @include prefixed('transform', 'translateX(26px)');
+      }
+
+      input:checked + .checkbox_slider:after {
+        font-family: 'Montserrat', sans-serif;
+        content: "YES";
+        color: $neutralColor;
+        left: 4px;
+        top: 12px;
+      }
+
+      input[type^=checkbox] {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+    }
+
+    div {
+      @include flexbox();
+      @include justify-content(space-around);
+      @include flex-direction(column);
+
+      label:first-of-type {
+        padding-top: 2em;
+      }
+
+      label, .g-recaptcha {
+        padding-top: 45px;
+        margin-bottom: 0px;
+        &.switch {
+          padding: 0;
         }
-        a:hover {
-          color: $red4;
-        }
+      }
+
+      input, textarea {
+        background: $primaryDark;
+        color: $primaryWhite;
+        border-width: 0px 0px 2px 0px;
+        padding: 10px 0px;
+        font-size: 0.8em;
+      }
+
+      textarea::-webkit-input-placeholder, textarea:-ms-input-placeholder, textarea::-moz-placeholder  {
+        color: $neutralColor;
+      }
+
+      input::-webkit-input-placeholder, input::-moz-placeholder, input::-ms-input-placeholder {
+        color: $neutralColor;
+      }
+
+      .footer_submit, .footer_reset {
+        cursor: pointer;
+        padding: 10px 0;
+        margin-top: 45px;
+        width: 30%;
+        background: $tertiaryRed;
+        border: none;
+        @include fade();
+        border-radius: 34px;
+      }
+    }
+
+    & > div:last-of-type {
+      @include flex-direction(row);
+      @include justify-content(flex-start);
+      .footer_submit {
+        margin-right: 1.5em;
+      }
+    }
+
+    .modal {
+      display: none;
+      color: black;
+      &,
+      div {
+        @include flex-direction(column!important);
+      }
+    }
+  }
+
+  &_social-media {
+    i {
+      font-family: $primary-font;
+      $map: (642: 12, 984: 12);
+      font-size: minimosCuadrados($map);
+    }
+
+    i::before {
+      font-size: 2em;
+      padding: 0 0.5em 0 0;
+      font-family: $social-media-font;
+    }
+  }
+
+  &_sublist {
+    @include flexbox();
+    @include flex-direction(column);
+    padding-top: 2em;
+    @media only screen and (min-width: 360px) and (max-width: 680px) {
+      @include flex-direction(row);
+      @include justify-content(space-between);
+    }
+  }
+
+  &_documentation {
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(flex-start);
+    @include align-items(center);
+    p, a {
+      font-size: 0.8em;
+    }
+    padding: 3em 0;
+    &_signature {
+      text-align: center;
+      margin-bottom: 1em;
+      img {
+        width: 100px;
       }
     }
   }
 }
 
-@media screen and(max-width:1100px) {
-  footer {
-    .container-all {
-      .container-footer {
-        flex: wrap;
-        .column2 {
-          margin-top: 40px;
+@media #{$footer-fix} {
+  .footer {
+    &_header {
+      @include grid();
+      @include grid-template-columns(1fr 2fr);
+      @include grid-template-rows(auto auto);
+      @include grid-column-gap(5%);
+      //@include prefixed(grid-column-gap, 5%);
+    }
+
+    &_contact_form {
+      @include grid-child(2,4);
+      @include grid-child-align(start);
+      #message {
+        height: 130px;
+      }
+    }
+
+    &_title {
+      @include flexbox();
+    }
+
+    &_web-map {
+      @include justify-content(intial);
+      @include grid-child(1,2);
+      @include grid-child-align(start);
+    }
+
+    &_sublist {
+      @include flex-direction(column);
+      padding-top: 2em;
+    }
+
+    &_social-media {
+      @include grid-child(1, 3, 2, 3);
+      @include grid-child-align(start);
+      //@include prefixed(grid-column, '1 / span 2');
+      @include justify-content(space-between);
+      .footer_title {
+        @include justify-content(center);
+      }
+
+      ul {
+        @include flex-direction(row);
+        @include justify-content(space-around);
+      }
+    }
+  }
+}
+
+@media #{$large-devices} {
+  .footer {
+
+    &_header {
+      @include grid();
+      @include grid-template-rows(1fr);
+      @include grid-template-columns(1fr 2fr 1fr);
+      //@include prefixed(grid-column-gap, 5%);
+      @include grid-column-gap(5%);
+    }
+
+    &_title {
+      @include flexbox();
+    }
+
+    &_web-map {
+      @include grid-child(1,2);
+      @include grid-child-align(start);
+      @include justify-content(initial);
+    }
+
+    &_contact_form {
+      @include grid-child(2,4);
+      @include grid-child-align(start);
+      #message {
+        height: 130px;
+      }
+
+      .text_input {
+        @include flex-direction(row);
+        @include justify-content(space-between);
+        @include align-items(baseline);
+        input {
+          width: 85%;
+          padding-bottom: 5px;
+        }
+      }
+
+      .switch_input {
+        @include grid();
+        @include grid-template-columns(60% auto);
+        @include justify-content(space-between);
+        & > label {
+          @include grid-child(1,2);
+        }
+
+        & > .switch {
+          @include grid-child(2,3);
+          margin-top: 2em;
+        }
+      }
+
+      .checkbox_input {
+        display: block;
+        .switch {
+          float: right;
+        }
+      }
+
+      div:last-of-type {
+        @include flex-direction(row);
+        @include justify-content(flex-start);
+        .footer_submit {
+          margin-right: 2em;
+        }
+      }
+
+      .modal {
+        display: none;
+        color: black;
+        &,
+        div {
+          @include flex-direction(row !important);
+        }
+      }
+    }
+
+    &_social-media {
+      @include grid-child(4,5);
+      @include grid-child-align(start);
+      width: 100%;
+      .footer_sublist {
+        @include flex-direction(column);
+        li:not(first-of-type) {
+          padding: 0 0.9em;
+        }
+      }
+    }
+
+    &_documentation {
+      @include flex-direction(row);
+      @include justify-content(space-between);
+      &_signature {
+        @include flexbox();
+        @include align-items(first baseline);
+        a {
+          margin-left: .5em;
         }
       }
     }

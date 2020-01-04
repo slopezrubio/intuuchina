@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/courses/{course}', function($course) {
+    return response()
+            ->json(__('content.courses.' . $course));
+})->where('course', '([a-z]+[_-]?[a-z])*');

@@ -1,31 +1,13 @@
-<section>
-    <article>
-        <center>
-            <h3 >Más de</h3>
+<section class="sensationalism-stats">
+    @foreach (__('content.facts') as $fact)
+        <article class="facts">
+            <p>{{ $fact['first text'] }}</p>
             <div class="circle">
-                <h4 class="count">450</h4>
+                <h4 class="count">{{ $fact['number'] }}</h4>
             </div>
-            <h3>Personas en China</h3>
-        </center>
-    </article>
-    <article>
-        <center>
-            <h3>Más de</h3>
-            <div class="circle">
-                <h4 class="count">500</h4>
-            </div>
-            <h3>Solicitudes mensuales</h3>
-        </center>
-    </article>
-    <article>
-        <center>
-            <h3>Desde</h3>
-            <div class="circle">
-                <h4 class="count">41</h4>
-            </div>
-            <h3>Países</h3>
-        </center>
-    </article>
+            <p>{{ $fact['second text'] }}</p>
+        </article>
+    @endforeach
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

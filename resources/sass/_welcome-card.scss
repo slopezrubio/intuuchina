@@ -1,0 +1,119 @@
+@import './forms/dialog-box-confirmed';
+
+.user-card {
+  padding: 1em 1em;
+  margin-top: 7em;
+  margin-bottom: 7em;
+  @include align-self(center);
+  background: transparent;
+  a {
+    color: $primaryRed;
+    font-weight: 500;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .card {
+    background: transparent;
+    &-header {
+      background: $sectionDark;
+      border: 2px solid $primaryWhite;
+      border-radius: 28px 28px 0px 0px;
+      h1 {
+        color: $primaryWhite;
+        font-weight: 700;
+        font-size: 1.25em;
+        margin: 0.25em 0;
+        text-uppercase: uppercase;
+      }
+    }
+
+    &-body {
+      background: $primaryWhite;
+      border-radius: 0px 0px 5px 5px;
+    }
+  }
+
+  #dialog-box {
+    form {
+      @include inputText();
+      @include select();
+      label {
+        font-weight: 700;
+        height: 22px;
+      }
+
+      .is-invalid {
+        border-color: $primaryRed;
+      }
+
+      .invalid-feedback, .invalid-stripe-feedback {
+        $font-size: emToPx(0.8);
+        $line-height: 1.6;
+        margin-top: 0.25em;
+        font-size: $font-size;
+        font-weight: 700;
+        color: $secondaryRed;
+        padding-left: 0;
+        height: calc(2 * (#{$line-height} * #{$font-size}));
+        overflow: hidden;
+      }
+
+      .invalid-stripe-feedback {
+        display: none;
+      }
+    }
+
+    .loading-button {
+      @include flexbox();
+      @include align-items(center);
+      @include justify-content(center);
+
+      .spinner-border.hidden {
+        display: none;
+      }
+
+      .spinner-border {
+        width: 1.5em;
+        height: 1.5em;
+        margin-left: 0.25em;
+      }
+    }
+  }
+
+  &__action {
+    margin-top: 1em;
+    @media only screen and (min-width: 768px) {
+      margin-top: 3em;
+    }
+
+    .breadcrumb-link {
+      button, a {
+        font-weight: 700;
+        background: none;
+        border: none;
+        color: $primaryRed;
+      }
+
+      button:hover,
+      a:hover {
+        text-decoration: underline;
+      }
+
+      button[type=submit] {
+        @include prefixed(appearance, none);
+      }
+    }
+
+    .cta {
+      margin-top: 0;
+      margin-left: auto;
+      margin-right: 0;
+      display: block;
+    }
+
+    .cta:not(:first-of-type) {
+      margin-left: 1em;
+    }
+  }
+}

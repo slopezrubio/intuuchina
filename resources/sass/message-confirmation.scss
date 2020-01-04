@@ -1,0 +1,61 @@
+.confirmation {
+  @include verticalAlign();
+  .confirmation_content {
+    color: $primaryDark;
+    text-align: center;
+    padding: 3em 0em 8em 0em;
+    @media only screen and (min-width: 980px) {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+
+    h1 {
+      font-size: 1.85em;
+      color: $secondaryRed;
+      margin-bottom: 1em;
+    }
+
+    p {
+      $map: (425: 16, 812: 16, 1440: 18);
+      font-size: minimosCuadrados($map);
+    }
+
+    [class^="confirmation_button"] {
+      color: $primaryWhite;
+    }
+
+    .confirmation_more_info {
+      cursor: pointer;
+      $map: (425: 16, 812: 16, 1440: 18);
+      padding: 10px;
+      font-size: minimosCuadrados($map);
+      @include shutter-in-horizontal();
+      margin-top: 2em;
+    }
+  }
+}
+
+@media #{$footer-fix} {
+  .confirmation {
+    &_content {
+      width: 70%;
+      text-align: left;
+      .confirmation_more_info {
+        width: 50%;
+      }
+    }
+  }
+}
+
+@media #{$large-devices} {
+  .confirmation {
+    &_content {
+      width: 70%;
+      text-align: left;
+      .confirmation_more_info {
+        width: 50%;
+      }
+    }
+  }
+}

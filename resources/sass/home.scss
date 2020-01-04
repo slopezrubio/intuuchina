@@ -8,9 +8,12 @@ $white: white;
 $black2:#2D2B2E;
 $black3:#161414;
 //llamada del scss de nav,slider,funcion,testimonials,footer
-@import 'testimonials';
-@import 'news';
-@import 'slider';
+@import '_testimonials';
+@import '_news';
+@import '_header';
+@import '_services';
+@import '_customer-journey';
+@import '_welcome-card';
 //grid system for extend
 %grid {
   display: grid;
@@ -27,12 +30,14 @@ body {
 }
 
 header {
-  background-image: url(/../../storage/images/practicas-1-1.jpg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  padding-bottom: 50px;
-  height: 35rem;
+}
+
+header.auth {
+  background: $primaryRed;
+  height: 20rem;
 }
 
 //grid system

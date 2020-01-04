@@ -1,0 +1,385 @@
+@mixin arrow-slider($first-slide-preset, $second-slide-preset, $third-slide-preset: null) {
+  .arrow-slider {
+    &__holder {
+      background: map_get($first-slide-preset, background-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    &__carousel {
+      @include flexbox();
+      @include prefixed(transition, all ease-in-out .5s);
+      & > div:nth-of-type(1) {
+        .arrow-slider__slide-header {
+          h2 {
+            color: map_get($first-slide-preset, primary-title-color);
+            span {
+              color: map_get($first-slide-preset, secondary-title-color);
+            }
+          }
+          form > .cta {
+            background: map_get($first-slide-preset, primary-button-color);
+            &:hover {
+              background: map_get($first-slide-preset, secondary-button-color);
+            }
+          }
+        }
+
+        & > p {
+          color: map_get($first-slide-preset, primary-text-color);
+        }
+
+        &:after {
+          color: map_get($first-slide-preset, primary-text-color);
+        }
+
+        &:before {
+          background: map_get($first-slide-preset, background-color);
+          border-left: 50px solid map_get($first-slide-preset, background-color);
+        }
+      }
+
+      & > div:nth-of-type(2) {
+        .arrow-slider__slide-header {
+          h2 {
+            color: map_get($second-slide-preset, primary-title-color);
+            span {
+              color: map_get($second-slide-preset, secondary-title-color);
+            }
+          }
+          form > .cta {
+            background: map_get($second-slide-preset, primary-button-color);
+            &:hover {
+              background: map_get($second-slide-preset, secondary-button-color);
+            }
+          }
+        }
+
+        & > p {
+          color: map_get($second-slide-preset, primary-text-color);
+        }
+
+        &:before {
+          background: map_get($second-slide-preset, background-color);
+          border-left: 50px solid map_get($second-slide-preset, background-color);
+        }
+
+        &:after {
+          color: map_get($second-slide-preset, primary-text-color);
+        }
+      }
+
+      @if $third-slide-preset != null {
+        & > div:nth-of-type(3) {
+          .arrow-slider__slide-header {
+            h2 {
+              color: map_get($third-slide-preset, primary-title-color);
+              span {
+                color: map_get($third-slide-preset, secondary-title-color);
+              }
+            }
+            form > .cta {
+              background: map_get($third-slide-preset, primary-button-color);
+              &:hover {
+                background: map_get($third-slide-preset, secondary-button-color);
+              }
+            }
+          }
+
+          & > p {
+            color: map_get($third-slide-preset, primary-text-color);
+          }
+
+          &:after {
+            color: map_get($third-slide-preset, primary-text-color);
+          }
+
+          &:before {
+            background: map_get($third-slide-preset, background-color);
+            border-left: 50px solid map_get($third-slide-preset, background-color);
+          }
+        }
+      }
+    }
+
+    &__slide {
+      box-sizing: border-box;
+      color: $white;
+      padding-bottom: 2em;
+
+      p {
+        margin-bottom: 3em;
+      }
+
+      & > * {
+        padding: 1em 2em;
+      }
+    }
+
+    &__slide-header {
+      @include flexbox();
+      @include flex-direction(column);
+      @include align-content(center);
+
+      form > .cta {
+        margin-top: 0;
+      }
+
+      & > * {
+        margin-top: 1em;
+      }
+
+      h2 {
+        $map: (278: 24, 820: 28, 1492: 32);
+        font-size: minimosCuadrados($map);
+
+        span {
+          color: $white;
+        }
+      }
+
+      button {
+        margin-left: 0px;
+        //$map: (320: 14, 824: 18, 1903: 18);
+        //font-size: minimosCuadrados($map);
+        font-size: 1.2em;
+        padding: 0.5rem 2rem;
+        border-radius: 2rem;
+        text-decoration: none;
+        transition-duration: 0.3s;
+
+        &:active {
+          text-decoration: none;
+        }
+
+        &:visited {
+          text-decoration: none;
+        }
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+
+    .description-disabled {
+      transition: all 0.9s ease;
+
+      .description-header {
+        h2 {
+          cursor: pointer;
+        }
+
+        a {
+          width: 0;
+          padding: 0;
+          font-size: 0;
+        }
+      }
+    }
+
+    &__controllers {
+      left: 0%;
+      bottom: 30px;
+      width: 100%;
+      @include flexbox();
+      @include justify-content(center);
+      position: absolute;
+      color: $primaryWhite;
+      font-weight: 700;
+
+      a {
+        padding: .5em 1em;
+        @include prefixed(border-radius, 25px);
+        $map: (320: 16, 996: 12);
+        font-size: 1em;
+
+        &:hover,
+        &:active,
+        &.selected {
+          @include prefixed(transition, all ease-in-out 0.5s);
+          background: rgba(255, 255, 255, 0.4);
+          color: $primaryWhite;
+        }
+      }
+
+      a:not(:last-of-type) {
+        margin-right: 1.5em;
+      }
+    }
+
+    &__controllers.dark {
+      a {
+        color: $primaryDark;
+        &:hover,
+        &:active,
+        &.selected {
+          background: rgba(0, 0, 0, 0.4);
+          color: $primaryDark;
+        }
+      }
+    }
+  }
+
+  @media #{$large-devices} {
+    .arrow-slider {
+      &__holder {
+        overflow: hidden;
+      }
+
+      &__carousel {
+        position: relative;
+        height: 456px;
+      }
+
+      &__slide--current {
+        .arrow-slider__slide-header {
+          margin-bottom: 1em;
+
+          button {
+            margin-right: 0;
+            margin-left: auto;
+          }
+
+          p {
+            text-align: right;
+            float: right;
+          }
+        }
+      }
+
+      &__slide {
+        &--current {
+          width: auto;
+          box-sizing: border-box;
+          @include prefixed(transition, width .5s);
+
+          p, .arrow-slider__slide-header {
+            width: 30%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+          }
+
+          p {
+            opacity: 1;
+            @include prefixed(transition, opacity .2s .5s);
+          }
+        }
+
+        &--current.first, &--current.last {
+          .arrow-slider__slide-header, p {
+            width: 50%;
+          }
+        }
+
+        &--current.first {
+          .arrow-slider__slide-header, p {
+            margin-left: 0;
+            margin-right: auto;
+            padding-left: 150px;
+            text-align: left;
+          }
+
+          .arrow-slider__slide-header {
+            @include align-items(flex-start);
+          }
+        }
+
+        &--current.last {
+          .arrow-slider__slide-header, p {
+            margin-right: 0;
+            margin-left: auto;
+            padding-right: 150px;
+          }
+
+          .arrow-slider__slide-header {
+            @include align-items(flex-end);
+          }
+
+          .arrow-slider__slide-header > h2, p {
+            text-align: right;
+          }
+        }
+
+        &--left,
+        &--right {
+          position: relative;
+          cursor: pointer;
+          z-index: 0;
+          @include prefixed(transition, width .5s);
+
+          p {
+            opacity: 0;
+            height: 0;
+          }
+
+          //@include flexbox();
+          //@include align-items(center);
+          &:before {
+            content: "";
+            width: 407px;
+            height: 407px;
+            position: absolute;
+            z-index: -1;
+            border-radius: 25px;
+            top: 26px;
+          }
+
+          &:after {
+            position: absolute;
+            font-size: 80px;
+            top: 169px;
+            font-weight: 900;
+            font-family: "Font Awesome 5 Free";
+          }
+
+          .arrow-slider__slide-header {
+            position: relative;
+            top: 50%;
+            @include prefixed(transform, translateY(-50%));
+            width: 150px;
+          }
+
+          button.cta {
+            display: none;
+          }
+        }
+
+        &--left {
+          left: 150px;
+
+          .arrow-slider__slide-header {
+            right: -100%;
+            @include prefixed(transform, 'translate(-120px, -50%)');
+          }
+
+          &:before {
+            right: -102px;
+            @include prefixed(transform, rotate(-45deg));
+            border-left: 50px solid $primaryDark;
+          }
+
+          &:after {
+            content: "\f101";
+            right: -158px;
+          }
+        }
+
+        &--right {
+          right: 150px;
+
+          &:before {
+            left: -102px;
+            @include prefixed(transform, rotate(45deg));
+          }
+
+          &:after {
+            content: "\f100";
+            left: -158px;
+          }
+        }
+      }
+    }
+  }
+}

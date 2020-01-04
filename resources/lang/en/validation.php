@@ -40,6 +40,7 @@ return [
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
     'email' => 'The :attribute must be a valid email address.',
+    'email_simple' => "The :attribute must fulfil the <a target='_blank' href='https://www.w3.org/Protocols/rfc822/#z8'>RFC</a> requirements.",
     'exists' => 'The selected :attribute is invalid.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
@@ -131,6 +132,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'invalid' => 'The :field has an invalid format',
+        'minimum_hours' => 'A minimum of at least :value hours is required.',
+        'minimum_staying' => '{1} A minimum of :value month is required.|[2,*] A minimum of :value months is required.',
+        'gdpr' => 'You must agree with our terms and conditions and GDPR',
+        'required' => 'We need your :attribute to keep you in the process.',
+        'uploaded' => 'The :file file cannot overpass ' . ini_get('upload_max_filesize') . '.',
     ],
 
     /*

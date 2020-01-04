@@ -1,0 +1,43 @@
+.filter_selector {
+  &--mobile {
+    padding: 1em 2em;
+    select {
+      background: $primaryDark;
+      cursor: pointer;
+      color: $neutralColor;
+    }
+
+    .custom-select-wrapper {
+      max-width: 350px;
+      background-image: linear-gradient(to left, $primaryRed 70px, $primaryDark 280px);
+      position: relative;
+      padding: 0;
+      z-index: 2;
+      select {
+        background: transparent;
+        padding-right: 4.75em;
+        border: none;
+        z-index: -1;
+        @include prefixed(appearance, none);
+        option {
+          background: $primaryDark;
+        }
+      }
+
+      &:before {
+        color: $primaryWhite;
+        content: '';
+        position: absolute;
+        left: calc(100% - 2.7em);
+        top: 6px;
+        width: 1em;
+        height: 1em;
+        border-top: solid 1px currentColor;
+        border-right: solid 1px currentColor;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+        z-index: -2;
+      }
+    }
+  }
+}

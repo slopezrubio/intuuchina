@@ -1,21 +1,14 @@
 @extends('layouts.master')
 
-<header>
-     <div class="img">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
+@section('content')
+    <header class="header" id="internship">
+            {{--Elemento NAV--}}
+            @include('partials._nav')
 
-        {{--Elemento SLIDER--}}
-        @include('partials._slider')
+            {{--Elemento SLIDER--}}
+            @include('partials._header')
+    </header>
 
-         <div class="box">
-            <h1>Prácticas</h1>
-         </div>
-     </div>
-</header>
-
-{{--Elemento donde se recogen las ofertas de trabajo--}}
-@include('partials._offers')
-
-{{--Elemento de los testiomonios que han sido asesorados por Intuuchina--}}
-@include('partials._footer')
+    {{-- Elemento donde se recogen las ofertas de trabajo --}}
+    @include('partials._offers')
+@endsection

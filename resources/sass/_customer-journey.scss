@@ -1,0 +1,18 @@
+.infographic {
+  .customer-journey {
+    img {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    &--mobile {
+      img {
+        width: 60%;
+        margin: 0 auto;
+        display: block;
+      }
+    }
+  }
+}

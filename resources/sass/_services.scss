@@ -1,0 +1,88 @@
+@media #{$large-devices} {
+  section {
+    .services {
+      @include prefixed(display, flex);
+      @include prefixed(justify-content, space-evenly);
+      .service_card {
+        width: calc(100% / 3);
+        padding: 10em 2em 3em 2em !important;
+        &_container {
+          .service_card {
+            &_header {
+              height: 80px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+section {
+   .triangle {
+     position: absolute;
+     color: $neutralColor;
+     width: 0;
+     height: 0;
+     border-color: $neutralColor transparent transparent $neutralColor;
+     border-width: 100px 100px;
+     border-style: solid;
+     z-index: 2;
+   }
+   .services {
+     position: relative;
+     z-index: 1;
+     .service_card {
+       &#s_internship {
+         background: url('/../../storage/images/team.jpg') no-repeat scroll center;
+         background-size: cover;
+       }
+
+       &#s_university {
+         background: url('/../../storage/images/student.jpg') no-repeat scroll center;;
+         background-size: cover;
+       }
+
+       &#s_learn {
+         background: url('/../../storage/images/service-1.jpg') no-repeat scroll center;
+         background-size: cover;
+       }
+     }
+
+     .service_card {
+       padding: 1em 1em 1em 1em;
+       &:first-of-type {
+         padding-top: 10em;
+       }
+       &_container {
+         max-width: 500px;
+         border: 2px solid $primaryWhite;
+         background: rgba(0, 0, 0, .6);
+         @include prefixed(border-radius, 25px);
+         padding: 2em;
+         margin: 0 auto;
+
+         .service_card {
+           &_body {
+             color: $primaryWhite;
+           }
+
+           &_header {
+             height: 50px;
+           }
+
+           &_footer {
+             .cta {
+               line-height: 45px;
+               font-weight: 500;
+               width: 80%;
+               margin: 3em auto 0 auto;
+               display: block;
+               text-align: center;
+             }
+           }
+         }
+       }
+     }
+   }
+ }

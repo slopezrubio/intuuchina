@@ -1,0 +1,443 @@
+// Incluye los prefijos de los navegadores principales para que no tengan que ser escritos constantementes
+@mixin prefixed($property, $value) {
+  -webkit-#{$property}: #{$value};
+  -moz-#{$property}: #{$value};
+  -ms-#{$property}: #{$value};
+  -o-#{$property}: #{$value};
+  #{$property}: #{$value};
+}
+
+@mixin ie10($selector, $map) {
+  @media all and (-ms-high-contrast:none) {
+    *::-ms-backdrop, #{$selector} {
+      @each $property, $value in ($map) {
+        #{$property}: $value;
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Grid Layout --
+ * ----------------
+ */
+
+@mixin grid {
+  display: -ms-grid;
+  display: grid;
+  display: -moz-grid;
+}
+
+@mixin grid-template-rows($value) {
+  -ms-grid-rows: $value;
+  grid-template-rows: $value;
+}
+
+@mixin grid-template-columns($value) {
+  -ms-grid-columns: $value;
+  grid-template-columns: $value;
+}
+
+@mixin grid-child($col-start: 1, $col-end: 2, $row-start: 1, $row-end: 2) {
+  -ms-grid-column: $col-start;
+  -ms-grid-column-span: $col-end - $col-start;
+  -ms-grid-row: $row-start;
+  -ms-grid-row-span: $row-end - $row-start;
+  grid-column: #{$col-start} / #{$col-end};
+  grid-row: #{$row-start} / #{$row-end};
+}
+
+@mixin grid-child-align($columnsAlign: start, $rowsAlign: start) {
+  -ms-grid-column-align: $columnsAlign;
+  -ms-grid-row-align: $rowsAlign;
+  align-self: $rowsAlign;
+  justify-self: $columnsAlign;
+}
+
+@mixin grid-column-gap($value) {
+  grid-column-gap: $value;
+  $width: 100% - $value;
+  $map: (width: #{$width});
+  @include ie10('& > *', $map);
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * --- Flexbox ----
+ * ----------------
+ */
+
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin inline-flex {
+  display: -webkit-inline-flex;
+  display: -moz-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+@mixin flex-direction($value: row) {
+  @if $value == row-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -moz-box-orient: horizontal;
+  } @else if $value == column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: normal;
+    -moz-box-orient: vertical;
+  } @else if $value == column-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: reverse;
+    -moz-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -moz-box-orient: horizontal;
+  }
+
+  -webkit-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+
+@mixin flex-wrap($value: mowrap) {
+    -webkit-flex-wrap: $value;
+    @if ($value == nowrap) {
+        -ms-flex-wrap: none;
+    } @else {
+        -ms-flex-wrap: $value;
+    }
+    flex-wrap: $value;
+}
+
+@mixin align-items($value: stretch) {
+  @if $value == flex-start {
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -ms-box-align: start;
+  } @else if $value == flex-end {
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    -ms-box-align: end;
+  } @else {
+    -webkit-box-align: $value;
+    -moz-box-align: $value;
+    -ms-box-align: $value;
+  }
+
+  -webkit-align-items: $value;
+  align-items: $value;
+}
+
+@mixin justify-content($value) {
+  @if $value == space-between {
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+  }
+  justify-content: $value;
+  -webkit-justify-content: $value;
+}
+
+@mixin align-content($value: stretch) {
+  // No Webkit Box Fallback.
+  -webkit-align-content: $value;
+  @if $value == flex-start {
+    -ms-flex-line-pack: start;
+  } @else if $value == flex-end {
+    -ms-flex-line-pack: end;
+  } @else {
+    -ms-flex-line-pack: $value;
+  }
+  align-content: $value;
+}
+
+@mixin align-self($value: auto) {
+  // No Webkit Box Fallback.
+  -webkit-align-self: $value;
+  @if $value == flex-start {
+    -ms-flex-item-align: start;
+  } @else if $value == flex-end {
+    -ms-flex-item-align: end;
+  } @else {
+    -ms-flex-item-align: $value;
+  }
+  align-self: $value;
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * ---- Hacks -----
+ * ----------------
+ */
+
+@mixin hardwareAccel() {
+  // Mejora el rendimiento en dispositivos móvil/tablet de los botones
+  // La propiedad 'perspectie(1px)' reduce la borrosidad del texto en Chrome
+  @include prefixed(transform, perspective(1px) translateZ(0));
+}
+
+@mixin improveAntiAlias() {
+  // Mejora el aliasing en dispositivos móvil/tablet
+  box-shadow: 0 0 1px rgba(0,0,0,0);
+}
+
+@mixin forceBlockLevel() {
+  // La propiedad 'transform' necesita que el elemento esté en bloque para funcionar
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Centrar verticalmente (el elemento padre tiene que
+ * tener el atributo 'position: relative' para que
+ * funcione)
+ */
+@mixin verticalAlign() {
+  position: absolute;
+  top: calc(50% + 32px);
+  @include prefixed(transform, translateY(-50%));
+}
+
+// Arreglos para los botones
+@mixin hacks() {
+  @include forceBlockLevel();
+  @include hardwareAccel();
+  @include improveAntiAlias();
+}
+
+// Footer buttons effects
+@mixin fade {
+  @include hacks();
+  overflow: hidden;
+  @include prefixed(transition-duration, $mediumDuration);
+  @include prefixed(transition-property, "color, background");
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: $primaryRed;
+    color: $primaryWhite;
+  }
+}
+
+// Components
+@mixin title-card {
+  background: $sectionDark;
+  margin: 0 auto;
+  padding: 1.5em;
+  border-radius: 28px;
+  @include flexbox();
+  @include flex-direction(column-reverse);
+  max-width: 630px;
+}
+
+@mixin inputText($element: input) {
+  #{$element} {
+    height: calc(1.6em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.6;
+    @include marginBottom;
+    @include prefixed(transition, 'border-color .15s ease-in-out, box-shadow .15s ease-in-out');
+    @if $element == '.StripeElement' {
+      border-bottom: 2px solid #ced4da;
+
+      &--focus, &--invalid {
+        border-color: $primaryRed;
+      }
+    }
+
+    &:focus {
+      border-color: $primaryRed;
+    }
+  }
+}
+
+@mixin select() {
+  .regular--select-wrapper {
+    z-index: 2;
+    position: relative;
+    select {
+      @include resetSelect;
+      @include marginBottom;
+      z-index: -1;
+      cursor: pointer;
+      &:focus {
+        border-color: $primaryRed;
+      }
+    }
+    &::before {
+      @include arrowIcon;
+      top: 5px;
+    }
+  }
+}
+
+// Login buttons effects
+@mixin shutter-in-horizontal {
+  @include hacks();
+  position: relative;
+  background: $primaryWhite;
+  @include prefixed(transition-property,color);
+  @include prefixed(transition-duration, $mediumDuration);
+  border: 2px solid $primaryRed;
+  border-radius: 22px;
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $primaryRed;
+    border-radius: 20px;
+    @include prefixed(transform, scaleX(1));
+    @include prefixed(transform-origin, 50%);
+    @include prefixed(transform-property, transform);
+    @include prefixed(transition-duration, $mediumDuration);
+    @include prefixed(transition-timing-function, ease-out);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $primaryRed;
+
+    &:before {
+      @include prefixed(transform, scaleX(0))
+    }
+  }
+}
+
+@mixin marginBottom {
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  &:focus,
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+@mixin squareWithBorder {
+  padding: .3rem .4rem;
+  border: 1px solid $primaryDark;
+}
+
+@mixin resetSelect {
+  @include prefixed(appearance, none);
+  padding-left: 0px;
+}
+
+@mixin arrowIcon {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1.7em);
+  top: 60px;
+  width: 1em;
+  height: 1em;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  @include prefixed(transform, rotate(135deg));
+  z-index: -2;
+}
+
+/* Gets the element disappeared */
+@mixin reset {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Dropdown button */
+@mixin animation($animationName) {
+  animation: $animationName 1s ease-in-out;
+  -moz-animation: $animationName 1s ease-in-out;
+  -webkit-animation: $animationName 1s ease-in-out;
+  -ms-animation: $animationName 1s ease-in-out;
+}
+
+@mixin switchButton {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 34px;
+  margin-top: 10px;
+  .checkbox_slider {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: $neutralColor;
+    @include prefixed('transition', '.4s');
+
+    &--rounded {
+      border-radius: 34px;
+    }
+
+    &--rounded::after {
+      font-family: 'Montserrat', sans-serif;
+      content: "NO";
+      color: $primaryDark;
+      top: 12px;
+      position: absolute;
+      font-size: 0.8em;
+      z-index: 1;
+      left: 33px;
+    }
+
+    &--rounded:before {
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    &:before {
+      position: absolute;
+      content: "";
+      width: 26px;
+      height: 26px;
+      background: $primaryWhite;
+      left: 4px;
+      bottom: 4px;
+      @include prefixed('transition', '.4s');
+    }
+  }
+
+  input:checked + .checkbox_slider:before {
+    @include prefixed('transform', 'translateX(26px)');
+  }
+
+  input:checked + .checkbox_slider {
+    background: $primaryRed;
+  }
+
+  input:focus + .checkbox_slider {
+    box-shadow: 0 0 1px $primaryRed;
+  }
+
+  input:checked + .checkbox_slider:after {
+    font-family: 'Montserrat', sans-serif;
+    content: "YES";
+    left: 4px;
+    top: 12px;
+    color: $primaryWhite;
+  }
+}

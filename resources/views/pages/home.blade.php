@@ -1,20 +1,27 @@
 @extends('layouts.master')
 
-
 @section('content')
 
-<header>
-    {{--Elemento NAV--}}
-    @include('partials._nav')
+    <header id="home" class="header">
+        {{--Elemento NAV--}}
+        @include('partials._nav')
 
-    {{--Elemento SLIDER--}}
-    @include('partials._slider')
-</header>
-    {{--Elemento Medios de TV--}}
-    @include('partials._news')
+        {{--Título de la página--}}
+        @include('partials._header')
+    </header>
+    <main>
+        {{--Elemento Medios de TV--}}
+        @include('partials._news')
 
-    {{--Elemento de los testiomonios que han sido asesorados por Intuuchina--}}
-    @include('partials._testimonials')
+        {{--Sección de los servicios ofrecidos--}}
+        @include('partials._services')
+
+        {{--Infografia del «Customer Journey»--}}
+        @include('partials._customer-journey')
+
+        {{--Elemento de los testiomonios que han sido asesorados por Intuuchina--}}
+        @include('partials._testimonials')
+    </main>
 
     {{--Elemento FOOTER--}}
     @include('partials._footer')

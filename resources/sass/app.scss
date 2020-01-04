@@ -8,6 +8,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Quill (Rich Text Editor)
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

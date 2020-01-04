@@ -5,20 +5,36 @@ $body-bg: #f8fafc;
 // Typography
 $primary-font: "Montserrat", sans-serif;
 $secondary-font: "Nunito", sans-serif;
+$social-media-font: "Font Awesome 5 Brands";
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
 $primaryDark: black;
+$navbarPrimary: rgb(255,255,255);
+$navbarDark: rgba(255,255,255,0.3);
+$sectionDark: rgba(0,0,0,0.5);
 $secondaryDark:#2D2B2E;
-$primaryRed: #B71C1C;
+//$primaryRed: #B71C1C;
+$primaryRed: #C80B0B;
 $secondaryRed:#F44336;
 $tertiaryRed:#E57373;
 $quaternaryRed:#C80B0B;
 $primaryWhite: white;
+$neutralColor: #d1d1d1;
+$warningColor: linear-gradient(to right, transparent, #f8dcdc 30%, #f5cbcb);
+$okColor: linear-gradient(to right, transparent, #73e5ac);
 
 // Breakpoints
-$small-and-medium-devices: "only screen and (min-width: 100px) and (max-width: 992px)";
+$small-and-medium-devices: "only screen and (max-width: 992px)";
+$small-and-medium-devices_secondary: "only screen and (min-width: 0px) and (max-width: 680px)";
 $small-devices: "only screen and (max-width: 320px)";
+$footer-fix: "only screen and (min-width: 681px) and (max-width: 991px)";
+$offers-fix: "only screen and (min-width: 992px) and (max-width: 1340px)";
 $medium-devices: "only screen and (min-width: 321px) and (max-width: 780px)";
-$large-devices: "only screen and (min-width: 993px)";
+$medium_devices_secondary: "only screen and (min-width: 575px) and (max-width: 991px)";
+$large-devices: "only screen and (min-width: 992px)";
+$large-devices_secondary: "only screen and (min-width: 1340px)";
+
+// Transitions
+$mediumDuration: .3s !default;

@@ -1,0 +1,69 @@
+/******* General Styles for the component *******/
+.regular-select-wrapper {
+  z-index: 2;
+  position: relative;
+  select {
+    @include resetSelect;
+    @include marginBottom;
+    z-index: -1;
+    cursor: pointer;
+    &:focus {
+      background: transparent;
+      border-color: $primaryRed;
+    }
+  }
+  &::before {
+    @include arrowIcon;
+    top: 5px;
+  }
+}
+
+div.editor {
+  height: 400px;
+}
+
+.shutter-button {
+  cursor: pointer;
+  padding: .5em;
+  width: 100%;
+  @include shutter-in-horizontal();
+}
+
+.form {
+  input {
+    @include marginBottom;
+    &:focus {
+      border-color: $primaryRed;
+    }
+  }
+
+  .items_form {
+    animation: scale-display 0.3s;
+    animation-fill-mode: forwards;
+    &--hidden {
+      display: none;
+      animation: scale-display--reversed 0.3s;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  .form_header {
+    &:first-of-type {
+      padding: 1rem;
+    }
+  }
+
+  .form-title {
+    border-top: 1px solid $primaryRed;
+    h2 {
+      color: $neutralColor;
+      text-transform: uppercase;
+      padding: 2rem 1rem 2rem 1rem;
+      letter-spacing: 1rem;
+      line-height: 1.8;
+
+      $map: (356: 24, 1279: 26, 1689: 30);
+      font-size: minimosCuadrados($map)
+    }
+  }
+}
