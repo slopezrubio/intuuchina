@@ -27,30 +27,30 @@
                     @endif
                 @endif
             @endif
-                <div class="arrow-slider__slide-header">
-                    <h2>{{ $course['text'] }} {!! $course['slider'] !!}</h2>
-                    @auth
-                        @if(Auth::user()->type !== 'admin')
-                            <form action="{{ route('update.program') }}" method="POST">
-                                @csrf
-                                <input type="hidden" value="learn-chinese" name="program">
-                                <input type="hidden" value="{{ $key }}" name="course" id="study">
-                                <button type="submit" class="cta">{{ __('content.also interested') }}</button>
-                            </form>
-                        @endif
-                    @else
-                        <form action="{{ route('register') }}" method="POST">
+            <div class="arrow-slider__slide-header">
+                <h2>{{ $course['text'] }} {!! $course['slider'] !!}</h2>
+                @auth
+                    @if(Auth::user()->type !== 'admin')
+                        <form action="{{ route('update.program') }}" method="POST">
                             @csrf
                             <input type="hidden" value="learn-chinese" name="program">
                             <input type="hidden" value="{{ $key }}" name="course" id="study">
-                            <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                            <button type="submit" class="cta">{{ __('content.also interested') }}</button>
                         </form>
-                    @endauth
-                </div>
-                <p>
-                    {{ $course['description'] }}
-                </p>
+                    @endif
+                @else
+                    <form action="{{ route('register') }}" method="POST">
+                        @csrf
+                        <input type="hidden" value="learn-chinese" name="program">
+                        <input type="hidden" value="{{ $key }}" name="course" id="study">
+                        <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                    </form>
+                @endauth
             </div>
+            <p>
+                {{ $course['description'] }}
+            </p>
+        </div>
         @endforeach
     </div>
     <div class="arrow-slider__controllers">

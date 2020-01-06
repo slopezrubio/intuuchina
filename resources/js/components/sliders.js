@@ -63,7 +63,7 @@ var coursesSlider = (function() {
     var arrowSlider = null;
 
     function replaceCourseInfoSection(newCourseInfoSection) {
-        $('.course-information').remove();
+        $('section#course-info').remove();
         $('section.arrow-slider').after(newCourseInfoSection);
     }
 
@@ -89,26 +89,41 @@ var coursesSlider = (function() {
                 controllers: document.querySelector('.arrow-slider__controllers').children,
                 controllersCallback: function (slider) {
                     let course = slider.querySelector('#study').getAttribute('value');
-                    let courseInfoSection = api.getCourseInfo(course, replaceCourseInfoSection);
+                    api.getCourseInfo(course, replaceCourseInfoSection);
                 }
             });
         }
     }
 })();
 
-let universitySlider = {
-    init: function() {
-        var arrowSlider = new ArrowSlider({
-            holder: document.querySelector('.arrow-slider__holder'),
-            colors: [
-                'white',
-                'black',
-                '\#E57373'
-            ],
-            controllers: document.querySelector('.arrow-slider__controllers').children,
-        });
+var universitiesSlider = (function() {
+    var arrowSlider = null;
+
+    function getCurrentSlide() {
+        let controllers = document.querySelector('.arrow-slider__controllers').children;
+
+        for (let i = 0; i < controllers.length; i++) {
+            if ($(controllers[i]).hasClass('selected')) {
+                return i;
+            }
+        }
     }
-}
+
+    return {
+        init: function() {
+            arrowSlider = new ArrowSlider({
+                holder: document.querySelector('.arrow-slider__holder'),
+                slide: getCurrentSlide(),
+                colors: [
+                    'white',
+                    'black',
+                    '\#E57373'
+                ],
+                controllers: document.querySelector('.arrow-slider__controllers').children,
+            });
+        }
+    }
+})();
 
 if (document.querySelector('.note_carrousel') !== null) {
     $(document).ready(press.init);
@@ -120,5 +135,5 @@ if (document.querySelector('header#learn-chinese') !== null) {
 }
 
 if (document.querySelector('header#university') !== null) {
-    window.addEventListener('load', universitySlider.init);
+    window.addEventListener('load', universitiesSlider.init);
 }

@@ -17,22 +17,22 @@
                         @foreach (__('links.webmap') as $title => $section)
                             @if (!empty($section))
                                 <div>
-                                    <h4 class="footer_subtitle">{{ $title }}</h4>
-                                    <ul class="web-map-list">
-                                    @foreach ($section as $key => $item)
+                                    <h4 class="footer_subtitle">{{ $section['heading'] }}</h4>
+                                    <ul class="web-map">
+                                    @foreach ($section['options']() as $key => $item)
                                         <li class="web-map_item">
                                         @switch($item['method'])
                                             @case('POST')
-                                                <form action="{{ route($item['route']) }}" method="{{ $item['method'] }}">
+                                                <form action="{{ $item['url'] }}" method="{{ $item['method'] }}">
                                                     @csrf
                                                     <input type="hidden" name="{{ $title }}" value="{{ $key }}">
                                                     <a href="#">
-                                                        <input type="submit" value="{{ $item['text'] }}">
+                                                        <button type="submit">{{ $item['text'] }}</button>
                                                     </a>
                                                 </form>
                                                 @break
                                             @case('GET')
-                                                <a href="{{ route($item['route']) }}">
+                                                <a href="{{ $item['url'] }}">
                                                     {{ $item['text'] }}
                                                 </a>
                                                 @break
@@ -133,8 +133,8 @@
             <div class="footer_documentation col-sm-12">
                 <p>{{ __('content.copyright') }}</p>
                 <span class="footer_documentation_signature">
-                    <p>{{ __('content.made with love by ') }}<a href="http://factoriaf5.org"></p>
-                    <img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5">
+                    <p>{{ __('content.made with love by ') }}</p>
+                    <a href="http://factoriaf5.org"><img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5"></a>
                 </span>
                 <p>
                     <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{!! trans('links.terms and conditions') !!}</a>

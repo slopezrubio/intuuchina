@@ -2897,66 +2897,6 @@ var ArrowSlider = function () {
 
 /***/ }),
 
-/***/ "./resources/js/components/_chinese-courses.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/_chinese-courses.js ***!
-  \*****************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-
-var chineseCourses = {
-  init: function init() {
-    var _this = this;
-
-    window.addEventListener('load', function (e) {
-      _this[e.type + 'Listeners']();
-
-      _this.loadCoursesHolder();
-    });
-    window.addEventListener('resize', function (e) {
-      _this.loadCoursesHolder();
-    });
-  },
-  courses: document.querySelectorAll('.description-base'),
-  cta: document.querySelectorAll('.cta'),
-  coursesHolder: document.querySelector('.course-descriptions'),
-  loadListeners: function loadListeners() {
-    for (var i = 0; i < this.cta.length; i++) {
-      this.cta[i].addEventListener('click', function (event) {
-        event.stopPropagation();
-      });
-    }
-  },
-  loadCoursesHolder: function loadCoursesHolder() {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.coursesHolder);
-    this.setSizeCourses();
-  },
-  // if (event.type === 'load') {
-  //     for (let i = 0; i < chineseCourses.cta.length; i++) {
-  //         chineseCourses.cta[i].addEventListener('click', function(event) {
-  //             event.stopPropagation();
-  //         })
-  //     }
-  // }
-  // DOM.expandToViewport(chineseCourses.coursesHolder);
-  // this.setSizeCourses();
-  setSizeCourses: function setSizeCourses() {
-    for (var i = 0; i < this.courses.length; i++) {
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(this.courses[i]);
-    }
-  }
-};
-
-if (document.querySelector('.course-descriptions') !== null) {
-  chineseCourses.init();
-}
-
-/***/ }),
-
 /***/ "./resources/js/components/_customer-journey.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/_customer-journey.js ***!
@@ -3386,86 +3326,197 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom.js */ "./resources/js/main/dom.js");
 
 
-var nav = {
-  init: function init() {
-    nav.setup();
-  },
-  setup: function setup() {
-    /*
-     * Loads the login modal when there is some error coming
-     * from the form inside.
-     */
-    window.addEventListener('load', function () {
-      if (nav.hasErrorsMessages(nav.modalForm)) {
-        nav.showModal();
-      }
-
-      ;
-    });
-
-    var _loop = function _loop(i) {
-      var dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
-      dropdown.addEventListener('mouseover', function (e) {
-        if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
-          var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-          $(targetId).dropdown('show');
-        }
-      });
-      dropdown.addEventListener('click', function (e) {
-        /*if (!MediaQueries.isNavbarBreakpoint()) {
-            let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-            if ($(targetId.querySelector('ul')).hasClass('show')) {
-                console.log("hola");
-                $(targetId).dropdown('hide');
-            } else {
-                $(targetId).dropdown('show');
-            }
-        }*/
-      });
-      dropdown.addEventListener('mouseout', function (e) {
-        if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
-          var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-          $(targetId).dropdown('hide');
-        }
-      });
-    };
-
-    for (var i = 0; i < nav.navbar.querySelectorAll('.dropdown').length; i++) {
-      _loop(i);
-    }
-
-    for (var i = 0; i < nav.accordionSubmenus.length; i++) {
-      nav.accordionSubmenus[i].addEventListener('mouseover', nav.highlightItem, true);
-      nav.accordionSubmenus[i].addEventListener('mouseout', nav.highlightItem, true);
-    }
-  },
-  navbar: document.querySelector('.navbar') ? document.querySelector('.navbar') : null,
-  modalForm: document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null,
-  accordionSubmenus: document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null,
-  highlightItem: function highlightItem(event) {
-    if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isLargeDevice()) {
-      var pattern = /\s?show\s?/;
-
-      if (this.getAttribute('class').match(pattern)) {
-        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(this.parentElement, 'reverse-colours');
-      }
-    }
-  },
-  hasErrorsMessages: function hasErrorsMessages(parent) {
-    if ($(parent).find('.is-invalid').length > 0) {
-      return true;
-    }
-
-    return false;
-  },
-  showModal: function showModal() {
-    $('#loginModal').modal();
-  }
-};
 
 if (document.getElementsByTagName('nav') !== null) {
-  nav.init();
-}
+  var nav = function () {
+    var _navbar = document.querySelector('.navbar') ? document.querySelector('.navbar') : null;
+
+    var _dropdowns = _navbar.querySelectorAll('li.dropdown') ? _navbar.querySelectorAll('li.dropdown') : null;
+
+    var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item') ? _navbar.querySelectorAll('a.dropdown-item') : null;
+
+    var _modalForm = document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null;
+
+    var _accordionSubmenus = document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null;
+
+    var _listeners = {
+      dropdown: function dropdown() {
+        _dropdowns.forEach(function (dropdown) {
+          if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
+            dropdown.removeEventListener('click', setDropdowns);
+            dropdown.addEventListener('mouseenter', setDropdowns);
+            dropdown.addEventListener('mouseleave', setDropdowns);
+          } else {
+            dropdown.removeEventListener('mouseenter', setDropdowns);
+            dropdown.removeEventListener('mouseleave', setDropdowns);
+            dropdown.addEventListener('click', setDropdowns);
+          }
+        });
+      },
+      dropdownItem: function dropdownItem() {
+        _dropdownItems.forEach(function (item) {
+          item.addEventListener('click', setDropdownItems);
+        });
+      }
+    };
+
+    function init() {
+      window.addEventListener('load', function () {
+        _listeners.dropdown();
+
+        _listeners.dropdownItem();
+      });
+      window.addEventListener('resize', function (e) {
+        _listeners.dropdown();
+      });
+    }
+
+    function toggleDropdown(element) {
+      if ($(element).hasClass('show')) {
+        $(element).dropdown('hide');
+      } else {
+        $(element).dropdown('show');
+      }
+    }
+
+    function setDropdownItems(e) {
+      var URL = e.target.getAttribute('href');
+      var anchor = e.target;
+
+      while (URL === null) {
+        anchor = anchor.parentElement;
+        URL = anchor.getAttribute('href');
+      }
+
+      location.href = URL;
+    }
+
+    function setDropdowns(e) {
+      var submenu = getSubmenu(e.target);
+
+      switch (e.type) {
+        case 'click':
+          e.preventDefault();
+
+          if ($(e.target).hasClass('toggleOption')) {
+            location.href = e.target.parentElement.getAttribute('href');
+          } else {
+            toggleDropdown(submenu);
+          }
+
+          break;
+
+        case 'mouseenter':
+          $(submenu).dropdown('show');
+          break;
+
+        case 'mouseleave':
+          $(submenu).dropdown('hide');
+          break;
+      }
+    }
+
+    function getSubmenu(menuItem) {
+      var submenu = menuItem.querySelector('.dropdown-menu');
+
+      if (submenu === null) {
+        submenu = $(menuItem).parents('.dropdown-menu')[0];
+
+        if (submenu === undefined) {
+          $(menuItem).parents().map(function () {
+            if ($(this).siblings('.dropdown-menu')[0]) {
+              submenu = $(this).siblings('.dropdown-menu')[0];
+              return submenu;
+            }
+          });
+        }
+      }
+
+      return submenu;
+    }
+
+    init();
+  }();
+} // let nav = {
+//     init: () => {
+//         nav.setup();
+//     },
+//     navbar:
+//     dropdownItems: nav.navbar.querySelectorAll('.dropdown') !== undefined ? nav.navbar.querySelectorAll('.dropdown') : null,
+//     modalForm: document.querySelector('.modal__form') !== null ?  document.querySelector('.modal__form') : null,
+//     accordionSubmenus:  document.querySelectorAll('.accordion_submenu') !== null ?  document.querySelectorAll('.accordion_submenu') : null,
+//     setup: () => {
+//         /*
+//          * Loads the login modal when there is some error coming
+//          * from the form inside.
+//          */
+//         window.addEventListener('load', function() {
+//             if (nav.hasErrorsMessages(nav.modalForm)) {
+//                 nav.showModal();
+//             };
+//         });
+//
+//         console.log(nav.dropdownItems);
+//
+//         // for (let i=0; i < nav.navbar.querySelectorAll('.dropdown').length; i++) {
+//         //     let dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
+//         //     console.log(dropdown);
+//         //     dropdown.addEventListener('mouseover', (e) => {
+//         //         e.stopPropagation();
+//         //         if (MediaQueries.isNavbarBreakpoint()) {
+//         //             let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+//         //             console.log(targetId);
+//         //             $(targetId).dropdown('show');
+//         //         }
+//         //     });
+//         //
+//         //     dropdown.addEventListener('click', (e) => {
+//         //         /*if (!MediaQueries.isNavbarBreakpoint()) {
+//         //             let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+//         //             if ($(targetId.querySelector('ul')).hasClass('show')) {
+//         //                 console.log("hola");
+//         //                 $(targetId).dropdown('hide');
+//         //             } else {
+//         //                 $(targetId).dropdown('show');
+//         //             }
+//         //         }*/
+//         //     });
+//         //
+//         //     dropdown.addEventListener('mouseout', function(e) {
+//         //         if (MediaQueries.isNavbarBreakpoint()) {
+//         //             let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
+//         //             $(targetId).dropdown('hide');
+//         //         }
+//         //     });
+//         // }
+//
+//         for (let i=0; i < nav.accordionSubmenus.length; i++) {
+//             nav.accordionSubmenus[i].addEventListener('mouseover', nav.highlightItem, true);
+//             nav.accordionSubmenus[i].addEventListener('mouseout', nav.highlightItem, true);
+//         }
+//     },
+//     highlightItem: function(event) {
+//         if (!MediaQueries.isLargeDevice()) {
+//             let pattern = /\s?show\s?/;
+//             if (this.getAttribute('class').match(pattern)) {
+//                 DOM.toggleSingleClass(this.parentElement, 'reverse-colours');
+//             }
+//         }
+//     },
+//     hasErrorsMessages: (parent) => {
+//         if ($(parent).find('.is-invalid').length > 0) {
+//             return true;
+//         }
+//
+//         return false;
+//     },
+//     showModal: () => {
+//         $('#loginModal').modal();
+//     }
+// }
+// if (document.getElementsByTagName('nav') !== null) {
+//     nav.init();
+// }
 
 /***/ }),
 
@@ -3664,9 +3715,8 @@ var offers = {
     }
 
     return value;
-  } // Component Events
-
-};
+  }
+}; // Component Events
 
 if (document.querySelector('.dropdown-button')) {
   //document.querySelector('.dropdown-button')..addEventListener('click', displayForm);
@@ -4963,7 +5013,7 @@ var welcomeCard = {
             } else {
                 e.complete('success')
                 stripe.confirmCardPayment(clientSecret).then(function(result) {
-                 })
+                  })
             }
         })
     });*/
@@ -5052,7 +5102,7 @@ var coursesSlider = function () {
   var arrowSlider = null;
 
   function replaceCourseInfoSection(newCourseInfoSection) {
-    $('.course-information').remove();
+    $('section#course-info').remove();
     $('section.arrow-slider').after(newCourseInfoSection);
   }
 
@@ -5075,22 +5125,37 @@ var coursesSlider = function () {
         controllers: document.querySelector('.arrow-slider__controllers').children,
         controllersCallback: function controllersCallback(slider) {
           var course = slider.querySelector('#study').getAttribute('value');
-          var courseInfoSection = _main_api_js__WEBPACK_IMPORTED_MODULE_3__["default"].getCourseInfo(course, replaceCourseInfoSection);
+          _main_api_js__WEBPACK_IMPORTED_MODULE_3__["default"].getCourseInfo(course, replaceCourseInfoSection);
         }
       });
     }
   };
 }();
 
-var universitySlider = {
-  init: function init() {
-    var arrowSlider = new _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
-      holder: document.querySelector('.arrow-slider__holder'),
-      colors: ['white', 'black', '\#E57373'],
-      controllers: document.querySelector('.arrow-slider__controllers').children
-    });
+var universitiesSlider = function () {
+  var arrowSlider = null;
+
+  function getCurrentSlide() {
+    var controllers = document.querySelector('.arrow-slider__controllers').children;
+
+    for (var i = 0; i < controllers.length; i++) {
+      if ($(controllers[i]).hasClass('selected')) {
+        return i;
+      }
+    }
   }
-};
+
+  return {
+    init: function init() {
+      arrowSlider = new _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        holder: document.querySelector('.arrow-slider__holder'),
+        slide: getCurrentSlide(),
+        colors: ['white', 'black', '\#E57373'],
+        controllers: document.querySelector('.arrow-slider__controllers').children
+      });
+    }
+  };
+}();
 
 if (document.querySelector('.note_carrousel') !== null) {
   $(document).ready(press.init);
@@ -5102,7 +5167,7 @@ if (document.querySelector('header#learn-chinese') !== null) {
 }
 
 if (document.querySelector('header#university') !== null) {
-  window.addEventListener('load', universitySlider.init);
+  window.addEventListener('load', universitiesSlider.init);
 }
 
 /***/ }),
@@ -5355,9 +5420,9 @@ var UI = function () {
     // Private properties
     var patterns = {
       verticalCustomerJourney: /vertical.(png|jpg|gif)$/g,
-      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g // Private methods
+      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g
+    }; // Private methods
 
-    };
     return {
       get: function get(key) {
         return eval(key);
@@ -5741,17 +5806,24 @@ var api = {
     return validateFields;
   }(),
   setTokenToAxiosHeader: function setTokenToAxiosHeader() {
-    var token = document.head.querySelector('meta[name="csrf-token"');
+    api.getToken();
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
   },
-  getCourseInfo: function getCourseInfo() {
-    var course = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var callback = arguments.length > 1 ? arguments[1] : undefined;
-    $.get({
-      url: '/learn/' + course,
+  getToken: function getToken() {
+    return document.head.querySelector('meta[name="csrf-token"');
+  },
+  getCourseInfo: function getCourseInfo(course, callback) {
+    var data = {
+      'course': course
+    };
+    $.post({
+      url: 'api/course',
       cache: false,
-      data: course,
+      data: data,
       dataType: 'html',
+      headers: {
+        'X-CSRF-TOKEN': api.getToken()
+      },
       error: function error(xhr, status, _error) {
         console.log(_error);
       },
@@ -5999,29 +6071,28 @@ var messages = {
 /***/ }),
 
 /***/ 1:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_edit-offer.js */"./resources/js/components/_edit-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_services.js */"./resources/js/components/_services.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_customer-journey.js */"./resources/js/components/_customer-journey.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_welcome-card.js */"./resources/js/components/_welcome-card.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_stats.js */"./resources/js/components/_stats.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_motifs.js */"./resources/js/components/_motifs.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_welcome-card.js */"./resources/js/components/_welcome-card.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 
 
 /***/ })

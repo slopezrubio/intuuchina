@@ -5,6 +5,19 @@
 
 /*----------------------------------------------*/
 
+.bg-info-box {
+  padding: 2em;
+  @include prefixed(filter, grayscale(100%));
+  @include prefixed(filter, grayscale(100%));
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.8s ease;
+  &--primary {
+    background-image: url('/../../storage/images/student.jpg');
+    background-position-y: 30%;
+  }
+}
+
 %default-info-box {
   box-sizing: border-box;
   padding: 2rem;
@@ -44,7 +57,7 @@
       @include inline-flex();
       @include flex-direction(row);
       .price-tag {
-        font-size: 4em;
+        font-size: 3em;
         &:first-of-type {
           margin-right: 1em;
         }
@@ -69,8 +82,7 @@
 
     .advice {
       margin: 1em 0 0 .5em;
-      $map: (295: 16, 389: 14, 688: 14, 1875: 14);
-      font-size: minimosCuadrados($map);
+
     }
   }
 }
@@ -79,15 +91,6 @@
   height: auto;
   width: 100%;
   max-width: 600px;
-}
-#bg-classroom-course{
-  background-image: url('/../../storage/images/student.jpg');
-  @include prefixed(filter, grayscale(100%));
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: 30%;
-  @include prefixed(filter, grayscale(100%));
-  transition: all 0.8s ease;
 }
 
 .course-information {

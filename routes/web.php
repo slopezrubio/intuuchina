@@ -25,44 +25,44 @@ Route::prefix('internship')->group(function() {
 Route::get('/internship/{offer}', 'OffersController@single')->where('offer', '[0-9]+')->name('single-offer');
 
 /* Información Cursos Aprende Chino */
-Route::get('/learn/{course}', function($selected_course) {
-    return view('partials/_price-course-info', compact( 'selected_course'));
-})->where('course', (function() {
-                        $pattern = '^(';
+//Route::get('/learn/{course}', function($selected_course) {
+//    return view('partials/_price-course-info', compact( 'selected_course'));
+//})->where('course', (function() {
+//                        $pattern = '^(';
+//
+//                        foreach (__('content.courses') as $key => $value) {
+//                            $pattern .= $key . '|';
+//                        }
+//
+//                        $pattern = substr_replace($pattern, ')$', -1);
+//                        return $pattern;
+//                    })()
+//    );
 
-                        foreach (__('content.courses') as $key => $value) {
-                            $pattern .= $key . '|';
-                        }
-
-                        $pattern = substr_replace($pattern, ')$', -1);
-                        return $pattern;
-                    })()
-    );
+Route::get('learn', 'IndexController@learn');
 
 /* Aprende Chino */
-Route::match(['get', 'post'],'/learn', function(Illuminate\Http\Request $request) {
-    $selected_course = $request->get('learn-chinese');
-    $courses = __('content.courses');
-    $slider = [];
-
-    $currentKey = array_key_first($courses);
-
-    while ($currentKey !== $selected_course) {
-        next($courses);
-        $currentKey = key($courses);
-        if ($currentKey === $selected_course) {
-            $slider['previous'] = prev($courses);
-            $slider['current'] = next($courses);
-            $slider['next'] = next($courses);
-        }
-    }
-    return view('pages/learn-chinese', compact('slider'));
-})->name('learn');
+//Route::match(['get', 'post'],'/learn', function(Illuminate\Http\Request $request) {
+//    $selected_course = $request->get('learn-chinese');
+//    $courses = __('content.courses');
+//    $slider = [];
+//
+//    $currentKey = array_key_first($courses);
+//
+//    while ($currentKey !== $selected_course) {
+//        next($courses);
+//        $currentKey = key($courses);
+//        if ($currentKey === $selected_course) {
+//            $slider['previous'] = prev($courses);
+//            $slider['current'] = next($courses);
+//            $slider['next'] = next($courses);
+//        }
+//    }
+//    return view('pages/learn-chinese', compact('slider'));
+//})->name('learn');
 
 /* Universidad */
-Route::match(['get', 'post'],'/university', function() {
-    return view('pages/university');
-})->name('university');
+Route::get('university', 'IndexController@university');
 
 /* Why Us */
 Route::get('/why', function() {

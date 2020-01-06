@@ -240,15 +240,18 @@ return [
     'universities' => [
         'mba' => [
             'heading' => 'MBA',
-            'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.'
+            'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
+            'key' => 'mba'
         ],
         'mib' => [
             'heading' => 'M. Intl. Bsns.',
             'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
+            'key' => 'mib',
         ],
         'other' => [
             'heading' => 'Other',
-            'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.'
+            'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.',
+            'key' => 'other'
         ],
     ],
     'courses' => [
@@ -256,8 +259,8 @@ return [
             'text' => 'In-Person',
             'slider' => '<span>in China</span>',
             'price' => [
-                'eur' => '470.00',
-                'usd' => '499.00',
+                'eur' => '564.00',
+                'usd' => '630.00',
             ],
             'scope' => [
                 'min' => '1',
@@ -271,8 +274,8 @@ return [
             'text' => 'Online',
             'slider' => 'Course',
             'price' => [
-                'eur' => '15.00',
-                'usd' => '18.00',
+                'eur' => '18.00',
+                'usd' => '20.00',
             ],
             'scope' => [
                 'min' => '40',

@@ -86,15 +86,25 @@ let api = {
         return await response;
     },
     setTokenToAxiosHeader: function() {
-        var token = document.head.querySelector('meta[name="csrf-token"');
+        api.getToken();
         axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
     },
-    getCourseInfo: function(course = 0, callback) {
-        $.get({
-            url: '/learn/' + course,
+    getToken: function() {
+        return document.head.querySelector('meta[name="csrf-token"');
+    },
+    getCourseInfo: function(course, callback) {
+        let data = {
+            'course' : course
+        };
+
+        $.post({
+            url: 'api/course',
             cache: false,
-            data: course,
+            data: data,
             dataType: 'html',
+            headers: {
+                'X-CSRF-TOKEN': api.getToken()
+            },
             error: function(xhr, status, error) {
                 console.log(error);
             },
