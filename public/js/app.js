@@ -3362,6 +3362,12 @@ if (document.getElementsByTagName('nav') !== null) {
 
     function init() {
       window.addEventListener('load', function () {
+        if (hasErrorsMessages(_modalForm)) {
+          showModal();
+        }
+
+        ;
+
         _listeners.dropdown();
 
         _listeners.dropdownItem();
@@ -3377,6 +3383,18 @@ if (document.getElementsByTagName('nav') !== null) {
       } else {
         $(element).dropdown('show');
       }
+    }
+
+    function hasErrorsMessages(element) {
+      if ($(element).find('.is-invalid').length > 0) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function showModal() {
+      $(_modalForm).modal();
     }
 
     function setDropdownItems(e) {
@@ -3715,8 +3733,9 @@ var offers = {
     }
 
     return value;
-  }
-}; // Component Events
+  } // Component Events
+
+};
 
 if (document.querySelector('.dropdown-button')) {
   //document.querySelector('.dropdown-button')..addEventListener('click', displayForm);
@@ -3741,7 +3760,7 @@ function displayForm(event) {
 
     var previousElementPosition = document.querySelector('.offers').offsetTop + document.querySelector('.offers').clientHeight; // Scrolls the page where the form is being displayed.
 
-    scrollTo(previousElementPosition); // Heads the typing to the first field of the hidden form
+    slideTo('scrollDown', previousElementPosition); // Heads the typing to the first field of the hidden form
 
     var firstInputOfTheForm = $('.form_body input').filter(':first');
     firstInputOfTheForm.focus();
@@ -3749,16 +3768,16 @@ function displayForm(event) {
 
   if (formIsDisplayed) {
     var itemManagementPosition = document.querySelector('.items_management').offsetTop;
-    scrollTo(itemManagementPosition);
+    slideTo('scrollTop', itemManagementPosition);
     setTimeout(function () {
       $('.items_form').addClass('items_form--hidden').removeClass('items_form');
     }, 500);
   }
 }
 
-function scrollTo(target) {
+function slideTo(direction, target) {
   $("html, body").animate({
-    'scrollTop': target
+    direction: target
   }, 1000, 'swing');
 }
 
@@ -5013,7 +5032,7 @@ var welcomeCard = {
             } else {
                 e.complete('success')
                 stripe.confirmCardPayment(clientSecret).then(function(result) {
-                  })
+                 })
             }
         })
     });*/
@@ -5420,9 +5439,9 @@ var UI = function () {
     // Private properties
     var patterns = {
       verticalCustomerJourney: /vertical.(png|jpg|gif)$/g,
-      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g
-    }; // Private methods
+      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g // Private methods
 
+    };
     return {
       get: function get(key) {
         return eval(key);
@@ -6077,22 +6096,22 @@ var messages = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_welcome-card.js */"./resources/js/components/_welcome-card.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");
-module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_edit-offer.js */"./resources/js/components/_edit-offer.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_services.js */"./resources/js/components/_services.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_customer-journey.js */"./resources/js/components/_customer-journey.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_welcome-card.js */"./resources/js/components/_welcome-card.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_stats.js */"./resources/js/components/_stats.js");
+__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_motifs.js */"./resources/js/components/_motifs.js");
+module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
 
 
 /***/ })

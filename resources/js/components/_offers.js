@@ -84,7 +84,7 @@ function displayForm(event) {
         let previousElementPosition = document.querySelector('.offers').offsetTop + document.querySelector('.offers').clientHeight;
 
         // Scrolls the page where the form is being displayed.
-        scrollTo(previousElementPosition);
+        slideTo('scrollDown', previousElementPosition);
 
         // Heads the typing to the first field of the hidden form
         let firstInputOfTheForm = $('.form_body input').filter(':first');
@@ -93,7 +93,7 @@ function displayForm(event) {
 
     if (formIsDisplayed) {
         let itemManagementPosition = document.querySelector('.items_management').offsetTop;
-        scrollTo(itemManagementPosition);
+        slideTo('scrollTop', itemManagementPosition);
         setTimeout(function() {
             $('.items_form').addClass('items_form--hidden')
                 .removeClass('items_form')
@@ -101,9 +101,9 @@ function displayForm(event) {
     }
 }
 
-function scrollTo(target) {
+function slideTo(direction, target) {
     $("html, body").animate({
-        'scrollTop': target
+        direction : target
     }, 1000, 'swing');
 }
 

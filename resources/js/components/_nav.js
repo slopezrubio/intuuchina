@@ -33,6 +33,10 @@ if (document.getElementsByTagName('nav') !== null) {
 
         function init() {
             window.addEventListener('load', function() {
+                if (hasErrorsMessages(_modalForm)) {
+                    showModal();
+                };
+
                 _listeners.dropdown();
                 _listeners.dropdownItem();
             });
@@ -48,6 +52,18 @@ if (document.getElementsByTagName('nav') !== null) {
             } else {
                 $(element).dropdown('show');
             }
+        }
+
+        function hasErrorsMessages(element) {
+            if ($(element).find('.is-invalid').length > 0) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function showModal() {
+            $(_modalForm).modal();
         }
 
         function setDropdownItems(e) {

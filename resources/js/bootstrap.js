@@ -11,7 +11,7 @@ require('./quill');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-    window.Quill = require('Quill');
+    window.Quill = require('quill');
 
     require('bootstrap');
 } catch (e) {}

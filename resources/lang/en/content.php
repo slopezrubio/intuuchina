@@ -293,7 +293,7 @@ return [
     'study chinese via' => 'Study Chinese via',
     'sign in' => 'Sign In',
     'edit' => 'Editar',
-    'offer title label' => 'Title',
+    'title' => 'Title',
     'offer location label' => 'Location',
     'save' => 'Save',
     'program' => 'Program',
