@@ -3733,9 +3733,8 @@ var offers = {
     }
 
     return value;
-  } // Component Events
-
-};
+  }
+}; // Component Events
 
 if (document.querySelector('.dropdown-button')) {
   //document.querySelector('.dropdown-button')..addEventListener('click', displayForm);
@@ -5032,7 +5031,7 @@ var welcomeCard = {
             } else {
                 e.complete('success')
                 stripe.confirmCardPayment(clientSecret).then(function(result) {
-                 })
+                  })
             }
         })
     });*/
@@ -5439,9 +5438,9 @@ var UI = function () {
     // Private properties
     var patterns = {
       verticalCustomerJourney: /vertical.(png|jpg|gif)$/g,
-      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g // Private methods
+      horizontalCustomerJourney: /horizontal.(png|jpg|gif)$/g
+    }; // Private methods
 
-    };
     return {
       get: function get(key) {
         return eval(key);
@@ -6096,22 +6095,22 @@ var messages = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_register.js */"./resources/js/components/_register.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_nav.js */"./resources/js/components/_nav.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_page-title.js */"./resources/js/components/_page-title.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers.js */"./resources/js/components/_offers.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_single-offer.js */"./resources/js/components/_single-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_edit-offer.js */"./resources/js/components/_edit-offer.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_news.js */"./resources/js/components/_news.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_services.js */"./resources/js/components/_services.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_customer-journey.js */"./resources/js/components/_customer-journey.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_welcome-card.js */"./resources/js/components/_welcome-card.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_filter-by.js */"./resources/js/components/_filter-by.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_stats.js */"./resources/js/components/_stats.js");
-__webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_motifs.js */"./resources/js/components/_motifs.js");
-module.exports = __webpack_require__(/*! /media/meinsusseichhornchen/DATOS/Salva/Proyectos/Apache/intuuchina/resources/js/components/_footer.js */"./resources/js/components/_footer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_welcome-card.js */"./resources/js/components/_welcome-card.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_stats.js */"./resources/js/components/_stats.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_motifs.js */"./resources/js/components/_motifs.js");
+module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 
 
 /***/ })

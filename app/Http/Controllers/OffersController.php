@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
 {
+    const ELEMENTS_PER_PAGE = 20;
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +43,7 @@ class OffersController extends Controller
          * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
          * por la fecha de creación.
          */
-        $offers = Offer::orderBy('created_at','DESC')->get();
+        $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
         $offer = new Offer();
         $offers = $offer->setDaysRenewed($offers);
 
