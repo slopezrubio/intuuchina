@@ -1,17 +1,27 @@
 import messages from '../main/messages';
+import Pagination from './Pagination';
+import domObserver from '../main/domObserver.js';
 
 let offersList = {
     init: () => {
         window.addEventListener('load', offersList.setup);
+        if (document.querySelector('.pagination')) {
+            offersList.pagination = new Pagination({
+                container: document.querySelector('.pagination')
+            });
+        }
     },
     inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
     modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
     deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
+    pagination: null,
     setup: function() {
         offersList.inputFilter.addEventListener('change', function(event) {
             let selectedFilter = offersList.inputFilter.value;
-            let path = window.location.pathname + `/filter=${selectedFilter}`;
-            offersList.getRequest(path, selectedFilter);
+            let path = selectedFilter !== 'all' ? window.location.pathname + `/${selectedFilter}` : window.location.pathname;
+            offersList.getRequest(path, {
+                isNewFilter: 'true',
+            });
         });
 
         for (let i = 0; i < offersList.deleteButtons.length; i++) {
@@ -53,13 +63,17 @@ let offersList = {
             url: path,
             cache: false,
             data: data,
-            dataType: 'html',
+            dataType: 'json',
             error: function(xhr, status, error) {
                 console.log(error);
             },
             success: function(data, status, xhr) {
-                $('.offers').remove();
-                $('.items_management').after(data);
+                $('#content').html(data);
+                if (offersList.pagination.hasPagination()) {
+                    offersList.pagination = new Pagination({
+                        container: document.querySelector('.pagination')
+                    });
+                }
             }
         })
     }

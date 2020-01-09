@@ -2897,6 +2897,231 @@ var ArrowSlider = function () {
 
 /***/ }),
 
+/***/ "./resources/js/components/Pagination.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Pagination.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
+
+
+
+var Pagination = function () {
+  var instance;
+
+  function PaginationClass(options) {
+    var _this = this;
+
+    // Private properties
+    var _container = options.container;
+
+    var _links = options.container.querySelectorAll('.page-link');
+
+    var _selector = options.container.querySelector('.item-selector');
+
+    var _controllers = {
+      next: _links[_links.length - 1],
+      previous: _links[0]
+    };
+
+    var _path = _controllers.previous.getAttribute('href') ? _controllers.previous.getAttribute('href').split('page=')[0] : _controllers.next.getAttribute('href').split('page=')[0]; // Private methods
+
+
+    function init() {
+      slideTo(getCurrentLink().offsetLeft - _selector.offsetLeft);
+
+      _links.forEach(function (element) {
+        element.addEventListener('click', getPage);
+      });
+    }
+
+    function getPage(e) {
+      e.preventDefault();
+
+      if (isCurrentLink(e.target)) {
+        return false;
+      } // if (e.target.offsetLeft === _selector.offsetLeft || DOM.isDisabled(e.target)) {
+      //     console.log("hola");
+      //     return false;
+      // }
+
+
+      _main_api__WEBPACK_IMPORTED_MODULE_1__["default"].getPagination(e.target.getAttribute('href'), _container);
+      moveSelectorTo(e.target);
+    }
+
+    function moveSelectorTo(linkSelected) {
+      var moveTo = false;
+      var rel = linkSelected.getAttribute('rel');
+
+      if (rel !== null) {
+        var selected = eval('get' + rel[0].toUpperCase() + rel.slice(1) + '(getCurrentLink())');
+
+        if (selected.getAttribute('rel') === null) {
+          moveTo = selected.offsetLeft - _selector.offsetLeft;
+          setCurrentLink(selected);
+          updateControllers();
+          slideTo(moveTo);
+        }
+
+        return moveTo;
+      }
+
+      moveTo = linkSelected.offsetLeft - _selector.offsetLeft;
+      setCurrentLink(linkSelected);
+      updateControllers();
+      slideTo(moveTo);
+      return true;
+    }
+
+    function slideTo(x) {
+      x += 'px';
+      $(_selector).css({
+        '-webkit-transform': 'translateX(' + x + ')',
+        '-moz-transform': 'translateX(' + x + ')',
+        '-ms-transform': 'translateX(' + x + ')',
+        '-o-transform': 'translateX(' + x + ')',
+        'transform': 'translateX(' + x + ')'
+      });
+    }
+    /**
+     * Gets the next link from the current one.
+     *
+     * @param element
+     * @returns {Element}
+     */
+
+
+    function getNext(element) {
+      return element.parentElement.nextElementSibling.querySelector('.page-link');
+    }
+    /**
+     * Gets the previous link from the current one.
+     *
+     * @param element
+     * @returns {Element}
+     */
+
+
+    function getPrev(element) {
+      return element.parentElement.previousElementSibling.querySelector('.page-link');
+    }
+
+    function isCurrentLink(anchor) {
+      return anchor.isEqualNode(getCurrentLink());
+    }
+
+    function updateControllers() {
+      updateLinks();
+      var container = _controllers.previous.parentElement;
+
+      if (isFirstPage()) {
+        if (!$(container).hasClass('disabled')) {
+          container.classList.add('disabled');
+          container.setAttribute('aria-disabled', 'true');
+          container.innerHTML = '<span class="page-link" aria-hidden="true">‹</span>';
+        }
+      } else {
+        if ($(container).hasClass('disabled')) {
+          container.classList.remove('disabled');
+          container.removeAttribute('aria-disabled');
+        }
+
+        container.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getPrev(getCurrentLink()).textContent + '" rel="prev" aria-label="Previous »">‹</a>';
+      }
+
+      _controllers.previous = container.querySelector('.page-link');
+
+      _controllers.previous.addEventListener('click', getPage);
+
+      container = _controllers.next.parentElement;
+
+      if (isLastPage()) {
+        if (!$(container).hasClass('disabled')) {
+          container.classList.add('disabled');
+          container.setAttribute('aria-disabled', 'true');
+          container.innerHTML = '<span class="page-link" aria-hidden="true">›</span>';
+        }
+      } else {
+        if ($(container).hasClass('disabled')) {
+          container.classList.remove('disabled');
+          container.removeAttribute('aria-disabled');
+        }
+
+        container.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getNext(getCurrentLink()).textContent + '" rel="next" aria-label="Next »">›</a>';
+      }
+
+      _controllers.next = container.querySelector('.page-link');
+
+      _controllers.next.addEventListener('click', getPage);
+    }
+    /**
+     * Sets the element passed an argument as the current link.
+     *
+     * @param element
+     */
+
+
+    function setCurrentLink(element) {
+      getCurrentLink().parentElement.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getCurrentLink().textContent + '">' + getCurrentLink().textContent + '</a>';
+      getCurrentLink().addEventListener('click', getPage);
+      getCurrentLink().parentElement.removeAttribute('aria-current');
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(getCurrentLink().parentElement, 'active');
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(element.parentElement, 'active');
+      element.parentElement.setAttribute('aria-current', 'page');
+      element.parentElement.innerHTML = '<span class="page-link">' + element.textContent + '</span>';
+    }
+
+    function isFirstPage() {
+      return getCurrentLink().isEqualNode(_links[1]);
+    }
+
+    function isLastPage() {
+      return getCurrentLink().isEqualNode(_links[_links.length - 2]);
+    }
+
+    function updateLinks() {
+      _links = _container.querySelectorAll('.page-link');
+    }
+
+    function getCurrentLink() {
+      return _container.querySelector('.active > .page-link');
+    }
+
+    init();
+    return {
+      hasPagination: function hasPagination() {
+        return document.querySelector('.pagination');
+      },
+      get: function get(key) {
+        return _this[key];
+      },
+      set: function set(key, value) {
+        _this[key] = value;
+      }
+    };
+  }
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = PaginationClass;
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Pagination.getInstance());
+
+/***/ }),
+
 /***/ "./resources/js/components/_customer-journey.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/_customer-journey.js ***!
@@ -3591,19 +3816,32 @@ if (news.polygon !== null) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/messages */ "./resources/js/main/messages.js");
+/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination */ "./resources/js/components/Pagination.js");
+/* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
+
+
 
 var offersList = {
   init: function init() {
     window.addEventListener('load', offersList.setup);
+
+    if (document.querySelector('.pagination')) {
+      offersList.pagination = new _Pagination__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        container: document.querySelector('.pagination')
+      });
+    }
   },
   inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
   modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
   deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
+  pagination: null,
   setup: function setup() {
     offersList.inputFilter.addEventListener('change', function (event) {
       var selectedFilter = offersList.inputFilter.value;
-      var path = window.location.pathname + "/filter=".concat(selectedFilter);
-      offersList.getRequest(path, selectedFilter);
+      var path = selectedFilter !== 'all' ? window.location.pathname + "/".concat(selectedFilter) : window.location.pathname;
+      offersList.getRequest(path, {
+        isNewFilter: 'true'
+      });
     });
 
     for (var i = 0; i < offersList.deleteButtons.length; i++) {
@@ -3646,13 +3884,18 @@ var offersList = {
       url: path,
       cache: false,
       data: data,
-      dataType: 'html',
+      dataType: 'json',
       error: function error(xhr, status, _error) {
         console.log(_error);
       },
       success: function success(data, status, xhr) {
-        $('.offers').remove();
-        $('.items_management').after(data);
+        $('#content').html(data);
+
+        if (offersList.pagination.hasPagination()) {
+          offersList.pagination = new _Pagination__WEBPACK_IMPORTED_MODULE_1__["default"]({
+            container: document.querySelector('.pagination')
+          });
+        }
       }
     });
   }
@@ -5827,6 +6070,31 @@ var api = {
     api.getToken();
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
   },
+  getPagination: function getPagination(url, container) {
+    if (url !== undefined) {
+      var request = {
+        url: url.split('page=')[0],
+        page: url.split('page=')[1]
+      };
+      $.get({
+        data: {
+          page: request.page
+        },
+        dataType: 'json',
+        cache: false,
+        url: request.url,
+        error: function error(xhr, status, _error) {
+          console.log(_error);
+        },
+        success: function success(data, status) {
+          $(container.previousElementSibling).remove();
+          $(container).before(data);
+        }
+      });
+    }
+
+    return false;
+  },
   getToken: function getToken() {
     return document.head.querySelector('meta[name="csrf-token"');
   },
@@ -5842,8 +6110,8 @@ var api = {
       headers: {
         'X-CSRF-TOKEN': api.getToken()
       },
-      error: function error(xhr, status, _error) {
-        console.log(_error);
+      error: function error(xhr, status, _error2) {
+        console.log(_error2);
       },
       success: function success(data, status, xhr) {
         callback(data);
@@ -5989,6 +6257,9 @@ var DOM = function () {
         }
 
         return elements[elementsHeight.indexOf(Math.max.apply(null, elementsHeight))];
+      },
+      isDisabled: function isDisabled(element) {
+        return element.getAttribute('disabled') || element.getAttribute('aria-disabled');
       }
     };
   }

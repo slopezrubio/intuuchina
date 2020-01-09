@@ -89,6 +89,32 @@ let api = {
         api.getToken();
         axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
     },
+    getPagination: function(url, container) {
+        if (url !== undefined) {
+            let request = {
+                url: url.split('page=')[0],
+                page: url.split('page=')[1]
+            }
+
+            $.get({
+                data: {
+                    page: request.page
+                },
+                dataType: 'json',
+                cache: false,
+                url: request.url,
+                error: function(xhr, status, error) {
+                    console.log(error);
+                },
+                success: function(data, status) {
+                    $(container.previousElementSibling).remove();
+                    $(container).before(data);
+                }
+            });
+        }
+
+        return false;
+    },
     getToken: function() {
         return document.head.querySelector('meta[name="csrf-token"');
     },

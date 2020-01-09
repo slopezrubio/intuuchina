@@ -32,7 +32,7 @@ Route::get('/why', function() {
  */
 Route::prefix('internship')->group(function() {
     Route::get('/', 'OffersController@index')->name('internship');
-    Route::get('/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
+    Route::get('/{industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
     Route::get('{offer}',  'OffersController@single')->where('offer', '[0-9]+')->name('single-offer');
 });
 

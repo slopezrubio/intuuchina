@@ -100,4 +100,9 @@
         </div>
     @endif
 @endauth
-{!! $offers->render() !!}
+
+@if ((isset($isAjax) && !$isAjax) || (isset($isNewFilter) && $isNewFilter))
+    @if (count($offers) > 0)
+        {!! $offers->links() !!}
+    @endif
+@endif

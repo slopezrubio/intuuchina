@@ -15,8 +15,10 @@
             @include('partials._filter-by')
         </div>
 
-        {{-- Tabla de ofertas --}}
-        @include('partials._offers-list')
+        <section id="content">
+            {{-- Tabla de ofertas --}}
+            @include('partials._offers-list')
+        </section>
 
     </main>
 

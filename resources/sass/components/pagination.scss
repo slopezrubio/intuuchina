@@ -1,0 +1,35 @@
+.pagination {
+  @include justify-content(center);
+  position: relative;
+  margin-bottom: 3em;
+  .page-item {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    a,
+    .page-item.active,
+    .page-link {
+      padding: 0.25em 0.75em;
+      background: none;
+      width: 35px;
+    }
+
+    a {
+      color: $primaryDark;
+      border: none;
+      border-radius: 4px;
+    }
+  }
+
+  .item-selector {
+    background: $primaryDark;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    @include prefixed(transition, all .5s ease-out);
+    .shape {
+      display: block;
+      width: 35px;
+    }
+  }
+}

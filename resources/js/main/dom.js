@@ -38,6 +38,9 @@ var DOM = (function() {
                 }
 
                 return elements[elementsHeight.indexOf(Math.max.apply(null, elementsHeight))];
+            },
+            isDisabled: (element) => {
+                return element.getAttribute('disabled') || element.getAttribute('aria-disabled');
             }
         }
     };
