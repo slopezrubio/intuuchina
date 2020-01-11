@@ -50,7 +50,7 @@ class InvoicePaid extends Mailable
      */
     public function build()
     {
-        return $this->from('info@intuuchina.com')
+        return $this->from(config('mail.from.address'))
                     ->attach($this->invoice->invoice_pdf, [
                         'as' => $this->invoice->id . 'pdf',
                         'mime' => 'application/pdf'

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Swift_Plugins_ThrottlerPlugin;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -32,6 +34,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        $throttleRate = config('mail.throttle_to_messages_per_sec');
+        if ($throttleRate) {
+            $throttlerPlugin = new Swift_Plugins_ThrottlerPlugin($throttleRate, \Swift_Plugins_ThrottlerPlugin::MESSAGES_PER_SECOND);
+            Mail::getSwiftMailer()->registerPlugin($throttlerPlugin);
+        }
+
         Schema::defaultStringLength(191);
         Validator::extend('email_simple', function($attribute, $value, $parameters, $validator) {
             return filter_var($value, FILTER_VALIDATE_EMAIL);

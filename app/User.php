@@ -5,6 +5,7 @@ namespace App;
 use App\Notifications\NewUserNotification;
 use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\MustVerifyEmail as VerifyEmail;
@@ -119,6 +120,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getStudies() {
         return json_decode($this->study);
+    }
+
+    public function getCompletePhoneNumber() {
+        return '(' . __('prefixes.' . json_decode($this->phone_number)->prefix . '.prefix') . ')'. json_decode($this->phone_number)->number;
     }
 
     public static function allOrderBy($field, $order) {

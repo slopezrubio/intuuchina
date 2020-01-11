@@ -3,7 +3,7 @@
         <h2>{{ $header }}</h2>
     </div>
     <div class="notification-card__body">
-        {!! $body!!}
+        {!! $body !!}
         <table class="details">
             @foreach($fields as $fieldName => $field)
                 <tr>
