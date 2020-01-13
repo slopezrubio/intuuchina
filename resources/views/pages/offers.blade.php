@@ -9,11 +9,14 @@
         @include('partials._header')
     </header>
 
-    <main>
-        <div class="row align-items-center items_management container-fluid">
-            {{-- Filtro de ofertas --}}
-            @include('partials._filter-by')
-        </div>
+    <main id="job-board" class="container-fluid">
+        <section id="search-tool">
+{{--            @include('partials._filter-by');--}}
+            {{-- Barra de herramientas de busqueda --}}
+            @component('components.toolbars.job-board')
+
+            @endcomponent
+        </section>
 
         <section id="content">
             {{-- Tabla de ofertas --}}

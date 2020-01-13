@@ -3,7 +3,9 @@
     <div class="navbar">
         <div class="col-12 navbar-expand-lg navbar_container">
             <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
-            <button class="toggleMenu navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar_items">
                     @if(!empty(__('links.navbar')))
@@ -42,13 +44,13 @@
                         </li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="nav-item" data-target="#userMenu" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="nav-item" data-target="#userMenu" data-toggle="none" aria-haspopup="true" aria-expanded="false">
                                 <div class="toggleOption" >{{ Auth::user()->name }}<i class="fas fa-angle-right"></i></div>
                             </a>
 
                             <ul id="userMenu" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="userMenu">
                                 <li>
-                                    <a href="" class="dropdown-item">
+                                    <a href="{{ route('password.reset', ['token' => Str::random(30)]) }}" class="dropdown-item">
                                         <div class="toggleOption">{{ trans('auth.change pass') }}</div>
                                     </a>
                                 </li>
@@ -85,26 +87,26 @@
                         </li>
                     @endguest
 
-                    <li class="dropdown inline-items">
-                        <div class="toggleOption" data-toggle="dropdown">
-                            @foreach(config('app.locales') as $key => $locale)
-                                <a href="#" class="{{ App::isLocale($key) ? 'selected' : '' }}">{{ strtoupper($key) }}</a>
-                            @endforeach
-                        </div>
-                        <a class="nav-item" href="#" data-target="#language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="toggleOption" >{{ strtoupper(App::getLocale()) }}<i class="fas fa-angle-right"></i></div>
-                        </a>
+{{--                    <li class="dropdown inline-items">--}}
+{{--                        <div class="toggleOption" data-toggle="dropdown">--}}
+{{--                            @foreach(config('app.locales') as $key => $locale)--}}
+{{--                                <a href="#" class="{{ App::isLocale($key) ? 'selected' : '' }}">{{ strtoupper($key) }}</a>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+{{--                        <a class="nav-item" href="#" data-target="#language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                            <div class="toggleOption" >{{ strtoupper(App::getLocale()) }}<i class="fas fa-angle-right"></i></div>--}}
+{{--                        </a>--}}
 
-                        <ul id="language" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="language">
-                            @foreach(config('app.locales') as $key => $locale)
-                                <li>
-                                    <a href="#" class="dropdown-item">
-                                        <div class="toggleOption">{{ strtoupper($key) }}</div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
+{{--                        <ul id="language" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="language">--}}
+{{--                            @foreach(config('app.locales') as $key => $locale)--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="dropdown-item">--}}
+{{--                                        <div class="toggleOption">{{ strtoupper($key) }}</div>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
 
                     <li class="social-media-nav">
                         <div class="media" id="media">

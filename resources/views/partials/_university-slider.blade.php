@@ -33,17 +33,17 @@
                 @if(Auth::user()->type !== 'admin')
                     <form action="{{ route('update.program') }}" method="POST">
                         @csrf
-                        <input type="hidden" value="university" name="program">
-                        <input type="hidden" value="{{ $key }}" name="degree" id="study">
-                        <button type="submit" class="cta">{{ __('content.also interested') }}</button>
+                        <input type="hidden" value="university" name="program" id="program">
+                        <input type="hidden" value="{{ $key }}" name="university">
+                        <button type="submit" class="cta" name="product" value="university">{{ __('content.also interested') }}</button>
                     </form>
                 @endif
             @else
-                <form action="{{ route('register') }}" method="POST">
+                <form action="{{ route('application.form') }}" method="POST">
                     @csrf
-                    <input type="hidden" value="university" name="program">
-                    <input type="hidden" value="{{ $key }}" name="degree" id="study">
-                    <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                    <input type="hidden" value="university" name="program" id="program">
+                    <input type="hidden" value="{{ $key }}" name="university">
+                    <button type="submit" class="cta" name="product" value="university">{{ __('content.apply for') }}</button>
                 </form>
             @endauth
         </div>

@@ -126,6 +126,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return '(' . __('prefixes.' . json_decode($this->phone_number)->prefix . '.prefix') . ')'. json_decode($this->phone_number)->number;
     }
 
+    public function getIndustries() {
+        return json_decode($this->industry);
+    }
+
     public static function allOrderBy($field, $order) {
         User::all()
             ->orderBy($field, $order)

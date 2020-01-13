@@ -107,31 +107,34 @@
                                     <div class="regular-select-wrapper">
                                         <select class="form-control" id="inputProgram" name="program">
                                             @foreach (__('content.programs') as $key => $program)
-{{--                                                @if ($i === 0)--}}
-{{--                                                    @if(empty(session('options')))--}}
-{{--                                                        <option value="{{ __('content.programs')[$i]['value'] }}" aria-selected="true" selected>{{ __('content.programs')[$i]['text'] }}</option>--}}
-{{--                                                    @else--}}
-{{--                                                        <option value="internship" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === __('content.programs')[$i]['value'] ? 'selected' : '' }}>--}}
-{{--                                                            {{ __('content.programs')[$i]['text'] }}--}}
-{{--                                                        </option>--}}
-{{--                                                    @endif--}}
-{{--                                                @endif--}}
-                                                    <option value="{{ $key }}" aria-selected="{{ isset(session('options')['program']) && session('options')['program'] === $key ? 'true' : 'false' }}" {{ isset(session('options')['program']) && session('options')['program'] === $key ? 'selected' : '' }}>{{ $program }}</option>
+                                                @if (session()->has('preferences.program'))
+                                                    @if (session('preferences.program') === $key)
+                                                        <option value="{{ $key }}" aria-selected="true" selected>{{ __('content.programs')[$key]}}</option>
+                                                    @else
+                                                        <option value="{{ $key }}">{{ __('content.programs')[$key]}}</option>
+                                                    @endif
+                                                @else
+                                                    @if ($loop->first)
+                                                        <option value="{{ $key }}" aria-selected="true" selected>{{ __('content.programs')[$key]}}</option>
+                                                    @else
+                                                        <option value="{{ $key }}">{{ __('content.programs')[$key]}}</option>
+                                                    @endif
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="industryFieldset">
+                            <div class="form-group row {{ session()->has('preferences') && !session()->has('preferences.university') ? 'hidden' : ''}}" id="industryFieldset" style="{{ session()->has('preferences.industry') ? 'display: block' : '' }}">
                                 <label for="inputIndustry" class="col-md-3 col-form-label text-md-left">{{ __('content.industry') }}</label>
                                 <div class="col-md-9">
                                 @foreach (__('content.industries') as $key => $industry)
                                     <div class="sw_input">
                                         <label aria-label="{{ $key }}">{{ $industry }}</label>
                                         <label for="{{ $key }}" class="switch">
-                                            @if(isset(session('options')['internship']) && session('options')['internship'] === $key)
-                                                <input id="{{ $industry }}" type="checkbox" value="{{ $key }}" name="industry[]" aria-checked="true" checked="true">
+                                            @if(session()->has('preferences.industry') && session('preferences.industry') === $key)
+                                                <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="industry[]" aria-checked="true" checked="true">
                                             @else
                                                 <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="industry[]">
                                             @endif
@@ -142,7 +145,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="studyFieldset">
+                            <div class="form-group row {{ !session()->has('preferences.study') ? 'hidden' : ''}}" id="studyFieldset" style="{{ session()->has('preferences.study') ? 'display: block' : '' }}">
                                 <label for="inputStudy" class="col-md-3 col-form-label text-md-left">{{ __('content.study chinese via') }}</label>
                                 <div class="col-md-9">
 
@@ -150,7 +153,7 @@
                                         <div class="sw_input">
                                             <label aria-label="{{ $key }}">{{ $course['text'] }}</label>
                                             <label for="{{ $key }}" class="switch">
-                                                @if(isset(session('options')['study']) && session('options')['study'] === $key)
+                                                @if(session()->has('preferences.study') && session('preferences.study') === $key)
                                                     <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="study[]" aria-checked="true" checked="true">
                                                 @else
                                                     <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="study[]">
@@ -162,7 +165,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="universityFieldset">
+                            <div class="form-group row {{ !session()->has('preferences.university') ? 'hidden' : ''}}" id="universityFieldset" style="{{ session()->has('preferences.university') ? 'display: block' : '' }}">
                                 <label for="inputUniversity" class="col-md-3 col-form-label text-md-left">{{ __('content.programs.university') }}</label>
                                 <div class="col-md-9">
 
@@ -170,7 +173,11 @@
                                     <div class="sw_input">
                                         <label aria-label="{{ $key }}">{{ $degree['heading'] }}</label>
                                         <label for="{{ $key }}" class="switch">
-                                            <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="university[]">
+                                            @if(session()->has('preferences.university') && session('preferences.university') === $key)
+                                                <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="university[]" aria-checked="true" checked="true">
+                                            @else
+                                                <input id="{{ $key }}" type="checkbox" value="{{ $key }}" name="study[]">
+                                            @endif
                                             <i class="checkbox_slider fas checkbox_slider--rounded"></i>
                                         </label>
                                     </div>

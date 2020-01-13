@@ -2700,6 +2700,31 @@ var ArrowSlider = function () {
       window.addEventListener('resize', setResponsive);
     }
 
+    function setCurrentSlide(value) {
+      currentSlideIndex = value + offset;
+      currentSlide = slides[value];
+    }
+
+    function isCurrentSlide(slide) {
+      return slide.isEqualNode(currentSlide);
+    }
+
+    function isNextSlide(slide) {
+      return slide.isEqualNode(slides[currentSlideIndex]);
+    }
+
+    function isPreviousSlide(slide) {
+      return slide.isEqualNode(slides[currentSlideIndex - offset * 2]);
+    }
+
+    function isFirstSlide(slide) {
+      return slide.isEqualNode(slides[0]);
+    }
+
+    function isLastSlide(slide) {
+      return slide.isEqualNode(slides[slides.length - offset]);
+    }
+
     function addControllers(controllers) {
       var sliderControllers = [];
 
@@ -2805,31 +2830,6 @@ var ArrowSlider = function () {
         controllers[i].removeEventListener('click', updateController);
         controllers[i].addEventListener('click', updateController);
       }
-    }
-
-    function setCurrentSlide(value) {
-      currentSlideIndex = value + offset;
-      currentSlide = slides[value];
-    }
-
-    function isCurrentSlide(slide) {
-      return slide.isEqualNode(currentSlide);
-    }
-
-    function isNextSlide(slide) {
-      return slide.isEqualNode(slides[currentSlideIndex]);
-    }
-
-    function isPreviousSlide(slide) {
-      return slide.isEqualNode(slides[currentSlideIndex - offset * 2]);
-    }
-
-    function isFirstSlide(slide) {
-      return slide.isEqualNode(slides[0]);
-    }
-
-    function isLastSlide(slide) {
-      return slide.isEqualNode(slides[slides.length - offset]);
     }
 
     function setResponsive() {
@@ -3553,16 +3553,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 if (document.getElementsByTagName('nav') !== null) {
-  var nav = function () {
+  var navbar = function () {
     var _navbar = document.querySelector('.navbar') ? document.querySelector('.navbar') : null;
 
-    var _dropdowns = _navbar.querySelectorAll('li.dropdown') ? _navbar.querySelectorAll('li.dropdown') : null;
+    var _dropdowns = _navbar.querySelectorAll('li.dropdown');
 
-    var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item') ? _navbar.querySelectorAll('a.dropdown-item') : null;
+    var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item');
 
-    var _modalForm = document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null;
+    var _loginModal = document.querySelector('#loginModal');
 
-    var _accordionSubmenus = document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null;
+    var _loginForm = _loginModal.querySelector('.modal__form');
+
+    var _accordionSubmenus = _navbar.querySelectorAll('.accordion_submenu');
 
     var _listeners = {
       dropdown: function dropdown() {
@@ -3587,8 +3589,8 @@ if (document.getElementsByTagName('nav') !== null) {
 
     function init() {
       window.addEventListener('load', function () {
-        if (hasErrorsMessages(_modalForm)) {
-          showModal();
+        if (hasErrorsMessages(_loginForm)) {
+          $(_loginModal).modal();
         }
 
         ;
@@ -3618,10 +3620,6 @@ if (document.getElementsByTagName('nav') !== null) {
       return false;
     }
 
-    function showModal() {
-      $(_modalForm).modal();
-    }
-
     function setDropdownItems(e) {
       e.preventDefault();
       var URL = e.target.getAttribute('href');
@@ -3632,8 +3630,12 @@ if (document.getElementsByTagName('nav') !== null) {
         URL = anchor.getAttribute('href');
       }
 
-      if (anchor.onclick.length === 0) {
+      if (anchor.nextElementSibling === null) {
         location.href = URL;
+      } else {
+        if (anchor.nextElementSibling.tagName !== 'FORM') {
+          location.href = URL;
+        }
       }
     }
 
@@ -3825,7 +3827,7 @@ var offersList = {
   }
 };
 
-if (document.querySelector('.offers_list') !== null) {
+if (document.querySelector('#job-board') !== null) {
   offersList.init();
 }
 
@@ -3991,96 +3993,70 @@ if (document.getElementsByTagName('header') !== null) {
 
 /***/ }),
 
-/***/ "./resources/js/components/_register.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/_register.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./resources/js/components/_register-form.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/_register-form.js ***!
+  \***************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var register = {
-  select: document.querySelector('#inputProgram'),
-  industryFieldset: document.querySelector('#industryFieldset'),
-  studyFieldset: document.querySelector('#studyFieldset'),
-  universityFieldset: document.querySelector('#universityFieldset'),
-  cvFieldset: $('#cv').parents('.form-group')[0],
-  showElement: function showElement(domElement) {
-    domElement.classList.remove('hidden');
-    domElement.setAttribute('aria-hidden', false);
-  },
-  hideElement: function hideElement(domElement) {
-    domElement.classList.add('hidden');
-    domElement.setAttribute('aria-hidden', true);
-  },
-  checkFields: function checkFields() {
-    if (register.industryFieldset) {
-      if (register.select.value !== 'internship') {
-        register.hideElement(register.industryFieldset);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+
+
+if (document.querySelector('header#register') !== null) {
+  var registerForm = function () {
+    var _fieldsets = {
+      industry: document.querySelector('#industryFieldset'),
+      study: document.querySelector('#studyFieldset'),
+      program: document.querySelector('#programFieldset'),
+      university: document.querySelector('#universityFieldset'),
+      cv: $('#cv').parents('.form-group')[0]
+    };
+    var _inputs = {
+      program: document.querySelector('#inputProgram')
+    };
+
+    function init() {
+      window.addEventListener('load', setFields);
+
+      _inputs.program.addEventListener('change', setFields);
+    }
+
+    function getProgramSelected() {
+      return _inputs.program.options[_inputs.program.selectedIndex].value;
+    }
+
+    function setFields() {
+      switch (getProgramSelected()) {
+        case 'internship':
+        case 'inter_relocat':
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.cv);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.industry);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.university);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.study);
+          break;
+
+        case 'study':
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.cv);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.industry);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.university);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.study);
+          break;
+
+        case 'university':
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.cv);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.industry);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.university);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.study);
+          break;
       }
     }
 
-    if (register.studyFieldset) {
-      register.hideElement(register.studyFieldset);
-    }
-
-    if (register.universityFieldset) {
-      register.hideElement(register.universityFieldset);
-    }
-  },
-  setFields: function setFields(selectorValue) {
-    switch (selectorValue) {
-      case 'internship':
-      case 'inter_relocat':
-        register.showElement(register.cvFieldset);
-        register.showElement(register.industryFieldset);
-        register.hideElement(register.studyFieldset);
-        register.hideElement(register.universityFieldset);
-        break;
-
-      case 'study':
-        register.showElement(register.studyFieldset);
-        register.hideElement(register.industryFieldset);
-        register.hideElement(register.universityFieldset);
-        register.hideElement(register.cvFieldset);
-        break;
-
-      case 'university':
-        register.showElement(register.cvFieldset);
-        register.showElement(register.universityFieldset);
-        register.hideElement(register.industryFieldset);
-        register.hideElement(register.studyFieldset);
-
-      default:
-        register.showElement(register.cvFieldset);
-        register.hideElement(register.studyFieldset);
-        register.hideElement(register.industryFieldset);
-        register.showElement(register.universityFieldset);
-        break;
-    }
-  },
-  init: function init() {
-    window.addEventListener('load', register.setFields(register.select.value));
-    register.select.addEventListener('change', function (event) {
-      register.setFields(event.target.value);
-    });
-  }
-};
-
-if (register.select !== null) {
-  register.init();
-} // const select = document.querySelector('#inputProgram')
-// const industryFieldset = document.querySelector('#industryFieldset')
-// const studyFieldset = document.querySelector('#studyFieldset')
-// const universityFieldset = document.querySelector('#universityFieldset')
-//
-// const showElement = (domElement) => {
-//   domElement.classList.remove('hidden')
-//   domElement.setAttribute('aria-hidden', false)
-// }
-// const hideElement = (domElement) => {
-//   domElement.classList.add('hidden')
-//   domElement.setAttribute('aria-hidden', true)
-// }
+    init();
+  }();
+}
 
 /***/ }),
 
@@ -6189,6 +6165,14 @@ var DOM = function () {
       },
       isDisabled: function isDisabled(element) {
         return element.getAttribute('disabled') || element.getAttribute('aria-disabled');
+      },
+      hide: function hide(element) {
+        element.classList.add('hidden');
+        element.setAttribute('aria-hidden', true);
+      },
+      show: function show(element) {
+        element.classList.remove('hidden');
+        element.setAttribute('aria-hidden', false);
       }
     };
   }
@@ -6289,14 +6273,14 @@ var messages = {
 /***/ }),
 
 /***/ 1:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register-form.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register-form.js */"./resources/js/components/_register-form.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");

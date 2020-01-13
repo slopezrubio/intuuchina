@@ -30,20 +30,33 @@
             <div class="arrow-slider__slide-header">
                 <h2>{{ $course['text'] }} {!! $course['slider'] !!}</h2>
                 @auth
-                    @if(Auth::user()->type !== 'admin')
-                        <form action="{{ route('update.program') }}" method="POST">
-                            @csrf
-                            <input type="hidden" value="learn-chinese" name="program">
-                            <input type="hidden" value="{{ $key }}" name="course" id="study">
-                            <button type="submit" class="cta">{{ __('content.also interested') }}</button>
-                        </form>
+                    @if(Auth::user()->type === 'user')
+                        @if (Auth::user()->program === 'study')
+                            @if (array_key_exists($key, Auth::user()->getStudies()))
+                                <p>You are already interested in this service</p>
+                            @else
+                                <form action="{{ route('update.program', ['user' => Auth::user()->id, 'program' => Auth::user()->program]) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" value="study" name="program">
+                                    <input type="hidden" value="{{ $key }}" name="course" id="study">
+                                    <button type="submit" name="product" value="study" class="cta">{{ __('content.i\'m also interested') }}</button>
+                                </form>
+                            @endif
+                        @else
+                            <form action="{{ route('change.program', ['user' => Auth::user()->id ]) }}" method="POST">
+                                @csrf
+                                <input type="hidden" value="study" name="program" id="program">
+                                <input type="hidden" value="{{ $key }}" name="course">
+                                <button type="submit" name="product" value="study" class="cta">{{ __('content.change preference') }}</button>
+                            </form>
+                        @endif
                     @endif
                 @else
-                    <form action="{{ route('register') }}" method="POST">
+                    <form action="{{ route('application.form') }}" method="POST">
                         @csrf
-                        <input type="hidden" value="learn-chinese" name="program">
-                        <input type="hidden" value="{{ $key }}" name="course" id="study">
-                        <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                        <input type="hidden" value="study" name="program" id="program">
+                        <input type="hidden" value="{{ $key }}" name="study">
+                        <button type="submit" class="cta" name="product" value="study">{{ __('content.apply for') }}</button>
                     </form>
                 @endauth
             </div>

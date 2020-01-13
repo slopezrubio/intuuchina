@@ -21,9 +21,11 @@ Route::get('/', function () {
 });
 Route::get('learn', 'IndexController@learn');
 Route::get('university', 'IndexController@university');
+Route::post('/application-form','IndexController@applicationForm')->name('application.form');
 Route::get('/why', function() {
     return view('pages/why-intuuchina');
 })->name('whyus');
+
 
 /**
  * |--------------------------------------------------------------------------
@@ -41,8 +43,6 @@ Route::get('/login', function() {
     return view('pages/login');
 });
 
-/* Register with parameters */
-Route::post('/register/options','Auth\RegisterController@registerWithOptions')->name('register.options');
 
 /**
  * |--------------------------------------------------------------------------
@@ -112,7 +112,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('confirm', 'UsersController@confirm')->name('confirm');
     Route::post('payment-method', 'CheckoutsController@newPaymentIntent')->name('payment_method');
     Route::get('{user}/profile', 'UsersController@single')->where('user', '[0-9]+')->name('edit_user');
-    Route::post('{user}/program', 'UsersConrollers@addProgram')->name('update.program');
+    Route::post('{user}/program', 'UsersControllers@changeProgram')->name('change.program');
+    Route::post('{user}/update/{program}', 'UsersController@updateProgram')->name('update.program');
 });
 
 Route::get('payment-successful', 'Auth\CheckoutsController@test');

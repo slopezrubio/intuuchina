@@ -1,4 +1,4 @@
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade {{ $errors->login->has('email') ? 'show' : '' }}" tabindex="-1" id="loginModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header align-items-center">
@@ -11,17 +11,22 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="inputUsername" class="col-form-label">{{ __('auth.e-mail address') }}</label>
-                        <input type="text" class="form-control{{ $errors->has('email') && !$errors->has('register.email') ? ' is-invalid' : '' }}" id="inputUsername" name="email" placeholder="{{ __('content.email placeholder') }}" value="{{ old('email') }}" required autofocus>
-                        @if ($errors->has('email') && !$errors->has('register.email'))
+                        <label for="login-email" class="col-form-label">{{ __('auth.e-mail address') }}</label>
+                        <input type="text" class="form-control{{ $errors->login->has('email') ? ' is-invalid' : '' }}" id="login-email" name="email" placeholder="{{ __('content.email placeholder') }}" value="{{ old('email') }}" required autofocus>
+                        @if ($errors->login->has('email'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('email') }}</strong>
+                                <strong>{{ $errors->login->first('email') }}</strong>
                             </span>
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-form-label">{{ __('auth.password') }}</label>
-                        <input type="password" class="form-control" id="inputPassword" name="password" required>
+                        <label for="login-password" class="col-form-label">{{ __('auth.password') }}</label>
+                        <input type="password" class="form-control{{ $errors->login->has('password') ? ' is-invalid' : '' }}" id="login-password" name="password" required>
+                        @if ($errors->login->has('password'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->login->first('password') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <div class="form-check pl-0">

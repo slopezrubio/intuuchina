@@ -30,6 +30,31 @@ var ArrowSlider = (function() {
             window.addEventListener('resize', setResponsive);
         }
 
+        function setCurrentSlide(value) {
+            currentSlideIndex = value + offset;
+            currentSlide = slides[value];
+        }
+
+        function isCurrentSlide(slide) {
+            return slide.isEqualNode(currentSlide);
+        }
+
+        function isNextSlide(slide) {
+            return slide.isEqualNode(slides[currentSlideIndex]);
+        }
+
+        function isPreviousSlide(slide) {
+            return slide.isEqualNode(slides[currentSlideIndex - (offset * 2)]);
+        }
+
+        function isFirstSlide(slide) {
+            return slide.isEqualNode(slides[0]);
+        }
+
+        function isLastSlide(slide) {
+            return slide.isEqualNode(slides[slides.length - offset]);
+        }
+
         function addControllers(controllers) {
             let sliderControllers = [];
 
@@ -134,31 +159,6 @@ var ArrowSlider = (function() {
                 controllers[i].removeEventListener('click', updateController);
                 controllers[i].addEventListener('click', updateController);
             }
-        }
-
-        function setCurrentSlide(value) {
-            currentSlideIndex = value + offset;
-            currentSlide = slides[value];
-        }
-
-        function isCurrentSlide(slide) {
-            return slide.isEqualNode(currentSlide);
-        }
-
-        function isNextSlide(slide) {
-            return slide.isEqualNode(slides[currentSlideIndex]);
-        }
-
-        function isPreviousSlide(slide) {
-            return slide.isEqualNode(slides[currentSlideIndex - (offset * 2)]);
-        }
-
-        function isFirstSlide(slide) {
-            return slide.isEqualNode(slides[0]);
-        }
-
-        function isLastSlide(slide) {
-            return slide.isEqualNode(slides[slides.length - offset]);
         }
 
         function setResponsive(e = null) {

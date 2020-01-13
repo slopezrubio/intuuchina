@@ -137,7 +137,7 @@
                     <a href="http://factoriaf5.org"><img src="{{ asset('storage/images/logo_factoriaf5.png') }}" alt="Logo de factoriaF5"></a>
                 </span>
                 <p>
-                    <a href="#" data-toggle="modal" data-target="#termsAndConditionsModal">{!! trans('links.terms and conditions') !!}</a>
+                    {!! trans('links.terms and conditions') !!}
                 </p>
             </div>
         </div>

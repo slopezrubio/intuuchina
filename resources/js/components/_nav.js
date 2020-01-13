@@ -2,13 +2,14 @@ import MediaQueries from '../main/breakpoints';
 import DOM from '../main/dom.js';
 
 if (document.getElementsByTagName('nav') !== null) {
-    var nav = (function() {
+    var navbar = (function() {
 
         var _navbar =  document.querySelector('.navbar') ? document.querySelector('.navbar') : null;
-        var _dropdowns = _navbar.querySelectorAll('li.dropdown') ? _navbar.querySelectorAll('li.dropdown') : null;
-        var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item') ? _navbar.querySelectorAll('a.dropdown-item') : null;
-        var _modalForm = document.querySelector('.modal__form') !== null ?  document.querySelector('.modal__form') : null;
-        var _accordionSubmenus = document.querySelectorAll('.accordion_submenu') !== null ?  document.querySelectorAll('.accordion_submenu') : null;
+        var _dropdowns = _navbar.querySelectorAll('li.dropdown');
+        var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item');
+        var _loginModal = document.querySelector('#loginModal');
+        var _loginForm = _loginModal.querySelector('.modal__form');
+        var _accordionSubmenus = _navbar.querySelectorAll('.accordion_submenu');
 
         var _listeners = {
             dropdown: function() {
@@ -33,8 +34,8 @@ if (document.getElementsByTagName('nav') !== null) {
 
         function init() {
             window.addEventListener('load', function() {
-                if (hasErrorsMessages(_modalForm)) {
-                    showModal();
+                if (hasErrorsMessages(_loginForm)) {
+                    $(_loginModal).modal();
                 };
 
                 _listeners.dropdown();
@@ -62,10 +63,6 @@ if (document.getElementsByTagName('nav') !== null) {
             return false;
         }
 
-        function showModal() {
-            $(_modalForm).modal();
-        }
-
         function setDropdownItems(e) {
             e.preventDefault();
             let URL = e.target.getAttribute('href');
@@ -76,9 +73,14 @@ if (document.getElementsByTagName('nav') !== null) {
                 URL = anchor.getAttribute('href');
             }
 
-            if (anchor.onclick.length === 0) {
+            if (anchor.nextElementSibling === null) {
                 location.href = URL;
+            } else {
+                if (anchor.nextElementSibling.tagName !== 'FORM') {
+                    location.href = URL;
+                }
             }
+
         }
 
         function setDropdowns(e) {
@@ -116,7 +118,6 @@ if (document.getElementsByTagName('nav') !== null) {
                     })
                 }
             }
-
             return submenu;
         }
 

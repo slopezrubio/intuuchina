@@ -1,0 +1,13 @@
+$shutter__height: 50px;
+$card-pictures__height: 320px;
+$card-pictures__width: 480px;
+
+main#job-board {
+  section#search-tool {
+    @include toolbar($card-pictures__width)
+  }
+
+  section#content {
+    @include cards-list($card-pictures__width, $card-pictures__height, $shutter__height)
+  }
+}

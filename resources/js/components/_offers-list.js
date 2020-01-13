@@ -79,6 +79,6 @@ let offersList = {
     }
 };
 
-if (document.querySelector('.offers_list') !== null) {
+if (document.querySelector('#job-board') !== null) {
     offersList.init();
 }

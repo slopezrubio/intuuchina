@@ -50,6 +50,40 @@ class IndexController extends Controller
         return view('pages/university');
     }
 
+    public function applicationForm(Request $request) {
+        session()->pull('preferences');
+        session()->flash('preferences', [
+            'program' => $request->get('program'),
+            $request->get('product') => $request->get($request->get('program'))
+        ]);
+
+        return redirect()->route('register');
+    }
+
+    /**
+     * Creates the array is going to be flashed into the session by the @see applicationForm method.
+     *
+     * @param array $parameters
+     * @return array
+     */
+    private function setPreferences(Array $preferences) {
+        $found = false;
+        $options = [];
+        while ($preference = current($preferences) && $found !== true) {
+            for ($y = 0; $y < count(__('content.programs')) && $found !== true; $y++) {
+                $pattern = __('content.programs')[$y];
+                if ($pattern ===  key($preferences)) {
+                    $found = true;
+                    $options[key($preferences)] = current($preferences);
+                }
+            }
+            next($preferences);
+        }
+
+        $options['program'] = $parameters['program'];
+        return $options;
+    }
+
     private function buildSlider($items, $selected) {
         $slider = [];
         ${$items} = __('content.' . $items);

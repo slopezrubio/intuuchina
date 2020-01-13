@@ -117,10 +117,9 @@ return [
     'confirmed status text' => 'Registered.',
     'paid status text' => 'Application fee paid. You must answer him for the interview.',
     'accepted status text' => 'Accepted in the program.',
+    'there are no' => 'There are no :item with such characteristic',
     'pending_deposit status text' => 'Pending the second deposit.',
     'done status text' => 'Ready to take off.',
-
-
 
 
     /*
@@ -149,8 +148,6 @@ return [
     | Forms (labels, placeholder, options, items...)
     |--------------------------------------------------------------------------
     */
-
-    'also interested' => 'I\'m also interested',
     'agree' => 'Agree',
     'amount received' => 'Amount Received',
     'amount of months' => 'Amount of months roughly',
@@ -160,6 +157,7 @@ return [
     'cardholder name' => 'Cardholder Name',
     'card number' => 'Card Number',
     'card expiry' => 'Card Expiry',
+    'change preference' => 'Change Preference',
     'confirm' => 'Confirm',
     'continue' => 'Continue',
     'currency' => 'Currency',
@@ -174,6 +172,7 @@ return [
     'home' => 'Home',
     'issue' => 'Issue',
     'i accept the' => 'I accept the ' . __('links.terms and conditions') . ' as well as the '  . __('links.general data protection regulation'),
+    'i\'m also interested' => 'I\'m Also interested',
     'industry' => 'Industry',
     'join also' => 'Join Also',
     'job position' => 'Job Position',
@@ -295,6 +294,7 @@ return [
     'surnames' => 'Surnames',
     'subject' => 'Subject',
     'submit' => 'Submit',
+    'staying' => 'Staying of :time month|Staying of :time months',
     'study chinese via' => 'Study Chinese via',
     'sign in' => 'Sign In',
     'edit' => 'Editar',

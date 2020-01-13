@@ -17,7 +17,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     ], 'js/vendor.js')
     .js([
         'resources/js/components/sliders.js',
-        'resources/js/components/_register.js',
+        'resources/js/components/_register-form.js',
         'resources/js/components/_nav.js',
         'resources/js/components/_page-title.js',
         'resources/js/components/_offers.js',

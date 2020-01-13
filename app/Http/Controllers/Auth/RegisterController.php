@@ -181,28 +181,4 @@ class RegisterController extends Controller
         session()->flash('options', $this->setOptions($request->all()));
         return redirect()->route('register');
     }
-
-    /**
-     * Creates the array is going to be flashed into the session by the @see registerWithOptions method.
-     *
-     * @param array $parameters
-     * @return array
-     */
-    private function setOptions(Array $parameters) {
-        $found = false;
-        $options = [];
-        while ($parameter = current($parameters) && $found !== true) {
-            for ($y = 0; $y < count(__('content.programs')) && $found !== true; $y++) {
-                $pattern = __('content.programs')[$y];
-                if ($pattern ===  key($parameters)) {
-                    $found = true;
-                    $options[key($parameters)] = current($parameters);
-                }
-            }
-            next($parameters);
-        }
-
-        $options['program'] = $parameters['program'];
-        return $options;
-    }
 }

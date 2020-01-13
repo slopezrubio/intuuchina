@@ -41,6 +41,14 @@ var DOM = (function() {
             },
             isDisabled: (element) => {
                 return element.getAttribute('disabled') || element.getAttribute('aria-disabled');
+            },
+            hide: (element) => {
+                element.classList.add('hidden')
+                element.setAttribute('aria-hidden', true)
+            },
+            show: (element) => {
+                element.classList.remove('hidden')
+                element.setAttribute('aria-hidden', false)
             }
         }
     };
