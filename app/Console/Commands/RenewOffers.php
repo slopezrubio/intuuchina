@@ -15,14 +15,14 @@ class RenewOffers extends Command
      *
      * @var string
      */
-    protected $signature = 'offer:renew';
+    protected $signature = 'offers:renew';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Renovación de las ofertas publicadas de más de 2 meses';
+    protected $description = 'Sets the created_at field of all the offers have been created two months ago in the database with today\'s date';
 
     /**
      * Create a new command instance.
@@ -41,8 +41,9 @@ class RenewOffers extends Command
      */
     public function handle()
     {
-        $TwoMonthAgo = Carbon::now()->subMonth(2);
-        $result = Offer::where('created_at', '<=', $TwoMonthAgo)->update(['created_at'=> Carbon:: now()]);
-        return $result;
+        $twoMonthAgo = Carbon::now()->subMonth(2);
+        Offer::where('created_at', '<=', $twoMonthAgo)
+            ->orWhere('updated_at', '<=', $twoMonthAgo)
+            ->update(['created_at'=> Carbon::now(), 'updated_at' => Carbon::now()]);
     }
 }

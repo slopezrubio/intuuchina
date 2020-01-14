@@ -45,9 +45,24 @@
       text-transform: uppercase;
     }
     div {
-      .web-map_list {
-        li {
-          a {
+      .web-map {
+        &_item {
+          button[type="submit"] {
+            border: none;
+            padding: 0;
+            background: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            margin: 0;
+            color: white;
+            font-weight: 700;
+            &:hover {
+              color: $tertiaryRed;
+            }
+          }
+
+          a,
+          button[type="submit"] {
             $map: (642: 12, 984: 12);
             font-size: minimosCuadrados($map);
           }
@@ -107,7 +122,7 @@
 
       input:checked + .checkbox_slider:after {
         font-family: 'Font Awesome 5 Free', Arial, serif;
-        font-size: 0.8em;
+        font-size: 2.3em;
         content: "\f00c";
       }
     }

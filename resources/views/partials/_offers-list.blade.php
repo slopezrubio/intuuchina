@@ -1,95 +1,85 @@
 @auth
-    @if(Auth::user()->type === 'admin')
-        @if (count($offers) === 0)
-            <div class="container-fluid offers">
-                <p class="item_not_found">There are no offers with such characteristic</p>
-            </div>
-        @else
-            <div class="container-fluid offers">
-                <div class="card-group offers_list">
-                    @foreach($offers as $offer)
-                        <div class="card shadow">
-                            <div class="card-shutter">{{ $offer->industry }}</div>
-                            <div class="img-window">
-                                <img src="{{ asset('storage/images/' . $offer->picture) }}" alt="Offer card image" class="card-img-top">
-                            </div>
-
-                            <div class="card-body mb-2">
-                                <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
-                                <p class="card-text location">{{ ucfirst($offer->location) }}</p>
-                                <p class="card-text duration">Staying: {{ $offer->duration }} {{ $offer->duration > 1 ? 'Months' : 'Month' }}</p>
-                                <div class="offers_buttons">
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a class="edit" href="{{ url('/admin/offers/edit/' . $offer->id) }}">{{ __('content.edit') }}</a></button>
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a class="delete" data-value="{{ $offer->id }}" data-toggle="modal" data-target="#offerModal">{{ __('content.delete') }}</a></button>
-                                </div>
-                            </div>
-                            <div class="card-footer mb-2">
-                                <small class="text-muted">{{ $offer->gone_by }}</small>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
+    @if (count($offers) === 0)
+        <div class="cards-list">
+            <p class="cards-list__empty">{{ __('content.there are no', ['item' => 'offers']) }}</p>
+        </div>
     @else
-        @if (count($offers) === 0)
-            <div class="container-fluid offers">
-                <p class="item_not_found">There are no offers with such characteristic</p>
-            </div>
-        @else
-            <div class="container-fluid offers">
-                <div class="card-group offers_list">
-                    @foreach($offers as $offer)
-                        <div class="card shadow">
-                            <div class="card-shutter">{{ $offer->industry }}</div>
-                            <div class="img-window">
-                                <img src="{{ asset('storage/images/' . $offer->picture) }}" alt="Offer card image" class="card-img-top">
-                            </div>
+        <div class="cards-list">
+            <div class="card-group">
+                @foreach($offers as $offer)
+                    <div class="card shadow">
+                        <div class="card__shutter">{{ $offer->industry }}</div>
+                        <div class="card__window">
+                            <img src="{{ asset('storage/images/' . $offer->picture) }}" alt="Offer card image" class="card-img-top horizontally-centered grayscale">
+                        </div>
 
-                            <div class="card-body mb-2">
-                                <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
-                                <p class="card-text location">{{ ucfirst($offer->location) }}</p>
-                                <p class="card-text duration">Staying: {{ $offer->duration }} {{ $offer->duration > 1 ? 'Months' : 'Month' }}</p>
-                                <div class="offers_buttons">
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="#">{{ __('content.also interested') }}</a></button>
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.job description') }}</a></button>
-                                </div>
+                        <div class="card-body mb-2">
+                            <h5 class="card-body__title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
+                            <div class="card-body__subtitle mb-3">
+                                <p class="card-text"><strong>{{ strtoupper($offer->location) }}</strong></p>
+                                <p class="card-text">{{ trans_choice('content.staying', $offer->duration, ['time' => $offer->duration ]) }}</p>
                             </div>
-                            <div class="card-footer mb-2">
-                                <small class="text-muted">{{ $offer->gone_by }}</small>
+                            <div class="card-body__action">
+                                @if (Auth::user()->program === 'internship' || Auth::user()->program === 'inter_relocat')
+                                    <form class="card-form" action="{{ route('update.program', ['user' => Auth::user()->id, 'program' => Auth::user()->program]) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="{{ Auth::user()->program }}" name="program">
+                                        <input type="hidden" value="{{ $offer->industry}}" name="industry">
+                                        @if (Auth::user()->getIndustries() === null)
+                                            <button type="submit" class="cta">{{ __('content.apply for') }}</button>
+                                        @elseif(!array_key_exists($offer->industry, Auth::user()->getIndustries()))
+                                            <button type="submit" class="cta">{{ __('content.i\'m also interested') }}</button>
+                                        @endif
+                                        <button class="cta"><a href="/internship/{{ $offer->id }}">{{ __('content.description') }}</a></button>
+                                    </form>
+                                @else
+                                    <form class="card-form" action="{{ route('change.program', ['user' => Auth::user()->id ]) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="{{ Auth::user()->program }}" name="program">
+                                        <input type="hidden" value="{{ $offer->industry }}" name="industry">
+                                        <button type="submit" class="cta">{{ __('content.change preference') }}</button>
+                                        <button class="cta"><a href="/internship/{{ $offer->id }}">{{ __('content.description') }}</a></button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                        <div class="card-footer mb-2">
+                            <small class="text-muted">{{ $offer->gone_by }}</small>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        @endif
+        </div>
     @endif
 @else
     @if (count($offers) === 0)
-        <div class="container-fluid offers">
-            <p class="item_not_found">There are no offers with such characteristic</p>
+        <div class="cards-list">
+            <p class="cards-list__empty">{{ trans_choice('content.there are no', ['item' => 'offers']) }}</p>
         </div>
     @else
-        <div class="container-fluid offers">
-            <div class="card-group offers_list">
+        <div class="cards-list">
+            <div class="card-group">
                 @foreach($offers as $offer)
                     <div class="card shadow">
-                        <div class="card-shutter">{{ $offer->industry }}</div>
-                        <div class="img-window">
-                            <img src="{{ asset('storage/images/' . $offer->picture) }}" alt="Offer card image" class="card-img-top">
+                        <div class="card__shutter">{{ $offer->industry }}</div>
+                        <div class="card__window">
+                            <img src="{{ asset('storage/images/' . $offer->picture) }}" alt="Offer card image" class="card-img-top horizontally-centered grayscale">
                         </div>
                         <div class="card-body mb-2">
-                            <h5 class="card-title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
-                            <p class="card-text location">{{ ucfirst($offer->location) }}</p>
-                            <p class="card-text duration">Staying: {{ $offer->duration }} {{ $offer->duration > 1 ? 'Months' : 'Month' }}</p>
-                            <form id="#applyJob" action="{{ route('register.options') }}" method="POST">
-                                @csrf
-                                <input type="hidden" value="internship" name="program" id="program">
-                                <div class="offers_buttons">
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5" type="submit" value="{{ $offer->industry }}" name="internship">{{ __('content.apply for') }}</a></button>
-                                    <button class="cta col-12 col-xs-5 col-sm-12 col-md-5"><a href="/internship/{{ $offer->id }}">{{ __('content.description') }}</a></button>
-                                </div>
-                            </form>
+                            <h5 class="card-body__title"><a href="/internship/{{ $offer->id }}">{{ $offer->title }}</a></h5>
+                            <div class="card-body__subtitle mb-3">
+                                <p class="card-text"><strong>{{ strtoupper($offer->location) }}</strong></p>
+                                <p class="card-text">{{ trans_choice('content.staying', $offer->duration, ['time' => $offer->duration ]) }}</p>
+                            </div>
+                            <div class="card-body__action">
+                                <form class="card-form" id="#applyJob" action="{{ route('application.form') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" value="inter_relocat" name="program" id="program">
+                                    <input type="hidden" value="{{ $offer->industry }}" name="inter_relocat">
+                                    <button class="cta" type="submit" value="industry" name="product">{{ __('content.apply for') }}</button>
+                                    <button class="cta"><a href="/internship/{{ $offer->id }}">{{ __('content.description') }}</a></button>
+                                </form>
+                            </div>
                         </div>
                         <div class="card-footer mb-2">
                             <small class="text-muted">{{ $offer->gone_by }}</small>
@@ -100,3 +90,9 @@
         </div>
     @endif
 @endauth
+
+@if ((isset($isAjax) && !$isAjax) || (isset($isNewFilter) && $isNewFilter))
+    @if (count($offers) > 0)
+        {!! $offers->links() !!}
+    @endif
+@endif

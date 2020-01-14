@@ -35,4 +35,7 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {!! $cardFooter !!}
+    </div>
 </div>

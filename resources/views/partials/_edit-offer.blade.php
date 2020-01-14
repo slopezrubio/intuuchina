@@ -21,13 +21,9 @@
                         <div class="col-md-9">
                             <div class="regular-select-wrapper">
                                 <select class="form-control" name="location" id="location">
-                                    @for ($i = 0; $i < count(__('content.offers locations')); $i++)
-                                        @if(__('content.offers locations')[$i]['value'] !== $offer->location)
-                                            <option value="{{ __('content.offers locations')[$i]['value'] }}">{{ __('content.offers locations')[$i]['text'] }}</option>
-                                        @else
-                                            <option value="{{ __('content.offers locations')[$i]['value'] }}" selected="true">{{ __('content.offers locations')[$i]['text'] }}</option>
-                                        @endif
-                                    @endfor
+                                    @foreach (__('content.jobs.locations') as $key => $location)
+                                        <option value="{{ $location['key'] }}" {!! $location['key'] === $offer->location ? "selected='true'" : '' !!}>{{ $location['text'] }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             @if ($errors->has('location'))

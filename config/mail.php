@@ -56,8 +56,23 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@intuuchina.com'),
+        'name' => env('MAIL_FROM_NAME', 'IntuuChina'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global "To" Address
+    |--------------------------------------------------------------------------
+    |
+    | You may wish for all e-mails sent by your application to be sent to
+    | the same address. Here, you may specify a name and address that is
+    | used globally for all e-mails that are sent by your application.
+    |
+    */
+    'to' => [
+        'address' => env('MAIL_TO_ADDRESS', 'fernando.zavala@intuuchina.com'),
+        'name' => env('MAIL_TO_NAME', 'Fernando de Zavala')
     ],
 
     /*
@@ -132,5 +147,17 @@ return [
     */
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Throttle to Messages per Minute
+    |--------------------------------------------------------------------------
+    |
+    | https://mailtrap.io has a rate limit of 2 emails/sec per inbox,
+    | but consider being even more conservative.
+    |
+    */
+
+    'throttle_to_messages_per_sec' => env('MAIL_THROTTLE_TO_MESSAGES_PER_SECOND', null),
 
 ];

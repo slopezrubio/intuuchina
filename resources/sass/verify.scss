@@ -1,0 +1,82 @@
+#verify-user {
+  max-width: 500px;
+  .shutter-button {
+    font-weight: 500;
+    text-align: center;
+    width: 50%;
+    margin: 1em auto;
+    display: block;
+    max-width: 250px;
+  }
+
+  .cartoon {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+
+  .notice {
+    p
+    a,
+    h2,
+    h3, {
+      color: $primaryDark;
+    }
+
+    &__title {
+      text-align: center;
+    }
+
+    &__action {
+      &--alert {
+        @include prefixed(animation, fadeInDown .5s ease-out);
+        color: $successColor;
+        text-align: center;
+
+        i {
+          font-size: 2em;
+          vertical-align: middle;
+          margin-bottom: 0.05em;
+          margin-left: 0.1em;
+        }
+      }
+    }
+
+    &__footer {
+      margin-top: 3em;
+
+      ul {
+        text-align: center;
+
+        li {
+          display: inline;
+          padding: 0 0.5em 0 0.35em;
+
+          &, a {
+            @include prefixed(transition, 'all ease-in .3s');
+          }
+          &:not(:last-child) {
+            border-right: 1px solid $sectionDark;
+          }
+
+          &:hover,
+          a:hover,
+          &:active, {
+            color: $secondaryDark;
+          }
+
+          &:hover,
+          &:active, {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      a,
+      li,
+      p, {
+        color: $sectionDark;
+        font-weight: 500;
+      }
+    }
+  }
+}

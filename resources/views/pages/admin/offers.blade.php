@@ -28,8 +28,10 @@
             @endauth
         </div>
 
-        {{-- Tabla de ofertas --}}
-        @include('partials._offers-list')
+        <section id="content">
+            {{-- Tabla de ofertas --}}
+            @include('partials._offers-list')
+        </section>
 
         {{-- Formulario de nueva oferta --}}
         @include('partials._new-offer')

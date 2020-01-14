@@ -119,4 +119,11 @@
             </div>
         </form>
     </div>
+    <div class="card-footer">
+        <ul>
+            <li>
+                {!! __('dialog.are you in doubt?') !!}
+            </li>
+        </ul>
+    </div>
 </div>

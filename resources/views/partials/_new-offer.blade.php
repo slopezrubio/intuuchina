@@ -1,4 +1,4 @@
-<form method="POST" class="form" enctype="multipart/form-data" action="{{ route('admin.offers') }}">
+<form method="POST" id="job-offer" class="form" enctype="multipart/form-data" action="{{ route('admin.offers') }}">
     @csrf
     <div class="container {{ count($errors) > 0 ? 'items_form' : 'items_form--hidden'}}">
         <div class="form-group row justify-content-center form-title">
@@ -7,9 +7,9 @@
         <div class="row form_body justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="form-group row">
-                    <label for="title" class="col-md-3 col-form-label text-md-left">{{ __('content.offer title label') }}</label>
+                    <label for="title" class="col-md-3 col-form-label text-md-left">{{ __('content.title') }}</label>
                     <div class="col-md-9">
-                        <input type="text" id="title" class="form-control" name="title" value="{{old('title')}}" placeholder="{{ __('content.job position') }}" required>
+                        <input type="text" id="title" class="form-control" name="title" value="{{ old('title') }}" placeholder="{{ __('content.job position') }}" required>
                         @if ($errors->has('title'))
                             <div class="alert alert-danger" role="alert">
                                {{ $errors->first('title') }}
@@ -22,13 +22,9 @@
                     <div class="col-md-9">
                         <div class="regular-select-wrapper">
                             <select class="form-control" name="location" id="location">
-                                @for ($i = 0; $i < count(__('content.offers locations')); $i++)
-                                    @if ($i === 0)
-                                        <option value="{{ __('content.offers locations')[$i]['value'] }}" selected aria-selected="true">{{ __('content.offers locations')[$i]['text'] }}</option>
-                                    @else
-                                        <option value="{{ __('content.offers locations')[$i]['value'] }}">{{ __('content.offers locations')[$i]['text'] }}</option>
-                                    @endif
-                                @endfor
+                                @foreach (__('content.jobs.locations') as $key => $location)
+                                    <option value="{{ $location['key'] }} {!! $loop->first ? "selected='true' aria-selected='true'" : '' !!}">{{ $location['text'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                         @if ($errors->has('location'))

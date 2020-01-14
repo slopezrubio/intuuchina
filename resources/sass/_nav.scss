@@ -112,10 +112,11 @@
           a {
             div.toggleOption {
               padding-left: 15px;
-              padding-right: 15px;
               i {
-                padding: 0;
+                padding-right: 15px;
                 position: absolute;
+                text-align: right;
+                width: 50%;
                 top: 3px;
                 right: 0;
               }
@@ -249,6 +250,9 @@
                 padding: 0;
                 i {
                   position: initial;
+                  text-align: center;
+                  padding-right: 0;
+                  width: 30px;
                 }
               }
             }

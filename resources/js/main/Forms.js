@@ -9,8 +9,11 @@ var Forms = (function() {
         return {
             // Disables the custom inputs of the form (All but the Stripe inputs)
             disableFormInputs: function(form, disabled = true) {
-                $(form).filter(':input:not(.__PrivateStripeElement-input)').each(function() {
-                    $(this).attr("disabled", disabled);
+                $(form).filter(function() {
+                    if (disabled) {
+                        return $('input:not(.__PrivateStripeElement-input), select, button',this).attr("disabled", disabled);
+                    }
+                    $('input:not(.__PrivateStripeElement-input), select, button',this).removeAttr('disabled');
                 });
             },
 
@@ -26,11 +29,10 @@ var Forms = (function() {
 
             // Disables all the Stripe inputs of the form.
             disableStripeInputs: function(stripeElements, disabled = true) {
-                $(stripeElements._elements).each(function() {
-                    let stripeInput = $(this)[0];
-                    stripeInput.update({
-                        disabled: disabled
-                    });
+                stripeElements.forEach(function(element) {
+                    element.update({
+                        disabled: disabled,
+                    })
                 });
             },
 
@@ -40,9 +42,6 @@ var Forms = (function() {
 
             toggleDisablingForm: function(form) {
                 let submitButton = form.querySelector('button[type=submit]');
-
-                console.log(submitButton);
-                console.log(form);
 
                 $(submitButton).one('click', (event) => {
                     if (submitButton.getAttribute('disabled') !== true) {

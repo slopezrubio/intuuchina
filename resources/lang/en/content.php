@@ -49,6 +49,7 @@ return [
     */
 
     'application fee' => 'Application Fee',
+    'attached' => 'Attached',
     'el pais quote' => '"The statistics confirmed that IntuuChina hit the spot: They have managed to place 290 people of 46 nationalities ... The highest percentage of success (78%) is among those who arrived in China with the intention of staying"',
     'el pais author' => 'Z. Aldama',
     'el pais date' => '08/05/2016',
@@ -69,12 +70,15 @@ return [
     'abc quote' => '"80% of IntuuChinos continue their career in the country ... Ruben Sanchez got the job after the first 6 months of practice"',
     'abc author' => 'Pablo M. Díez',
     'abc date' => '09/11/2014',
+    'nationality' => 'Nationality',
     'entrepeneur quote' => '"We help talented young people who do not find opportunities in their country, as would be the case in Spain, and we help them develop their career in China"',
     'entrepeneur date' => '21/05/2015',
     'internship service text' => 'Looking for a professional experience in China? We can place you in Startup or Multinational.',
     'university service text' => 'We have worked with all major business schools in China placing 100% of our applicants. Let us help you!',
     'learn chinese service text' => 'Study the most spoken first language in the world. Come to China for a full immersion or join classes on-line',
     'follow us' => 'Follow Us',
+    'not provided' => 'Not Provided',
+    'resume' => 'Resume',
     'website map' => 'WebSite Map',
     'contact us' => 'Contact Us!',
     'no offers found' => 'There are no offers which fulfill the filter criteria',
@@ -113,10 +117,9 @@ return [
     'confirmed status text' => 'Registered.',
     'paid status text' => 'Application fee paid. You must answer him for the interview.',
     'accepted status text' => 'Accepted in the program.',
+    'there are no' => 'There are no :item with such characteristic',
     'pending_deposit status text' => 'Pending the second deposit.',
     'done status text' => 'Ready to take off.',
-
-
 
 
     /*
@@ -145,8 +148,6 @@ return [
     | Forms (labels, placeholder, options, items...)
     |--------------------------------------------------------------------------
     */
-
-    'also interested' => 'I\'m also interested',
     'agree' => 'Agree',
     'amount received' => 'Amount Received',
     'amount of months' => 'Amount of months roughly',
@@ -156,6 +157,7 @@ return [
     'cardholder name' => 'Cardholder Name',
     'card number' => 'Card Number',
     'card expiry' => 'Card Expiry',
+    'change preference' => 'Change Preference',
     'confirm' => 'Confirm',
     'continue' => 'Continue',
     'currency' => 'Currency',
@@ -166,9 +168,11 @@ return [
     'duration' => 'Duration',
     'e-mail address' => 'E-Mail Address',
     'email placeholder' => 'e.g. confucio@confucio.com',
+    'first name' => 'First Name',
     'home' => 'Home',
     'issue' => 'Issue',
     'i accept the' => 'I accept the ' . __('links.terms and conditions') . ' as well as the '  . __('links.general data protection regulation'),
+    'i\'m also interested' => 'I\'m Also interested',
     'industry' => 'Industry',
     'join also' => 'Join Also',
     'job position' => 'Job Position',
@@ -240,15 +244,18 @@ return [
     'universities' => [
         'mba' => [
             'heading' => 'MBA',
-            'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.'
+            'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
+            'key' => 'mba'
         ],
         'mib' => [
             'heading' => 'M. Intl. Bsns.',
             'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
+            'key' => 'mib',
         ],
         'other' => [
             'heading' => 'Other',
-            'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.'
+            'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.',
+            'key' => 'other'
         ],
     ],
     'courses' => [
@@ -256,8 +263,8 @@ return [
             'text' => 'In-Person',
             'slider' => '<span>in China</span>',
             'price' => [
-                'eur' => '470.00',
-                'usd' => '499.00',
+                'eur' => '564.00',
+                'usd' => '630.00',
             ],
             'scope' => [
                 'min' => '1',
@@ -271,8 +278,8 @@ return [
             'text' => 'Online',
             'slider' => 'Course',
             'price' => [
-                'eur' => '15.00',
-                'usd' => '18.00',
+                'eur' => '18.00',
+                'usd' => '20.00',
             ],
             'scope' => [
                 'min' => '40',
@@ -287,10 +294,11 @@ return [
     'surnames' => 'Surnames',
     'subject' => 'Subject',
     'submit' => 'Submit',
+    'staying' => 'Staying of :time month|Staying of :time months',
     'study chinese via' => 'Study Chinese via',
     'sign in' => 'Sign In',
     'edit' => 'Editar',
-    'offer title label' => 'Title',
+    'title' => 'Title',
     'offer location label' => 'Location',
     'save' => 'Save',
     'program' => 'Program',

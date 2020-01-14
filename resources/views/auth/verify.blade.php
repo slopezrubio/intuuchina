@@ -1,24 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.blank')
+
+@section('title')
+    {{ __('meta.titles.user_verification') }}
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+<div id="verify-user" class="container absolute-center">
+    <div class="cartoon">
+        <img src="{{ __('pictures.user_verify_cartoon.url') }}" alt="{{ __('pictures.user_verify_cartoon.alt') }}" style="width: 200px">
+    </div>
+    <div class="notice">
+        <div class="notice__title"><strong>{!! __('auth.verify your email address') !!}</strong></div>
+        <div class="notice__message">{!! __('auth.before proceeding, please check your email') !!}</div>
+        <div class="notice__action">
+            <a href="{{ route('verification.resend') }}" class="shutter-button">{{ __('auth.send it again') }}</a>
+            @if (session('resent'))
+                <div class="notice__action--alert" role="alert">
+                    {{ __('auth.done it') }}
+                    <i class="fas fa-check-circle"></i>
                 </div>
-            </div>
+            @endif
+        </div>
+        <div class="notice__footer">
+            @if(!empty(__('links.verification-user')))
+                <ul>
+                    @foreach(__('links.user-verification') as $key => $link)
+                        <li><a href="{{ $link['url'] }}" >{{ $link['text'] }}</a></li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
-</div>
 @endsection

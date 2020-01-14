@@ -1,0 +1,94 @@
+.info-box {
+  color: white;
+  box-sizing: border-box;
+  padding: 2rem;
+  width: 100%;
+  background-color: #00000070;
+  border: 5px solid $white;
+  border-radius: 30px;
+  box-shadow: 3px 3px 20px #00000080;
+  display: block;
+  margin: 4em auto;
+  max-width: 600px;
+  //@include flexbox();
+  //@include flex-direction(column);
+  //@include justify-content(center);
+
+  &__header {
+    margin: 0.5em 0.5em 0 0.5em;
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+    p {
+      text-align: center;
+    }
+  }
+
+  &__body {
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+  }
+
+  p > .advice {
+    font-size: 1em;
+  }
+
+  &__price-table {
+    @include flexbox();
+    @include flex-direction(column);
+    &--tag {
+      @include flexbox();
+      @include flex-direction(column);
+      font-size: 3em;
+      font-weight: 700;
+      text-align: center;
+      padding: 0 0.5em;
+    }
+
+    &--symbol {
+      display: block;
+      $map: (295: 28, 1875: 48);
+      font-size: minimosCuadrados($map);
+      font-style: normal;
+      position: relative;
+      top: -20px;
+    }
+  }
+
+  &__advice {
+    $text-lines: 5;
+    $font-size: 16px;
+    $line-height: 1.4;
+    height: calc(#{$font-size} * #{$text-lines} * #{$line-height});
+    display: block;
+  }
+
+  &__footer {
+
+  }
+
+  @media only screen and (min-width: 550px) {
+    &__price-table {
+      @include flexbox();
+      @include flex-direction(row);
+      @include justify-content(center);
+
+      &--tag {
+        $map: (550: 48, 688: 56, 3875: 56);
+        font-size: minimosCuadrados($map);
+      }
+
+      &--tag:nth-child(2n+0) {
+        border-left: solid 1px $primaryWhite;
+      }
+    }
+
+    &__advice {
+      $text-lines: 3;
+      $font-size: 16px;
+      $line-height: 1.4;
+      height: calc(#{$font-size} * #{$text-lines} * #{$line-height});
+    }
+  }
+}

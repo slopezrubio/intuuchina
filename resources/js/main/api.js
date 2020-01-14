@@ -41,6 +41,7 @@ let api = {
                 data: data,
             });
 
+            console.log(response);
             return response;
         } catch(error) {
             console.log(error.response);
@@ -81,20 +82,56 @@ let api = {
             data: object,
         })
             .then(function(response) { return response.data })
-            .catch(error => { return error.response.data });
+            .catch(error => { console.log(error.response);return error.response.data });
 
         return await response;
     },
     setTokenToAxiosHeader: function() {
-        var token = document.head.querySelector('meta[name="csrf-token"');
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+        console.log(api.getToken());
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = api.getToken();
     },
-    getCourseInfo: function(course = 0, callback) {
-        $.get({
-            url: '/learn/' + course,
+    getPagination: function(url, container) {
+        if (url !== undefined) {
+            let request = {
+                url: url.split('page=')[0],
+                page: url.split('page=')[1]
+            }
+
+            $.get({
+                data: {
+                    page: request.page
+                },
+                dataType: 'json',
+                cache: false,
+                url: request.url,
+                error: function(xhr, status, error) {
+                    console.log(error);
+                },
+                success: function(data, status) {
+                    $(container.previousElementSibling).remove();
+                    $(container).before(data);
+                }
+            });
+        }
+
+        return false;
+    },
+    getToken: function() {
+        return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
+    },
+    getCourseInfo: function(course, callback) {
+        let data = {
+            'course' : course
+        };
+
+        $.post({
+            url: 'api/course',
             cache: false,
-            data: course,
+            data: data,
             dataType: 'html',
+            headers: {
+                'X-CSRF-TOKEN': api.getToken()
+            },
             error: function(xhr, status, error) {
                 console.log(error);
             },

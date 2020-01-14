@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 
-class NewUserNotification extends Notification
+class NewUserNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -75,11 +75,11 @@ class NewUserNotification extends Notification
         return [
             'email' => URL::temporarySignedRoute('verification.email',
                 Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
-                ['id' => $notifiable->getKey()]
+                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true]
             ),
             'checkout' => URL::temporarySignedRoute('verification.email',
                 Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
-                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true ]
+                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true]
             ),
         ];
 

@@ -4,24 +4,61 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use App\Offer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
 {
+    const ELEMENTS_PER_PAGE = 3;
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $offers = $this->all();
+        /*
+         * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
+         * por la fecha de creación.
+         */
+        $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
+        $this->setDaysRenewed($offers);
+        $isAjax = $request->ajax();
 
-        return view('pages/offers', compact('offers', 'params'));
+        if ($isAjax) {
+            if ($request->get('isNewFilter')) {
+                $isNewFilter = $request->get('isNewFilter');
+                return response()->json(view('partials/_offers-list', compact('offers', 'isAjax', 'isNewFilter'))->render());
+            }
+
+            return response()->json(view('partials/_offers-list', compact('offers', 'isAjax'))->render());
+        }
+
+        return view('pages/offers', compact('offers', 'isAjax'));
+    }
+
+    /**
+     * Sets a new field for each offer the time consummated since the offer was
+     * updated for the last time. This information will be shown in the view
+     * as the date of the offer.
+     *
+     * @param $offers
+     * @return mixed
+     */
+    public function setDaysRenewed($offers) {
+        if (count($offers) > 0) {
+            foreach ($offers as $offer) {
+                $offer->gone_by = Carbon::parse($offer->created_at)->diffForHumans(Carbon::now());
+            }
+        }
+
+        return $offers;
     }
 
     /**
@@ -31,21 +68,10 @@ class OffersController extends Controller
      */
     public function admin()
     {
-        $offers = $this->all();
+        $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
+        $this->setDaysRenewed($offers);
 
         return view('pages/admin/offers', compact('offers', 'params'));
-    }
-
-    public function all() {
-        /*
-         * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
-         * por la fecha de creación.
-         */
-        $offers = Offer::orderBy('created_at','DESC')->get();
-        $offer = new Offer();
-        $offers = $offer->setDaysRenewed($offers);
-
-        return $offers;
     }
 
     /**
@@ -66,7 +92,6 @@ class OffersController extends Controller
      */
     public function store(Request $request)
     {
-
         //
         $request->validate([
             'title' => 'required|max:255|string',
@@ -171,7 +196,6 @@ class OffersController extends Controller
      */
     public function destroy($id)
     {
-        //
         $this->deleteUploadedFileAssociatedWithOffer($id);
         Offer::destroy($id);
 
@@ -182,18 +206,22 @@ class OffersController extends Controller
      * Select all the offers that matches with the name of the industry passed as an argument
      * and send the partial view that comprises just the list of offers.
      */
-    public function filterBy($filter) {
-        if ($filter !== 'all') {
-            $offers = Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->get();
-            if (count($offers) > 0) {
-                $offer = new Offer();
-                $offers = $offer->setDaysRenewed($offers);
-            }
-            return view('partials/_offers-list', compact('offers'));
+    public function filterBy(Request $request, $filter) {
+        $isAjax = $request->ajax();
+        $isNewFilter = $request->get('isNewFilter');
+
+        $offers = Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE);
+        $this->setDaysRenewed($offers);
+
+        if ($isNewFilter) {
+            return response()->json(view('partials/_offers-list', compact('offers', 'filter', 'isNewFilter'))->render());
         }
 
-        $offers = $this->all();
-        return view('partials/_offers-list', compact('offers'));
+        if ($isAjax) {
+            return response()->json(view('partials/_offers-list', compact('offers', 'filter', 'isAjax'))->render());
+        }
+
+        return view('partials/_offers-list', compact('offers', 'filter'));
     }
 
     /*

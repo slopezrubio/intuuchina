@@ -13,6 +13,7 @@
 
     <!-- Título de la aplicación -->
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- reCAPCTCHA v2.0 de Google -->
     <script src='https://www.google.com/recaptcha/api.js?hl={{ app()->getLocale() }}' async defer></script>

@@ -2700,6 +2700,31 @@ var ArrowSlider = function () {
       window.addEventListener('resize', setResponsive);
     }
 
+    function setCurrentSlide(value) {
+      currentSlideIndex = value + offset;
+      currentSlide = slides[value];
+    }
+
+    function isCurrentSlide(slide) {
+      return slide.isEqualNode(currentSlide);
+    }
+
+    function isNextSlide(slide) {
+      return slide.isEqualNode(slides[currentSlideIndex]);
+    }
+
+    function isPreviousSlide(slide) {
+      return slide.isEqualNode(slides[currentSlideIndex - offset * 2]);
+    }
+
+    function isFirstSlide(slide) {
+      return slide.isEqualNode(slides[0]);
+    }
+
+    function isLastSlide(slide) {
+      return slide.isEqualNode(slides[slides.length - offset]);
+    }
+
     function addControllers(controllers) {
       var sliderControllers = [];
 
@@ -2807,31 +2832,6 @@ var ArrowSlider = function () {
       }
     }
 
-    function setCurrentSlide(value) {
-      currentSlideIndex = value + offset;
-      currentSlide = slides[value];
-    }
-
-    function isCurrentSlide(slide) {
-      return slide.isEqualNode(currentSlide);
-    }
-
-    function isNextSlide(slide) {
-      return slide.isEqualNode(slides[currentSlideIndex]);
-    }
-
-    function isPreviousSlide(slide) {
-      return slide.isEqualNode(slides[currentSlideIndex - offset * 2]);
-    }
-
-    function isFirstSlide(slide) {
-      return slide.isEqualNode(slides[0]);
-    }
-
-    function isLastSlide(slide) {
-      return slide.isEqualNode(slides[slides.length - offset]);
-    }
-
     function setResponsive() {
       var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       setControllers(); // Update holder width
@@ -2897,63 +2897,228 @@ var ArrowSlider = function () {
 
 /***/ }),
 
-/***/ "./resources/js/components/_chinese-courses.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/_chinese-courses.js ***!
-  \*****************************************************/
-/*! no exports provided */
+/***/ "./resources/js/components/Pagination.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Pagination.js ***!
+  \***********************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
 
-var chineseCourses = {
-  init: function init() {
+
+
+var Pagination = function () {
+  var instance;
+
+  function PaginationClass(options) {
     var _this = this;
 
-    window.addEventListener('load', function (e) {
-      _this[e.type + 'Listeners']();
+    // Private properties
+    var _container = options.container;
 
-      _this.loadCoursesHolder();
-    });
-    window.addEventListener('resize', function (e) {
-      _this.loadCoursesHolder();
-    });
-  },
-  courses: document.querySelectorAll('.description-base'),
-  cta: document.querySelectorAll('.cta'),
-  coursesHolder: document.querySelector('.course-descriptions'),
-  loadListeners: function loadListeners() {
-    for (var i = 0; i < this.cta.length; i++) {
-      this.cta[i].addEventListener('click', function (event) {
-        event.stopPropagation();
+    var _links = options.container.querySelectorAll('.page-link');
+
+    var _selector = options.container.querySelector('.item-selector');
+
+    var _controllers = {
+      next: _links[_links.length - 1],
+      previous: _links[0]
+    };
+
+    var _path = _controllers.previous.getAttribute('href') ? _controllers.previous.getAttribute('href').split('page=')[0] : _controllers.next.getAttribute('href').split('page=')[0]; // Private methods
+
+
+    function init() {
+      slideTo(getCurrentLink().offsetLeft - _selector.offsetLeft);
+
+      _links.forEach(function (element) {
+        element.addEventListener('click', getPage);
       });
     }
-  },
-  loadCoursesHolder: function loadCoursesHolder() {
-    _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(chineseCourses.coursesHolder);
-    this.setSizeCourses();
-  },
-  // if (event.type === 'load') {
-  //     for (let i = 0; i < chineseCourses.cta.length; i++) {
-  //         chineseCourses.cta[i].addEventListener('click', function(event) {
-  //             event.stopPropagation();
-  //         })
-  //     }
-  // }
-  // DOM.expandToViewport(chineseCourses.coursesHolder);
-  // this.setSizeCourses();
-  setSizeCourses: function setSizeCourses() {
-    for (var i = 0; i < this.courses.length; i++) {
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].expandToViewport(this.courses[i]);
-    }
-  }
-};
 
-if (document.querySelector('.course-descriptions') !== null) {
-  chineseCourses.init();
-}
+    function getPage(e) {
+      e.preventDefault();
+
+      if (isCurrentLink(e.target)) {
+        return false;
+      } // if (e.target.offsetLeft === _selector.offsetLeft || DOM.isDisabled(e.target)) {
+      //     console.log("hola");
+      //     return false;
+      // }
+
+
+      _main_api__WEBPACK_IMPORTED_MODULE_1__["default"].getPagination(e.target.getAttribute('href'), _container);
+      moveSelectorTo(e.target);
+    }
+
+    function moveSelectorTo(linkSelected) {
+      var moveTo = false;
+      var rel = linkSelected.getAttribute('rel');
+
+      if (rel !== null) {
+        var selected = eval('get' + rel[0].toUpperCase() + rel.slice(1) + '(getCurrentLink())');
+
+        if (selected.getAttribute('rel') === null) {
+          moveTo = selected.offsetLeft - _selector.offsetLeft;
+          setCurrentLink(selected);
+          updateControllers();
+          slideTo(moveTo);
+        }
+
+        return moveTo;
+      }
+
+      moveTo = linkSelected.offsetLeft - _selector.offsetLeft;
+      setCurrentLink(linkSelected);
+      updateControllers();
+      slideTo(moveTo);
+      return true;
+    }
+
+    function slideTo(x) {
+      x += 'px';
+      $(_selector).css({
+        '-webkit-transform': 'translateX(' + x + ')',
+        '-moz-transform': 'translateX(' + x + ')',
+        '-ms-transform': 'translateX(' + x + ')',
+        '-o-transform': 'translateX(' + x + ')',
+        'transform': 'translateX(' + x + ')'
+      });
+    }
+    /**
+     * Gets the next link from the current one.
+     *
+     * @param element
+     * @returns {Element}
+     */
+
+
+    function getNext(element) {
+      return element.parentElement.nextElementSibling.querySelector('.page-link');
+    }
+    /**
+     * Gets the previous link from the current one.
+     *
+     * @param element
+     * @returns {Element}
+     */
+
+
+    function getPrev(element) {
+      return element.parentElement.previousElementSibling.querySelector('.page-link');
+    }
+
+    function isCurrentLink(anchor) {
+      return anchor.isEqualNode(getCurrentLink());
+    }
+
+    function updateControllers() {
+      updateLinks();
+      var container = _controllers.previous.parentElement;
+
+      if (isFirstPage()) {
+        if (!$(container).hasClass('disabled')) {
+          container.classList.add('disabled');
+          container.setAttribute('aria-disabled', 'true');
+          container.innerHTML = '<span class="page-link" aria-hidden="true">‹</span>';
+        }
+      } else {
+        if ($(container).hasClass('disabled')) {
+          container.classList.remove('disabled');
+          container.removeAttribute('aria-disabled');
+        }
+
+        container.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getPrev(getCurrentLink()).textContent + '" rel="prev" aria-label="Previous »">‹</a>';
+      }
+
+      _controllers.previous = container.querySelector('.page-link');
+
+      _controllers.previous.addEventListener('click', getPage);
+
+      container = _controllers.next.parentElement;
+
+      if (isLastPage()) {
+        if (!$(container).hasClass('disabled')) {
+          container.classList.add('disabled');
+          container.setAttribute('aria-disabled', 'true');
+          container.innerHTML = '<span class="page-link" aria-hidden="true">›</span>';
+        }
+      } else {
+        if ($(container).hasClass('disabled')) {
+          container.classList.remove('disabled');
+          container.removeAttribute('aria-disabled');
+        }
+
+        container.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getNext(getCurrentLink()).textContent + '" rel="next" aria-label="Next »">›</a>';
+      }
+
+      _controllers.next = container.querySelector('.page-link');
+
+      _controllers.next.addEventListener('click', getPage);
+    }
+    /**
+     * Sets the element passed an argument as the current link.
+     *
+     * @param element
+     */
+
+
+    function setCurrentLink(element) {
+      getCurrentLink().parentElement.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getCurrentLink().textContent + '">' + getCurrentLink().textContent + '</a>';
+      getCurrentLink().addEventListener('click', getPage);
+      getCurrentLink().parentElement.removeAttribute('aria-current');
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(getCurrentLink().parentElement, 'active');
+      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(element.parentElement, 'active');
+      element.parentElement.setAttribute('aria-current', 'page');
+      element.parentElement.innerHTML = '<span class="page-link">' + element.textContent + '</span>';
+    }
+
+    function isFirstPage() {
+      return getCurrentLink().isEqualNode(_links[1]);
+    }
+
+    function isLastPage() {
+      return getCurrentLink().isEqualNode(_links[_links.length - 2]);
+    }
+
+    function updateLinks() {
+      _links = _container.querySelectorAll('.page-link');
+    }
+
+    function getCurrentLink() {
+      return _container.querySelector('.active > .page-link');
+    }
+
+    init();
+    return {
+      hasPagination: function hasPagination() {
+        return document.querySelector('.pagination');
+      },
+      get: function get(key) {
+        return _this[key];
+      },
+      set: function set(key, value) {
+        _this[key] = value;
+      }
+    };
+  }
+
+  return {
+    getInstance: function getInstance() {
+      if (!instance) {
+        instance = PaginationClass;
+      }
+
+      return instance;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Pagination.getInstance());
 
 /***/ }),
 
@@ -3386,86 +3551,140 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom.js */ "./resources/js/main/dom.js");
 
 
-var nav = {
-  init: function init() {
-    nav.setup();
-  },
-  setup: function setup() {
-    /*
-     * Loads the login modal when there is some error coming
-     * from the form inside.
-     */
-    window.addEventListener('load', function () {
-      if (nav.hasErrorsMessages(nav.modalForm)) {
-        nav.showModal();
-      }
-
-      ;
-    });
-
-    var _loop = function _loop(i) {
-      var dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
-      dropdown.addEventListener('mouseover', function (e) {
-        if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
-          var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-          $(targetId).dropdown('show');
-        }
-      });
-      dropdown.addEventListener('click', function (e) {
-        /*if (!MediaQueries.isNavbarBreakpoint()) {
-            let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-            if ($(targetId.querySelector('ul')).hasClass('show')) {
-                console.log("hola");
-                $(targetId).dropdown('hide');
-            } else {
-                $(targetId).dropdown('show');
-            }
-        }*/
-      });
-      dropdown.addEventListener('mouseout', function (e) {
-        if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
-          var targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-          $(targetId).dropdown('hide');
-        }
-      });
-    };
-
-    for (var i = 0; i < nav.navbar.querySelectorAll('.dropdown').length; i++) {
-      _loop(i);
-    }
-
-    for (var _i = 0; _i < nav.accordionSubmenus.length; _i++) {
-      nav.accordionSubmenus[_i].addEventListener('mouseover', nav.highlightItem, true);
-
-      nav.accordionSubmenus[_i].addEventListener('mouseout', nav.highlightItem, true);
-    }
-  },
-  navbar: document.querySelector('.navbar') ? document.querySelector('.navbar') : null,
-  modalForm: document.querySelector('.modal__form') !== null ? document.querySelector('.modal__form') : null,
-  accordionSubmenus: document.querySelectorAll('.accordion_submenu') !== null ? document.querySelectorAll('.accordion_submenu') : null,
-  highlightItem: function highlightItem(event) {
-    if (!_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isLargeDevice()) {
-      var pattern = /\s?show\s?/;
-
-      if (this.getAttribute('class').match(pattern)) {
-        _main_dom_js__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(this.parentElement, 'reverse-colours');
-      }
-    }
-  },
-  hasErrorsMessages: function hasErrorsMessages(parent) {
-    if ($(parent).find('.is-invalid').length > 0) {
-      return true;
-    }
-
-    return false;
-  },
-  showModal: function showModal() {
-    $('#loginModal').modal();
-  }
-};
 
 if (document.getElementsByTagName('nav') !== null) {
-  nav.init();
+  var navbar = function () {
+    var _navbar = document.querySelector('.navbar') ? document.querySelector('.navbar') : null;
+
+    var _dropdowns = _navbar.querySelectorAll('li.dropdown');
+
+    var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item');
+
+    var _loginModal = document.querySelector('#loginModal');
+
+    var _loginForm = _loginModal.querySelector('.modal__form');
+
+    var _accordionSubmenus = _navbar.querySelectorAll('.accordion_submenu');
+
+    var _listeners = {
+      dropdown: function dropdown() {
+        _dropdowns.forEach(function (dropdown) {
+          if (_main_breakpoints__WEBPACK_IMPORTED_MODULE_0__["default"].isNavbarBreakpoint()) {
+            dropdown.removeEventListener('click', setDropdowns);
+            dropdown.addEventListener('mouseenter', setDropdowns);
+            dropdown.addEventListener('mouseleave', setDropdowns);
+          } else {
+            dropdown.removeEventListener('mouseenter', setDropdowns);
+            dropdown.removeEventListener('mouseleave', setDropdowns);
+            dropdown.addEventListener('click', setDropdowns);
+          }
+        });
+      },
+      dropdownItem: function dropdownItem() {
+        _dropdownItems.forEach(function (item) {
+          item.addEventListener('click', setDropdownItems);
+        });
+      }
+    };
+
+    function init() {
+      window.addEventListener('load', function () {
+        if (hasErrorsMessages(_loginForm)) {
+          $(_loginModal).modal();
+        }
+
+        ;
+
+        _listeners.dropdown();
+
+        _listeners.dropdownItem();
+      });
+      window.addEventListener('resize', function (e) {
+        _listeners.dropdown();
+      });
+    }
+
+    function toggleDropdown(element) {
+      if ($(element).hasClass('show')) {
+        $(element).dropdown('hide');
+      } else {
+        $(element).dropdown('show');
+      }
+    }
+
+    function hasErrorsMessages(element) {
+      if ($(element).find('.is-invalid').length > 0) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function setDropdownItems(e) {
+      e.preventDefault();
+      var URL = e.target.getAttribute('href');
+      var anchor = e.target;
+
+      while (URL === null) {
+        anchor = anchor.parentElement;
+        URL = anchor.getAttribute('href');
+      }
+
+      if (anchor.nextElementSibling === null) {
+        location.href = URL;
+      } else {
+        if (anchor.nextElementSibling.tagName !== 'FORM') {
+          location.href = URL;
+        }
+      }
+    }
+
+    function setDropdowns(e) {
+      var submenu = getSubmenu(e.target);
+
+      switch (e.type) {
+        case 'click':
+          e.preventDefault();
+
+          if ($(e.target).hasClass('toggleOption')) {
+            location.href = e.target.parentElement.getAttribute('href');
+          } else {
+            toggleDropdown(submenu);
+          }
+
+          break;
+
+        case 'mouseenter':
+          $(submenu).dropdown('show');
+          break;
+
+        case 'mouseleave':
+          $(submenu).dropdown('hide');
+          break;
+      }
+    }
+
+    function getSubmenu(menuItem) {
+      var submenu = menuItem.querySelector('.dropdown-menu');
+
+      if (submenu === null) {
+        submenu = $(menuItem).parents('.dropdown-menu')[0];
+
+        if (submenu === undefined) {
+          $(menuItem).parents().map(function () {
+            if ($(this).siblings('.dropdown-menu')[0]) {
+              submenu = $(this).siblings('.dropdown-menu')[0];
+              return submenu;
+            }
+          });
+        }
+      }
+
+      return submenu;
+    }
+
+    init();
+  }();
 }
 
 /***/ }),
@@ -3523,19 +3742,32 @@ if (news.polygon !== null) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/messages */ "./resources/js/main/messages.js");
+/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination */ "./resources/js/components/Pagination.js");
+/* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
+
+
 
 var offersList = {
   init: function init() {
     window.addEventListener('load', offersList.setup);
+
+    if (document.querySelector('.pagination')) {
+      offersList.pagination = new _Pagination__WEBPACK_IMPORTED_MODULE_1__["default"]({
+        container: document.querySelector('.pagination')
+      });
+    }
   },
   inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
   modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
   deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
+  pagination: null,
   setup: function setup() {
     offersList.inputFilter.addEventListener('change', function (event) {
       var selectedFilter = offersList.inputFilter.value;
-      var path = window.location.pathname + "/filter=".concat(selectedFilter);
-      offersList.getRequest(path, selectedFilter);
+      var path = selectedFilter !== 'all' ? window.location.pathname + "/".concat(selectedFilter) : window.location.pathname;
+      offersList.getRequest(path, {
+        isNewFilter: 'true'
+      });
     });
 
     for (var i = 0; i < offersList.deleteButtons.length; i++) {
@@ -3578,19 +3810,24 @@ var offersList = {
       url: path,
       cache: false,
       data: data,
-      dataType: 'html',
+      dataType: 'json',
       error: function error(xhr, status, _error) {
         console.log(_error);
       },
       success: function success(data, status, xhr) {
-        $('.offers').remove();
-        $('.items_management').after(data);
+        $('#content').html(data);
+
+        if (offersList.pagination.hasPagination()) {
+          offersList.pagination = new _Pagination__WEBPACK_IMPORTED_MODULE_1__["default"]({
+            container: document.querySelector('.pagination')
+          });
+        }
       }
     });
   }
 };
 
-if (document.querySelector('.offers_list') !== null) {
+if (document.querySelector('#job-board') !== null) {
   offersList.init();
 }
 
@@ -3691,7 +3928,7 @@ function displayForm(event) {
 
     var previousElementPosition = document.querySelector('.offers').offsetTop + document.querySelector('.offers').clientHeight; // Scrolls the page where the form is being displayed.
 
-    scrollTo(previousElementPosition); // Heads the typing to the first field of the hidden form
+    slideTo('scrollDown', previousElementPosition); // Heads the typing to the first field of the hidden form
 
     var firstInputOfTheForm = $('.form_body input').filter(':first');
     firstInputOfTheForm.focus();
@@ -3699,16 +3936,16 @@ function displayForm(event) {
 
   if (formIsDisplayed) {
     var itemManagementPosition = document.querySelector('.items_management').offsetTop;
-    scrollTo(itemManagementPosition);
+    slideTo('scrollTop', itemManagementPosition);
     setTimeout(function () {
       $('.items_form').addClass('items_form--hidden').removeClass('items_form');
     }, 500);
   }
 }
 
-function scrollTo(target) {
+function slideTo(direction, target) {
   $("html, body").animate({
-    'scrollTop': target
+    direction: target
   }, 1000, 'swing');
 }
 
@@ -3756,91 +3993,70 @@ if (document.getElementsByTagName('header') !== null) {
 
 /***/ }),
 
-/***/ "./resources/js/components/_register.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/_register.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./resources/js/components/_register-form.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/_register-form.js ***!
+  \***************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var register = {
-  select: document.querySelector('#inputProgram'),
-  industryFieldset: document.querySelector('#industryFieldset'),
-  studyFieldset: document.querySelector('#studyFieldset'),
-  universityFieldset: document.querySelector('#universityFieldset'),
-  showElement: function showElement(domElement) {
-    domElement.classList.remove('hidden');
-    domElement.setAttribute('aria-hidden', false);
-  },
-  hideElement: function hideElement(domElement) {
-    domElement.classList.add('hidden');
-    domElement.setAttribute('aria-hidden', true);
-  },
-  checkFields: function checkFields() {
-    if (register.industryFieldset) {
-      if (register.select.value !== 'internship') {
-        register.hideElement(register.industryFieldset);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
+
+
+if (document.querySelector('header#register') !== null) {
+  var registerForm = function () {
+    var _fieldsets = {
+      industry: document.querySelector('#industryFieldset'),
+      study: document.querySelector('#studyFieldset'),
+      program: document.querySelector('#programFieldset'),
+      university: document.querySelector('#universityFieldset'),
+      cv: $('#cv').parents('.form-group')[0]
+    };
+    var _inputs = {
+      program: document.querySelector('#inputProgram')
+    };
+
+    function init() {
+      window.addEventListener('load', setFields);
+
+      _inputs.program.addEventListener('change', setFields);
+    }
+
+    function getProgramSelected() {
+      return _inputs.program.options[_inputs.program.selectedIndex].value;
+    }
+
+    function setFields() {
+      switch (getProgramSelected()) {
+        case 'internship':
+        case 'inter_relocat':
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.cv);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.industry);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.university);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.study);
+          break;
+
+        case 'study':
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.cv);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.industry);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.university);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.study);
+          break;
+
+        case 'university':
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.cv);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.industry);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.university);
+          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.study);
+          break;
       }
     }
 
-    if (register.studyFieldset) {
-      register.hideElement(register.studyFieldset);
-    }
-
-    if (register.universityFieldset) {
-      register.hideElement(register.universityFieldset);
-    }
-  },
-  setFields: function setFields(selectorValue) {
-    switch (selectorValue) {
-      case 'internship':
-      case 'inter_relocat':
-        register.showElement(register.industryFieldset);
-        register.hideElement(register.studyFieldset);
-        register.hideElement(register.universityFieldset);
-        break;
-
-      case 'study':
-        register.showElement(register.studyFieldset);
-        register.hideElement(register.industryFieldset);
-        register.hideElement(register.universityFieldset);
-        break;
-
-      case 'university':
-        register.showElement(register.universityFieldset);
-        register.hideElement(register.industryFieldset);
-        register.hideElement(register.studyFieldset);
-
-      default:
-        register.hideElement(register.studyFieldset);
-        register.hideElement(register.industryFieldset);
-        register.showElement(register.universityFieldset);
-        break;
-    }
-  },
-  init: function init() {
-    window.addEventListener('load', register.setFields(register.select.value));
-    register.select.addEventListener('change', function (event) {
-      register.setFields(event.target.value);
-    });
-  }
-};
-
-if (register.select !== null) {
-  register.init();
-} // const select = document.querySelector('#inputProgram')
-// const industryFieldset = document.querySelector('#industryFieldset')
-// const studyFieldset = document.querySelector('#studyFieldset')
-// const universityFieldset = document.querySelector('#universityFieldset')
-//
-// const showElement = (domElement) => {
-//   domElement.classList.remove('hidden')
-//   domElement.setAttribute('aria-hidden', false)
-// }
-// const hideElement = (domElement) => {
-//   domElement.classList.add('hidden')
-//   domElement.setAttribute('aria-hidden', true)
-// }
+    init();
+  }();
+}
 
 /***/ }),
 
@@ -4115,7 +4331,6 @@ var welcomeCard = {
           switch (_context2.prev = _context2.next) {
             case 0:
               if (welcomeCard.forms.payment.el() !== null) {
-                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].preventDoubleClick(welcomeCard.forms.payment.el());
                 welcomeCard.forms.payment.el().addEventListener('submit',
                 /*#__PURE__*/
                 function () {
@@ -4127,22 +4342,25 @@ var welcomeCard = {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            event.preventDefault(); // Sets the loader inside the button
+                            event.preventDefault();
+                            _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, true); // Sets the loader inside the button
 
                             _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Gets the URL and make a request to the API
 
                             urlPaymentForm = event.target.getAttribute('action');
-                            _context.next = 5;
+                            _context.next = 6;
                             return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].getDialog(urlPaymentForm, _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].getFormToken(event.target));
 
-                          case 5:
+                          case 6:
                             paymentFeeDialog = _context.sent;
-                            // Hides the loader once again
-                            _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Replace dialog box
+                            // Hides the loader once again.
+                            _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Sets the button to the initial state.
+
+                            _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false); // Replace dialog box.
 
                             welcomeCard.replaceDialog(paymentFeeDialog);
 
-                          case 8:
+                          case 10:
                           case "end":
                             return _context.stop();
                         }
@@ -4498,7 +4716,6 @@ var welcomeCard = {
         return _ref8.apply(this, arguments);
       };
     }());
-    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].preventDoubleClick(welcomeCard.forms.checkout.el());
     $(welcomeCard.forms.checkout.el()).on('submit',
     /*#__PURE__*/
     function () {
@@ -4511,16 +4728,11 @@ var welcomeCard = {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                event.preventDefault(); // Only for testing
-                // console.log(api.getHostName() + '/payment-successful');
-                // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
-                // welcomeCard.replaceDialog(newDialog);
-                // return;
-                // Sets the loader inside the checkout button.
+                event.preventDefault(); // Sets the loader inside the checkout button.
 
-                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Disables all inputs of the form.
-
-                welcomeCard.disableCheckoutInputs(event.target, true);
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, true);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], true);
                 paymentDetails = {
                   card_holder_name: cardHolderName.value,
                   email: document.querySelector('#email').value,
@@ -4528,70 +4740,68 @@ var welcomeCard = {
                 };
 
                 if (!welcomeCard.isCourseSelected()) {
-                  _context8.next = 13;
+                  _context8.next = 14;
                   break;
                 }
 
                 paymentDetails[courseSelector.getAttribute('name')] = courseSelector.value;
                 _context8.t0 = courseSelector.value;
-                _context8.next = _context8.t0 === 'in-person' ? 9 : _context8.t0 === 'online' ? 11 : 13;
+                _context8.next = _context8.t0 === 'in-person' ? 10 : _context8.t0 === 'online' ? 12 : 14;
                 break;
 
-              case 9:
+              case 10:
                 paymentDetails['staying'] = document.getElementById('staying').value;
-                return _context8.abrupt("break", 13);
+                return _context8.abrupt("break", 14);
 
-              case 11:
+              case 12:
                 paymentDetails['hours'] = document.getElementById('hours').value;
-                return _context8.abrupt("break", 13);
+                return _context8.abrupt("break", 14);
 
-              case 13:
-                _context8.next = 15;
+              case 14:
+                _context8.next = 16;
                 return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].validateFields('payment-details', paymentDetails);
 
-              case 15:
+              case 16:
                 validation = _context8.sent;
 
                 if (!validation.errors) {
-                  _context8.next = 21;
+                  _context8.next = 23;
                   break;
                 }
 
                 welcomeCard.handleErrorFields(Object.keys(validation.errors), validation.errors); // Hides the loader inside the checkout button.
 
-                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
-                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target);
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Enables again the inputs of the checkout form.
+
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false);
                 return _context8.abrupt("return", false);
 
-              case 21:
-                _context8.next = 23;
+              case 23:
+                _context8.next = 25;
                 return stripe.createPaymentMethod('card', cardNumber, {
                   billing_details: validation
                 });
 
-              case 23:
+              case 25:
                 _ref10 = _context8.sent;
                 paymentMethod = _ref10.paymentMethod;
                 error = _ref10.error;
 
                 if (!error) {
-                  _context8.next = 32;
+                  _context8.next = 36;
                   break;
                 }
 
-                welcomeCard.displayInputFieldError('submit', error.message);
-                /*
-                 * Resets the event that prevents the double click when pressing
-                 * the submit button.
-                 */
+                welcomeCard.displayInputFieldError('submit', error.message); // Sets the inputs to the initial state.
 
-                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target); // Hides the loader inside the checkout button.
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false); // Hides the loader inside the checkout button.
 
                 _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
-                _context8.next = 43;
-                break;
+                return _context8.abrupt("return", false);
 
-              case 32:
+              case 36:
                 /**
                  * If no errors found it, gathers the information needed to Stripe PHP API
                  * so the payment can be applied in the server.
@@ -4606,24 +4816,24 @@ var welcomeCard = {
                 };
 
                 if (!welcomeCard.isCourseSelected()) {
-                  _context8.next = 42;
+                  _context8.next = 46;
                   break;
                 }
 
                 data.study = courseSelector.value;
                 _context8.t1 = data.study;
-                _context8.next = _context8.t1 === 'in-person' ? 38 : _context8.t1 === 'online' ? 40 : 42;
+                _context8.next = _context8.t1 === 'in-person' ? 42 : _context8.t1 === 'online' ? 44 : 46;
                 break;
 
-              case 38:
-                data.staying = document.getElementById('staying').value;
-                return _context8.abrupt("break", 42);
-
-              case 40:
-                data.hours = document.getElementById('hours').value;
-                return _context8.abrupt("break", 42);
-
               case 42:
+                data.staying = document.getElementById('staying').value;
+                return _context8.abrupt("break", 46);
+
+              case 44:
+                data.hours = document.getElementById('hours').value;
+                return _context8.abrupt("break", 46);
+
+              case 46:
                 /*
                  * Sends the information needed along the Payment Method ID.
                  */
@@ -4635,13 +4845,10 @@ var welcomeCard = {
                      * Displays the error coming from the server according to the field or
                      * parameter the error is related to.
                      */
-                    welcomeCard.displayInputFieldError(error.field, error.message);
-                    /*
-                     * Resets the event that prevents the double click when pressing
-                     * the submit button.
-                     */
+                    welcomeCard.displayInputFieldError(error.field, error.message); // Enables again the inputs of the checkout form.
 
-                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target); // Hides the loader inside the checkout button.
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false); // Hides the loader inside the checkout button.
 
                     _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
                   } else {
@@ -4662,16 +4869,16 @@ var welcomeCard = {
                     // In both cases the returned data is sent to a handler.
                     welcomeCard.handleServerResponse(result.data); // Enables again the inputs of the checkout form.
 
-                    welcomeCard.disableCheckoutInputs(welcomeCard.forms.checkout.el(), false); // Hides the loader inside the checkout button.
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false); // Hides the loader inside the checkout button.
 
                     _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
-                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target);
                   }
                 }); // Only when JavaScript is disabled
                 // document.querySelector('#payment-method').value = paymentMethod.id;
                 // welcomeCard.forms.checkout.el().submit();
 
-              case 43:
+              case 47:
               case "end":
                 return _context8.stop();
             }
@@ -4732,23 +4939,6 @@ var welcomeCard = {
 
     return setPaymentAmount;
   }(),
-  // setPaymentAmount: function(value, currency = 'eur') {
-  //     if (welcomeCard.paymentAmount !== null) {
-  //         // Check if the given currency is a zero-decimal currency
-  //         let multiplier = currencies[currency].decimal_digits > 0
-  //             ? Math.pow(10, currencies[currency].decimal_digits) : 1;
-  //
-  //         // Remove decimals to set the amount in the less unit of measure (cents)
-  //         welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
-  //         return true;
-  //     }
-  //
-  //     welcomeCard.paymentAmount = value;
-  // },
-  disableCheckoutInputs: function disableCheckoutInputs(form, disabled) {
-    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(form, disabled);
-    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs(form, disabled);
-  },
   displayStripeErrors: function displayStripeErrors(element, error) {
     if (error) {
       element.textContent = error.message;
@@ -4952,21 +5142,6 @@ var welcomeCard = {
         document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w').parentElement.style.display = 'block';
       }
     });
-    /*paymentRequest.on('paymentmethod', function(e) {
-        stripe.confirmCardPayment(
-            clientSecret,
-            {payment_method: e.paymentMethod.id},
-            {handleActions: false}
-        ).then(function(confirmResult) {
-            if (confirmResult.error) {
-                e.complete('failed');
-            } else {
-                e.complete('success')
-                stripe.confirmCardPayment(clientSecret).then(function(result) {
-                  })
-            }
-        })
-    });*/
   }
 };
 
@@ -5052,7 +5227,7 @@ var coursesSlider = function () {
   var arrowSlider = null;
 
   function replaceCourseInfoSection(newCourseInfoSection) {
-    $('.course-information').remove();
+    $('section#course-info').remove();
     $('section.arrow-slider').after(newCourseInfoSection);
   }
 
@@ -5075,22 +5250,37 @@ var coursesSlider = function () {
         controllers: document.querySelector('.arrow-slider__controllers').children,
         controllersCallback: function controllersCallback(slider) {
           var course = slider.querySelector('#study').getAttribute('value');
-          var courseInfoSection = _main_api_js__WEBPACK_IMPORTED_MODULE_3__["default"].getCourseInfo(course, replaceCourseInfoSection);
+          _main_api_js__WEBPACK_IMPORTED_MODULE_3__["default"].getCourseInfo(course, replaceCourseInfoSection);
         }
       });
     }
   };
 }();
 
-var universitySlider = {
-  init: function init() {
-    var arrowSlider = new _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
-      holder: document.querySelector('.arrow-slider__holder'),
-      colors: ['white', 'black', '\#E57373'],
-      controllers: document.querySelector('.arrow-slider__controllers').children
-    });
+var universitiesSlider = function () {
+  var arrowSlider = null;
+
+  function getCurrentSlide() {
+    var controllers = document.querySelector('.arrow-slider__controllers').children;
+
+    for (var i = 0; i < controllers.length; i++) {
+      if ($(controllers[i]).hasClass('selected')) {
+        return i;
+      }
+    }
   }
-};
+
+  return {
+    init: function init() {
+      arrowSlider = new _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        holder: document.querySelector('.arrow-slider__holder'),
+        slide: getCurrentSlide(),
+        colors: ['white', 'black', '\#E57373'],
+        controllers: document.querySelector('.arrow-slider__controllers').children
+      });
+    }
+  };
+}();
 
 if (document.querySelector('.note_carrousel') !== null) {
   $(document).ready(press.init);
@@ -5102,7 +5292,7 @@ if (document.querySelector('header#learn-chinese') !== null) {
 }
 
 if (document.querySelector('header#university') !== null) {
-  window.addEventListener('load', universitySlider.init);
+  window.addEventListener('load', universitiesSlider.init);
 }
 
 /***/ }),
@@ -5128,8 +5318,12 @@ var Forms = function () {
       // Disables the custom inputs of the form (All but the Stripe inputs)
       disableFormInputs: function disableFormInputs(form) {
         var disabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-        $(form).filter(':input:not(.__PrivateStripeElement-input)').each(function () {
-          $(this).attr("disabled", disabled);
+        $(form).filter(function () {
+          if (disabled) {
+            return $('input:not(.__PrivateStripeElement-input), select, button', this).attr("disabled", disabled);
+          }
+
+          $('input:not(.__PrivateStripeElement-input), select, button', this).removeAttr('disabled');
         });
       },
       showElement: function showElement(element) {
@@ -5143,9 +5337,8 @@ var Forms = function () {
       // Disables all the Stripe inputs of the form.
       disableStripeInputs: function disableStripeInputs(stripeElements) {
         var disabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-        $(stripeElements._elements).each(function () {
-          var stripeInput = $(this)[0];
-          stripeInput.update({
+        stripeElements.forEach(function (element) {
+          element.update({
             disabled: disabled
           });
         });
@@ -5157,8 +5350,6 @@ var Forms = function () {
         var _this = this;
 
         var submitButton = form.querySelector('button[type=submit]');
-        console.log(submitButton);
-        console.log(form);
         $(submitButton).one('click', function (event) {
           if (submitButton.getAttribute('disabled') !== true) {
             $(_this).prop('disabled', true);
@@ -5583,19 +5774,20 @@ var api = {
 
             case 4:
               response = _context3.sent;
+              console.log(response);
               return _context3.abrupt("return", response);
 
-            case 8:
-              _context3.prev = 8;
+            case 9:
+              _context3.prev = 9;
               _context3.t0 = _context3["catch"](1);
               console.log(_context3.t0.response);
 
-            case 11:
+            case 12:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[1, 8]]);
+      }, _callee3, null, [[1, 9]]);
     }));
 
     function sendPaymentMethod(_x5) {
@@ -5715,6 +5907,7 @@ var api = {
               }).then(function (response) {
                 return response.data;
               })["catch"](function (error) {
+                console.log(error.response);
                 return error.response.data;
               });
 
@@ -5741,19 +5934,51 @@ var api = {
     return validateFields;
   }(),
   setTokenToAxiosHeader: function setTokenToAxiosHeader() {
-    var token = document.head.querySelector('meta[name="csrf-token"');
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    console.log(api.getToken());
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = api.getToken();
   },
-  getCourseInfo: function getCourseInfo() {
-    var course = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var callback = arguments.length > 1 ? arguments[1] : undefined;
-    $.get({
-      url: '/learn/' + course,
+  getPagination: function getPagination(url, container) {
+    if (url !== undefined) {
+      var request = {
+        url: url.split('page=')[0],
+        page: url.split('page=')[1]
+      };
+      $.get({
+        data: {
+          page: request.page
+        },
+        dataType: 'json',
+        cache: false,
+        url: request.url,
+        error: function error(xhr, status, _error) {
+          console.log(_error);
+        },
+        success: function success(data, status) {
+          $(container.previousElementSibling).remove();
+          $(container).before(data);
+        }
+      });
+    }
+
+    return false;
+  },
+  getToken: function getToken() {
+    return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
+  },
+  getCourseInfo: function getCourseInfo(course, callback) {
+    var data = {
+      'course': course
+    };
+    $.post({
+      url: 'api/course',
       cache: false,
-      data: course,
+      data: data,
       dataType: 'html',
-      error: function error(xhr, status, _error) {
-        console.log(_error);
+      headers: {
+        'X-CSRF-TOKEN': api.getToken()
+      },
+      error: function error(xhr, status, _error2) {
+        console.log(_error2);
       },
       success: function success(data, status, xhr) {
         callback(data);
@@ -5899,6 +6124,17 @@ var DOM = function () {
         }
 
         return elements[elementsHeight.indexOf(Math.max.apply(null, elementsHeight))];
+      },
+      isDisabled: function isDisabled(element) {
+        return element.getAttribute('disabled') || element.getAttribute('aria-disabled');
+      },
+      hide: function hide(element) {
+        element.classList.add('hidden');
+        element.setAttribute('aria-hidden', true);
+      },
+      show: function show(element) {
+        element.classList.remove('hidden');
+        element.setAttribute('aria-hidden', false);
       }
     };
   }
@@ -5999,14 +6235,14 @@ var messages = {
 /***/ }),
 
 /***/ 1:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_chinese-courses.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register-form.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register.js */"./resources/js/components/_register.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register-form.js */"./resources/js/components/_register-form.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
@@ -6015,7 +6251,6 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_chinese-courses.js */"./resources/js/components/_chinese-courses.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_welcome-card.js */"./resources/js/components/_welcome-card.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_filter-by.js */"./resources/js/components/_filter-by.js");

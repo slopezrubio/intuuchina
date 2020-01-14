@@ -2,34 +2,31 @@
 <nav>
     <div class="navbar">
         <div class="col-12 navbar-expand-lg navbar_container">
-            @auth
-                <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
-            @endauth
-            @guest()
-                <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
-            @endguest
-            <button class="toggleMenu navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+            <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar_items">
                     @if(!empty(__('links.navbar')))
                         @foreach(__('links.navbar') as $key => $item)
                             @if(!isset($item['options']))
                                 <li>
-                                    <a href="{{ isset($item['parameter']) ? route($item['route'], ['course' => $item['parameter']] ) : route($item['route']) }}">
+                                    <a href="{{ $item['url'] }}">
                                         <div class="toggleOption">{{ $item['text'] }}</div>
                                     </a>
                                 </li>
                             @else
                                 <li class="dropdown">
-                                    <a href="{{ route($item['route']) }}" class="nav-item" data-target="{{ '#' . $key }}" data-toggle="none" aria-haspopup="true" aria-expanded="false">
+                                    <a href="{{ url($item['url']) }}" class="nav-item" data-target="{{ '#' . $key }}" data-toggle="none" aria-haspopup="true" aria-expanded="false">
                                         <div class="toggleOption" >{{ $item['text'] }}<i class="fas fa-angle-right"></i></div>
                                     </a>
 
                                     <ul id="{{ $key }}" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="{{ $key }}">
-                                        @foreach($item['options']() as $option)
+                                        @foreach($item['options']() as $key => $option)
                                             <li>
-                                                <a href="{{ $key }}" class="dropdown-item">
-                                                    <div class="toggleOption">{{ $option }}</div>
+                                                <a href="{{ $option['url'] }}" class="dropdown-item">
+                                                    <div class="toggleOption">{{ $option['text'] }}</div>
                                                 </a>
                                             </li>
                                         @endforeach
@@ -47,13 +44,13 @@
                         </li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="nav-item" data-target="#userMenu" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="nav-item" data-target="#userMenu" data-toggle="none" aria-haspopup="true" aria-expanded="false">
                                 <div class="toggleOption" >{{ Auth::user()->name }}<i class="fas fa-angle-right"></i></div>
                             </a>
 
                             <ul id="userMenu" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="userMenu">
                                 <li>
-                                    <a href="" class="dropdown-item">
+                                    <a href="{{ route('password.reset', ['token' => Str::random(30)]) }}" class="dropdown-item">
                                         <div class="toggleOption">{{ trans('auth.change pass') }}</div>
                                     </a>
                                 </li>

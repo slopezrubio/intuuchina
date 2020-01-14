@@ -210,4 +210,22 @@ return [
             ]
         ]
     ],
+    'admin' => [
+        'new-user' => [
+            'subject' => 'A new form submission has been received',
+            'title' => 'User Details',
+            'card' => [
+                'body' =>   "
+                                <p>
+                                   The following data has been sent from the submission form:
+                                </p>
+                            "
+            ],
+            'body' =>   "
+                            <p>
+                                A new user has addressed to IntuuChina to apply for the :program program
+                            </p>
+                        "
+        ]
+    ],
 ];

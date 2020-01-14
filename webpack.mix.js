@@ -17,7 +17,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     ], 'js/vendor.js')
     .js([
         'resources/js/components/sliders.js',
-        'resources/js/components/_register.js',
+        'resources/js/components/_register-form.js',
         'resources/js/components/_nav.js',
         'resources/js/components/_page-title.js',
         'resources/js/components/_offers.js',
@@ -26,7 +26,6 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/components/_edit-offer.js',
         'resources/js/components/_news.js',
         'resources/js/components/_services.js',
-        'resources/js/components/_chinese-courses.js',
         'resources/js/components/_customer-journey.js',
         'resources/js/components/_welcome-card.js',
         'resources/js/components/_filter-by.js',

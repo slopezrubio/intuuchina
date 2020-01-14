@@ -1,78 +1,127 @@
 import MediaQueries from '../main/breakpoints';
 import DOM from '../main/dom.js';
 
-let nav = {
-    init: () => {
-        nav.setup();
-    },
-    setup: () => {
-        /*
-         * Loads the login modal when there is some error coming
-         * from the form inside.
-         */
-        window.addEventListener('load', function() {
-            if (nav.hasErrorsMessages(nav.modalForm)) {
-                nav.showModal();
-            };
-        });
+if (document.getElementsByTagName('nav') !== null) {
+    var navbar = (function() {
 
-        for (let i=0; i < nav.navbar.querySelectorAll('.dropdown').length; i++) {
-            let dropdown = nav.navbar.querySelectorAll('.dropdown')[i];
-            dropdown.addEventListener('mouseover', (e) => {
-                if (MediaQueries.isNavbarBreakpoint()) {
-                    let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-                    $(targetId).dropdown('show');
-                }
-            });
+        var _navbar =  document.querySelector('.navbar') ? document.querySelector('.navbar') : null;
+        var _dropdowns = _navbar.querySelectorAll('li.dropdown');
+        var _dropdownItems = _navbar.querySelectorAll('a.dropdown-item');
+        var _loginModal = document.querySelector('#loginModal');
+        var _loginForm = _loginModal.querySelector('.modal__form');
+        var _accordionSubmenus = _navbar.querySelectorAll('.accordion_submenu');
 
-            dropdown.addEventListener('click', (e) => {
-                /*if (!MediaQueries.isNavbarBreakpoint()) {
-                    let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-                    if ($(targetId.querySelector('ul')).hasClass('show')) {
-                        console.log("hola");
-                        $(targetId).dropdown('hide');
+        var _listeners = {
+            dropdown: function() {
+                _dropdowns.forEach((dropdown) => {
+                    if (MediaQueries.isNavbarBreakpoint()) {
+                        dropdown.removeEventListener('click', setDropdowns);
+                        dropdown.addEventListener('mouseenter', setDropdowns);
+                        dropdown.addEventListener('mouseleave', setDropdowns);
                     } else {
-                        $(targetId).dropdown('show');
+                        dropdown.removeEventListener('mouseenter', setDropdowns);
+                        dropdown.removeEventListener('mouseleave', setDropdowns);
+                        dropdown.addEventListener('click', setDropdowns);
                     }
-                }*/
+                })
+            },
+            dropdownItem: function() {
+                _dropdownItems.forEach((item) => {
+                    item.addEventListener('click', setDropdownItems)
+                })
+            }
+        };
+
+        function init() {
+            window.addEventListener('load', function() {
+                if (hasErrorsMessages(_loginForm)) {
+                    $(_loginModal).modal();
+                };
+
+                _listeners.dropdown();
+                _listeners.dropdownItem();
             });
 
-            dropdown.addEventListener('mouseout', function(e) {
-                if (MediaQueries.isNavbarBreakpoint()) {
-                    let targetId = dropdown.querySelector('.nav-item').getAttribute('data-target');
-                    $(targetId).dropdown('hide');
-                }
+            window.addEventListener('resize', (e) => {
+                _listeners.dropdown();
             });
         }
 
-        for (let i=0; i < nav.accordionSubmenus.length; i++) {
-            nav.accordionSubmenus[i].addEventListener('mouseover', nav.highlightItem, true);
-            nav.accordionSubmenus[i].addEventListener('mouseout', nav.highlightItem, true);
-        }
-    },
-    navbar: document.querySelector('.navbar') ? document.querySelector('.navbar') : null,
-    modalForm: document.querySelector('.modal__form') !== null ?  document.querySelector('.modal__form') : null,
-    accordionSubmenus:  document.querySelectorAll('.accordion_submenu') !== null ?  document.querySelectorAll('.accordion_submenu') : null,
-    highlightItem: function(event) {
-        if (!MediaQueries.isLargeDevice()) {
-            let pattern = /\s?show\s?/;
-            if (this.getAttribute('class').match(pattern)) {
-                DOM.toggleSingleClass(this.parentElement, 'reverse-colours');
+        function toggleDropdown(element) {
+            if ($(element).hasClass('show')) {
+                $(element).dropdown('hide');
+            } else {
+                $(element).dropdown('show');
             }
         }
-    },
-    hasErrorsMessages: (parent) => {
-        if ($(parent).find('.is-invalid').length > 0) {
-            return true;
+
+        function hasErrorsMessages(element) {
+            if ($(element).find('.is-invalid').length > 0) {
+                return true;
+            }
+
+            return false;
         }
 
-        return false;
-    },
-    showModal: () => {
-        $('#loginModal').modal();
-    }
-}
+        function setDropdownItems(e) {
+            e.preventDefault();
+            let URL = e.target.getAttribute('href');
+            let anchor = e.target;
 
-if (document.getElementsByTagName('nav') !== null) {
-    nav.init();
+            while (URL === null) {
+                anchor = anchor.parentElement;
+                URL = anchor.getAttribute('href');
+            }
+
+            if (anchor.nextElementSibling === null) {
+                location.href = URL;
+            } else {
+                if (anchor.nextElementSibling.tagName !== 'FORM') {
+                    location.href = URL;
+                }
+            }
+
+        }
+
+        function setDropdowns(e) {
+            let submenu = getSubmenu(e.target);
+
+            switch(e.type) {
+                case 'click':
+                    e.preventDefault();
+                    if ($(e.target).hasClass('toggleOption')) {
+                        location.href = e.target.parentElement.getAttribute('href');
+                    } else {
+                        toggleDropdown(submenu);
+                    }
+                    break;
+                case 'mouseenter':
+                    $(submenu).dropdown('show');
+                    break;
+                case 'mouseleave':
+                    $(submenu).dropdown('hide');
+                    break;
+            }
+        }
+
+        function getSubmenu(menuItem) {
+            let submenu = menuItem.querySelector('.dropdown-menu');
+
+            if (submenu === null) {
+                submenu = $(menuItem).parents('.dropdown-menu')[0];
+                if (submenu === undefined) {
+                    $(menuItem).parents().map(function() {
+                        if ($(this).siblings('.dropdown-menu')[0]) {
+                            submenu = $(this).siblings('.dropdown-menu')[0];
+                            return submenu;
+                        }
+                    })
+                }
+            }
+            return submenu;
+        }
+
+        init();
+
+    })();
 }

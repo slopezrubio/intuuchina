@@ -7,6 +7,8 @@ use Faker\Generator as Faker;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Admin\NewUserNotification;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +16,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Array_;
+use Illuminate\Validation\Rule;
 use Stripe\Checkout\Session as Checkout;
 use Stripe\Stripe;
 
@@ -64,7 +66,7 @@ class RegisterController extends Controller
             'email' => ['required', 'email_simple', 'max:255', 'unique:users'],
             'phone_number' => ['required', 'numeric', new PhoneNumber()],
             'nationality' => ['required', 'max:255'],
-            'cv' => ['required', 'file', 'max:2000', 'mimes:pdf,doc,docx,odt,zip'],
+            'cv' => [Rule::requiredIf($data['program'] !== 'study'), 'file', 'max:2000', 'mimes:pdf,doc,docx,odt,zip'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'terms-register' => 'required',
         ],[
@@ -108,7 +110,7 @@ class RegisterController extends Controller
             'study' => $data['program'] === 'study' && isset($data['study']) ? json_encode($data[$data['program']]) : null,
             'university' =>  $data['program'] === 'university' && !empty($data['university']) ? json_encode($data[$data['program']]) : null,
             'type' => 'user',
-            'cv' => $data['cv']->store('cv'),
+            'cv' => array_key_exists('cv', $data) ? $data['cv']->store('cv') : null,
             'status_id' => DB::table('states')
                             ->select(DB::raw('id'))
                             ->where('name', 'unverified')
@@ -131,7 +133,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($user = $this->create($request->all(), $request->file('cv'))));
 
         $this->guard()->login($user);
 
@@ -159,46 +161,10 @@ class RegisterController extends Controller
         ]);*/
 
         /*
-         * Sends a notification to the user via the provided email.
+         * Sends a notification to the admin.
          */
-        $user->sendEmailVerificationNotification();
-    }
-
-    /**
-     * Flashes a set of parameters into the session as to get the register form ready with the corresponding inputs loaded and
-     * selected depending on the source where the request was made. Then redirects the user to the register form.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function registerWithOptions(Request $request) {
-        session()->pull('options');
-        session()->pull('program');
-        session()->flash('options', $this->setOptions($request->all()));
-        return redirect()->route('register');
-    }
-
-    /**
-     * Creates the array is going to be flashed into the session by the @see registerWithOptions method.
-     *
-     * @param array $parameters
-     * @return array
-     */
-    private function setOptions(Array $parameters) {
-        $found = false;
-        $options = [];
-        while ($parameter = current($parameters) && $found !== true) {
-            for ($y = 0; $y < count(__('content.programs')) && $found !== true; $y++) {
-                $pattern = __('content.programs')[$y];
-                if ($pattern ===  key($parameters)) {
-                    $found = true;
-                    $options[key($parameters)] = current($parameters);
-                }
-            }
-            next($parameters);
-        }
-
-        $options['program'] = $parameters['program'];
-        return $options;
+//        $admins = User::getAdmins();
+//
+//        Notification::send($admins, new NewUserNotification($user));
     }
 }

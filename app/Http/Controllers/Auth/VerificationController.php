@@ -35,13 +35,11 @@ class VerificationController extends Controller
             throw new AuthorizationException;
         }
 
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect($this->redirectPath());
-        }
-
-        // REMEMBER TO UNCOMMENT PRICK
-//        if ($request->user()->markEmailAsVerified()) {
+//        if ($request->user()->hasVerifiedEmail()) {
+//            return redirect($this->redirectPath());
+//        }
 //
+//        if ($request->user()->markEmailAsVerified()) {
 //           event(new Verified($request->user()));
 //        }
 

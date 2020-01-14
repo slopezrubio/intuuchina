@@ -21,33 +21,48 @@ return [
     'navbar' => [
         'home' => [
             'text' => 'Home',
-            'route' => 'home',
+            'url' => url('/'),
             'method' => 'GET',
         ],
         'internship' => [
             'text' => 'Internship',
-            'route' => 'internship',
+            'url' => url('internship'),
             'method' => 'GET',
         ],
-        'learn chinese' => [
+        'learn-chinese' => [
             'text' => 'Learn Chinese',
-            'route' => 'learn',
+            'url' => url('/learn'),
             'method' => 'POST',
+            'options' => function() {
+                $options = [];
+                foreach (__('content.courses') as $key => $value) {
+                    $option = array(
+                        'text' => $value['text'],
+                        'url' => url('learn?param=' . $key)
+                    );
+                    $options[$key] = $option;
+                }
+                return $options;
+            }
         ],
         'university' => [
             'text' => 'University',
-            'route' => 'university',
+            'url' => '/university',
+            'method' => 'POST',
             'options' => function() {
                 $options = [];
-
-                foreach (__('content.universities') as $study) {
-                    array_push($options, $study['heading']);
+                foreach (__('content.universities') as $key => $value) {
+                    $option = array(
+                        'text' => $value['heading'],
+                        'url' => url('university?param=' . $key)
+                    );
+                    $options[$key] = $option;
                 }
                 return $options;
             }
         ],
         'whyus' => [
-            'route' => 'whyus',
+            'url' => '/whyus',
             'text' => 'Why Us',
         ],
     ],
@@ -60,48 +75,75 @@ return [
 
     'webmap' => [
         'internship' => [
-            'job offers' => [
-                'text' => 'Job Offers',
-                'route' => 'internship',
-                'method' => 'GET',
-            ],
+            'heading' => 'Internship',
+            'options' => function() {
+                return array(
+                    'job offers' => [
+                        'text' => 'Job Offers',
+                        'url' => url('whyus'),
+                        'method' => 'GET',
+                    ]
+                );
+            }
         ],
         'learn-chinese' => [
-            'in-person' => [
-                'text' => 'In-Person',
-                'route' => 'learn',
-                'method' => 'POST'
-            ],
-            'online' => [
-                'text' => 'Online',
-                'route' => 'learn',
-                'method' => 'POST',
-            ]
+            'heading' => 'Learn Chinese',
+            'options' => function() {
+                $options = [];
+                foreach (__('content.courses') as $key => $value) {
+                    $option = array(
+                        'method' => 'GET',
+                        'text' => $value['text'],
+                        'url' => url('learn?param=' . $key)
+                    );
+                    $options[$key] = $option;
+                }
+                return $options;
+            }
         ],
         'university' => [
-            'mba' => [
-                'text' => 'MBA',
-                'route' => 'university',
-                'method' => 'POST'
-            ],
-            'mib' => [
-                'text' => 'M. Intl. Bsns.',
-                'route' => 'university',
-                'method' => 'POST'
-            ],
-            'others' => [
-                'text' => 'Others Studies',
-                'route' => 'university',
-                'method' => 'POST'
-            ]
+            'heading' => 'University',
+            'options' => function() {
+                $options = [];
+                foreach (__('content.universities') as $key => $value) {
+                    $option = array(
+                        'method' => 'GET',
+                        'text' => $value['heading'],
+                        'url' => url('university?param=' . $key)
+                    );
+                    $options[$key] = $option;
+                }
+                return $options;
+            }
         ],
         'why intuuchina' => [
-            'why us' => [
-                'text' => 'Why Us',
-                'route' => 'whyus',
-                'method' => 'GET',
-            ]
+            'heading' => 'Why Us',
+            'options' => function() {
+                return array(
+                    'why us' => [
+                        'text' => 'Why Us',
+                        'url' => 'whyus',
+                        'method' => 'GET',
+                    ]
+                );
+            }
         ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | User Verification
+    |--------------------------------------------------------------------------
+    */
+    'user-verification' => [
+        'home' => [
+            'text' => "Go Back",
+            'url' => url('/')
+        ],
+        'whyus' => [
+            'text' => 'Why IntuuChina',
+            'url' => url('whyus'),
+        ],
     ],
 
     /*
