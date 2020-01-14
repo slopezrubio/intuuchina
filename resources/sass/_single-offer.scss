@@ -1,24 +1,10 @@
-main {
-  .breadcumb_section {
-    ol {
-      background: $neutralColor;
-      padding: 0;
-      display: flex;
-      li {
-        padding: 0 1em;
-        list-style-type: none;
-        line-height: 52px;
-        background: $primaryRed;
-        a {
-          display: block;
-          color: $primaryWhite;
-          text-decoration: underline;
-          font-weight: 500;
-        }
-      }
-    }
+main#offer {
+  #content {
+    @include breadcrumb();
   }
+}
 
+main {
   .readable_section {
     margin-top: 2.2em;
     &_title {
@@ -27,7 +13,6 @@ main {
       font-size: minimosCuadrados($map);
       margin-bottom: 1.2em;
     }
-
     #jobDescription {
 
       h5, p {
@@ -148,36 +133,33 @@ main {
   }
 
   .sendable_section {
-    padding: 1.5em 1em;
+    //padding: 1.5em 1em;
     z-index: 1000;
     width: 100%;
     background: $primaryWhite;
-    height: 94px;
+    //height: 94px;
     margin-top: 2.2em;
-    margin-bottom: 1em;
-    top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
+    //margin-bottom: 1em;
+    //top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
     @include prefixed(transition, all .3s ease-in-out);
-    .offers_buttons {
-      display: flex;
-      .cta {
-        max-width: 325px;
-      }
+
+    .cta {
+      max-width: 325px;
     }
+
     &--fixed {
       @include prefixed(transition, all .3s ease-in-out);
-      padding: 1.5em 1em;
       position: fixed;
       z-index: 1000;
       width: 100%;
       background: $neutralColor;
-      height: 94px;
-      top: calc(100% - 84px); // (Alto del viewport - altura del elemento)
+      //height: 94px;
+      //top: calc(100% - 84px); (Alto del viewport - altura del elemento)
+      bottom: 0px;
       left: 0;
-      .offers_buttons {
-        display: flex;
-        .cta {
-          max-width: 325px;
-        }
+
+      .cta {
+        max-width: 325px;
       }
     }
   }
