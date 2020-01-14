@@ -4331,7 +4331,6 @@ var welcomeCard = {
           switch (_context2.prev = _context2.next) {
             case 0:
               if (welcomeCard.forms.payment.el() !== null) {
-                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].preventDoubleClick(welcomeCard.forms.payment.el());
                 welcomeCard.forms.payment.el().addEventListener('submit',
                 /*#__PURE__*/
                 function () {
@@ -4343,22 +4342,25 @@ var welcomeCard = {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            event.preventDefault(); // Sets the loader inside the button
+                            event.preventDefault();
+                            _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, true); // Sets the loader inside the button
 
                             _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Gets the URL and make a request to the API
 
                             urlPaymentForm = event.target.getAttribute('action');
-                            _context.next = 5;
+                            _context.next = 6;
                             return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].getDialog(urlPaymentForm, _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].getFormToken(event.target));
 
-                          case 5:
+                          case 6:
                             paymentFeeDialog = _context.sent;
-                            // Hides the loader once again
-                            _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Replace dialog box
+                            // Hides the loader once again.
+                            _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Sets the button to the initial state.
+
+                            _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false); // Replace dialog box.
 
                             welcomeCard.replaceDialog(paymentFeeDialog);
 
-                          case 8:
+                          case 10:
                           case "end":
                             return _context.stop();
                         }
@@ -4714,7 +4716,6 @@ var welcomeCard = {
         return _ref8.apply(this, arguments);
       };
     }());
-    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].preventDoubleClick(welcomeCard.forms.checkout.el());
     $(welcomeCard.forms.checkout.el()).on('submit',
     /*#__PURE__*/
     function () {
@@ -4727,16 +4728,11 @@ var welcomeCard = {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                event.preventDefault(); // Only for testing
-                // console.log(api.getHostName() + '/payment-successful');
-                // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
-                // welcomeCard.replaceDialog(newDialog);
-                // return;
-                // Sets the loader inside the checkout button.
+                event.preventDefault(); // Sets the loader inside the checkout button.
 
-                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Disables all inputs of the form.
-
-                welcomeCard.disableCheckoutInputs(event.target, true);
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, true);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], true);
                 paymentDetails = {
                   card_holder_name: cardHolderName.value,
                   email: document.querySelector('#email').value,
@@ -4744,70 +4740,68 @@ var welcomeCard = {
                 };
 
                 if (!welcomeCard.isCourseSelected()) {
-                  _context8.next = 13;
+                  _context8.next = 14;
                   break;
                 }
 
                 paymentDetails[courseSelector.getAttribute('name')] = courseSelector.value;
                 _context8.t0 = courseSelector.value;
-                _context8.next = _context8.t0 === 'in-person' ? 9 : _context8.t0 === 'online' ? 11 : 13;
+                _context8.next = _context8.t0 === 'in-person' ? 10 : _context8.t0 === 'online' ? 12 : 14;
                 break;
 
-              case 9:
+              case 10:
                 paymentDetails['staying'] = document.getElementById('staying').value;
-                return _context8.abrupt("break", 13);
+                return _context8.abrupt("break", 14);
 
-              case 11:
+              case 12:
                 paymentDetails['hours'] = document.getElementById('hours').value;
-                return _context8.abrupt("break", 13);
+                return _context8.abrupt("break", 14);
 
-              case 13:
-                _context8.next = 15;
+              case 14:
+                _context8.next = 16;
                 return _main_api__WEBPACK_IMPORTED_MODULE_5__["default"].validateFields('payment-details', paymentDetails);
 
-              case 15:
+              case 16:
                 validation = _context8.sent;
 
                 if (!validation.errors) {
-                  _context8.next = 21;
+                  _context8.next = 23;
                   break;
                 }
 
                 welcomeCard.handleErrorFields(Object.keys(validation.errors), validation.errors); // Hides the loader inside the checkout button.
 
-                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
-                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target);
+                _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target); // Enables again the inputs of the checkout form.
+
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false);
                 return _context8.abrupt("return", false);
 
-              case 21:
-                _context8.next = 23;
+              case 23:
+                _context8.next = 25;
                 return stripe.createPaymentMethod('card', cardNumber, {
                   billing_details: validation
                 });
 
-              case 23:
+              case 25:
                 _ref10 = _context8.sent;
                 paymentMethod = _ref10.paymentMethod;
                 error = _ref10.error;
 
                 if (!error) {
-                  _context8.next = 32;
+                  _context8.next = 36;
                   break;
                 }
 
-                welcomeCard.displayInputFieldError('submit', error.message);
-                /*
-                 * Resets the event that prevents the double click when pressing
-                 * the submit button.
-                 */
+                welcomeCard.displayInputFieldError('submit', error.message); // Sets the inputs to the initial state.
 
-                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target); // Hides the loader inside the checkout button.
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false); // Hides the loader inside the checkout button.
 
                 _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
-                _context8.next = 43;
-                break;
+                return _context8.abrupt("return", false);
 
-              case 32:
+              case 36:
                 /**
                  * If no errors found it, gathers the information needed to Stripe PHP API
                  * so the payment can be applied in the server.
@@ -4822,24 +4816,24 @@ var welcomeCard = {
                 };
 
                 if (!welcomeCard.isCourseSelected()) {
-                  _context8.next = 42;
+                  _context8.next = 46;
                   break;
                 }
 
                 data.study = courseSelector.value;
                 _context8.t1 = data.study;
-                _context8.next = _context8.t1 === 'in-person' ? 38 : _context8.t1 === 'online' ? 40 : 42;
+                _context8.next = _context8.t1 === 'in-person' ? 42 : _context8.t1 === 'online' ? 44 : 46;
                 break;
 
-              case 38:
-                data.staying = document.getElementById('staying').value;
-                return _context8.abrupt("break", 42);
-
-              case 40:
-                data.hours = document.getElementById('hours').value;
-                return _context8.abrupt("break", 42);
-
               case 42:
+                data.staying = document.getElementById('staying').value;
+                return _context8.abrupt("break", 46);
+
+              case 44:
+                data.hours = document.getElementById('hours').value;
+                return _context8.abrupt("break", 46);
+
+              case 46:
                 /*
                  * Sends the information needed along the Payment Method ID.
                  */
@@ -4851,13 +4845,10 @@ var welcomeCard = {
                      * Displays the error coming from the server according to the field or
                      * parameter the error is related to.
                      */
-                    welcomeCard.displayInputFieldError(error.field, error.message);
-                    /*
-                     * Resets the event that prevents the double click when pressing
-                     * the submit button.
-                     */
+                    welcomeCard.displayInputFieldError(error.field, error.message); // Enables again the inputs of the checkout form.
 
-                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target); // Hides the loader inside the checkout button.
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false); // Hides the loader inside the checkout button.
 
                     _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
                   } else {
@@ -4878,16 +4869,16 @@ var welcomeCard = {
                     // In both cases the returned data is sent to a handler.
                     welcomeCard.handleServerResponse(result.data); // Enables again the inputs of the checkout form.
 
-                    welcomeCard.disableCheckoutInputs(welcomeCard.forms.checkout.el(), false); // Hides the loader inside the checkout button.
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(event.target, false);
+                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs([cardNumber, cvc, cardExpiry], false); // Hides the loader inside the checkout button.
 
                     _main_UI__WEBPACK_IMPORTED_MODULE_3__["default"].changeLoadingButtonState(event.target);
-                    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].toggleDisablingForm(event.target);
                   }
                 }); // Only when JavaScript is disabled
                 // document.querySelector('#payment-method').value = paymentMethod.id;
                 // welcomeCard.forms.checkout.el().submit();
 
-              case 43:
+              case 47:
               case "end":
                 return _context8.stop();
             }
@@ -4948,23 +4939,6 @@ var welcomeCard = {
 
     return setPaymentAmount;
   }(),
-  // setPaymentAmount: function(value, currency = 'eur') {
-  //     if (welcomeCard.paymentAmount !== null) {
-  //         // Check if the given currency is a zero-decimal currency
-  //         let multiplier = currencies[currency].decimal_digits > 0
-  //             ? Math.pow(10, currencies[currency].decimal_digits) : 1;
-  //
-  //         // Remove decimals to set the amount in the less unit of measure (cents)
-  //         welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
-  //         return true;
-  //     }
-  //
-  //     welcomeCard.paymentAmount = value;
-  // },
-  disableCheckoutInputs: function disableCheckoutInputs(form, disabled) {
-    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableFormInputs(form, disabled);
-    _main_Forms__WEBPACK_IMPORTED_MODULE_1__["default"].disableStripeInputs(form, disabled);
-  },
   displayStripeErrors: function displayStripeErrors(element, error) {
     if (error) {
       element.textContent = error.message;
@@ -5168,21 +5142,6 @@ var welcomeCard = {
         document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w').parentElement.style.display = 'block';
       }
     });
-    /*paymentRequest.on('paymentmethod', function(e) {
-        stripe.confirmCardPayment(
-            clientSecret,
-            {payment_method: e.paymentMethod.id},
-            {handleActions: false}
-        ).then(function(confirmResult) {
-            if (confirmResult.error) {
-                e.complete('failed');
-            } else {
-                e.complete('success')
-                stripe.confirmCardPayment(clientSecret).then(function(result) {
-                  })
-            }
-        })
-    });*/
   }
 };
 
@@ -5359,8 +5318,12 @@ var Forms = function () {
       // Disables the custom inputs of the form (All but the Stripe inputs)
       disableFormInputs: function disableFormInputs(form) {
         var disabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-        $(form).filter(':input:not(.__PrivateStripeElement-input)').each(function () {
-          $(this).attr("disabled", disabled);
+        $(form).filter(function () {
+          if (disabled) {
+            return $('input:not(.__PrivateStripeElement-input), select, button', this).attr("disabled", disabled);
+          }
+
+          $('input:not(.__PrivateStripeElement-input), select, button', this).removeAttr('disabled');
         });
       },
       showElement: function showElement(element) {
@@ -5374,9 +5337,8 @@ var Forms = function () {
       // Disables all the Stripe inputs of the form.
       disableStripeInputs: function disableStripeInputs(stripeElements) {
         var disabled = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-        $(stripeElements._elements).each(function () {
-          var stripeInput = $(this)[0];
-          stripeInput.update({
+        stripeElements.forEach(function (element) {
+          element.update({
             disabled: disabled
           });
         });
@@ -5388,8 +5350,6 @@ var Forms = function () {
         var _this = this;
 
         var submitButton = form.querySelector('button[type=submit]');
-        console.log(submitButton);
-        console.log(form);
         $(submitButton).one('click', function (event) {
           if (submitButton.getAttribute('disabled') !== true) {
             $(_this).prop('disabled', true);
@@ -5814,19 +5774,20 @@ var api = {
 
             case 4:
               response = _context3.sent;
+              console.log(response);
               return _context3.abrupt("return", response);
 
-            case 8:
-              _context3.prev = 8;
+            case 9:
+              _context3.prev = 9;
               _context3.t0 = _context3["catch"](1);
               console.log(_context3.t0.response);
 
-            case 11:
+            case 12:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[1, 8]]);
+      }, _callee3, null, [[1, 9]]);
     }));
 
     function sendPaymentMethod(_x5) {
@@ -5946,6 +5907,7 @@ var api = {
               }).then(function (response) {
                 return response.data;
               })["catch"](function (error) {
+                console.log(error.response);
                 return error.response.data;
               });
 
@@ -5972,8 +5934,8 @@ var api = {
     return validateFields;
   }(),
   setTokenToAxiosHeader: function setTokenToAxiosHeader() {
-    api.getToken();
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    console.log(api.getToken());
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = api.getToken();
   },
   getPagination: function getPagination(url, container) {
     if (url !== undefined) {
@@ -6001,7 +5963,7 @@ var api = {
     return false;
   },
   getToken: function getToken() {
-    return document.head.querySelector('meta[name="csrf-token"');
+    return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
   },
   getCourseInfo: function getCourseInfo(course, callback) {
     var data = {

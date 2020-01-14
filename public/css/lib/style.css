@@ -17721,25 +17721,38 @@ section .services .service_card_container .service_card_footer .cta {
 
 .user-card .card {
   background: transparent;
+  border: none;
+  border-radius: 15px 15px 0px 0px;
+  -ms-box-shadow: 1px 1px 150px 1px black;
+  -o-box-shadow: 1px 1px 150px 1px black;
+  box-shadow: 1px 1px 150px 1px black;
 }
 
 .user-card .card-header {
   background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px 15px 0px 0px;
   border: 2px solid white;
-  border-radius: 28px 28px 0px 0px;
 }
 
 .user-card .card-header h1 {
   color: white;
-  font-weight: 700;
   font-size: 1.25em;
   margin: 0.25em 0;
-  text-uppercase: uppercase;
+  text-transform: uppercase;
 }
 
 .user-card .card-body {
   background: white;
-  border-radius: 0px 0px 5px 5px;
+}
+
+.user-card .card-footer {
+  background: white;
+}
+
+.user-card .card-footer a,
+.user-card .card-footer li,
+.user-card .card-footer p {
+  font-size: 0.9em;
 }
 
 .user-card #dialog-box form input {

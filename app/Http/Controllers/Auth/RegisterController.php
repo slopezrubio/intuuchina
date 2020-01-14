@@ -163,22 +163,8 @@ class RegisterController extends Controller
         /*
          * Sends a notification to the admin.
          */
-        $admins = User::getAdmins();
-
-        Notification::send($admins, new NewUserNotification($user));
-    }
-
-    /**
-     * Flashes a set of parameters into the session as to get the register form ready with the corresponding inputs loaded and
-     * selected depending on the source where the request was made. Then redirects the user to the register form.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function registerWithOptions(Request $request) {
-        session()->pull('options');
-        session()->pull('program');
-        session()->flash('options', $this->setOptions($request->all()));
-        return redirect()->route('register');
+//        $admins = User::getAdmins();
+//
+//        Notification::send($admins, new NewUserNotification($user));
     }
 }

@@ -51,10 +51,10 @@ let welcomeCard = {
     setup: async function() {
         if (welcomeCard.forms.payment.el() !== null) {
 
-            Forms.preventDoubleClick(welcomeCard.forms.payment.el());
-
             welcomeCard.forms.payment.el().addEventListener('submit', async function (event) {
                 event.preventDefault();
+
+                Forms.disableFormInputs(event.target, true);
 
                 // Sets the loader inside the button
                 UI.changeLoadingButtonState(event.target);
@@ -64,10 +64,13 @@ let welcomeCard = {
 
                 let paymentFeeDialog = await api.getDialog(urlPaymentForm, Forms.getFormToken(event.target));
 
-                // Hides the loader once again
+                // Hides the loader once again.
                 UI.changeLoadingButtonState(event.target);
 
-                // Replace dialog box
+                // Sets the button to the initial state.
+                Forms.disableFormInputs(event.target, false);
+
+                // Replace dialog box.
                 welcomeCard.replaceDialog(paymentFeeDialog);
             })
         }
@@ -297,22 +300,20 @@ let welcomeCard = {
             welcomeCard.setPaymentAmount(welcomeCard.getPricePerUnit(), e.target.value);
         });
 
-        Forms.preventDoubleClick(welcomeCard.forms.checkout.el());
-
         $(welcomeCard.forms.checkout.el()).on('submit', async (event) => {
             event.preventDefault();
-
-            // Only for testing
-            // console.log(api.getHostName() + '/payment-successful');
-            // let newDialog = await api.continue(api.getHostName() + '/payment-successful');
-            // welcomeCard.replaceDialog(newDialog);
-            // return;
 
             // Sets the loader inside the checkout button.
             UI.changeLoadingButtonState(event.target);
 
-            // Disables all inputs of the form.
-            welcomeCard.disableCheckoutInputs(event.target, true);
+            Forms.disableFormInputs(event.target, true);
+
+            Forms.disableStripeInputs([
+                cardNumber,
+                cvc,
+                cardExpiry
+            ], true);
+
 
             let paymentDetails = {
                 card_holder_name: cardHolderName.value,
@@ -348,7 +349,13 @@ let welcomeCard = {
                 // Hides the loader inside the checkout button.
                 UI.changeLoadingButtonState(event.target);
 
-                Forms.toggleDisablingForm(event.target);
+                // Enables again the inputs of the checkout form.
+                Forms.disableFormInputs(event.target, false);
+                Forms.disableStripeInputs([
+                    cardNumber,
+                    cvc,
+                    cardExpiry
+                ], false);
 
                 return false;
             }
@@ -367,14 +374,18 @@ let welcomeCard = {
             if (error) {
                 welcomeCard.displayInputFieldError('submit', error.message);
 
-                /*
-                 * Resets the event that prevents the double click when pressing
-                 * the submit button.
-                 */
-                Forms.toggleDisablingForm(event.target);
+                // Sets the inputs to the initial state.
+                Forms.disableFormInputs(event.target, false);
+                Forms.disableStripeInputs([
+                    cardNumber,
+                    cvc,
+                    cardExpiry
+                ], false);
 
                 // Hides the loader inside the checkout button.
                 UI.changeLoadingButtonState(event.target);
+
+                return false;
             } else {
                 /**
                  * If no errors found it, gathers the information needed to Stripe PHP API
@@ -417,11 +428,13 @@ let welcomeCard = {
                              */
                             welcomeCard.displayInputFieldError(error.field, error.message);
 
-                            /*
-                             * Resets the event that prevents the double click when pressing
-                             * the submit button.
-                             */
-                            Forms.toggleDisablingForm(event.target);
+                            // Enables again the inputs of the checkout form.
+                            Forms.disableFormInputs(event.target, false);
+                            Forms.disableStripeInputs([
+                                cardNumber,
+                                cvc,
+                                cardExpiry
+                            ], false);
 
                             // Hides the loader inside the checkout button.
                             UI.changeLoadingButtonState(event.target);
@@ -447,12 +460,15 @@ let welcomeCard = {
                             welcomeCard.handleServerResponse(result.data);
 
                             // Enables again the inputs of the checkout form.
-                            welcomeCard.disableCheckoutInputs(welcomeCard.forms.checkout.el(), false);
+                            Forms.disableFormInputs(event.target, false);
+                            Forms.disableStripeInputs([
+                                cardNumber,
+                                cvc,
+                                cardExpiry
+                            ], false);
 
                             // Hides the loader inside the checkout button.
                             UI.changeLoadingButtonState(event.target);
-
-                            Forms.toggleDisablingForm(event.target);
                         }
                     })
 
@@ -460,14 +476,6 @@ let welcomeCard = {
                 // document.querySelector('#payment-method').value = paymentMethod.id;
                 // welcomeCard.forms.checkout.el().submit();
             }
-
-            /**
-             * CHECKOUT PAYMENT PROCESS (optional)
-             */
-            // let cancelUrl = window.location.protocol + '//' + window.location.hostname + '/home';
-            // let successUrl = welcomeCard.forms.checkout.el().getAttribute('action');
-            //
-            // welcomeCard.redirectToCheckout(successUrl, cancelUrl);
         });
     },
     getCourseDuration: function() {
@@ -488,23 +496,6 @@ let welcomeCard = {
         value = await welcomeCard.currencyExchange(value, currency);
         value *= welcomeCard.getCourseDuration();
         welcomeCard.updatePaymentButton(value, currency);
-    },
-    // setPaymentAmount: function(value, currency = 'eur') {
-    //     if (welcomeCard.paymentAmount !== null) {
-    //         // Check if the given currency is a zero-decimal currency
-    //         let multiplier = currencies[currency].decimal_digits > 0
-    //             ? Math.pow(10, currencies[currency].decimal_digits) : 1;
-    //
-    //         // Remove decimals to set the amount in the less unit of measure (cents)
-    //         welcomeCard.paymentAmount = (value * multiplier).toFixed(0);
-    //         return true;
-    //     }
-    //
-    //     welcomeCard.paymentAmount = value;
-    // },
-    disableCheckoutInputs: (form, disabled) => {
-        Forms.disableFormInputs(form, disabled);
-        Forms.disableStripeInputs(form, disabled);
     },
     displayStripeErrors: function(element, error) {
         if (error) {
@@ -655,23 +646,6 @@ let welcomeCard = {
                 document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w').parentElement.style.display = 'block';
             }
         });
-
-        /*paymentRequest.on('paymentmethod', function(e) {
-            stripe.confirmCardPayment(
-                clientSecret,
-                {payment_method: e.paymentMethod.id},
-                {handleActions: false}
-            ).then(function(confirmResult) {
-                if (confirmResult.error) {
-                    e.complete('failed');
-                } else {
-                    e.complete('success')
-                    stripe.confirmCardPayment(clientSecret).then(function(result) {
-
-                    })
-                }
-            })
-        });*/
     }
 }
 

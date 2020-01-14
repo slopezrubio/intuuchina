@@ -41,6 +41,7 @@ let api = {
                 data: data,
             });
 
+            console.log(response);
             return response;
         } catch(error) {
             console.log(error.response);
@@ -81,13 +82,13 @@ let api = {
             data: object,
         })
             .then(function(response) { return response.data })
-            .catch(error => { return error.response.data });
+            .catch(error => { console.log(error.response);return error.response.data });
 
         return await response;
     },
     setTokenToAxiosHeader: function() {
-        api.getToken();
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+        console.log(api.getToken());
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = api.getToken();
     },
     getPagination: function(url, container) {
         if (url !== undefined) {
@@ -116,7 +117,7 @@ let api = {
         return false;
     },
     getToken: function() {
-        return document.head.querySelector('meta[name="csrf-token"');
+        return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
     },
     getCourseInfo: function(course, callback) {
         let data = {

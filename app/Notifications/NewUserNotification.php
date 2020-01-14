@@ -75,11 +75,11 @@ class NewUserNotification extends Notification implements ShouldQueue
         return [
             'email' => URL::temporarySignedRoute('verification.email',
                 Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
-                ['id' => $notifiable->getKey()]
+                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true]
             ),
             'checkout' => URL::temporarySignedRoute('verification.email',
                 Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
-                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true ]
+                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true]
             ),
         ];
 

@@ -15,22 +15,30 @@
   }
   .card {
     background: transparent;
+    border: none;
+    border-radius: 15px 15px 0px 0px;
+    @include prefixed(box-shadow, 1px 1px 150px 1px $primaryDark);
     &-header {
       background: $sectionDark;
+      border-radius: 15px 15px 0px 0px;
       border: 2px solid $primaryWhite;
-      border-radius: 28px 28px 0px 0px;
       h1 {
         color: $primaryWhite;
-        font-weight: 700;
         font-size: 1.25em;
         margin: 0.25em 0;
-        text-uppercase: uppercase;
+        text-transform: uppercase;
       }
     }
 
     &-body {
       background: $primaryWhite;
-      border-radius: 0px 0px 5px 5px;
+    }
+
+    &-footer {
+      background: $primaryWhite;
+      a, li, p {
+        font-size: 0.9em;
+      }
     }
   }
 
