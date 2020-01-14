@@ -1,6 +1,6 @@
 # README
 
-<img src="http://intuuchina.meinsusseichhornchen.org/./storage/images/logo.png" style="text-align: center">
+<img src="http://intuuchina.meinsusseichhornchen.org/./storage/images/logo.png">
 
 <h2>Shared Hosting Deployment
 
