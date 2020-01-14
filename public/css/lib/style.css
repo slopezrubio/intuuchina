@@ -13999,7 +13999,12 @@ table.table tbody tr.status--warning td p {
 .navbar_container #navbarToggler .navbar_items a i,
 .navbar_container #navbarToggler .navbar_items .media i {
   text-align: center;
-  width: 30px;
+  width: 45px;
+}
+
+.navbar_container #navbarToggler .navbar_items a.social-media-nav-links,
+.navbar_container #navbarToggler .navbar_items .media.social-media-nav-links {
+  font-weight: 500;
 }
 
 .navbar_container #navbarToggler .navbar_items li:hover {
@@ -18443,25 +18448,132 @@ main#job-board section#content .cards-list .card-group .card-body__action .card-
   padding-right: 0;
 }
 
-main .breadcumb_section ol {
+main#offer #content #breadcrumb {
   background: #d1d1d1;
-  padding: 0;
-  display: -webkit-box;
-  display: flex;
+  padding-top: 0.5em;
 }
 
-main .breadcumb_section ol li {
-  padding: 0 1em;
-  list-style-type: none;
-  line-height: 52px;
-  background: #C80B0B;
+main#offer #content #breadcrumb ul {
+  list-style: none;
+  display: inline-block;
 }
 
-main .breadcumb_section ol li a {
-  display: block;
+main#offer #content #breadcrumb .icon {
+  font-size: 14px;
+}
+
+main#offer #content #breadcrumb li {
+  float: left;
+}
+
+main#offer #content #breadcrumb li a {
   color: white;
-  text-decoration: underline;
+  display: block;
   font-weight: 500;
+  background: black;
+  text-decoration: none;
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px 0 5px;
+  text-align: center;
+  margin-right: 23px;
+}
+
+main#offer #content #breadcrumb li:nth-child(even) a {
+  background-color: #C80B0B;
+}
+
+main#offer #content #breadcrumb li:nth-child(even) a:before {
+  border-color: #C80B0B;
+  border-left-color: transparent;
+}
+
+main#offer #content #breadcrumb li:nth-child(even) a:after {
+  border-left-color: #C80B0B;
+}
+
+main#offer #content #breadcrumb li:nth-child(even) a:hover {
+  background-color: #F44336;
+}
+
+main#offer #content #breadcrumb li:nth-child(even) a:hover:before {
+  border-color: #F44336;
+  border-left-color: transparent;
+}
+
+main#offer #content #breadcrumb li:nth-child(even) a:hover:after {
+  border-left-color: #F44336;
+}
+
+main#offer #content #breadcrumb li:nth-child(odd) a:hover {
+  background-color: #2D2B2E;
+}
+
+main#offer #content #breadcrumb li:nth-child(odd) a:hover:before {
+  border-color: #2D2B2E;
+  border-left-color: transparent;
+}
+
+main#offer #content #breadcrumb li:nth-child(odd) a:hover:after {
+  border-left-color: #2D2B2E;
+}
+
+main#offer #content #breadcrumb li:first-child a {
+  padding-left: 15px;
+  border-radius: 4px 0 0 4px;
+}
+
+main#offer #content #breadcrumb li:first-child a:before {
+  border: none;
+}
+
+main#offer #content #breadcrumb li:last-child a {
+  padding-right: 15px;
+  border-radius: 0 4px 4px 0;
+}
+
+main#offer #content #breadcrumb li:last-child a:after {
+  border: none;
+}
+
+main#offer #content #breadcrumb li a:before,
+main#offer #content #breadcrumb li a:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  border: 0 solid black;
+  border-width: 20px 10px;
+  width: 0;
+  height: 0;
+}
+
+main#offer #content #breadcrumb li a:before {
+  left: -20px;
+  border-left-color: transparent;
+}
+
+main#offer #content #breadcrumb li a:after {
+  left: 100%;
+  border-color: transparent;
+  border-left-color: black;
+}
+
+main#offer #content #breadcrumb li a:hover:before {
+  border-left-color: transparent;
+}
+
+main#offer #content #breadcrumb li a:active {
+  background-color: #F44336;
+}
+
+main#offer #content #breadcrumb li a:active:before {
+  border-color: #F44336;
+  border-left-color: transparent;
+}
+
+main#offer #content #breadcrumb li a:active:after {
+  border-left-color: #F44336;
 }
 
 main .readable_section {
@@ -18607,46 +18719,30 @@ main .readable_section .card_background-image_info .card-text .month .month_valu
 }
 
 main .sendable_section {
-  padding: 1.5em 1em;
   z-index: 1000;
   width: 100%;
   background: white;
-  height: 94px;
   margin-top: 2.2em;
-  margin-bottom: 1em;
-  top: calc(100% - 84px);
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
 
-main .sendable_section .offers_buttons {
-  display: -webkit-box;
-  display: flex;
-}
-
-main .sendable_section .offers_buttons .cta {
+main .sendable_section .cta {
   max-width: 325px;
 }
 
 main .sendable_section--fixed {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  padding: 1.5em 1em;
   position: fixed;
   z-index: 1000;
   width: 100%;
   background: #d1d1d1;
-  height: 94px;
-  top: calc(100% - 84px);
+  bottom: 0px;
   left: 0;
 }
 
-main .sendable_section--fixed .offers_buttons {
-  display: -webkit-box;
-  display: flex;
-}
-
-main .sendable_section--fixed .offers_buttons .cta {
+main .sendable_section--fixed .cta {
   max-width: 325px;
 }
 

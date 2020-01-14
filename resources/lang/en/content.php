@@ -25,6 +25,7 @@ return [
     'university' => 'University',
     'why intuuchina' => 'Why IntuuChina',
     'job offers' => 'Job Offers',
+    'job description' => 'Job Description',
     'new offer' => 'New Offer',
     'mission & vision' => 'Mission and Vision',
     'awards & honours' => 'Awards and Honours',

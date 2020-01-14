@@ -11,8 +11,6 @@
 
     <main id="job-board" class="container-fluid">
         <section id="search-tool">
-{{--            @include('partials._filter-by');--}}
-            {{-- Barra de herramientas de busqueda --}}
             @component('components.toolbars.job-board')
 
             @endcomponent
