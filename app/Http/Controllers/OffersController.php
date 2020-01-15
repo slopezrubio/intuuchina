@@ -262,6 +262,6 @@ class OffersController extends Controller
     public function single($id) {
         $offer = Offer::find($id);
 
-        return view(('pages/job-description'), compact('offer', 'params'));
+        return view(('pages/job-description'), compact('offer'));
     }
 }
