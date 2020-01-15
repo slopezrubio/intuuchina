@@ -1,11 +1,8 @@
 # README
 
-<img src="http://intuuchina.meinsusseichhornchen.org/./storage/images/logo.png" style="text-align: center">
-
+<img src="http://intuuchina.meinsusseichhornchen.org/./storage/images/logo.png">
 <h2>Shared Hosting Deployment
-
-<p>
-    First, upload all the files inside the root project barring <code>\vendor</code>, <code>\node_modules</code>, and <code>\public</code>
+<p>First, upload all the files inside the root project barring <code>\vendor</code>, <code>\node_modules</code>, and <code>\public</code>
 </p>
 <pre>
    |-- intuuchina
