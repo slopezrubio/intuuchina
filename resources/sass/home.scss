@@ -29,12 +29,6 @@ body {
   background: $white;
 }
 
-header {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 header.auth {
   background: $primaryRed;
   height: 20rem;

@@ -12,23 +12,19 @@ if (document.getElementsByTagName('nav') !== null) {
         var _accordionSubmenus = _navbar.querySelectorAll('.accordion_submenu');
 
         var _listeners = {
-            dropdown: function() {
-                _dropdowns.forEach((dropdown) => {
-                    if (MediaQueries.isNavbarBreakpoint()) {
-                        dropdown.removeEventListener('click', setDropdowns);
-                        dropdown.addEventListener('mouseenter', setDropdowns);
-                        dropdown.addEventListener('mouseleave', setDropdowns);
-                    } else {
-                        dropdown.removeEventListener('mouseenter', setDropdowns);
-                        dropdown.removeEventListener('mouseleave', setDropdowns);
-                        dropdown.addEventListener('click', setDropdowns);
-                    }
-                })
+            dropdown: function(dropdown) {
+                if (MediaQueries.isNavbarBreakpoint()) {
+                    dropdown.removeEventListener('click', setDropdowns);
+                    dropdown.addEventListener('mouseenter', setDropdowns);
+                    dropdown.addEventListener('mouseleave', setDropdowns);
+                } else {
+                    dropdown.removeEventListener('mouseenter', setDropdowns);
+                    dropdown.removeEventListener('mouseleave', setDropdowns);
+                    dropdown.addEventListener('click', setDropdowns);
+                }
             },
-            dropdownItem: function() {
-                _dropdownItems.forEach((item) => {
-                    item.addEventListener('click', setDropdownItems)
-                })
+            dropdownItem: function(item) {
+                item.addEventListener('click', setDropdownItems)
             }
         };
 
@@ -38,12 +34,19 @@ if (document.getElementsByTagName('nav') !== null) {
                     $(_loginModal).modal();
                 };
 
-                _listeners.dropdown();
-                _listeners.dropdownItem();
+                for (let i = 0; i < _dropdowns.length; i++) {
+                    _listeners.dropdown(_dropdowns[i]);
+                }
+
+                for (let y = 0; y < _dropdownItems.length; y++) {
+                    _listeners.dropdownItem(_dropdownItems[y]);
+                }
             });
 
             window.addEventListener('resize', (e) => {
-                _listeners.dropdown();
+                for (let i = 0; i < _dropdowns.length; i++) {
+                    _listeners.dropdown(_dropdowns[i]);
+                }
             });
         }
 

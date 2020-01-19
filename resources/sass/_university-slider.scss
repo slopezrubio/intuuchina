@@ -25,6 +25,6 @@ $third-slide: (
         secondary-button-color: $primaryDark
 );
 
-header#university + main {
+main#university {
   @include arrow-slider($first-slide, $second-slide, $third-slide)
 }

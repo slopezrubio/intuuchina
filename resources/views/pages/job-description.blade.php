@@ -1,13 +1,24 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="header" id="job-description" data-content="{{ $offer->picture }}">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
 
-        {{--Título de la página--}}
-        @include('partials._header')
-    </header>
+    @component('components.header', ['href' => route('internship')])
+        @slot('variant')
+            {{ 'primary' }}
+        @endslot
+
+        @slot('background_image')
+            {{ $offer->picture }}
+        @endslot
+
+        @slot('title')
+            {!!  __('content.industries' .$offer->industry) !!}
+        @endslot
+
+        @slot('subtitle')
+            {{ $offer->title }}
+        @endslot
+    @endcomponent
 
     <main id="offer">
         <section id="content">

@@ -236,8 +236,7 @@
 }
 
 // Components
-@mixin title-card {
-  background: $sectionDark;
+@mixin header-box {
   margin: 0 auto;
   padding: 1.5em;
   border-radius: 28px;
@@ -363,6 +362,46 @@
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+/* -------------------
+ * --- Typography ----
+ * -------------------
+ */
+@function minimosCuadrados($values) {
+  $length: length(map_keys($values));
+
+  @if ($length < 2) {
+    @error "minimosCuadrados() $values must be at least 2 values"
+  }
+
+  $sumXTotal: 0;
+  $sumYTotal: 0;
+  @each $x, $y in $values {
+    $sumXTotal: $sumXTotal + $x;
+    $sumYTotal: $sumYTotal + $y;
+  }
+  $xAverage: $sumXTotal / $length;
+  $yAverage: $sumYTotal / $length;
+
+  $multipliedDiff: 0;
+  $squaredDiff: 0;
+  @each $x, $y in $values {
+    // Diferencias entre el promedio de X
+    $resDiff: $x - $xAverage;
+
+    // Diferencias entre el promedio de Y
+    $valueDiff: $y - $yAverage;
+
+    $multipliedDiff: $multipliedDiff + ($resDiff * $valueDiff);
+    $squaredDiff: $squaredDiff + ($resDiff * $resDiff);
+  }
+
+  // Calcula la pendiente o tendencia
+  $slope: $multipliedDiff / $squaredDiff;
+
+  $result: $yAverage - ($slope * $xAverage);
+  @return calc(#{$slope*100}vw + #{$result}px);
 }
 
 /* Dropdown button */

@@ -181,7 +181,7 @@ return [
     'pay' => 'Pay :value',
     'pay now' => 'Pay Now',
     'see more' => 'See more',
-    'see job offers' => 'Internship',
+    'open positions' => 'Open Positions',
     'name placeholder' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
     'subject placeholder' => 'Write down here your issue',
     'filter by:' => 'Filter by:',

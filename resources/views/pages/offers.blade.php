@@ -1,13 +1,19 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="header" id="internship">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
+    @component('components.header')
+        @slot('variant')
+            {{ 'primary' }}
+        @endslot
 
-        {{--Título de la página--}}
-        @include('partials._header')
-    </header>
+        @slot('background_image')
+            {{ __('heading.' .$view_name. '.background') }}
+        @endslot
+
+        @slot('title')
+            {!!  __('heading.' .$view_name. '.title') !!}
+        @endslot
+    @endcomponent
 
     <main id="job-board" class="container-fluid">
         <section id="search-tool">

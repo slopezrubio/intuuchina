@@ -1,232 +1,376 @@
 import MediaQueries from '../main/breakpoints';
 import DOM from '../main/dom';
+import { SliderFactory } from '../factories/SliderFactory';
 
-var ArrowSlider = (function() {
-    var instance;
+function ArrowSlider(options) {
+    this.holder = document.querySelector('.arrow-slider__holder');
+    this.offset = 1;
+    this.currentSlideIndex = options.slide ? options.slide + this.offset : null;
+    this.carousel = this.holder.children[0];
+    this.slides = this.carousel.children;
+    this.controllers = [];
+    this.controllersCallback = options.controllersCallback ? options.controllersCallback : null;
+    this.currentSlide = this.slides[this.currentSlideIndex - this.offset];
 
-    function ArrowSliderClass(options) {
-        // Private properties
-        var holder = options.holder;
-        var offset = 1;
-        var currentSlideIndex = options.slide ? options.slide + offset : 1;
-        var carousel = options.holder.children[0];
-        var colors = options.colors;
-        var slides = carousel.children;
-        var controllers = addControllers(options.controllers);
-        var controllersCallback = options.controllersCallback ? options.controllersCallback : null;
-        var currentSlide = slides[currentSlideIndex - offset];
+    this.init = function() {
+        this.setControllers()
+            .setColors()
+            .setCurrentSlideIndex()
+            .setCurrentSlide(this.currentSlideIndex - this.offset)
+            .runAutoWidths()
+            .setResponsive();
 
-        function init() {
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].autoWidth = function() {
-                    autoWidth(this)
-                }
-            };
+        this.setListeners();
+    };
 
-            // Make the slider responsive according to the screen resolution.
-            setResponsive();
+    /**
+     * Sets all the listeners.
+     */
+    this.setListeners = function() {
+        window.addEventListener('resize', () => {
+            this.setResponsive(this);
+        });
+    };
 
-            /* ---------- RESIZE ------------*/
-            window.addEventListener('resize', setResponsive);
+    /**
+     * Sets an array of the colors used by each slide of the slider.
+     *
+     * @returns {ArrowSlider}
+     */
+    this.setColors = function() {
+        this.colors = [];
+        for (let i = 0; i < this.slides.length; i++) {
+            this.colors.push(window.getComputedStyle(this.slides[i], ':before').getPropertyValue('background-color'));
         }
 
-        function setCurrentSlide(value) {
-            currentSlideIndex = value + offset;
-            currentSlide = slides[value];
-        }
+        return this;
+    };
 
-        function isCurrentSlide(slide) {
-            return slide.isEqualNode(currentSlide);
-        }
+    /**
+     * Sets the corresponding width for the given slide.
+     *
+     * @param slide
+     * @returns {ArrowSlider}
+     */
+    this.autoWidth = function(slide) {
+        /*
+         * Gives the slide passed the same width as the holder has
+         * so that each slide fit the width of the viewport.
+         */
+        $(slide).width(this.holder.clientWidth);
 
-        function isNextSlide(slide) {
-            return slide.isEqualNode(slides[currentSlideIndex]);
-        }
+        // If is not a mobile device
+        if (MediaQueries.isLargeDevice()) {
 
-        function isPreviousSlide(slide) {
-            return slide.isEqualNode(slides[currentSlideIndex - (offset * 2)]);
-        }
-
-        function isFirstSlide(slide) {
-            return slide.isEqualNode(slides[0]);
-        }
-
-        function isLastSlide(slide) {
-            return slide.isEqualNode(slides[slides.length - offset]);
-        }
-
-        function addControllers(controllers) {
-            let sliderControllers = [];
-
-            for (let i = 0; i < controllers.length; i++) {
-                sliderControllers.push(controllers[i]);
-            }
-
-            return sliderControllers;
-        }
-
-        function runAutoWidths() {
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].autoWidth()
-            };
-        }
-
-        function autoWidth(slide) {
-            $(slide).width(holder.clientWidth);
-
-            if (MediaQueries.isLargeDevice()) {
-                if (isCurrentSlide(slide)) {
-                    $(slide).removeClass();
-                    DOM.toggleSingleClass(slide, 'arrow-slider__slide--current');
-
-                    if (isFirstSlide(slide)) {
-                        DOM.toggleSingleClass(slide, 'first');
-                    }
-
-                    if (isLastSlide(slide)) {
-                        DOM.toggleSingleClass(slide, 'last');
-                    }
-                }
-
-                if (isPreviousSlide(slide)) {
-                    $(slide).removeClass();
-                    DOM.toggleSingleClass(slide, 'arrow-slider__slide--left');
-                }
-
-                if (isNextSlide(slide)) {
-                    $(slide).removeClass();
-                    DOM.toggleSingleClass(slide, 'arrow-slider__slide--right');
-                }
-            } else {
+            /*
+             * If the slide passed is the current the user is interacting with
+             * sets the proper class to the element.
+             */
+            if (this.isCurrentSlide(slide)) {
                 $(slide).removeClass();
-                DOM.toggleSingleClass(slide, 'arrow-slider__slide');
+                DOM.toggleSingleClass(slide, 'arrow-slider__slide--current');
+
+                /**
+                 * Additionally, checks if the current slide is the first or the last
+                 * as well, thus the text doesn't get centered.
+                 */
+                if (this.isFirstSlide(slide)) {
+                    DOM.toggleSingleClass(slide, 'first');
+                }
+
+                if (this.isLastSlide(slide)) {
+                    DOM.toggleSingleClass(slide, 'last');
+                }
             }
+
+            /*
+             * If the slide passed is the previous to the one the user
+             * is interacting with, then sets the proper class to the element.
+             */
+            if (this.isPreviousSlide(slide)) {
+                $(slide).removeClass();
+                DOM.toggleSingleClass(slide, 'arrow-slider__slide--left');
+            }
+
+            /*
+             * If the slide passed is the next to the one the user
+             * is interacting with, then sets the proper class to the element.
+             */
+            if (this.isNextSlide(slide)) {
+                $(slide).removeClass();
+                DOM.toggleSingleClass(slide, 'arrow-slider__slide--right');
+            }
+
+            return this;
         }
 
-        function resetControllers() {
-            if (slides.length < controllers.length) {
-                for (let i = slides.length; i < controllers.length; i++) {
-                    controllers.pop();
+        /**
+         * Ultimately, sets the same class as used when the user
+         * is using a mobile device.
+         */
+        $(slide).removeClass();
+        DOM.toggleSingleClass(slide, 'arrow-slider__slide');
+        return this;
+    };
+
+    this.isCurrentSlide = function(slide) {
+        if (this.currentSlide !== undefined) {
+            return slide.isEqualNode(this.currentSlide);
+        }
+
+        return false;
+    };
+
+    this.isNextSlide = function(slide) {
+        if (this.slides[this.currentSlideIndex] !== undefined) {
+            return slide.isEqualNode(this.slides[this.currentSlideIndex]);
+        }
+        return false;
+    };
+
+    this.getNextSlide = function() {
+        if (this.slides[this.currentSlideIndex] !== undefined) {
+            return this.slides[this.currentSlideIndex];
+        }
+
+        return null;
+    };
+
+    this.getCurrentSlide = function() {
+        if (this.slides[this.currentSlideIndex - this.offset] !== undefined) {
+            return this.slides[this.currentSlideIndex - this.offset];
+        }
+
+        return null;
+    };
+
+    this.getPreviousSlide = function() {
+        if (this.slides[this.currentSlideIndex - (this.offset * 2)] !== undefined) {
+            return this.slides[this.currentSlideIndex - (this.offset * 2)];
+        }
+
+        return null;
+    };
+
+    this.isPreviousSlide = function(slide) {
+        if (this.slides[this.currentSlideIndex - (this.offset * 2)] !== undefined) {
+            return slide.isEqualNode(this.slides[this.currentSlideIndex - (this.offset * 2)]);
+        }
+
+        return false;
+    };
+
+    this.isFirstSlide = function(slide) {
+        return slide.isEqualNode(this.slides[0]);
+    };
+
+    this.isLastSlide = function(slide) {
+        return slide.isEqualNode(this.slides[this.slides.length - this.offset]);
+    };
+
+    this.setCurrentSlide = function(value) {
+        this.currentSlide = this.slides[value];
+        return this;
+    };
+
+    this.setCurrentSlideIndex = function(value = null) {
+        if (value === null) {
+            for (let i = 0; i < this.controllers.length; i++) {
+                if ($(this.controllers[i]).hasClass('selected')) {
+                    this.currentSlideIndex = i + this.offset;
+                    return this;
                 }
             }
         }
 
-        function updateController(e) {
-            e.preventDefault();
-            for (let x = 0; x < controllers.length; x++) {
-                if (e.target.isEqualNode(controllers[x]) || e.target.parentElement.isEqualNode(controllers[x])) {
-                    if (currentSlideIndex !== x + offset) {
+        this.currentSlideIndex = value + this.offset;
+        return this;
+    };
 
-                        // Update controllers.
-                        DOM.toggleSingleClass(controllers[currentSlideIndex - offset], 'selected');
-                        if (x >= slides.length) {
-                            setCurrentSlide(isNextSlide(controllers[x]) ? currentSlideIndex : currentSlideIndex - (offset * 2));
-                        } else {
-                            setCurrentSlide(x);
-                        }
+    /**
+     * Sets the width of all the slides comprised in the slider.
+     *
+     * @returns {ArrowSlider}
+     */
+    this.runAutoWidths = function() {
+        for (let i = 0; i < this.slides.length; i++) {
+            this.autoWidth(this.slides[i]);
+        };
 
-                        DOM.toggleSingleClass(controllers[currentSlideIndex - offset], 'selected');
+        return this;
+    };
 
-                        // Update the sliders.
-                        runAutoWidths();
+    /**
+     * Makes the proper settings to fit the slider according
+     * to the browser's viewport.
+     *
+     * @param self
+     */
+    this.setResponsive = function(self = this) {
+        self.setControllers();
 
-                        moveCarouselTo(currentSlideIndex);
+        // Sets the slider holder width.
+        $(self.carousel).width(self.holder.clientWidth * self.slides.length);
 
-                        paint();
+        self.runAutoWidths()
+            .moveCarousel()
+            .paint();
+    };
 
-                        if (controllersCallback !== null) {
-                            controllersCallback(currentSlide);
-                        }
+    this.isLightColor = function(color) {
+        let lightColorsCounter = 0;
 
-                        setControllers();
+        for(let i = 0; i < 'rgb'.length; i++) {
+            if (parseInt(color.match(/[0-9]{1,3}/g)[i]) > 150) {
+                lightColorsCounter++;
+            }
+        }
+
+        return lightColorsCounter >= 2;
+    };
+
+    /**
+     * Sets the corresponding colour of the current slide and its controllers.
+     *
+     * @returns {ArrowSlider}
+     */
+    this.paint = function() {
+        // Change carousel background to the proper color given
+        this.carousel.style.background = this.colors[this.currentSlideIndex - this.offset];
+
+        let controllersContainer = this.controllers[this.currentSlideIndex - this.offset].parentElement;
+
+        if (this.isLightColor(this.carousel.style.backgroundColor)) {
+            if (!$(controllersContainer).hasClass('dark')) {
+                DOM.toggleSingleClass(controllersContainer, 'dark');
+            }
+            return this;
+        }
+
+        if ($(controllersContainer).hasClass('dark')) {
+            DOM.toggleSingleClass(controllersContainer, 'dark');
+        }
+
+        return this;
+    };
+
+    /**
+     * Slide the slider toward the one selected by the user.
+     *
+     * @returns {ArrowSlider}
+     */
+    this.moveCarousel = function() {
+        $(this.carousel).css({
+            "-webkit-transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
+            "transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
+            "-ms-transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
+            "-o-transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
+        });
+
+        return this;
+    };
+
+    /**
+     * Updates the slider controllers according to the slide selected by the user.
+     * (e.g. If the user selects the second slide, then the controller bound to that
+     * slide gets marked and the next and previous slide change).
+     *
+     * @param e
+     */
+    this.updateController = (e) => {
+        e.preventDefault();
+
+        for (let x = 0; x < this.controllers.length; x++) {
+            if (e.target.isEqualNode(this.controllers[x]) || e.target.parentElement.isEqualNode(this.controllers[x])) {
+                if (this.currentSlideIndex !== x + this.offset) {
+                    // Update controllers.
+                    DOM.toggleSingleClass(this.controllers[this.currentSlideIndex - this.offset], 'selected');
+                    if (x >= this.slides.length) {
+                        let slideSelected = this.isNextSlide(this.controllers[x]) === true ? this.currentSlideIndex : this.currentSlideIndex - (this.offset * 2);
+                        this.setCurrentSlide(slideSelected)
+                            .setCurrentSlideIndex(slideSelected);
+                    } else {
+                        this.setCurrentSlideIndex(x)
+                            .setCurrentSlide(x);
                     }
+
+                    DOM.toggleSingleClass(this.controllers[this.currentSlideIndex - this.offset], 'selected');
+
+                    // Update the sliders.
+                    this.runAutoWidths()
+                        .moveCarousel()
+                        .paint();
+
+                    if (this.controllersCallback !== null) {
+                        this.controllersCallback(this.currentSlide);
+                    }
+
+                    this.setControllers();
                 }
             }
         }
+    };
 
-        function setControllers() {
-            resetControllers();
-            if (MediaQueries.isLargeDevice()) {
-                if (!isFirstSlide(slides[currentSlideIndex - offset]) && !isLastSlide(slides[currentSlideIndex - offset])) {
-                    controllers.push(slides[currentSlideIndex]);
-                    controllers.push(slides[currentSlideIndex - (offset * 2)]);
-                } else {
-                    controllers.push(isFirstSlide(slides[currentSlideIndex - offset]) ? slides[currentSlideIndex] : slides[currentSlideIndex - (offset * 2)])
-                }
+    /**
+     * Attaches the events bound to the slider controllers.
+     */
+    this.setControllersListeners = function() {
+        for (let i = 0; i < this.controllers.length; i++) {
+            this.controllers[i].removeEventListener('click', this.updateController);
+            this.controllers[i].addEventListener('click', this.updateController);
+        }
+    };
+
+    /**
+     * Restart all the controllers of the slider.
+     *
+     * @return {ArrowSlider}
+     */
+    this.resetControllers = function() {
+        if (this.slides.length < this.controllers.length) {
+            for (let i = this.slides.length; i < this.controllers.length; i++) {
+                this.controllers.pop();
             }
+        }
+
+        return this;
+    };
+
+    /**
+     * Set the controllers of the slider and attaches their corresponding events.
+     *
+     * @returns {ArrowSlider}
+     */
+    this.setControllers = function() {
+        if (!this.controllers.length > 0) {
+            let controllers = document.querySelector('.arrow-slider__controllers').children;
 
             for (let i = 0; i < controllers.length; i++) {
-                controllers[i].removeEventListener('click', updateController);
-                controllers[i].addEventListener('click', updateController);
+                this.controllers.push(controllers[i]);
             }
         }
 
-        function setResponsive(e = null) {
-            setControllers();
+        if (this.currentSlideIndex !== null) {
+            this.resetControllers();
 
-            // Update holder width
-            $(carousel).width(holder.clientWidth * slides.length);
-
-            // Update Slides autowidth
-            runAutoWidths();
-
-            // Move carousel to the current slide once the screen has been resized.
-            moveCarouselTo(currentSlideIndex);
-
-            paint()
-        }
-
-        function paint() {
-            // Change carousel background to the proper color given
-            carousel.style.background = colors[currentSlideIndex - offset];
-
-            let isWhite = /^(white|#FFFFFF)\b|\s(white|#FFFFFF)\b/;
-            let controllersContainer = controllers[currentSlideIndex - offset].parentElement;
-
-            if (carousel.style.background.match(isWhite)) {
-                if (!$(controllersContainer).hasClass('dark')) {
-                    DOM.toggleSingleClass(controllersContainer, 'dark');
-                }
-            } else {
-                if ($(controllersContainer).hasClass('dark')) {
-                    DOM.toggleSingleClass(controllersContainer, 'dark');
+            if (MediaQueries.isLargeDevice()) {
+                if (!this.isFirstSlide(this.slides[this.currentSlideIndex - this.offset]) && !this.isLastSlide(this.slides[this.currentSlideIndex - this.offset])) {
+                    this.controllers.push(this.getNextSlide());
+                    this.controllers.push(this.getPreviousSlide());
+                } else {
+                    this.controllers.push(this.isFirstSlide(this.slides[this.currentSlideIndex - this.offset]) ? this.getNextSlide() : this.getPreviousSlide());
                 }
             }
+
+            this.setControllersListeners();
         }
 
-        function moveCarouselTo(slideIndex) {
-            slideIndex -= offset;
+        return this;
+    };
 
-            $(carousel).css({
-                "-webkit-transform": "translateX(-" + (holder.clientWidth * slideIndex) + "px)",
-                "transform": "translateX(-" + (holder.clientWidth * slideIndex) + "px)",
-                "-moz-transform": "translateX(-" + (holder.clientWidth * slideIndex) + "px)",
-                "-o-transform": "translateX(-" + (holder.clientWidth * slideIndex) + "px)",
-            })
-        }
+    this.init();
+};
 
-        init();
+export var arrowSliderFactory = new SliderFactory();
 
-        return {
-            get: (key) => {
-                return this[key];
-            },
-
-            set: (key, value) => {
-                this[key] = value;
-            }
-        }
-    }
-
-    return {
-        getInstance: function() {
-            if (!instance) {
-                instance = ArrowSliderClass;
-            }
-
-            return instance;
-        }
-    }
-})();
-
-export default ArrowSlider.getInstance();
+export default ArrowSlider;

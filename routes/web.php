@@ -21,8 +21,8 @@ Route::get('/', function () {
 });
 Route::get('learn', 'IndexController@learn');
 Route::get('university', 'IndexController@university');
-Route::post('/application-form','IndexController@applicationForm')->name('application.form');
-Route::get('/why', function() {
+Route::post('application-form','IndexController@applicationForm')->name('application.form');
+Route::get('why', function() {
     return view('pages/why-intuuchina');
 })->name('whyus');
 

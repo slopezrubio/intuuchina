@@ -1,15 +1,21 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="header" id="learn-chinese">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
+    @component('components.header')
+        @slot('variant')
+            {{ 'primary' }}
+        @endslot
 
-        {{--Elemento SLIDER--}}
-        @include('partials._header')
-    </header>
+        @slot('background_image')
+            {{ __('heading.' .$view_name. '.background') }}
+        @endslot
 
-    <main>
+        @slot('title')
+            {!!  __('heading.' .$view_name. '.title') !!}
+        @endslot
+    @endcomponent
+
+    <main id="learn-chinese">
         {{--Incluye los tipos de cursos ofrecidos--}}
         @include('partials._chinese-courses')
 

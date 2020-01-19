@@ -64,46 +64,6 @@ a {
 
 /* ------------------------------------------------------- */
 
-/* -------------------
- * --- Typography ----
- * -------------------
- */
-@function minimosCuadrados($values) {
-  $length: length(map_keys($values));
-
-  @if ($length < 2) {
-    @error "minimosCuadrados() $values must be at least 2 values"
-  }
-
-  $sumXTotal: 0;
-  $sumYTotal: 0;
-  @each $x, $y in $values {
-    $sumXTotal: $sumXTotal + $x;
-    $sumYTotal: $sumYTotal + $y;
-  }
-  $xAverage: $sumXTotal / $length;
-  $yAverage: $sumYTotal / $length;
-
-  $multipliedDiff: 0;
-  $squaredDiff: 0;
-  @each $x, $y in $values {
-    // Diferencias entre el promedio de X
-    $resDiff: $x - $xAverage;
-
-    // Diferencias entre el promedio de Y
-    $valueDiff: $y - $yAverage;
-
-    $multipliedDiff: $multipliedDiff + ($resDiff * $valueDiff);
-    $squaredDiff: $squaredDiff + ($resDiff * $resDiff);
-  }
-
-  // Calcula la pendiente o tendencia
-  $slope: $multipliedDiff / $squaredDiff;
-
-  $result: $yAverage - ($slope * $xAverage);
-  @return calc(#{$slope*100}vw + #{$result}px);
-}
-
 @function emToPx($value) {
   $valueInPixels: $value * 16;
   @return calc(#{$valueInPixels} * 1px);
@@ -115,9 +75,6 @@ a {
  * - Elements --
  * -------------
  */
-header {
-  position: relative;
-}
 
 .body-button {
   padding: 15px;
@@ -300,9 +257,10 @@ table.table {
 /* ------------------------------------------------------- */
 
 /* ----------------
- * - Page Custom --
+ * ---- Header ----
  * ----------------
  */
+
 
 .header {
   height: 30em;
@@ -314,19 +272,6 @@ table.table {
     text-transform: uppercase;
   }
 
-  &#home {
-    background-image: url('/../../storage/images/shanghai_internship_skyline.jpg');
-    height: 32em;
-    text-transform: none;
-    $map: (328: 480, 577: 480, 1656: 624, 1746: 766, 2500: 766);
-    height: minimosCuadrados($map);
-    background-position-y: 4em;
-
-    @media #{$large-devices_secondary} {
-      background-position-y: 2em;
-    }
-  }
-
   &#welcome {
     background-image: url('/../../storage/images/welcome-user.jpg');
     background-size: cover;
@@ -334,22 +279,6 @@ table.table {
     height: auto;
     text-transform: none;
     @include flexbox();
-  }
-
-  &#internship {
-    background-image: url('/../../storage/images/practicass.jpg');
-  }
-
-  &#job-description {
-    border-bottom: none;
-  }
-
-  &#university {
-    background-image: url('/../../storage/images/headers/university.jpg');
-  }
-
-  &#learn-chinese {
-    background-image: url('/../../storage/images/learn1.jpg');
   }
 
   &#why-us {

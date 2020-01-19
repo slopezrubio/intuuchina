@@ -20,6 +20,10 @@ class UsersController extends Controller
         return view('partials/forms/dialog-box-' . $currentStatus);
     }
 
+    public function changeProgram(string $program) {
+
+    }
+
     public function single($id) {
 
     }

@@ -1,17 +1,24 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="header" id="university">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
+    @component('components.header')
+        @slot('variant')
+            {{ 'primary' }}
+        @endslot
 
-        {{--Elemento SLIDER--}}
-        @include('partials._header')
-    </header>
+        @slot('background_image')
+            {{ __('heading.' .$view_name. '.background') }}
+        @endslot
 
-    <main>
+        @slot('title')
+            {!!  __('heading.' .$view_name. '.title') !!}
+        @endslot
+    @endcomponent
+
+    <main id="university">
         {{--Incluye los tipos de master ofrecidos--}}
         @include('partials._university-slider')
     </main>
+
     @include('partials._footer')
 @endsection

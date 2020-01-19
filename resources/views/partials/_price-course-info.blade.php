@@ -1,4 +1,4 @@
-<section id="course-info" class="bg-info-box bg-info-box--primary">
+<section id="course-info">
     <div class="info-box">
         @if (isset($course))
             <div class="info-box__header">

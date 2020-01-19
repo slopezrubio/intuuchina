@@ -62,7 +62,7 @@ return [
             }
         ],
         'whyus' => [
-            'url' => '/whyus',
+            'url' => url('why'),
             'text' => 'Why Us',
         ],
     ],
@@ -122,7 +122,7 @@ return [
                 return array(
                     'why us' => [
                         'text' => 'Why Us',
-                        'url' => 'whyus',
+                        'url' => url('why'),
                         'method' => 'GET',
                     ]
                 );
@@ -142,7 +142,7 @@ return [
         ],
         'whyus' => [
             'text' => 'Why IntuuChina',
-            'url' => url('whyus'),
+            'url' => url('why'),
         ],
     ],
 

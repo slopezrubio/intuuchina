@@ -1,14 +1,24 @@
 @extends('layouts.master')
 
 @section('content')
+    @component('components.header', ['href' => route('internship')])
+        @slot('variant')
+            {{ 'secondary' }}
+        @endslot
 
-    <header id="home" class="header">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
+        @slot('background_image')
+            {{ __('heading.' .$view_name. '.background') }}
+        @endslot
 
-        {{--Título de la página--}}
-        @include('partials._header')
-    </header>
+        @slot('cta')
+            {{ __('content.open positions') }}
+        @endslot
+
+        @slot('title')
+            {!!  __('heading.' .$view_name. '.title') !!}
+        @endslot
+    @endcomponent
+
     <main>
         {{--Elemento Medios de TV--}}
         @include('partials._news')

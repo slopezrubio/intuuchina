@@ -1,0 +1,102 @@
+@mixin header($background, $height: 30em, $text-transform: none) {
+  height: $height;
+  position: relative;
+  background-color:$primaryWhite;
+  text-transform: $text-transform;
+
+  @if ($background) {
+    background-size: cover;
+    background-repeat: no-repeat;
+    @if map_has_key($background, "position") {
+      background-position: map_get($background, "position");
+    }
+
+    @if map_has_key($background, "position-y") {
+      background-position-y: map_get($background, "position-y");
+    }
+
+    @if map_has_key($background, "position-y") {
+      background-position-x: map_get($background, "position-x");
+    }
+  }
+
+  section.wrapper {
+    /** Vertically centered **/
+    @include verticalAlign();
+
+    display: block;
+    width: 100%;
+    z-index: 1;
+    padding: 0 1.5em;
+  }
+
+  .header-box {
+    @include header-box();
+    border: 2px solid $primaryDark;
+    background: none;
+
+    @if ($background) {
+      border: 2px solid $primaryWhite;
+      background: $sectionDark;
+      &__title {
+        color: $primaryWhite;
+      }
+    }
+
+    &__title {
+      font-size: 1.5em;
+      line-height: 1.4;
+      font-weight: 800;
+      text-align: center;
+      margin: .5em;
+    }
+
+    &__subtitle {
+      font-size: 1.5em;
+      margin: .5em;
+      text-align: center;
+    }
+
+    .cta {
+      border: none;
+      margin: 2em auto 0 auto;
+      height: 45px;
+      padding: 0;
+      cursor: pointer;
+      border: none;
+      @include fade();
+      border-radius: 34px;
+      background: $tertiaryRed;
+
+      a {
+        font-size: 1em;
+      }
+
+      @media #{$small-devices} {
+        height: 35px;
+        a {
+          line-height: 35px;
+        }
+      }
+    }
+
+    a {
+      display: inline-block;
+      font-size: 1.5em;
+      line-height: 45px;
+      height: 100%;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $primaryWhite;
+    }
+
+    i {
+      padding-left: 1em;
+    }
+  }
+}

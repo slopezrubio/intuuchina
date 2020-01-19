@@ -23,6 +23,6 @@ $second-slide: (
         secondary-button-color: $primaryDark
 );
 
-header#learn-chinese + main {
+main#learn-chinese {
   @include arrow-slider($first-slide, $second-slide);
 }
