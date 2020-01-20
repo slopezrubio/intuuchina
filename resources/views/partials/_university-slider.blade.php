@@ -1,30 +1,28 @@
 <section class="arrow-slider arrow-slider__holder">
     <div class="arrow-slider__carousel">
         @foreach (__('content.universities') as $key => $degree)
-            @if (Browser::isDesktop())
-                @if (isset($slider))
-                    @switch($key)
-                        @case($slider['next']['key'])
-                            <div class="arrow-slider__slide--right">
-                            @break
-                        @case($slider['previous']['key'])
-                            <div class="arrow-slider__slide--left">
-                            @break
-                        @case($slider['current']['key'])
-                            <div class="arrow-slider__slide--current">
-                            @break
-                        @default
-                            <div class="arrow-slider__slide">
-                            @break
-                    @endswitch
-                @else
-                    @if ($loop->first)
-                        <div class="arrow-slider__slide--current">
-                    @elseif($loop->iteration == 2)
+            @if (isset($slider))
+                @switch($key)
+                    @case($slider['next']['key'])
                         <div class="arrow-slider__slide--right">
-                    @else
+                        @break
+                    @case($slider['previous']['key'])
+                        <div class="arrow-slider__slide--left">
+                        @break
+                    @case($slider['current']['key'])
+                        <div class="arrow-slider__slide--current">
+                        @break
+                    @default
                         <div class="arrow-slider__slide">
-                    @endif
+                        @break
+                @endswitch
+            @else
+                @if ($loop->first)
+                    <div class="arrow-slider__slide--current">
+                @elseif($loop->iteration == 2)
+                    <div class="arrow-slider__slide--right">
+                @else
+                    <div class="arrow-slider__slide">
                 @endif
             @endif
             <div class="arrow-slider__slide-header">
