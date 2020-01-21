@@ -30,5 +30,22 @@ return [
     ],
     'why-us' => [
         'background' => asset('images/why-us_header.jpg'),
+        'stats' => [
+            "
+                <p>More than</p>
+                <div class='stats__item-background'><h4 class='stats__item-counter'>400</h4></div>
+                <p>People in China</p>
+            ",
+            "
+                <p>More than</p>
+                <div class='stats__item-background'><h4 class='stats__item-counter'>500</h4></div>
+                <p>Monthly applications</p>
+            ",
+            "
+                <p>From</p>
+                <div class='stats__item-background'><h4 class='stats__item-counter'>41</h4></div>
+                <p>Countries</p>
+            ",
+        ]
     ],
 ];

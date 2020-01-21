@@ -363,6 +363,27 @@
   width: 0;
   height: 0;
 }
+@function stripUnit($number) {
+  $ripper: ($number * 0 + 1);
+  @if type_of($number) == "number" and not unitless($number) {
+    @return $number / $ripper;
+  }
+
+  @return $number;
+}
+
+@function fromPxToEm($pixels) {
+  $correlations: ('1em': 16);
+
+  @if (unit($pixels) == "em") {
+    @return $pixels;
+  }
+
+  $result: stripUnit($pixels) / map_get($correlations, '1em');
+
+
+  @return $result;
+}
 
 /* -------------------
  * --- Typography ----

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('components.header', ['href' => route('internship')])
+    @component('components.header')
         @slot('variant')
             {{ 'primary' }}
         @endslot

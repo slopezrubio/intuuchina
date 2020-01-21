@@ -63,7 +63,6 @@
       height: 45px;
       padding: 0;
       cursor: pointer;
-      border: none;
       @include fade();
       border-radius: 34px;
       background: $tertiaryRed;
@@ -97,6 +96,101 @@
 
     i {
       padding-left: 1em;
+    }
+  }
+}
+
+@mixin stats($background, $rows, $height: 30em, $text-transform: none) {
+  $offset: 20em;
+  $stats: (
+    width: 250px,
+  );
+  $max_columns_per_row: 3;
+
+  height: fromPxToEm($height) * $rows + $offset;
+  position: relative;
+  background-color:$primaryWhite;
+  text-transform: $text-transform;
+
+  @if ($background) {
+    background-size: cover;
+    background-repeat: no-repeat;
+    @if map_has_key($background, "position") {
+      background-position: map_get($background, "position");
+    }
+
+    @if map_has_key($background, "position-y") {
+      background-position-y: map_get($background, "position-y");
+    }
+
+    @if map_has_key($background, "position-y") {
+      background-position-x: map_get($background, "position-x");
+    }
+  }
+
+  section.stats__container {
+    @include flexbox();
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+    top: 54%;
+    position: relative;
+    max-width: 1342px;
+    @include prefixed(transform, translateY(-50% * $rows));
+  }
+
+  .stats {
+    &__item {
+      color: $primaryWhite;
+      font-size: 1.25em;
+      text-align: center;
+      width: map_get($stats, 'width');
+      float: left;
+      display: none;
+      margin: 0 auto;
+      @for $column from 1 through $max_columns_per_row {
+        @if ($column == 1) {
+          &:first-of-type {
+            display:block;
+          }
+        } @else {
+          @media only screen and (min-width: (map_get($stats, 'width') * $column)) {
+            &:nth-of-type(#{$column}) {
+              display:block;
+            }
+          }
+        }
+      }
+
+      &:last-of-type {
+        clear: right;
+      }
+
+      &-background {
+        background-color: $sectionDark;
+        border: 3px solid white;
+        margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        @include prefixed(border-radius, 50%);
+
+        & ~ p {
+          margin-top: 0.5rem;
+          margin-bottom: 1rem;
+        }
+      }
+
+      &-counter {
+        color: $primaryWhite;
+        line-height: 100px;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      p:first-of-type {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+      }
     }
   }
 }

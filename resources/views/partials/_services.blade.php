@@ -1,4 +1,4 @@
-    <section>
+<section>
     <div class="triangle"></div>
     <div class="services">
         <div class="service_card" id="s_internship">
