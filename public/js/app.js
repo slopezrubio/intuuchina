@@ -2937,11 +2937,12 @@ function ArrowSlider(options) {
 
 
   this.moveCarousel = function () {
+    var posX = this.holder.clientWidth * (this.currentSlideIndex - this.offset);
     $(this.carousel).css({
-      "-webkit-transform": "translateX(-" + this.holder.clientWidth * (this.currentSlideIndex - this.offset) + "px)",
-      "transform": "translateX(-" + this.holder.clientWidth * (this.currentSlideIndex - this.offset) + "px)",
-      "-ms-transform": "translateX(-" + this.holder.clientWidth * (this.currentSlideIndex - this.offset) + "px)",
-      "-o-transform": "translateX(-" + this.holder.clientWidth * (this.currentSlideIndex - this.offset) + "px)"
+      "-webkit-transform": "translateX(-" + posX + "px)",
+      "transform": "translateX(-" + posX + "px)",
+      "-ms-transform": "translateX(-" + posX + "px)",
+      "-o-transform": "translateX(-" + posX + "px)"
     });
     return this;
   };
@@ -3421,6 +3422,92 @@ var Pagination = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Pagination.getInstance());
+
+/***/ }),
+
+/***/ "./resources/js/components/PeopleSlider.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/PeopleSlider.js ***!
+  \*************************************************/
+/*! exports provided: peopleSliderFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "peopleSliderFactory", function() { return peopleSliderFactory; });
+/* harmony import */ var _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../factories/SliderFactory */ "./resources/js/factories/SliderFactory.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+
+
+
+function PeopleSlider(options) {
+  this.holder = document.querySelector('.people-slider__holder');
+  this.offset = 1;
+  this.interval = options.interval;
+  this.duration = options.duration;
+  this.currentSlideIndex = options.slide ? options.slide + this.offset : 1;
+  this.carousel = this.holder.children[0];
+  this.slides = this.carousel.children;
+  this.currentSlide = this.currentSlide = this.slides[this.currentSlideIndex - this.offset];
+
+  this.init = function () {
+    var _this = this;
+
+    //setInterval(this.renew, this.interval);
+    setInterval(function () {
+      _this.renew(_this);
+    }, this.interval);
+  };
+
+  this.setCurrentSlide = function (value) {
+    this.currentSlide = this.slides[value - this.offset];
+    return this;
+  };
+
+  this.setCurrentSlideIndex = function () {
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    this.currentSlideIndex = value;
+    return this;
+  };
+
+  this.isCurrentSlideIndex = function (value) {
+    return value === this.currentSlideIndex;
+  };
+
+  this.renew = function () {
+    var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
+    var randomSlideIndex = Math.floor(Math.random() * this.slides.length) + this.offset;
+
+    if (!this.isCurrentSlideIndex(randomSlideIndex)) {
+      self.setCurrentSlideIndex(randomSlideIndex).setCurrentSlide(this.currentSlideIndex).moveCarousel().fade('out').fade('in');
+    }
+  };
+
+  this.fade = function (type) {
+    var fn = 'fade' + _main_UI__WEBPACK_IMPORTED_MODULE_1__["default"].upperCaseFirst(type);
+    $(this.carousel)[fn]({
+      duration: this.duration,
+      easing: 'swing'
+    });
+    return this;
+  };
+
+  this.moveCarousel = function () {
+    var posY = this.holder.clientHeight * (this.currentSlideIndex - this.offset);
+    $(this.carousel).css({
+      "-webkit-transform": "translateY(-" + posY + "px)",
+      "transform": "translateY(-" + posY + "px)",
+      "-ms-transform": "translateY(-" + posY + "px)",
+      "-o-transform": "translateY(-" + posY + "px)"
+    });
+    return this;
+  };
+
+  this.init();
+}
+
+var peopleSliderFactory = new _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_0__["SliderFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (PeopleSlider);
 
 /***/ }),
 
@@ -5472,7 +5559,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
 /* harmony import */ var _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ArrowSlider */ "./resources/js/components/ArrowSlider.js");
 /* harmony import */ var _MediaSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MediaSlider */ "./resources/js/components/MediaSlider.js");
-/* harmony import */ var _main_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../main/api.js */ "./resources/js/main/api.js");
+/* harmony import */ var _PeopleSlider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PeopleSlider */ "./resources/js/components/PeopleSlider.js");
+/* harmony import */ var _main_api_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../main/api.js */ "./resources/js/main/api.js");
+
 
 
 
@@ -5504,7 +5593,7 @@ var learnChinese = function learnChinese() {
       type: 'arrow',
       controllersCallback: function controllersCallback(slider) {
         var course = slider.querySelector("input[name='study'").getAttribute('value');
-        _main_api_js__WEBPACK_IMPORTED_MODULE_4__["default"].getCourseInfo(course, replaceCourseInfoSection);
+        _main_api_js__WEBPACK_IMPORTED_MODULE_5__["default"].getCourseInfo(course, replaceCourseInfoSection);
       }
     });
   }
@@ -5529,6 +5618,20 @@ var university = function university() {
   init();
 };
 
+var testimonials = function testimonials() {
+  var peopleSlider = null;
+
+  function init() {
+    var peopleSlider = _PeopleSlider__WEBPACK_IMPORTED_MODULE_4__["peopleSliderFactory"].createSlider({
+      type: 'people',
+      interval: 5000,
+      duration: 550
+    });
+  }
+
+  init();
+};
+
 window.addEventListener('load', function () {
   if (document.querySelector('.note_carrousel') !== null) {
     // $(document).ready(press.init);
@@ -5542,6 +5645,10 @@ window.addEventListener('load', function () {
 
   if (document.querySelector('main#university') !== null) {
     university();
+  }
+
+  if (document.querySelector('section.people-slider') !== null) {
+    testimonials();
   }
 });
 
@@ -5559,6 +5666,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SliderFactory", function() { return SliderFactory; });
 /* harmony import */ var _components_ArrowSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ArrowSlider */ "./resources/js/components/ArrowSlider.js");
 /* harmony import */ var _components_MediaSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/MediaSlider */ "./resources/js/components/MediaSlider.js");
+/* harmony import */ var _components_PeopleSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/PeopleSlider */ "./resources/js/components/PeopleSlider.js");
+
 
 
 function SliderFactory() {}
@@ -5572,6 +5681,10 @@ SliderFactory.prototype.createSlider = function (options) {
 
     case 'media':
       this.sliderClass = _components_MediaSlider__WEBPACK_IMPORTED_MODULE_1__["default"];
+      break;
+
+    case 'people':
+      this.sliderClass = _components_PeopleSlider__WEBPACK_IMPORTED_MODULE_2__["default"];
       break;
   }
 
@@ -5860,6 +5973,10 @@ var UI = function () {
         }
 
         return null;
+      },
+      upperCaseFirst: function upperCaseFirst(string) {
+        var indexSecondCharacter = 1;
+        return string.toUpperCase().charAt(0) + string.slice(indexSecondCharacter, string.length);
       },
       getInputClass: function getInputClass(input) {
         if ($(input).has('.switch')) {

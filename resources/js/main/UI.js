@@ -46,6 +46,12 @@ var UI = (function() {
                 return null;
             },
 
+            upperCaseFirst: function(string) {
+                let indexSecondCharacter = 1;
+
+                return string.toUpperCase().charAt(0) + string.slice(indexSecondCharacter, (string.length));
+            },
+
             getInputClass: function(input) {
 
                 if ($(input).has('.switch')) {

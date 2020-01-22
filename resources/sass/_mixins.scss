@@ -433,6 +433,19 @@
   -ms-animation: $animationName 1s ease-in-out;
 }
 
+@mixin flip($axis) {
+  @if ($axis == 'horizontal') {
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
+  } @else if($axis == 'vertical') {
+    -webkit-transform: scaleY(-1);
+    -ms-transform: scaleY(-1);
+    transform: scaleY(-1);
+  }
+
+}
+
 @mixin switchButton {
   position: relative;
   display: block;

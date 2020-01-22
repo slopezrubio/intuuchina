@@ -91,6 +91,12 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public static function getLastUserCreated() {
+        return DB::table('users')
+            ->orderByDesc('id')
+            ->get()->first();
+    }
+
     public static function adminReadableList() {
         $users = DB::table('users')
             ->join('states', function($join) {

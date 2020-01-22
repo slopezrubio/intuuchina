@@ -1,0 +1,120 @@
+@mixin people-slider($rows, $background: $primaryRed) {
+  $slider: (
+    'width': 1024px,
+    'height': 300px,
+    'columns_per_row': 3,
+  );
+
+  .people-slider {
+    background: $background;
+
+    .container {
+      position: relative;
+      z-index: 2;
+
+      &::before, &::after {
+        background: url('/../../storage/images/quotes.png');
+        background-size: cover;
+        width: 200px;
+        content: "";
+        height: 200px;
+        z-index: -1;
+        position: absolute;
+      }
+
+      &::before {
+        top: 2%;
+      }
+
+      &::after {
+        bottom: 2%;
+        right: 0;
+        @include flip('horizontal');
+      }
+    }
+
+    &__slide {
+      max-width: map_get($slider, 'width');
+      @include flexbox();
+      @include justify-content(space-beteween);
+      @include align-items(center);
+    }
+
+    &__title {
+      text-align: left;
+      padding: 1.5em 0;
+    }
+
+    &__holder {
+      max-width: map_get($slider, 'width');
+      overflow: hidden;
+      margin: 0 auto;
+      height: map_get($slider, 'height');
+    }
+
+    &__carousel {
+      @include inline-flex();
+      @include flex-direction(column);
+      @include prefixed(transition, transform ease-in .8s);
+      height: 100% * $rows;
+      width: 100%;
+    }
+
+    &__item {
+      width: 100% / map_get($slider, 'columns_per_row');
+      text-align: center;
+      margin: 0 auto;
+      color: $primaryWhite;
+      height: map_get($slider, 'height');
+      display: none;
+      padding: 1.5em;
+
+      &:first-of-type {
+        display: block;
+        width: 100%;
+      }
+
+      @media only screen and (min-width: map_get($slider, 'width')) {
+        display: block;
+        width: 100% / map_get($slider, 'columns_per_row')!important;
+      }
+
+      $offset: 1;
+
+      @for $i from (map_get($slider, 'columns_per_row') - $offset) through 1 {
+        $column: abs(map_get($slider, 'columns_per_row') - $i + $offset);
+        content: $column;
+
+        @media only screen and (min-width: map_get($slider, 'width') / $i) {
+          @for $k from $column through 1 {
+            &:nth-child(#{$k}) {
+              width: 100% / $column;
+              display: block;
+            }
+          }
+        }
+      }
+
+      &-avatar {
+        border: 3px solid $white;
+        box-shadow: 3px 3px 20px $primaryDark;
+        border-radius: 20px;
+        width: 100px;
+        margin-bottom: 1.5em;
+      }
+
+      &-name {
+        margin-bottom: 1em;
+      }
+
+      &-details {
+
+      }
+
+      &-quote {
+        font-style: italic;
+        font-size: .85em;
+      }
+    }
+  }
+}

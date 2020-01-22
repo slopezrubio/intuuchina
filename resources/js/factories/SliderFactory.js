@@ -1,5 +1,6 @@
 import ArrowSlider from '../components/ArrowSlider';
 import MediaSlider from '../components/MediaSlider';
+import PeopleSlider from '../components/PeopleSlider';
 
 export function SliderFactory() {}
 
@@ -12,6 +13,9 @@ SliderFactory.prototype.createSlider = function(options) {
             break;
         case 'media':
             this.sliderClass = MediaSlider;
+            break;
+        case 'people':
+            this.sliderClass = PeopleSlider;
             break;
     }
 

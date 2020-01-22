@@ -19,7 +19,7 @@
         @endslot
     @endcomponent
 
-    <main>
+    <main id="home">
         {{--Elemento Medios de TV--}}
         @include('partials._news')
 

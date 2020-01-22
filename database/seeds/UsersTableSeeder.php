@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class UsersTableSeeder extends Seeder
     public function run(Faker $faker)
     {
         //
-        $admin = factory(App\User::class, 1)->create([
+        $admin = factory(User::class, 1)->create([
             'id' => $faker->unique()->randomDigit,
             'name' => 'Confucio',
             'surnames' => 'Shandong',
@@ -34,6 +35,6 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $users = factory(App\User::class, 3)->create();
+        $users = factory(User::class, 3)->create();
     }
 }

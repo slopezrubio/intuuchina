@@ -16,9 +16,7 @@
  * | Index
  * |--------------------------------------------------------------------------
  */
-Route::get('/', function () {
-    return view('pages/home');
-});
+Route::get('/', 'IndexController@index');
 Route::get('learn', 'IndexController@learn');
 Route::get('university', 'IndexController@university');
 Route::post('application-form','IndexController@applicationForm')->name('application.form');
