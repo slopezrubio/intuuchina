@@ -1,35 +1,72 @@
-.pagination {
+$breakpoint: 'only screen and (min-width: 520px)';
+
+.items-pagination {
+  @include flexbox();
   @include justify-content(center);
-  position: relative;
-  margin-bottom: 3em;
-  .page-item {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+  width: 100%;
+  padding: 1em 0 2em 0;
 
-    a,
-    .page-item.active,
-    .page-link {
-      padding: 0.25em 0.75em;
-      background: none;
-      width: 35px;
-    }
-
-    a {
-      color: $primaryDark;
-      border: none;
-      border-radius: 4px;
-    }
+  &__link,
+  &__link i {
+    color: $primaryDark;
   }
 
-  .item-selector {
-    background: $primaryDark;
-    height: 100%;
-    position: absolute;
-    z-index: -1;
-    @include prefixed(transition, all .5s ease-out);
-    .shape {
+  &__link {
+    padding: .5em 1em .5em 1em;
+    border: 1px solid $primaryDark;
+    @include prefixed(border-radius, 3px);
+    margin: 0 .25em;
+
+    &:not(.active) {
+      display: none;
+      @media #{$breakpoint} {
+        display: block;
+      }
+    }
+
+    &[rel] {
       display: block;
-      width: 35px;
+    }
+
+    &:active,
+    &:hover,
+    &:hover i,
+    &.active {
+      background: $primaryDark;
+      color: $primaryWhite;
+    }
+
+    &:not([href]):not([tabindex]) {
+      display: none;
+    }
+
+    &:not(.icon), &--splitter {
+      text-align: center;
+      width: 45px;
+    }
+
+    &.icon:first-of-type span {
+      margin-left: .5em;
+    }
+
+    &.icon:last-of-type span {
+      margin-right: .5em;
+    }
+
+    i {
+      padding: 0;
+    }
+
+    &--splitter {
+      border: none;
+      color: $secondaryDark;
+      font-weight: 500;
+      display: none;
+      padding: .5em;
+
+      @media #{$breakpoint} {
+        display: block;
+      }
     }
   }
 }

@@ -14,33 +14,28 @@ use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
 {
-    const ELEMENTS_PER_PAGE = 3;
+    const ELEMENTS_PER_PAGE = 2;
+    const PAGINATION_SCOPE = 4;
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response | JsonResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, $filter = null)
     {
+        if ($filter !== null) {
+            return $this->filter($filter, $request->ajax());
+        }
         /*
          * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
          * por la fecha de creación.
          */
         $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
         $this->setDaysRenewed($offers);
-        $isAjax = $request->ajax();
+        $offers->onEachSide = self::PAGINATION_SCOPE / 2;
 
-        if ($isAjax) {
-            if ($request->get('isNewFilter')) {
-                $isNewFilter = $request->get('isNewFilter');
-                return response()->json(view('partials/_offers-list', compact('offers', 'isAjax', 'isNewFilter'))->render());
-            }
-
-            return response()->json(view('partials/_offers-list', compact('offers', 'isAjax'))->render());
-        }
-
-        return view('pages/offers', compact('offers', 'isAjax'));
+        return view('pages/offers', compact('offers'));
     }
 
     /**
@@ -71,7 +66,7 @@ class OffersController extends Controller
         $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
         $this->setDaysRenewed($offers);
 
-        return view('pages/admin/offers', compact('offers', 'params'));
+        return view('pages/admin/offers', compact('offers'));
     }
 
     /**
@@ -206,22 +201,16 @@ class OffersController extends Controller
      * Select all the offers that matches with the name of the industry passed as an argument
      * and send the partial view that comprises just the list of offers.
      */
-    public function filterBy(Request $request, $filter) {
-        $isAjax = $request->ajax();
-        $isNewFilter = $request->get('isNewFilter');
-
+    public function filter($filter, $ajax) {
         $offers = Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE);
         $this->setDaysRenewed($offers);
+        $offers->onEachSide = self::PAGINATION_SCOPE / 2;
 
-        if ($isNewFilter) {
-            return response()->json(view('partials/_offers-list', compact('offers', 'filter', 'isNewFilter'))->render());
+        if ($ajax) {
+            return response()->json(view('partials/_offers-list', compact('offers'))->render());
         }
 
-        if ($isAjax) {
-            return response()->json(view('partials/_offers-list', compact('offers', 'filter', 'isAjax'))->render());
-        }
-
-        return view('partials/_offers-list', compact('offers', 'filter'));
+        return view('pages/offers', compact('offers'));
     }
 
     /*

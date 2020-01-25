@@ -30,13 +30,14 @@ Route::get('why', function() {
  * | Internship
  * |--------------------------------------------------------------------------
  */
-Route::prefix('internship')->group(function() {
-    Route::get('/', 'OffersController@index')->name('internship');
-    Route::get('/{industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
-    Route::get('{offer}',  'OffersController@single')->where('offer', '[0-9]+')->name('single-offer');
-});
+Route::get('internship/{filter?}', 'OffersController@index')->where('filter', '[a-z]+_?[a-z]*')->name('internship');
+Route::get('internship/{offer}',  'OffersController@single')->where('offer', '[0-9]+')->name('single-offer');
 
-/* Login */
+/**
+ * |--------------------------------------------------------------------------
+ * | Login
+ * |--------------------------------------------------------------------------
+ */
 Route::get('/login', function() {
     return view('pages/login');
 });
@@ -44,7 +45,7 @@ Route::get('/login', function() {
 
 /**
  * |--------------------------------------------------------------------------
- * | Administrator
+ * | Admin
  * |--------------------------------------------------------------------------
  */
 Route::group([
@@ -110,12 +111,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('confirm', 'UsersController@confirm')->name('confirm');
     Route::post('payment-method', 'CheckoutsController@newPaymentIntent')->name('payment_method');
     Route::get('{user}/profile', 'UsersController@single')->where('user', '[0-9]+')->name('edit_user');
-    Route::post('{user}/program', 'UsersControllers@changeProgram')->name('change.program');
+    Route::post('{user}/program', 'UsersController@changeProgram')->name('change.program');
     Route::post('{user}/update/{program}', 'UsersController@updateProgram')->name('update.program');
 });
-
-Route::get('payment-successful', 'Auth\CheckoutsController@test');
-/* Stripe WebHooks */
 
 
 

@@ -40,8 +40,5 @@
                 <span class="page-link" aria-hidden="true">&rsaquo;</span>
             </li>
         @endif
-        <li class="item-selector">
-            <span class="shape"></span>
-        </li>
     </ul>
 @endif

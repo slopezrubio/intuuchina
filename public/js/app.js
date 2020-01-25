@@ -3200,231 +3200,6 @@ var mediaSliderFactory = new _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_0
 
 /***/ }),
 
-/***/ "./resources/js/components/Pagination.js":
-/*!***********************************************!*\
-  !*** ./resources/js/components/Pagination.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-/* harmony import */ var _main_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/api */ "./resources/js/main/api.js");
-
-
-
-var Pagination = function () {
-  var instance;
-
-  function PaginationClass(options) {
-    var _this = this;
-
-    // Private properties
-    var _container = options.container;
-
-    var _links = options.container.querySelectorAll('.page-link');
-
-    var _selector = options.container.querySelector('.item-selector');
-
-    var _controllers = {
-      next: _links[_links.length - 1],
-      previous: _links[0]
-    };
-
-    var _path = _controllers.previous.getAttribute('href') ? _controllers.previous.getAttribute('href').split('page=')[0] : _controllers.next.getAttribute('href').split('page=')[0]; // Private methods
-
-
-    function init() {
-      slideTo(getCurrentLink().offsetLeft - _selector.offsetLeft);
-
-      _links.forEach(function (element) {
-        element.addEventListener('click', getPage);
-      });
-    }
-
-    function getPage(e) {
-      e.preventDefault();
-
-      if (isCurrentLink(e.target)) {
-        return false;
-      } // if (e.target.offsetLeft === _selector.offsetLeft || DOM.isDisabled(e.target)) {
-      //     console.log("hola");
-      //     return false;
-      // }
-
-
-      _main_api__WEBPACK_IMPORTED_MODULE_1__["default"].getPagination(e.target.getAttribute('href'), _container);
-      moveSelectorTo(e.target);
-    }
-
-    function moveSelectorTo(linkSelected) {
-      var moveTo = false;
-      var rel = linkSelected.getAttribute('rel');
-
-      if (rel !== null) {
-        var selected = eval('get' + rel[0].toUpperCase() + rel.slice(1) + '(getCurrentLink())');
-
-        if (selected.getAttribute('rel') === null) {
-          moveTo = selected.offsetLeft - _selector.offsetLeft;
-          setCurrentLink(selected);
-          updateControllers();
-          slideTo(moveTo);
-        }
-
-        return moveTo;
-      }
-
-      moveTo = linkSelected.offsetLeft - _selector.offsetLeft;
-      setCurrentLink(linkSelected);
-      updateControllers();
-      slideTo(moveTo);
-      return true;
-    }
-
-    function slideTo(x) {
-      x += 'px';
-      $(_selector).css({
-        '-webkit-transform': 'translateX(' + x + ')',
-        '-moz-transform': 'translateX(' + x + ')',
-        '-ms-transform': 'translateX(' + x + ')',
-        '-o-transform': 'translateX(' + x + ')',
-        'transform': 'translateX(' + x + ')'
-      });
-    }
-    /**
-     * Gets the next link from the current one.
-     *
-     * @param element
-     * @returns {Element}
-     */
-
-
-    function getNext(element) {
-      return element.parentElement.nextElementSibling.querySelector('.page-link');
-    }
-    /**
-     * Gets the previous link from the current one.
-     *
-     * @param element
-     * @returns {Element}
-     */
-
-
-    function getPrev(element) {
-      return element.parentElement.previousElementSibling.querySelector('.page-link');
-    }
-
-    function isCurrentLink(anchor) {
-      return anchor.isEqualNode(getCurrentLink());
-    }
-
-    function updateControllers() {
-      updateLinks();
-      var container = _controllers.previous.parentElement;
-
-      if (isFirstPage()) {
-        if (!$(container).hasClass('disabled')) {
-          container.classList.add('disabled');
-          container.setAttribute('aria-disabled', 'true');
-          container.innerHTML = '<span class="page-link" aria-hidden="true">‹</span>';
-        }
-      } else {
-        if ($(container).hasClass('disabled')) {
-          container.classList.remove('disabled');
-          container.removeAttribute('aria-disabled');
-        }
-
-        container.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getPrev(getCurrentLink()).textContent + '" rel="prev" aria-label="Previous »">‹</a>';
-      }
-
-      _controllers.previous = container.querySelector('.page-link');
-
-      _controllers.previous.addEventListener('click', getPage);
-
-      container = _controllers.next.parentElement;
-
-      if (isLastPage()) {
-        if (!$(container).hasClass('disabled')) {
-          container.classList.add('disabled');
-          container.setAttribute('aria-disabled', 'true');
-          container.innerHTML = '<span class="page-link" aria-hidden="true">›</span>';
-        }
-      } else {
-        if ($(container).hasClass('disabled')) {
-          container.classList.remove('disabled');
-          container.removeAttribute('aria-disabled');
-        }
-
-        container.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getNext(getCurrentLink()).textContent + '" rel="next" aria-label="Next »">›</a>';
-      }
-
-      _controllers.next = container.querySelector('.page-link');
-
-      _controllers.next.addEventListener('click', getPage);
-    }
-    /**
-     * Sets the element passed an argument as the current link.
-     *
-     * @param element
-     */
-
-
-    function setCurrentLink(element) {
-      getCurrentLink().parentElement.innerHTML = '<a class="page-link" href="' + _path + 'page=' + getCurrentLink().textContent + '">' + getCurrentLink().textContent + '</a>';
-      getCurrentLink().addEventListener('click', getPage);
-      getCurrentLink().parentElement.removeAttribute('aria-current');
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(getCurrentLink().parentElement, 'active');
-      _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleSingleClass(element.parentElement, 'active');
-      element.parentElement.setAttribute('aria-current', 'page');
-      element.parentElement.innerHTML = '<span class="page-link">' + element.textContent + '</span>';
-    }
-
-    function isFirstPage() {
-      return getCurrentLink().isEqualNode(_links[1]);
-    }
-
-    function isLastPage() {
-      return getCurrentLink().isEqualNode(_links[_links.length - 2]);
-    }
-
-    function updateLinks() {
-      _links = _container.querySelectorAll('.page-link');
-    }
-
-    function getCurrentLink() {
-      return _container.querySelector('.active > .page-link');
-    }
-
-    init();
-    return {
-      hasPagination: function hasPagination() {
-        return document.querySelector('.pagination');
-      },
-      get: function get(key) {
-        return _this[key];
-      },
-      set: function set(key, value) {
-        _this[key] = value;
-      }
-    };
-  }
-
-  return {
-    getInstance: function getInstance() {
-      if (!instance) {
-        instance = PaginationClass;
-      }
-
-      return instance;
-    }
-  };
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Pagination.getInstance());
-
-/***/ }),
-
 /***/ "./resources/js/components/PeopleSlider.js":
 /*!*************************************************!*\
   !*** ./resources/js/components/PeopleSlider.js ***!
@@ -4137,31 +3912,28 @@ if (news.polygon !== null) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/messages */ "./resources/js/main/messages.js");
-/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination */ "./resources/js/components/Pagination.js");
-/* harmony import */ var _main_domObserver_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/domObserver.js */ "./resources/js/main/domObserver.js");
+/* harmony import */ var _facades_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../facades/pagination */ "./resources/js/facades/pagination.js");
+/* harmony import */ var _facades_api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../facades/api.js */ "./resources/js/facades/api.js");
 
 
 
 var offersList = {
   init: function init() {
-    window.addEventListener('load', offersList.setup);
-
-    if (document.querySelector('.pagination')) {
-      offersList.pagination = new _Pagination__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        container: document.querySelector('.pagination')
-      });
-    }
+    window.addEventListener('load', offersList.setup); // if (pagination.hasPagination()) {
+    //     pagination.paginate({
+    //         container: document.querySelector('.items-pagination')
+    //     });
+    // }
   },
   inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
   modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
   deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
-  pagination: null,
   setup: function setup() {
     offersList.inputFilter.addEventListener('change', function (event) {
       var selectedFilter = offersList.inputFilter.value;
-      var path = selectedFilter !== 'all' ? window.location.pathname + "/".concat(selectedFilter) : window.location.pathname;
-      offersList.getRequest(path, {
-        isNewFilter: 'true'
+      _facades_api_js__WEBPACK_IMPORTED_MODULE_2__["default"].jQueryGet(_facades_api_js__WEBPACK_IMPORTED_MODULE_2__["default"].getRoute('offers'), null, [selectedFilter], function (data) {
+        $('#content').html(data);
+        offersList.init();
       });
     });
 
@@ -4198,27 +3970,6 @@ var offersList = {
     modalForm.setAttribute('action', modalForm.getAttribute('action').replace(/[0-9]+$/, chosenOffer));
     var offerTitle = $(element).parent().parent().siblings('.card-title').text();
     document.querySelector('.modal-body__text').innerHTML = _main_messages__WEBPACK_IMPORTED_MODULE_0__["default"].form.advices.removeOffer(offerTitle);
-  },
-  getRequest: function getRequest(path) {
-    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    $.get({
-      url: path,
-      cache: false,
-      data: data,
-      dataType: 'json',
-      error: function error(xhr, status, _error) {
-        console.log(_error);
-      },
-      success: function success(data, status, xhr) {
-        $('#content').html(data);
-
-        if (offersList.pagination.hasPagination()) {
-          offersList.pagination = new _Pagination__WEBPACK_IMPORTED_MODULE_1__["default"]({
-            container: document.querySelector('.pagination')
-          });
-        }
-      }
-    });
   }
 };
 
@@ -5651,6 +5402,391 @@ window.addEventListener('load', function () {
     testimonials();
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/facades/api.js":
+/*!*************************************!*\
+  !*** ./resources/js/facades/api.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var api = function () {
+  var _ = {
+    routes: {
+      offers: '/internship',
+      learn: '/learn'
+    },
+    getParams: function getParams() {
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.search;
+      var params = {};
+
+      if (url.charAt(0) !== '?') {
+        url = url.split('?', 2)[1];
+      }
+
+      url.substring(1).split('&').forEach(function (param) {
+        params[param.split('=')[0]] = param.split('=')[1];
+      });
+      return params;
+    },
+    setLaravelParams: function setLaravelParams(url) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+      if (params.length === 0) {
+        return url;
+      }
+
+      params.forEach(function (param) {
+        if (param !== null) {
+          url = url.concat('/', param);
+        }
+      });
+      return url;
+    },
+    setParams: function setParams(url) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      if (params.length === 0) {
+        return url;
+      }
+
+      Object.keys(params).forEach(function (key, index) {
+        if (params[key] !== null) {
+          if (index === 0) {
+            url += '?';
+          }
+
+          url = url.concat(key, '=', params[key]);
+        }
+      });
+      return url;
+    }
+  };
+  return {
+    jQueryGet: function jQueryGet(url) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var callback = arguments.length > 3 ? arguments[3] : undefined;
+
+      if (params !== null) {
+        url = _.setLaravelParams(url, params);
+      }
+
+      $.get({
+        url: url,
+        cache: false,
+        data: data,
+        dataType: 'json',
+        error: function error(xhr, status, _error) {
+          console.log(_error);
+        },
+        success: function success(data, status, xhr) {
+          callback(data);
+        }
+      });
+    },
+    getRoute: function getRoute(name) {
+      return _.routes[name];
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (api);
+
+/***/ }),
+
+/***/ "./resources/js/facades/browser.js":
+/*!*****************************************!*\
+  !*** ./resources/js/facades/browser.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var browser = function () {
+  var _ = {
+    breakpoints: {
+      small: {
+        media: null,
+        type: 'max',
+        size: 680
+      },
+      medium: {
+        media: null,
+        type: 'min',
+        size: 460
+      },
+      large: {
+        media: null,
+        type: 'min',
+        size: 993
+      },
+      navbar: {
+        media: null,
+        type: 'min',
+        size: 992
+      }
+    },
+    setBreakpoints: function setBreakpoints() {
+      Object.keys(this.breakpoints).map(function (breakpoint) {
+        _.breakpoints[breakpoint].media = '(' + _.breakpoints[breakpoint].type + '-width: ' + _.breakpoints[breakpoint].size + 'px)';
+      });
+    },
+    init: function init() {
+      this.setBreakpoints();
+    }
+  };
+
+  _.init();
+
+  return {
+    isSmallDevice: function isSmallDevice() {
+      return window.matchMedia(_.breakpoints.small.media).matches;
+    },
+    isMediumDevice: function isMediumDevice() {
+      return window.matchMedia(_.breakpoints.small.media).matches;
+    },
+    isLargeDevice: function isLargeDevice() {
+      return window.matchMedia(_.breakpoints.small.media).matches;
+    },
+    matchesGivenBreakpoint: function matchesGivenBreakpoint(breakpoint) {
+      if (_.breakpoints[breakpoint] === undefined) {
+        console.log("The given breakpoint name does not exist");
+        return null;
+      }
+
+      return window.matchMedia(_.breakpoints[breakpoint].media).matches;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (browser);
+
+/***/ }),
+
+/***/ "./resources/js/facades/dom.js":
+/*!*************************************!*\
+  !*** ./resources/js/facades/dom.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./browser */ "./resources/js/facades/browser.js");
+
+
+var pagination = function () {
+  var _ = {
+    isNodeList: function isNodeList(nodes) {
+      return NodeList.prototype.isPrototypeOf(nodes);
+    },
+    isHTMLCollection: function isHTMLCollection(collection) {
+      return HTMLCollection.prototype.isPrototypeOf(collection);
+    }
+  };
+  return {
+    toggleVisibility: function toggleVisibility(element) {
+      if (element.style.display === "none") {
+        this.show(element);
+      } else {
+        this.hide(element);
+      }
+    },
+    hide: function hide(elements) {
+      var element = null;
+
+      if (elements === null) {
+        return false;
+      } // Check if the element is not iterable
+
+
+      if (elements == null || typeof elements[Symbol.iterator] !== 'function') {
+        element = elements;
+      }
+
+      if (element !== null) {
+        element.style.display = 'none';
+
+        if (element.hasAttribute('aria-hidden')) {
+          element.setAttribute('aria-hidden', 'true');
+        }
+
+        return this;
+      }
+
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'none';
+
+        if (elements[i].hasAttribute('aria-hidden')) {
+          elements[i].setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      return this;
+    },
+    show: function show(elements) {
+      var displayValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'block';
+      var element = null;
+
+      if (elements === null) {
+        return false;
+      } // Check if the element is not iterable
+
+
+      if (elements == null || typeof elements[Symbol.iterator] !== 'function') {
+        element = elements;
+      }
+
+      if (element !== null) {
+        element.style.display = displayValue;
+
+        if (element.hasAttribute('aria-hidden')) {
+          element.setAttribute('aria-hidden', 'false');
+        }
+
+        return this;
+      }
+
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = displayValue;
+
+        if (elements[i].hasAttribute('aria-hidden')) {
+          elements[i].setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      return this;
+    },
+    clearContent: function clearContent(element) {
+      element.textContent ? element.textContent = '' : element.innerText = '';
+      return this;
+    },
+    replaceElements: function replaceElements(replacement, replaced) {}
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (pagination);
+
+/***/ }),
+
+/***/ "./resources/js/facades/pagination.js":
+/*!********************************************!*\
+  !*** ./resources/js/facades/pagination.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./browser */ "./resources/js/facades/browser.js");
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom */ "./resources/js/facades/dom.js");
+
+
+
+var pagination = function () {
+  var _ = {
+    container: null,
+    links: null,
+    prevButton: null,
+    nextButton: null,
+    init: function init(args) {
+      this.container = args.container;
+      this.links = this.container.getElementsByClassName('items-pagination__link');
+      this.offset = 1;
+      this.currentPageLink = this.container.querySelector('.active');
+      this.prevButton = this.container.querySelector('a[rel=\'prev\'');
+      this.nextButton = this.container.querySelector('a[rel=\'next\'');
+      this.splitters = this.container.getElementsByClassName('items-pagination__link--splitter');
+      this.isExtendedPagination = true;
+      this.setup();
+    },
+    setup: function setup() {
+      var _this = this;
+
+      this.getNonActivePageLinks(this.currentPageLink);
+      this.addEvent(window, 'load', function () {
+        _this.setResponsive(_this);
+      });
+      this.addEvent(window, 'resize', function () {
+        _this.setResponsive(_this);
+      });
+    },
+    getNonActivePageLinks: function getNonActivePageLinks(link) {
+      var pageLinks = [];
+
+      for (var i = 1; i < this.links.length - 1; i++) {
+        if (!this.links[i].isEqualNode(link)) {
+          pageLinks.push(this.links[i]);
+        }
+      }
+
+      return pageLinks;
+    },
+    setExtendedPagination: function setExtendedPagination(value) {
+      this.isExtendedPagination = value;
+    },
+    setResponsive: function setResponsive() {
+      var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
+
+      if (_browser__WEBPACK_IMPORTED_MODULE_0__["default"].isMediumDevice()) {
+        if (this.isExtendedPagination) {
+          this.showSimplePagination().setExtendedPagination(false);
+        }
+
+        return this;
+      }
+
+      if (!this.isExtendedPagination) {
+        this.showExtendedPagination().setExtendedPagination(true);
+      }
+
+      return true;
+    },
+    showExtendedPagination: function showExtendedPagination() {
+      // dom.show(this.getNonActivePageLinks(this.currentPageLink))
+      //
+      // if (this.nextButton !== null) dom.show(this.nextButton.querySelector('span'), 'initial');
+      // if (this.prevButton !== null) dom.show(this.prevButton.querySelector('span'), 'initial');
+      return this;
+    },
+    showSimplePagination: function showSimplePagination() {
+      // dom.hide(this.getNonActivePageLinks(this.currentPageLink));
+      //
+      // if (this.nextButton !== null) dom.hide(this.nextButton.querySelector('span'), 'initial');
+      // if (this.prevButton !== null) dom.hide(this.prevButton.querySelector('span'), 'initial');
+      return this;
+    },
+    addEvent: function addEvent(el, event, fn) {
+      if (el.addEventListener) {
+        el.addEventListener(event, fn, false);
+      } else if (el.attachEvent) {
+        el.attachEvent("on" + event, fn);
+      } else {
+        el["on" + event] = fn;
+      }
+    }
+  };
+  return {
+    paginate: function paginate(args) {
+      _.init(args);
+    },
+    hasPagination: function hasPagination() {
+      return document.querySelector('.items-pagination') !== null;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (pagination);
 
 /***/ }),
 

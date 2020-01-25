@@ -18,7 +18,6 @@ var MediaQueries = (function() {
             get: function(key) {
                 return eval(key);
             },
-
             isNavbarBreakpoint: function() {
                 return window.matchMedia(this.get('navbarBreakpoint')).matches;
             },
