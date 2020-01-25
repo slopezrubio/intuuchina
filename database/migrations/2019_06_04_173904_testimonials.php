@@ -15,6 +15,15 @@ class Testimonials extends Migration
     {
         Schema::create('testimonials', function (Blueprint $table){
             $table->bigINcrements('id');
+            $table->longText('quotes');
+            $table->string('occupation');
+            $table->string('company')->nullable();
+            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
         //
     }

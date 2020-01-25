@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Testimonial;
+use App\Observers\TestimonialObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Swift_Plugins_ThrottlerPlugin;
@@ -34,6 +36,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        /**
+         * Observers
+         */
+        Testimonial::observe(TestimonialObserver::class);
+
         $throttleRate = config('mail.throttle_to_messages_per_sec');
         if ($throttleRate) {
             $throttlerPlugin = new Swift_Plugins_ThrottlerPlugin($throttleRate, \Swift_Plugins_ThrottlerPlugin::MESSAGES_PER_SECOND);

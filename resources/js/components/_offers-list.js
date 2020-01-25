@@ -1,26 +1,27 @@
 import messages from '../main/messages';
-import Pagination from './Pagination';
-import domObserver from '../main/domObserver.js';
+import pagination from '../facades/pagination';
+import api from '../facades/api.js';
 
 let offersList = {
     init: () => {
         window.addEventListener('load', offersList.setup);
-        if (document.querySelector('.pagination')) {
-            offersList.pagination = new Pagination({
-                container: document.querySelector('.pagination')
-            });
-        }
+
+        // if (pagination.hasPagination()) {
+        //     pagination.paginate({
+        //         container: document.querySelector('.items-pagination')
+        //     });
+        // }
     },
     inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
     modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
     deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
-    pagination: null,
     setup: function() {
         offersList.inputFilter.addEventListener('change', function(event) {
             let selectedFilter = offersList.inputFilter.value;
-            let path = selectedFilter !== 'all' ? window.location.pathname + `/${selectedFilter}` : window.location.pathname;
-            offersList.getRequest(path, {
-                isNewFilter: 'true',
+
+            api.jQueryGet(api.getRoute('offers'), null, [selectedFilter], function(data) {
+                $('#content').html(data);
+                offersList.init()
             });
         });
 
@@ -57,25 +58,6 @@ let offersList = {
         modalForm.setAttribute('action', modalForm.getAttribute('action').replace(/[0-9]+$/, chosenOffer));
         let offerTitle = $(element).parent().parent().siblings('.card-title').text();
         document.querySelector('.modal-body__text').innerHTML = messages.form.advices.removeOffer(offerTitle);
-    },
-    getRequest: function(path, data = null) {
-        $.get({
-            url: path,
-            cache: false,
-            data: data,
-            dataType: 'json',
-            error: function(xhr, status, error) {
-                console.log(error);
-            },
-            success: function(data, status, xhr) {
-                $('#content').html(data);
-                if (offersList.pagination.hasPagination()) {
-                    offersList.pagination = new Pagination({
-                        container: document.querySelector('.pagination')
-                    });
-                }
-            }
-        })
     }
 };
 

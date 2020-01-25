@@ -91,8 +91,6 @@
     @endif
 @endauth
 
-@if ((isset($isAjax) && !$isAjax) || (isset($isNewFilter) && $isNewFilter))
-    @if (count($offers) > 0)
-        {!! $offers->links() !!}
-    @endif
+@if (count($offers) > 0)
+    {!! $offers->links('vendor.pagination.semantic-ui') !!}
 @endif

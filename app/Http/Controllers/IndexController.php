@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\StripFromUrl;
+use App\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
-use App\Http\Middleware\StripFromUrl;
 
 class IndexController extends Controller
 {
+    const MAX_NUMBER_OF_TESTIMONIALS = 3;
+
     public function __construct()
     {
         $this->middleware(StripFromUrl::class)->only([
@@ -18,6 +21,9 @@ class IndexController extends Controller
 
     public function index() {
 
+        return view('pages/home', [
+            'testimonials' => Testimonial::getFromDistinctUsers(self::MAX_NUMBER_OF_TESTIMONIALS)
+        ]);
     }
 
     /**

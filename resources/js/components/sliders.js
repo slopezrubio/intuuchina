@@ -2,6 +2,7 @@ import DOM from '../main/dom';
 import MediaQueries from "../main/breakpoints";
 import { arrowSliderFactory } from './ArrowSlider';
 import { mediaSliderFactory } from './MediaSlider';
+import { peopleSliderFactory } from './PeopleSlider';
 import api from '../main/api.js';
 
 var pressNote = function() {
@@ -54,6 +55,20 @@ var university = function() {
     init();
 };
 
+var testimonials = function() {
+    var peopleSlider = null;
+
+    function init() {
+        var peopleSlider = peopleSliderFactory.createSlider({
+            type: 'people',
+            interval: 5000,
+            duration: 550,
+        });
+    }
+
+    init();
+};
+
 window.addEventListener('load', function() {
     if (document.querySelector('.note_carrousel') !== null) {
         // $(document).ready(press.init);
@@ -67,5 +82,9 @@ window.addEventListener('load', function() {
 
     if (document.querySelector('main#university') !== null) {
         university();
+    }
+
+    if (document.querySelector('section.people-slider') !== null) {
+        testimonials();
     }
 });

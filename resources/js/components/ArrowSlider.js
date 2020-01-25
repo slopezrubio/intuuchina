@@ -260,11 +260,13 @@ function ArrowSlider(options) {
      * @returns {ArrowSlider}
      */
     this.moveCarousel = function() {
+        let posX = this.holder.clientWidth * (this.currentSlideIndex - this.offset);
+
         $(this.carousel).css({
-            "-webkit-transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
-            "transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
-            "-ms-transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
-            "-o-transform": "translateX(-" + (this.holder.clientWidth * (this.currentSlideIndex - this.offset)) + "px)",
+            "-webkit-transform": "translateX(-" + posX + "px)",
+            "transform": "translateX(-" + posX + "px)",
+            "-ms-transform": "translateX(-" + posX + "px)",
+            "-o-transform": "translateX(-" + posX + "px)",
         });
 
         return this;

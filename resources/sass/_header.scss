@@ -10,12 +10,20 @@ header {
     $height: minimosCuadrados($map);
 
     @include header((
-            position: center,
-            position-y: 4em,
+      position: center,
+      position-y: 4em,
     ), $height);
 
     @media #{$large-devices_secondary} {
       background-position-y: 2em;
     }
+  }
+
+  &.stats {
+    $height: 207.6px;
+
+    @include stats((
+      position: center,
+    ), 1, $height);
   }
 }

@@ -87,23 +87,6 @@ return [
     'from' => 'From',
     'please note' => 'Please note',
     'per hour symbol' => '/h',
-    'facts' => [
-        [
-            'first text' => 'More than',
-            'number' => '400',
-            'second text' => 'People in China',
-        ],
-        [
-            'first text' => 'More than',
-            'number' => '500',
-            'second text' => 'Monthly applications',
-        ],
-        [
-            'first text' => 'From',
-            'number' => '41',
-            'second text' => 'Countries',
-        ]
-    ],
     'intuuchina\'s first priority' => 'IntuuChina\'s first priority is to help people and organizations make a successful transition in China. To this end, we will guide you on your own path by making available the most valuable resources. An energetic and experienced team.',
     'awards and honours text' => '
         <li><p class="motif_card_text">International Startup RTVE Award</p></li>

@@ -1,0 +1,7 @@
+main#home {
+  h2 {
+    font-size: 1.25em;
+  }
+
+  @include people-slider(2);
+}
