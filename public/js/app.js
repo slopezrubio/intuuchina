@@ -5585,7 +5585,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./browser */ "./resources/js/facades/browser.js");
 
 
-var pagination = function () {
+var dom = function () {
   var _ = {
     isNodeList: function isNodeList(nodes) {
       return NodeList.prototype.isPrototypeOf(nodes);
@@ -5675,7 +5675,7 @@ var pagination = function () {
   };
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (pagination);
+/* harmony default export */ __webpack_exports__["default"] = (dom);
 
 /***/ }),
 
