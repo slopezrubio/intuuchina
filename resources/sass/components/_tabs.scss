@@ -1,0 +1,21 @@
+.nav-tabs {
+  .nav-item {
+    .nav-link {
+      color: $sectionDark;
+      @include prefixed(transition, color ease-in-out .3s);
+      &.active, &:active, &:hover {
+        color: $primaryDark;
+      }
+
+      & > span {
+        display: none;
+      }
+
+      @include media-breakpoint-up(sm) {
+        & > span {
+          display: initial;
+        }
+      }
+    }
+  }
+}

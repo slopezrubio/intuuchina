@@ -1,0 +1,55 @@
+.social-media {
+  &--footer {
+
+  }
+
+  &__list {
+    margin-bottom: 2.5em;
+    @include flexbox();
+    @include justify-content(center);
+
+    &-item {
+      margin: 0 1em;
+
+      a {
+        @include inline-flex();
+        @include flex-direction(column);
+        @include align-items(center);
+
+        .fab {
+          font-size: 2.5em;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 1118px) {
+    &__list {
+      display: table;
+      margin-left: auto;
+      margin-right: 0;
+
+      &-item {
+        margin: 0 0 0.5em 0;
+        text-align: left;
+        a {
+          display: block;
+          .fab {
+            font-size: 2em;
+            margin-right: 0.25em;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 1514px) {
+    &__list {
+      @include flexbox();
+      @include justify-content(flex-end);
+      &-item {
+        margin-left: 1.75em;
+      }
+    }
+  }
+}

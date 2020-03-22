@@ -1,0 +1,29 @@
+.banner {
+  a {
+    color: $secondaryRed;
+
+    &:hover {
+      color: $quaternaryRed;
+      text-decoration: underline;
+    }
+  }
+
+  &__container {
+    & > * {
+      margin-bottom: 2.5em;
+    }
+  }
+
+  &__thumbnail {
+    i {
+      width: 100%;
+      text-align: center;
+      font-size: 6em;
+      color: $successColor;
+    }
+  }
+
+  &__supporting-text {
+
+  }
+}

@@ -1,12 +1,12 @@
 import { SliderFactory } from "../factories/SliderFactory";
 
 function MediaSlider(options) {
-    this.holder = document.querySelector('.note_window');
+    this.holder = document.querySelector('.media-slider__holder');
     this.offset = 1;
     this.currentSlideIndex = null;
     this.carousel = this.holder.children[0];
     this.slides = this.carousel.children;
-    this.controllers = document.querySelector('.tv').children;
+    this.controllers = document.querySelector('.media-slider__controllers').children;
     this.currentSlide = this.slides[0];
 
     this.init = function() {
@@ -64,7 +64,8 @@ function MediaSlider(options) {
      * @param self
      */
     this.update = function(self = this) {
-        self.moveCarousel();
+        self.setWidths()
+            .moveCarousel();
         return this;
     };
 
@@ -75,8 +76,9 @@ function MediaSlider(options) {
 
     this.setControllersListeners = function() {
         for (let i = 0; i < this.controllers.length; i++) {
-            this.controllers[i].addEventListener('click', (e) => {
+            this.controllers[i].children[0].addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 this.preventScrolling()
                     .setCurrentSlideIndex(i + this.offset)
                     .setCurrentSlide(this.setCurrentSlideIndex)

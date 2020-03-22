@@ -1,0 +1,13 @@
+%arrow-icon {
+  content: "";
+  position: absolute;
+  left: calc(100% - 1.7em);
+  top: 60px;
+  width: 1em;
+  height: 1em;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  @include prefixed(transform, rotate(135deg));
+  z-index: -2;
+}
+

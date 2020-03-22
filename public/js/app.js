@@ -2666,7 +2666,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrowSliderFactory", function() { return arrowSliderFactory; });
 /* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
 /* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-/* harmony import */ var _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../factories/SliderFactory */ "./resources/js/factories/SliderFactory.js");
+/* harmony import */ var _facades_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../facades/browser */ "./resources/js/facades/browser.js");
+/* harmony import */ var _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../factories/SliderFactory */ "./resources/js/factories/SliderFactory.js");
+
 
 
 
@@ -2675,6 +2677,7 @@ function ArrowSlider(options) {
   var _this2 = this;
 
   this.holder = document.querySelector('.arrow-slider__holder');
+  this.sliderKeys = options.sections !== undefined ? options.sections : null;
   this.offset = 1;
   this.currentSlideIndex = options.slide ? options.slide + this.offset : null;
   this.carousel = this.holder.children[0];
@@ -2861,6 +2864,12 @@ function ArrowSlider(options) {
     this.currentSlideIndex = value + this.offset;
     return this;
   };
+
+  this.setSliderId = function () {
+    this.holder.setAttribute('id', this.sliderKeys[this.currentSlideIndex - this.offset]);
+    _facades_browser__WEBPACK_IMPORTED_MODULE_2__["default"].verticalScrollTo(this.holder);
+    return this;
+  };
   /**
    * Sets the width of all the slides comprised in the slider.
    *
@@ -2956,8 +2965,6 @@ function ArrowSlider(options) {
 
 
   this.updateController = function (e) {
-    e.preventDefault();
-
     for (var x = 0; x < _this2.controllers.length; x++) {
       if (e.target.isEqualNode(_this2.controllers[x]) || e.target.parentElement.isEqualNode(_this2.controllers[x])) {
         if (_this2.currentSlideIndex !== x + _this2.offset) {
@@ -2969,12 +2976,14 @@ function ArrowSlider(options) {
 
             _this2.setCurrentSlide(slideSelected).setCurrentSlideIndex(slideSelected);
           } else {
+            e.preventDefault();
+
             _this2.setCurrentSlideIndex(x).setCurrentSlide(x);
           }
 
           _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(_this2.controllers[_this2.currentSlideIndex - _this2.offset], 'selected'); // Update the sliders.
 
-          _this2.runAutoWidths().moveCarousel().paint();
+          _this2.setSliderId().runAutoWidths().moveCarousel().paint();
 
           if (_this2.controllersCallback !== null) {
             _this2.controllersCallback(_this2.currentSlide);
@@ -3050,8 +3059,44 @@ function ArrowSlider(options) {
 }
 
 ;
-var arrowSliderFactory = new _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_2__["SliderFactory"]();
+var arrowSliderFactory = new _factories_SliderFactory__WEBPACK_IMPORTED_MODULE_3__["SliderFactory"]();
 /* harmony default export */ __webpack_exports__["default"] = (ArrowSlider);
+
+/***/ }),
+
+/***/ "./resources/js/components/Dialog.js":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Dialog.js ***!
+  \*******************************************/
+/*! exports provided: dialogFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogFactory", function() { return dialogFactory; });
+/* harmony import */ var _factories_DialogsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../factories/DialogsFactory */ "./resources/js/factories/DialogsFactory.js");
+
+
+function Dialog(options) {
+  this.el = document.getElementById('dialog-box');
+  this.container = this.el.children[0];
+  /**
+   * Replace the dialog by the HTML content passed as
+   * an argument.
+   *
+   * @param content
+   */
+
+  this.replace = function (content) {
+    var header = this.el.parentElement;
+    $(this.el).remove();
+    $(header).append(content);
+    return dialogFactory.createDialog();
+  };
+}
+
+var dialogFactory = new _factories_DialogsFactory__WEBPACK_IMPORTED_MODULE_0__["DialogFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (Dialog);
 
 /***/ }),
 
@@ -3069,12 +3114,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function MediaSlider(options) {
-  this.holder = document.querySelector('.note_window');
+  this.holder = document.querySelector('.media-slider__holder');
   this.offset = 1;
   this.currentSlideIndex = null;
   this.carousel = this.holder.children[0];
   this.slides = this.carousel.children;
-  this.controllers = document.querySelector('.tv').children;
+  this.controllers = document.querySelector('.media-slider__controllers').children;
   this.currentSlide = this.slides[0];
 
   this.init = function () {
@@ -3136,7 +3181,7 @@ function MediaSlider(options) {
 
   this.update = function () {
     var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
-    self.moveCarousel();
+    self.setWidths().moveCarousel();
     return this;
   };
 
@@ -3149,8 +3194,9 @@ function MediaSlider(options) {
     var _this2 = this;
 
     var _loop = function _loop(i) {
-      _this2.controllers[i].addEventListener('click', function (e) {
+      _this2.controllers[i].children[0].addEventListener('click', function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         _this2.preventScrolling().setCurrentSlideIndex(i + _this2.offset).setCurrentSlide(_this2.setCurrentSlideIndex).moveCarousel();
       });
@@ -3455,80 +3501,51 @@ if (document.querySelector('.custom-select-wrapper') !== null) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+/* harmony import */ var _forms_ContactForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms/ContactForm */ "./resources/js/components/forms/ContactForm.js");
+/* harmony import */ var _facades_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../facades/browser */ "./resources/js/facades/browser.js");
 
 
 
-var footer = {
-  init: function init() {
-    window.addEventListener('load', footer.setup);
-    window.addEventListener('resize', function () {
-      footer.toggleSwitch();
+var footer = function () {
+  var el = document.querySelector('.footer');
+  var contactForm = null;
+
+  var init = function init() {
+    setListeners();
+  };
+
+  var setContactForm = function setContactForm() {
+    contactForm = new _forms_ContactForm__WEBPACK_IMPORTED_MODULE_0__["contactFormFactory"].createForm({
+      type: 'contact',
+      form: el.querySelector('.contact-form')
     });
-  },
-  form: document.querySelector('.footer_contact_form'),
-  setup: function setup() {
-    if (footer.hasErrorsMessages(footer.form)) {
-      footer.setViewport();
+
+    if (contactForm.hasErrorMessages()) {
+      contactForm.focusFirstInvalidField();
+      window.scrollBy(0, contactForm.el.getBoundingClientRect().top);
     }
 
-    footer.toggleSwitch();
-  },
-  toggleSwitch: function toggleSwitch() {
-    var switchInput = document.querySelector('#terms').parentElement.parentElement !== null ? document.querySelector('#terms').parentElement.parentElement : null;
-    var className = _main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getInputClass(switchInput);
+    ;
+  };
 
-    if (className !== null) {
-      _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(switchInput, className);
-    } // if (footer.getScreenSize()[0] > breakpoints.widths.largeDevices) {
-    //     if (document.querySelector('.checkbox_input') === null) {
-    //         dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
-    //     }
-    // }
-    //
-    // if (footer.getScreenSize()[0] <= breakpoints.widths.largeDevices) {
-    //     if (document.querySelector('.switch_input') === null) {
-    //         dom.toggleClass(switchInput, 'switch_input', 'checkbox_input');
-    //     }
-    // }
-
-  },
-  hasErrorsMessages: function hasErrorsMessages(parent) {
-    if ($(parent).find('.invalid-feedback', '.is-invalid').length > 0) {
-      return true;
+  var setResponsiveness = function setResponsiveness() {
+    if (_facades_browser__WEBPACK_IMPORTED_MODULE_1__["default"].matchesGivenBreakpoint('footer.checkbox') && contactForm.fields.terms.classList.contains('c-switch-input') || !_facades_browser__WEBPACK_IMPORTED_MODULE_1__["default"].matchesGivenBreakpoint('footer.checkbox') && contactForm.fields.terms.classList.contains('c-checkbox-input')) {
+      contactForm.toggleCheckableInput();
     }
+  };
 
-    return false; // let fields = footer.form.querySelectorAll('.col-xs-10');
-    // for (let i = 0; i < fields.length && errors === false; i++) {
-    //     if (fields[i].querySelector('.is-invalid') !== null) {
-    //         errors = true;
-    //     }
-    // }
-    //
-    // if (errors) {
-    //     return true;
-    // }
-    // return false;
-  },
-  setViewport: function setViewport() {
-    /*
-     * Obtiene la diferencia de scroll entre la del usuario y la del formulario
-     * del pie de página.
-     */
-    var scrollToForm = footer.form.offsetTop - window.scrollY;
-    /*
-     * Realiza el scroll hasta el formulario de pie de página.
-     */
+  var setListeners = function setListeners() {
+    window.addEventListener('load', function (e) {
+      setContactForm();
+      setResponsiveness();
+    });
+    window.addEventListener('resize', function (e) {
+      setResponsiveness();
+    });
+  };
 
-    window.scrollBy(0, scrollToForm);
-  }
-};
-
-if (document.querySelector('.footer') !== null) {
-  footer.init();
-}
+  init();
+}();
 
 /***/ }),
 
@@ -3914,68 +3931,106 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/messages */ "./resources/js/main/messages.js");
 /* harmony import */ var _facades_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../facades/pagination */ "./resources/js/facades/pagination.js");
 /* harmony import */ var _facades_api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../facades/api.js */ "./resources/js/facades/api.js");
+/* harmony import */ var _filters_IndustryFilter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filters/IndustryFilter */ "./resources/js/components/filters/IndustryFilter.js");
 
 
 
-var offersList = {
-  init: function init() {
-    window.addEventListener('load', offersList.setup); // if (pagination.hasPagination()) {
-    //     pagination.paginate({
-    //         container: document.querySelector('.items-pagination')
-    //     });
-    // }
-  },
-  inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
-  modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
-  deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
-  setup: function setup() {
-    offersList.inputFilter.addEventListener('change', function (event) {
-      var selectedFilter = offersList.inputFilter.value;
-      _facades_api_js__WEBPACK_IMPORTED_MODULE_2__["default"].jQueryGet(_facades_api_js__WEBPACK_IMPORTED_MODULE_2__["default"].getRoute('offers'), null, [selectedFilter], function (data) {
-        $('#content').html(data);
-        offersList.init();
-      });
-    });
 
-    for (var i = 0; i < offersList.deleteButtons.length; i++) {
-      offersList.deleteButtons[i].addEventListener('click', function () {
-        offersList.loadModalData(this);
+
+var offersList = function () {
+  var el = document.getElementById('job-board');
+  var industryFilter = null;
+
+  var init = function init() {
+    setPagination();
+    setIndustryFilter();
+  };
+
+  var setPagination = function setPagination() {
+    if (_facades_pagination__WEBPACK_IMPORTED_MODULE_1__["default"].hasPagination()) {
+      _facades_pagination__WEBPACK_IMPORTED_MODULE_1__["default"].paginate({
+        container: document.querySelector('.items-pagination')
       });
     }
-  },
-  render: function render(parentElement, data) {
-    parentElement.innerHTML = data;
-  },
-  addRemoveFunction: function addRemoveFunction(arr) {
-    (function (arr) {
-      arr.forEach(function (item) {
-        if (item.hasOwnProperty('remove')) {
-          return;
+  };
+
+  var setIndustryFilter = function setIndustryFilter() {
+    if (document.getElementById('industryFilter') !== null) {
+      industryFilter = new _filters_IndustryFilter__WEBPACK_IMPORTED_MODULE_3__["industryFilterFactory"].createFilter({
+        type: 'industry',
+        filter: document.getElementById('industryFilter'),
+        callback: function callback(data) {
+          $(el.querySelector('#content')).find('.cards-list').remove();
+          $(el.querySelector('#content')).append(data);
         }
-
-        Object.defineProperty(item, 'remove', {
-          configurable: true,
-          enumerable: true,
-          writable: true,
-          value: function remove() {
-            if (this.parentNode !== null) this.parentNode.removeChild(this);
-          }
-        });
       });
-    })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
-  },
-  loadModalData: function loadModalData(element) {
-    var chosenOffer = element.getAttribute('data-value');
-    var modalForm = document.querySelector('#removeOffer');
-    modalForm.setAttribute('action', modalForm.getAttribute('action').replace(/[0-9]+$/, chosenOffer));
-    var offerTitle = $(element).parent().parent().siblings('.card-title').text();
-    document.querySelector('.modal-body__text').innerHTML = _main_messages__WEBPACK_IMPORTED_MODULE_0__["default"].form.advices.removeOffer(offerTitle);
-  }
-};
+    }
 
-if (document.querySelector('#job-board') !== null) {
-  offersList.init();
-}
+    ;
+  };
+
+  init();
+}(); // let offersList = {
+//     init: () => {
+//         window.addEventListener('load', offersList.setup);
+//
+//         // if (pagination.hasPagination()) {
+//         //     pagination.paginate({
+//         //         container: document.querySelector('.items-pagination')
+//         //     });
+//         // }
+//     },
+//     inputFilter: document.querySelector('#inputFilter') !== null ? document.querySelector('#inputFilter') : null,
+//     modalOffer: document.querySelector('#modalOffer') !== null ? document.querySelector('#modalOffer') : null,
+//     deleteButtons: document.querySelectorAll('.delete') !== null ? document.querySelectorAll('.delete') : null,
+//     setup: function() {
+//         offersList.inputFilter.addEventListener('change', function(event) {
+//             let selectedFilter = offersList.inputFilter.value;
+//
+//             api.jQueryGet(api.getRoute('offers'), null, [selectedFilter], function(data) {
+//                 $('#content').html(data);
+//                 offersList.init()
+//             });
+//         });
+//
+//         for (let i = 0; i < offersList.deleteButtons.length; i++) {
+//             offersList.deleteButtons[i].addEventListener('click', function() {
+//                 offersList.loadModalData(this);
+//             })
+//         }
+//     },
+//     render: (parentElement, data) => {
+//         parentElement.innerHTML = data;
+//     },
+//     addRemoveFunction: (arr) => {
+//         (function (arr) {
+//             arr.forEach(function (item) {
+//                 if (item.hasOwnProperty('remove')) {
+//                     return;
+//                 }
+//                 Object.defineProperty(item, 'remove', {
+//                     configurable: true,
+//                     enumerable: true,
+//                     writable: true,
+//                     value: function remove() {
+//                         if (this.parentNode !== null)
+//                             this.parentNode.removeChild(this);
+//                     }
+//                 });
+//             });
+//         })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+//     },
+//     loadModalData: function(element) {
+//         let chosenOffer = element.getAttribute('data-value');
+//         let modalForm = document.querySelector('#removeOffer');
+//         modalForm.setAttribute('action', modalForm.getAttribute('action').replace(/[0-9]+$/, chosenOffer));
+//         let offerTitle = $(element).parent().parent().siblings('.card-title').text();
+//         document.querySelector('.modal-body__text').innerHTML = messages.form.advices.removeOffer(offerTitle);
+//     }
+// };
+// if (document.querySelector('#job-board') !== null) {
+//     offersList.init();
+// }
 
 /***/ }),
 
@@ -4135,73 +4190,6 @@ var pageTitle = {
 
 if (document.getElementsByTagName('header') !== null) {
   pageTitle.init();
-}
-
-/***/ }),
-
-/***/ "./resources/js/components/_register-form.js":
-/*!***************************************************!*\
-  !*** ./resources/js/components/_register-form.js ***!
-  \***************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-
-
-if (document.querySelector('header#register') !== null) {
-  var registerForm = function () {
-    var _fieldsets = {
-      industry: document.querySelector('#industryFieldset'),
-      study: document.querySelector('#studyFieldset'),
-      program: document.querySelector('#programFieldset'),
-      university: document.querySelector('#universityFieldset'),
-      cv: $('#cv').parents('.form-group')[0]
-    };
-    var _inputs = {
-      program: document.querySelector('#inputProgram')
-    };
-
-    function init() {
-      window.addEventListener('load', setFields);
-
-      _inputs.program.addEventListener('change', setFields);
-    }
-
-    function getProgramSelected() {
-      return _inputs.program.options[_inputs.program.selectedIndex].value;
-    }
-
-    function setFields() {
-      switch (getProgramSelected()) {
-        case 'internship':
-        case 'inter_relocat':
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.cv);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.industry);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.university);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.study);
-          break;
-
-        case 'study':
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.cv);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.industry);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.university);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.study);
-          break;
-
-        case 'university':
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.cv);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.industry);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].show(_fieldsets.university);
-          _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].hide(_fieldsets.study);
-          break;
-      }
-    }
-
-    init();
-  }();
 }
 
 /***/ }),
@@ -5297,6 +5285,1046 @@ if (document.querySelector('.user-card')) {
 
 /***/ }),
 
+/***/ "./resources/js/components/filters/IndustryFilter.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/filters/IndustryFilter.js ***!
+  \***********************************************************/
+/*! exports provided: industryFilterFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "industryFilterFactory", function() { return industryFilterFactory; });
+/* harmony import */ var _factories_FiltersFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FiltersFactory */ "./resources/js/factories/FiltersFactory.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../facades/api */ "./resources/js/facades/api.js");
+
+
+
+function IndustryFilter(options) {
+  this.el = options.filter;
+  this.callback = options.callback;
+
+  this.init = function () {
+    var _this = this;
+
+    this.el.addEventListener('change', function () {
+      _this.applyFilter(_this.callback);
+    });
+  };
+
+  this.getSelectedValue = function () {
+    return this.el.value;
+  };
+
+  this.applyFilter = function (callback) {
+    _facades_api__WEBPACK_IMPORTED_MODULE_1__["default"].jQueryGet(_facades_api__WEBPACK_IMPORTED_MODULE_1__["default"].getRoute('offers'), null, [this.getSelectedValue()], function (data) {
+      callback(data);
+    });
+  };
+
+  this.getSelectedIndex = function () {
+    return this.el.selectedIndex;
+  };
+
+  this.init();
+}
+
+var industryFilterFactory = new _factories_FiltersFactory__WEBPACK_IMPORTED_MODULE_0__["FilterFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (IndustryFilter);
+
+/***/ }),
+
+/***/ "./resources/js/components/filters/Searchbox.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/filters/Searchbox.js ***!
+  \******************************************************/
+/*! exports provided: searchboxFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchboxFactory", function() { return searchboxFactory; });
+/* harmony import */ var _factories_FiltersFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FiltersFactory */ "./resources/js/factories/FiltersFactory.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../facades/api */ "./resources/js/facades/api.js");
+/* harmony import */ var _IndustryFilter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IndustryFilter */ "./resources/js/components/filters/IndustryFilter.js");
+
+
+
+
+function Searchbox(options) {
+  this.el = options.filter;
+  this.callback = options.callback;
+
+  this.init = function () {};
+}
+
+var searchboxFactory = new _factories_FiltersFactory__WEBPACK_IMPORTED_MODULE_0__["FilterFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (Searchbox);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/ContactForm.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/forms/ContactForm.js ***!
+  \******************************************************/
+/*! exports provided: contactFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "contactFormFactory", function() { return contactFormFactory; });
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _facades_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../facades/browser */ "./resources/js/facades/browser.js");
+
+
+
+function ContactForm(options) {
+  this.fields = {
+    name: $('#contact-name'),
+    terms: $('#contact-terms').parents('.c-switch-input')[0]
+  };
+
+  this.toggleCheckableInput = function () {
+    $(this.fields.terms).toggleClass('c-switch-input c-checkbox-input c-checkbox-input--footer');
+    $(this.fields.terms).find('label:first-child').toggleClass('c-switch-input__label c-checkbox-input__label');
+    $(this.fields.terms).find('.wrapper').toggleClass('c-switch-input__wrapper c-checkbox-input__wrapper');
+  };
+}
+
+var contactFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (ContactForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/PaymentForm.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/forms/PaymentForm.js ***!
+  \******************************************************/
+/*! exports provided: paymentFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "paymentFormFactory", function() { return paymentFormFactory; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _Dialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Dialog */ "./resources/js/components/Dialog.js");
+/* harmony import */ var _facades_str__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../facades/str */ "./resources/js/facades/str.js");
+/* harmony import */ var _facades_money__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../facades/money */ "./resources/js/facades/money.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../facades/api */ "./resources/js/facades/api.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+function PaymentForm(options) {
+  var _this2 = this;
+
+  this.stripeElements = ['card'];
+  this.stripeElementsStyles = {
+    generic: {
+      base: {}
+    }
+  };
+  /**
+   * Form fields
+   *
+   * @type {{duration: {hours: HTMLElement, staying: HTMLElement}, card_holder: HTMLElement, study: HTMLElement, stripe: {}, phone_number: HTMLElement, currency: HTMLElement, payment: Element, email: HTMLElement, card: {number: HTMLElement, cvc: HTMLElement, expiry: HTMLElement}}}
+   */
+
+  this.fields = {
+    card_holder: document.getElementById('card_holder'),
+    phone_number: document.getElementById('phone_number'),
+    email: document.getElementById('payment-email'),
+    study: document.getElementById('study'),
+    duration: {
+      hours: document.getElementById('hours'),
+      staying: document.getElementById('staying')
+    },
+    card: {
+      number: document.getElementById('card-number'),
+      cvc: document.getElementById('card-cvc'),
+      expiry: document.getElementById('card-expiry')
+    },
+    currency: document.getElementById('payment-currency'),
+    payment: document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w'),
+    token: document.getElementsByName('_token')[0],
+    stripe: {}
+  }; // Dialog component
+
+  this.dialog = null;
+  this.paymentIntent = null; // Selected course
+
+  this.selectedCourse = null; // Payment details
+
+  this.paymentDetails = null;
+  this.stripe = null; // Used patterns
+
+  this.patterns = {
+    getActionText: new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/)
+  };
+  this.dialog = null;
+  this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
+  this.getCourseDuration = function () {
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    if (this.fields.study !== null) {
+      switch (this.fields.study.value) {
+        case 'in-person':
+          if (obj) {
+            obj['staying'] = this.fields.duration.staying.value;
+            return obj;
+          }
+
+          return this.fields.duration.staying.value;
+
+        case 'online':
+          if (obj) {
+            obj['hours'] = this.fields.duration.hours.value;
+            return obj;
+          }
+
+          return this.fields.duration.hours.value;
+
+        default:
+          return this.fields.duration.staying.value;
+      }
+    }
+
+    return 1;
+  }, this.init =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+    var _this = this;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            if (!(this.el !== null)) {
+              _context6.next = 15;
+              break;
+            }
+
+            this.dialog = _Dialog__WEBPACK_IMPORTED_MODULE_2__["dialogFactory"].createDialog();
+            this.loadStripeElements();
+            this.setPaymentAmount();
+            _context6.next = 6;
+            return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', this.fields.study.value));
+
+          case 6:
+            this.selectedCourse = _context6.sent;
+            this.fields.study.addEventListener('change',
+            /*#__PURE__*/
+            function () {
+              var _ref2 = _asyncToGenerator(
+              /*#__PURE__*/
+              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        _this.toggleInputs([_this.fields.duration.staying, _this.fields.duration.hours]);
+
+                        _context.next = 3;
+                        return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', event.target.value));
+
+                      case 3:
+                        _this.selectedCourse = _context.sent;
+
+                        _this.setTotalCoursePrice('eur').setPaymentAmount();
+
+                      case 5:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+
+              return function (_x) {
+                return _ref2.apply(this, arguments);
+              };
+            }());
+            this.fields.duration.staying.addEventListener('change',
+            /*#__PURE__*/
+            function () {
+              var _ref3 = _asyncToGenerator(
+              /*#__PURE__*/
+              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                  while (1) {
+                    switch (_context2.prev = _context2.next) {
+                      case 0:
+                        _this.validateField(event.target, ['required', 'integer', 'InPersonCoursesScope']);
+
+                        _this.setMinimumDuration().setPaymentAmount();
+
+                      case 2:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }
+                }, _callee2);
+              }));
+
+              return function (_x2) {
+                return _ref3.apply(this, arguments);
+              };
+            }());
+            this.fields.duration.hours.addEventListener('change',
+            /*#__PURE__*/
+            function () {
+              var _ref4 = _asyncToGenerator(
+              /*#__PURE__*/
+              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(event) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                  while (1) {
+                    switch (_context3.prev = _context3.next) {
+                      case 0:
+                        _this.validateField(event.target, ['required', 'integer', 'OnlineCoursesScope']);
+
+                        _this.setMinimumDuration().setPaymentAmount();
+
+                      case 2:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }
+                }, _callee3);
+              }));
+
+              return function (_x3) {
+                return _ref4.apply(this, arguments);
+              };
+            }());
+            this.fields.card_holder.addEventListener('change', function (event) {
+              _this.validateField(event.target, ['ValidName']);
+            });
+            this.fields.phone_number.addEventListener('change', function (event) {
+              _this.validateField(event.target, ['required', 'numeric', 'PhoneNumber']);
+            });
+            this.fields.email.addEventListener('change', function (event) {
+              _this.validateField(event.target, ['required', 'email']);
+            });
+            this.fields.currency.addEventListener('change',
+            /*#__PURE__*/
+            function () {
+              var _ref5 = _asyncToGenerator(
+              /*#__PURE__*/
+              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(event) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+                  while (1) {
+                    switch (_context4.prev = _context4.next) {
+                      case 0:
+                        _this.setPaymentAmount(event.target.value);
+
+                      case 1:
+                      case "end":
+                        return _context4.stop();
+                    }
+                  }
+                }, _callee4);
+              }));
+
+              return function (_x4) {
+                return _ref5.apply(this, arguments);
+              };
+            }());
+            $(this.el).on('submit',
+            /*#__PURE__*/
+            function () {
+              var _ref6 = _asyncToGenerator(
+              /*#__PURE__*/
+              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(event) {
+                var validation, _ref7, paymentMethod, error;
+
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+                  while (1) {
+                    switch (_context5.prev = _context5.next) {
+                      case 0:
+                        event.preventDefault();
+
+                        _this.toggleLoadingState();
+
+                        _this.disableStripeInputs();
+
+                        _this.paymentDetails = _this.createPaymentDetails(['card_holder', 'email', 'phone_number', 'duration']);
+                        /*
+                         * If the validation succeeds returns an object with the billing
+                         * details.
+                         */
+
+                        _context5.next = 6;
+                        return _this.validatePaymentDetails();
+
+                      case 6:
+                        validation = _context5.sent;
+
+                        if (!validation.errors) {
+                          _context5.next = 12;
+                          break;
+                        }
+
+                        Object.keys(validation.errors).forEach(function (fieldName) {
+                          _this.displayFieldError(_this.fields[fieldName], validation.errors[fieldName][0]);
+                        });
+
+                        _this.toggleLoadingState();
+
+                        _this.disableStripeInputs(false);
+
+                        return _context5.abrupt("return", false);
+
+                      case 12:
+                        _context5.next = 14;
+                        return stripe.createPaymentMethod('card', _this.fields.stripe['card-number'], {
+                          billing_details: validation
+                        });
+
+                      case 14:
+                        _ref7 = _context5.sent;
+                        paymentMethod = _ref7.paymentMethod;
+                        error = _ref7.error;
+
+                        if (!error) {
+                          _context5.next = 21;
+                          break;
+                        }
+
+                        _this.toggleLoadingState();
+
+                        _this.disableStripeInputs(false);
+
+                        return _context5.abrupt("return", false);
+
+                      case 21:
+                        _this.sendPaymentInformation({
+                          token: _this.fields.token.value,
+                          card_holder: _this.fields.card_holder.value,
+                          email: paymentMethod.billing_details.email,
+                          phone_number: paymentMethod.billing_details.phone,
+                          currency: _this.fields.currency.value,
+                          dialog: _this.dialog !== null,
+                          payment_method: paymentMethod.id
+                        });
+
+                      case 22:
+                      case "end":
+                        return _context5.stop();
+                    }
+                  }
+                }, _callee5);
+              }));
+
+              return function (_x5) {
+                return _ref6.apply(this, arguments);
+              };
+            }());
+
+          case 15:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, this);
+  }));
+
+  this.sendPaymentInformation =
+  /*#__PURE__*/
+  function () {
+    var _ref8 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(data) {
+      var paymentInformation, result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              paymentInformation = {
+                _token: data.token ? data.token : null,
+                card_holder: data.card_holder ? data.card_holder : null,
+                email: data.email ? data.email : null,
+                phone_number: data.phone_number ? data.phone_number : null,
+                currency: data.currency ? data.currency : null,
+                payment_method: data.payment_method ? data.payment_method : null,
+                payment_intent_id: data.payment_intent_id,
+                dialog: data.dialog ? data.dialog : null
+              };
+              paymentInformation = this.getCourseDuration(paymentInformation);
+              _context7.next = 4;
+              return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getRoute('payment_method'), 'post', paymentInformation);
+
+            case 4:
+              result = _context7.sent;
+
+              if (!result.error) {
+                _context7.next = 10;
+                break;
+              }
+
+              this.displayStripeErrors('submit', result.error.message);
+              this.toggleLoadingState();
+              this.disableStripeInputs(false);
+              return _context7.abrupt("return", this);
+
+            case 10:
+              this.handlePaymentResponse(result);
+
+            case 11:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, this);
+    }));
+
+    return function (_x6) {
+      return _ref8.apply(this, arguments);
+    };
+  }();
+  /**
+   * Receives the response of the «stripe.handleCardAction» method. If the Payment Intent
+   * has sent an error it will show the error message just above the submit button. Otherwise
+   * it will sent the Payment Method Intent ID to the server to finally complete and
+   * confirm the payment linked to the Payment Method sent previously.
+   *
+   * @param result
+   */
+
+
+  this.handleStripeJsResult = function (result) {
+    if (result.error) {
+      _this2.displayStripeErrors('submit', result.error.message);
+
+      return result;
+    }
+
+    _this2.paymentIntent = result.paymentIntent;
+
+    _this2.sendPaymentInformation({
+      token: _this2.fields.token.value,
+      payment_intent_id: result.paymentIntent.id
+    });
+  };
+
+  this.handlePaymentResponse =
+  /*#__PURE__*/
+  function () {
+    var _ref9 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(response) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              if (!response.error) {
+                _context8.next = 3;
+                break;
+              }
+
+              this.displayStripeErrors('submit', response.error.message);
+              return _context8.abrupt("return", this);
+
+            case 3:
+              if (!response.requires_action) {
+                _context8.next = 6;
+                break;
+              }
+
+              /*
+               * Triggers the next authentication step or action where the user is likely
+               * to be required for a 3D Secure (mandatory by the Strong Customer Authentication)
+               * regulation in Europe.
+               */
+              stripe.confirmCardPayment(response.payment_intent_client_secret).then(this.handleStripeJsResult); // stripe.handleCardAction(response.payment_intent_client_secret)
+              //    .then((result) => {
+              //        console.log(result);
+              //    });
+
+              return _context8.abrupt("return", this);
+
+            case 6:
+              if (!(this.dialog !== null)) {
+                _context8.next = 9;
+                break;
+              }
+
+              this.dialog.replace(response);
+              return _context8.abrupt("return", this);
+
+            case 9:
+              this.paymentIntent = response;
+              this.sendPaymentInformation({
+                token: this.fields.token.value,
+                payment_intent_id: this.paymentIntent.id
+              });
+              console.log(response);
+              window.location.href = _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].setLaravelParams(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getRoute('paid'), [this.getCharge()]);
+
+            case 13:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8, this);
+    }));
+
+    return function (_x7) {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+
+  this.getCharge = function () {
+    return this.paymentIntent.charges.data[0].id;
+  };
+
+  this.createPaymentDetails = function (fields) {
+    var _this3 = this;
+
+    var obj = {};
+    obj.name = 'payment-details';
+    fields.forEach(function (field) {
+      switch (field) {
+        case 'duration':
+          obj = _this3.getCourseDuration(obj);
+          break;
+
+        default:
+          obj[field] = _this3.fields[field].value;
+          break;
+      }
+    });
+    return obj;
+  };
+
+  this.validatePaymentDetails =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].validate(this.paymentDetails);
+
+          case 2:
+            return _context9.abrupt("return", _context9.sent);
+
+          case 3:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, this);
+  }));
+
+  this.setMinimumDuration = function () {
+    if (this.fields.study !== null) {
+      switch (this.fields.study.value) {
+        case 'in-person':
+          this.fields.duration.staying.value = this.fields.duration.staying.value < this.selectedCourse.scope.min ? this.selectedCourse.scope.min : this.fields.duration.staying.value;
+          break;
+
+        case 'online':
+          this.fields.duration.hours.value = this.fields.duration.hours.value < this.selectedCourse.scope.min ? this.selectedCourse.scope.min : this.fields.duration.hours.value;
+          break;
+      }
+    }
+
+    return this;
+  };
+
+  this.isStripeLoaded = function () {
+    return this.fields.stripe.card.number.childElementCount > 0;
+  };
+
+  this.disableStripeInputs = function () {
+    var _this4 = this;
+
+    var disabled = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    Object.keys(this.fields.stripe).forEach(function (key) {
+      _this4.fields.stripe[key].update({
+        disabled: disabled
+      });
+    });
+    return this;
+  };
+
+  this.displayStripeErrors = function (fieldName, message) {
+    if (fieldName !== 'submit') {
+      var formGroup = $('#' + fieldName).parents('.form-group')[0];
+      $(formGroup).find('.StripeElement').each(function (index, element) {
+        $(element).addClass('is-invalid');
+      });
+      $(formGroup).find('.invalid-feedback').each(function (index, element) {
+        $(element).css('display', 'block');
+      });
+      $(formGroup).find('#' + fieldName + '-errors').text(message);
+      return this;
+    }
+
+    $('#' + fieldName + '-errors').text(message);
+  };
+
+  this.removeStripeErrors = function (fieldName) {
+    var formGroup = $('#' + fieldName).parents('.form-group')[0];
+    $(formGroup).find('.StripeElement').each(function (index, element) {
+      $(element).removeClass('is-invalid');
+    });
+    $(formGroup).find('#' + fieldName + '-errors').empty();
+  };
+
+  this.mountStripeFields = function () {
+    var _this5 = this;
+
+    this.stripeElements.forEach(function (element) {
+      var elementName = element;
+
+      if (_this5.fields[element] !== null && _this5.fields[element][Symbol.iterator] !== 'function') {
+        Object.keys(_this5.fields[element]).map(function (key) {
+          var fieldName = _facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].kebabCase(element + ' ' + key);
+          _this5.fields.stripe[fieldName] = _this5.stripe.create(_facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(element + ' ' + key), {
+            style: _this5.stripeElementsStyles.generic
+          });
+
+          _this5.fields.stripe[fieldName].mount('#' + _this5.fields[element][key].getAttribute('id'));
+
+          _this5.fields.stripe[fieldName].addEventListener('change', function (_ref11) {
+            var error = _ref11.error;
+
+            if (error !== undefined) {
+              _this5.displayStripeErrors(fieldName, error.message);
+            } else {
+              _this5.removeStripeErrors(fieldName);
+            }
+          });
+        });
+        return;
+      }
+
+      ;
+
+      _this5.fields.stripe.create(element, {
+        style: _this5.stripeElementsStyles.generic
+      });
+    });
+  };
+
+  this.setTotalCoursePrice = function () {
+    var currency = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'eur';
+    this.pricePerUnit = this.selectedCourse.price[currency];
+    return this;
+  };
+
+  this.loadStripeElements = function () {
+    this.stripe = stripe.elements({
+      fonts: [{
+        cssSrc: "https://fonts.googleapis.com/css?family=Montserrat"
+      }]
+    });
+    this.mountStripeFields();
+    return this;
+  };
+
+  this.setPaymentAmount =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+    var currency,
+        total,
+        tmp,
+        _args10 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            currency = _args10.length > 0 && _args10[0] !== undefined ? _args10[0] : 'eur';
+            _context10.next = 3;
+            return _facades_money__WEBPACK_IMPORTED_MODULE_4__["default"].exchangeCurrency(this.pricePerUnit, currency);
+
+          case 3:
+            total = _context10.sent;
+            total *= this.getCourseDuration();
+            tmp = $(this.fields.payment).children('span')[0].textContent.match(this.patterns.getActionText)[0];
+            total = parseFloat(total).toLocaleString(document.documentElement.lang, {
+              style: 'currency',
+              currency: currency
+            });
+            $(this.fields.payment).children('span')[0].textContent = tmp + total;
+            return _context10.abrupt("return", this);
+
+          case 9:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, this);
+  }));
+}
+
+var paymentFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_1__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (PaymentForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/ProceedPaymentForm.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/forms/ProceedPaymentForm.js ***!
+  \*************************************************************/
+/*! exports provided: proceedPaymentFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "proceedPaymentFormFactory", function() { return proceedPaymentFormFactory; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _PaymentForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+/* harmony import */ var _Dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Dialog */ "./resources/js/components/Dialog.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../facades/api */ "./resources/js/facades/api.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+function ProceedPaymentForm(options) {
+  this.dialog = null;
+  this.paymentForm = null, this.init = function () {
+    var _this = this;
+
+    if (this.el !== null) {
+      this.dialog = _Dialog__WEBPACK_IMPORTED_MODULE_3__["dialogFactory"].createDialog();
+      this.fields = {
+        token: this.el.querySelector('[name=_token]')
+      };
+      this.el.addEventListener('submit',
+      /*#__PURE__*/
+      function () {
+        var _ref = _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
+          var dialog;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  event.preventDefault();
+
+                  if (!(_this.dialog !== null)) {
+                    _context.next = 9;
+                    break;
+                  }
+
+                  _this.toggleLoadingState();
+
+                  _context.next = 5;
+                  return _this.submit();
+
+                case 5:
+                  dialog = _context.sent;
+                  _this.dialog = _this.dialog.replace(dialog);
+                  _this.paymentForm = _PaymentForm__WEBPACK_IMPORTED_MODULE_2__["paymentFormFactory"].createForm({
+                    form: document.getElementById('payment'),
+                    type: 'payment'
+                  });
+
+                  _this.paymentForm.init();
+
+                case 9:
+                  event.target.submit();
+
+                case 10:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
+    }
+  };
+  this.submit =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return _facades_api__WEBPACK_IMPORTED_MODULE_4__["default"].axiosRequest(this.getActionUrl(), 'post', {
+              _token: this.getToken()
+            });
+
+          case 2:
+            return _context2.abrupt("return", _context2.sent);
+
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this);
+  }));
+
+  this.getToken = function () {
+    return this.fields.token.value;
+  };
+}
+
+var proceedPaymentFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_1__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (ProceedPaymentForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/SignUpForm.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/forms/SignUpForm.js ***!
+  \*****************************************************/
+/*! exports provided: signUpFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signUpFormFactory", function() { return signUpFormFactory; });
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../facades/dom */ "./resources/js/facades/dom.js");
+
+
+
+function SignUpForm(options) {
+  this.fields = {
+    name: document.getElementById('register-name'),
+    surnames: document.getElementById('surnames'),
+    email: document.getElementById('register-email'),
+    phone_number: {
+      prefix: document.getElementById('prefix'),
+      number: document.getElementById('phone-number')
+    },
+    program: document.getElementById('program'),
+    cv: document.getElementById('cv')
+  };
+  this.fieldsets = {
+    industry: document.getElementById('industryFieldset'),
+    study: document.getElementById('studyFieldset'),
+    university: document.getElementById('universityFieldset')
+  };
+
+  this.init = function () {
+    var _this = this;
+
+    this.fields.program.addEventListener('change', function () {
+      _this.updateFieldset(_this);
+    }, this);
+  };
+
+  this.getSelectedProgram = function () {
+    return this.fields.program.options[this.fields.program.selectedIndex].value;
+  };
+
+  this.updateFieldset = function () {
+    var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
+
+    switch (self.getSelectedProgram()) {
+      case 'internship':
+      case 'inter_relocat':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fieldsets.industry, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.university);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.study);
+        break;
+
+      case 'study':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fieldsets.study, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fields.cv.parentElement.parentElement);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.industry);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.university);
+        break;
+
+      case 'university':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fieldsets.university, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.study);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.industry);
+        break;
+    }
+  };
+
+  this.init();
+}
+
+var signUpFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (SignUpForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/register.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/register.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _forms_SignUpForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
+
+
+var register = function () {
+  var el = document.querySelector('main#signup');
+  var signUpForm = null;
+
+  var init = function init() {
+    setListeners();
+  };
+
+  var setRegisterForm = function setRegisterForm() {
+    if (document.querySelector('#signup-form') !== null) {
+      signUpForm = new _forms_SignUpForm__WEBPACK_IMPORTED_MODULE_0__["signUpFormFactory"].createForm({
+        type: 'sign-up',
+        form: document.querySelector('#signup-form')
+      });
+      signUpForm.updateFieldset();
+    }
+  };
+
+  var setListeners = function setListeners() {
+    window.addEventListener('load', function (e) {
+      setRegisterForm();
+    });
+  };
+
+  init();
+}();
+
+/***/ }),
+
 /***/ "./resources/js/components/sliders.js":
 /*!********************************************!*\
   !*** ./resources/js/components/sliders.js ***!
@@ -5323,7 +6351,7 @@ var pressNote = function pressNote() {
   var mediaSlider = null;
 
   function init() {
-    var mediaSlider = new _MediaSlider__WEBPACK_IMPORTED_MODULE_3__["mediaSliderFactory"].createSlider({
+    var mediaSlider = _MediaSlider__WEBPACK_IMPORTED_MODULE_3__["mediaSliderFactory"].createSlider({
       type: 'media'
     });
   }
@@ -5342,6 +6370,7 @@ var learnChinese = function learnChinese() {
   function init() {
     var arrowSlider = _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["arrowSliderFactory"].createSlider({
       type: 'arrow',
+      sections: ['in-person', 'online'],
       controllersCallback: function controllersCallback(slider) {
         var course = slider.querySelector("input[name='study'").getAttribute('value');
         _main_api_js__WEBPACK_IMPORTED_MODULE_5__["default"].getCourseInfo(course, replaceCourseInfoSection);
@@ -5362,7 +6391,8 @@ var university = function university() {
 
   function init() {
     var arrowSlider = _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["arrowSliderFactory"].createSlider({
-      type: 'arrow'
+      type: 'arrow',
+      sections: ['mba', 'mib', 'other']
     });
   }
 
@@ -5384,9 +6414,7 @@ var testimonials = function testimonials() {
 };
 
 window.addEventListener('load', function () {
-  if (document.querySelector('.note_carrousel') !== null) {
-    // $(document).ready(press.init);
-    // $(window).resize(press.init);
+  if (document.querySelector('section#press') !== null) {
     pressNote();
   }
 
@@ -5398,7 +6426,7 @@ window.addEventListener('load', function () {
     university();
   }
 
-  if (document.querySelector('section.people-slider') !== null) {
+  if (document.querySelector('section#testimonials') !== null) {
     testimonials();
   }
 });
@@ -5414,15 +6442,30 @@ window.addEventListener('load', function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 var api = function () {
   var _ = {
     routes: {
+      hostname: window.location.protocol + '//' + window.location.hostname,
       offers: '/internship',
-      learn: '/learn'
+      learn: '/learn',
+      payment_method: '/payment-method',
+      rates: 'https://api.exchangeratesapi.io/latest?base=EUR',
+      paid: '/paid',
+      payments: {
+        study: 'payments/study'
+      }
     },
     getParams: function getParams() {
       var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.search;
@@ -5436,20 +6479,6 @@ var api = function () {
         params[param.split('=')[0]] = param.split('=')[1];
       });
       return params;
-    },
-    setLaravelParams: function setLaravelParams(url) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-      if (params.length === 0) {
-        return url;
-      }
-
-      params.forEach(function (param) {
-        if (param !== null) {
-          url = url.concat('/', param);
-        }
-      });
-      return url;
     },
     setParams: function setParams(url) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -5474,7 +6503,7 @@ var api = function () {
     jQueryGet: function jQueryGet(url) {
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      var callback = arguments.length > 3 ? arguments[3] : undefined;
+      var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
       if (params !== null) {
         url = _.setLaravelParams(url, params);
@@ -5489,12 +6518,153 @@ var api = function () {
           console.log(_error);
         },
         success: function success(data, status, xhr) {
-          callback(data);
+          if (callback !== null) {
+            return callback(data);
+          }
+
+          return data;
         }
       });
     },
+    validate: function () {
+      var _validate = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(validationObject) {
+        var validationURL;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                validationURL = '/validate/' + validationObject.name;
+                _context.next = 3;
+                return this.axiosRequest(validationURL, 'post', validationObject);
+
+              case 3:
+                return _context.abrupt("return", _context.sent);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function validate(_x) {
+        return _validate.apply(this, arguments);
+      }
+
+      return validate;
+    }(),
+    fetchExternalApi: function fetchExternalApi(url) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'get';
+      return $.ajax({
+        url: url,
+        cache: false,
+        data: data,
+        dataType: 'json',
+        error: function error(xhr, status, _error2) {
+          console.log(_error2);
+        }
+      });
+    },
+    getToken: function getToken() {
+      return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
+    },
+    axiosRequest: function () {
+      var _axiosRequest = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(url) {
+        var method,
+            data,
+            response,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                method = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 'get';
+                data = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : null;
+                axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+                if (method === 'post') {
+                  axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['X-CSRF-TOKEN'] = this.getToken();
+                }
+
+                _context2.prev = 4;
+                _context2.next = 7;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default()({
+                  method: method,
+                  url: url,
+                  data: data
+                });
+
+              case 7:
+                response = _context2.sent;
+                _context2.next = 10;
+                return response.data;
+
+              case 10:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 13:
+                _context2.prev = 13;
+                _context2.t0 = _context2["catch"](4);
+
+                if (!(_context2.t0.response.status === 422)) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                return _context2.abrupt("return", _context2.t0.response.data);
+
+              case 17:
+                _context2.next = 19;
+                return _context2.t0.response;
+
+              case 19:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 20:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[4, 13]]);
+      }));
+
+      function axiosRequest(_x2) {
+        return _axiosRequest.apply(this, arguments);
+      }
+
+      return axiosRequest;
+    }(),
     getRoute: function getRoute(name) {
       return _.routes[name];
+    },
+    getResource: function getResource(name) {
+      var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      if (value !== null) {
+        return this.getRoute('hostname') + '/api/' + name + '/' + value;
+      }
+
+      return this.getRoute('hostname') + '/api/' + name;
+    },
+    setLaravelParams: function setLaravelParams(url) {
+      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+      if (params.length === 0) {
+        return url;
+      }
+
+      params.forEach(function (param) {
+        if (param !== null) {
+          url = url.concat('/', param);
+        }
+      });
+      return url;
     }
   };
 }();
@@ -5534,12 +6704,25 @@ var browser = function () {
         media: null,
         type: 'min',
         size: 992
+      },
+      footer: {
+        checkbox: {
+          media: null,
+          type: 'min',
+          size: 1118
+        }
       }
     },
     setBreakpoints: function setBreakpoints() {
-      Object.keys(this.breakpoints).map(function (breakpoint) {
-        _.breakpoints[breakpoint].media = '(' + _.breakpoints[breakpoint].type + '-width: ' + _.breakpoints[breakpoint].size + 'px)';
-      });
+      var breakpoints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      if (breakpoints === null) breakpoints = _.breakpoints;
+      Object.keys(breakpoints).map(function (key) {
+        if (breakpoints[key].media !== undefined) {
+          breakpoints[key].media = '(' + breakpoints[key].type + '-width: ' + breakpoints[key].size + 'px)';
+        } else {
+          this.setBreakpoints(breakpoints[key]);
+        }
+      }, this);
     },
     init: function init() {
       this.setBreakpoints();
@@ -5559,12 +6742,23 @@ var browser = function () {
       return window.matchMedia(_.breakpoints.small.media).matches;
     },
     matchesGivenBreakpoint: function matchesGivenBreakpoint(breakpoint) {
-      if (_.breakpoints[breakpoint] === undefined) {
+      if (eval('_.breakpoints.' + breakpoint) === undefined) {
         console.log("The given breakpoint name does not exist");
         return null;
       }
 
-      return window.matchMedia(_.breakpoints[breakpoint].media).matches;
+      return window.matchMedia(eval('_.breakpoints.' + breakpoint).media).matches;
+    },
+
+    /**
+     * Scrolls the window until the given element reaches
+     * the bottom of the navbar.
+     */
+    verticalScrollTo: function verticalScrollTo(element) {
+      // Check if the navbar exist
+      if ($('nav').length > 0) {
+        $(window).scrollTop(element.clientHeight - $('nav').height());
+      }
     }
   };
 }();
@@ -5648,7 +6842,7 @@ var dom = function () {
       }
 
       if (element !== null) {
-        element.style.display = displayValue;
+        element.style.display = element.style.display === 'none' ? '' : element.style.display;
 
         if (element.hasAttribute('aria-hidden')) {
           element.setAttribute('aria-hidden', 'false');
@@ -5658,7 +6852,7 @@ var dom = function () {
       }
 
       for (var i = 0; i < elements.length; i++) {
-        elements[i].style.display = displayValue;
+        elements[i].style.display = elements[i].style.display === 'none' ? '' : elements[i].style.display;
 
         if (elements[i].hasAttribute('aria-hidden')) {
           elements[i].setAttribute('aria-hidden', 'false');
@@ -5676,6 +6870,83 @@ var dom = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (dom);
+
+/***/ }),
+
+/***/ "./resources/js/facades/money.js":
+/*!***************************************!*\
+  !*** ./resources/js/facades/money.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/facades/api.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var money = function () {
+  var _ = {};
+  return {
+    getRates: function getRates() {
+      return _api__WEBPACK_IMPORTED_MODULE_1__["default"].fetchExternalApi(_api__WEBPACK_IMPORTED_MODULE_1__["default"].getRoute('rates'));
+    },
+    exchangeCurrency: function () {
+      var _exchangeCurrency = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(value, to) {
+        var from,
+            rates,
+            _args = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                from = _args.length > 2 && _args[2] !== undefined ? _args[2] : 'EUR';
+                _context.next = 3;
+                return this.getRates().then(function (response) {
+                  return response.rates;
+                });
+
+              case 3:
+                rates = _context.sent;
+
+                if (!(to.toUpperCase() !== 'EUR')) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", value * rates[to.toUpperCase()]);
+
+              case 6:
+                return _context.abrupt("return", value);
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function exchangeCurrency(_x, _x2) {
+        return _exchangeCurrency.apply(this, arguments);
+      }
+
+      return exchangeCurrency;
+    }()
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (money);
 
 /***/ }),
 
@@ -5787,6 +7058,277 @@ var pagination = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (pagination);
+
+/***/ }),
+
+/***/ "./resources/js/facades/str.js":
+/*!*************************************!*\
+  !*** ./resources/js/facades/str.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var str = function () {
+  var _ = {
+    init: function init() {}
+  };
+
+  _.init();
+
+  return {
+    camelCase: function camelCase(str) {
+      return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        return index === 0 ? word.toLowerCase() : word.toUpperCase();
+      }).replace(/\s+/g, '');
+    },
+    kebabCase: function kebabCase(str) {
+      return str.replace(/\s+/g, '-').toLowerCase();
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (str);
+
+/***/ }),
+
+/***/ "./resources/js/factories/DialogsFactory.js":
+/*!**************************************************!*\
+  !*** ./resources/js/factories/DialogsFactory.js ***!
+  \**************************************************/
+/*! exports provided: DialogFactory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DialogFactory", function() { return DialogFactory; });
+/* harmony import */ var _components_Dialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Dialog */ "./resources/js/components/Dialog.js");
+
+function DialogFactory() {}
+DialogFactory.prototype.dialogClass = null;
+
+DialogFactory.prototype.createDialog = function (options) {
+  this.dialogClass = document.getElementById('dialog-box') !== null ? _components_Dialog__WEBPACK_IMPORTED_MODULE_0__["default"] : null;
+  var dialogClass = this.dialogClass !== null ? new this.dialogClass(options) : null;
+  return dialogClass;
+};
+
+/***/ }),
+
+/***/ "./resources/js/factories/FiltersFactory.js":
+/*!**************************************************!*\
+  !*** ./resources/js/factories/FiltersFactory.js ***!
+  \**************************************************/
+/*! exports provided: FilterFactory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FilterFactory", function() { return FilterFactory; });
+/* harmony import */ var _components_filters_IndustryFilter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/filters/IndustryFilter */ "./resources/js/components/filters/IndustryFilter.js");
+/* harmony import */ var _components_filters_Searchbox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/filters/Searchbox */ "./resources/js/components/filters/Searchbox.js");
+
+
+function FilterFactory() {}
+FilterFactory.prototype.filterClass = null;
+
+FilterFactory.prototype.createFilter = function (options) {
+  switch (options.type) {
+    case 'industry':
+      this.filterClass = _components_filters_IndustryFilter__WEBPACK_IMPORTED_MODULE_0__["default"];
+      break;
+
+    case 'search':
+      this.filterClass = _components_filters_Searchbox__WEBPACK_IMPORTED_MODULE_1__["default"];
+      break;
+  }
+
+  ;
+  return new this.filterClass(options);
+};
+
+/***/ }),
+
+/***/ "./resources/js/factories/FormsFactory.js":
+/*!************************************************!*\
+  !*** ./resources/js/factories/FormsFactory.js ***!
+  \************************************************/
+/*! exports provided: FormFactory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormFactory", function() { return FormFactory; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_forms_ContactForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/forms/ContactForm */ "./resources/js/components/forms/ContactForm.js");
+/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
+/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
+/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+
+function FormFactory() {}
+FormFactory.prototype.formClass = null;
+
+FormFactory.prototype.createForm = function (options) {
+  switch (options.type) {
+    case 'contact':
+      this.formClass = _components_forms_ContactForm__WEBPACK_IMPORTED_MODULE_1__["default"];
+      break;
+
+    case 'sign-up':
+      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_2__["default"];
+      break;
+
+    case 'proceed-payment':
+      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_3__["default"];
+      break;
+
+    case 'payment':
+      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_4__["default"];
+      break;
+  }
+
+  var formClass = new this.formClass(options);
+  formClass.el = options.form;
+  formClass.disabled = false;
+
+  formClass.hasErrorMessages = function () {
+    var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : formClass.el;
+    return $(element).find('.invalid-feedback').length > 0 && $(element).find('.is-invalid').length > 0;
+  };
+
+  formClass.isInvalidField = function (field) {
+    return $(field).hasClass('is-invalid');
+  };
+
+  formClass.focusFirstInvalidField = function () {
+    Object.keys(formClass.fields).forEach(function (key) {
+      if (formClass.hasErrorMessages(formClass.fields[key]) || formClass.isInvalidField(formClass.fields[key])) {
+        formClass.fields[key].focus();
+        return formClass;
+      }
+    });
+    return formClass;
+  };
+
+  formClass.getActionUrl = function () {
+    return formClass.el.getAttribute('action');
+  };
+
+  formClass.toggleLoadingState = function () {
+    _main_UI__WEBPACK_IMPORTED_MODULE_5__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
+    formClass.disable(!formClass.isDisabled());
+    return formClass;
+  };
+
+  formClass.getSubmitInput = function () {
+    return $(formClass.el).find("button[type='submit']")[0];
+  };
+
+  formClass.toggleInputs = function (elements) {
+    elements.forEach(function (element) {
+      var input = element.localName !== 'input' ? element.querySelector('input') : element;
+
+      if (!$(input).hasClass('form-group')) {
+        $($(input).parents('.form-group')[0]).toggleClass('hidden');
+      }
+    });
+  };
+
+  formClass.isDisabled = function () {
+    return formClass.disabled;
+  };
+
+  formClass.validateField =
+  /*#__PURE__*/
+  function () {
+    var _ref = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(field, validators) {
+      var _this = this;
+
+      var validationObject, response, errors;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              validationObject = {
+                name: field.getAttribute('name'),
+                value: field.value,
+                validators: validators
+              };
+              _context.next = 3;
+              return _facades_api__WEBPACK_IMPORTED_MODULE_7__["default"].validate(validationObject);
+
+            case 3:
+              response = _context.sent;
+
+              if (!response.errors) {
+                _context.next = 8;
+                break;
+              }
+
+              errors = response.errors.value;
+              errors.forEach(function (error) {
+                _this.displayFieldError(field, error);
+              });
+              return _context.abrupt("return", this);
+
+            case 8:
+              this.removeFieldError(field);
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  formClass.displayFieldError = function (field, message) {
+    $(field).addClass('is-invalid');
+    $($(field).parents('.form-group')[0]).find('.invalid-feedback').text(message).css('display', 'block');
+  };
+
+  formClass.removeFieldError = function (field) {
+    if ($(field).hasClass('is-invalid')) {
+      $(field).removeClass('is-invalid');
+    }
+
+    $($(field).parents('.form-group')[0]).find('.invalid-feedback').empty();
+  };
+
+  formClass.disable = function () {
+    var disabled = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    $('input:not(.__PrivateStripeElement-input), select, button, fieldset', formClass.el).each(function (index, element) {
+      $(element).prop('disabled', disabled);
+    });
+    formClass.disabled = !formClass.isDisabled();
+  };
+
+  return formClass;
+};
 
 /***/ }),
 
@@ -6144,9 +7686,24 @@ var UI = function () {
         //
         // }
       },
+      toggleSpinnerButtonState: function toggleSpinnerButtonState(button) {
+        var spinner = button.querySelector('.spinner-border');
+
+        if (spinner !== null) {
+          $(spinner).hasClass('hidden') ? spinner.classList.remove('hidden') : spinner.classList.add('hidden');
+
+          if (!$(spinner).hasClass('hidden')) {
+            spinner.parentElement.previousElementSibling.style.display = "none";
+            spinner.parentElement.style.display = "block";
+          } else {
+            spinner.parentElement.previousElementSibling.style.display = "block";
+            spinner.parentElement.style.display = "none";
+          }
+        }
+      },
       // Sets the loader in the submit button of the given form.
       changeLoadingButtonState: function changeLoadingButtonState(form) {
-        if (form.querySelector('.loading-button') !== null) {
+        if (form.querySelector('.spinner-border') !== null) {
           var spinner = form.querySelector('.spinner-border');
           $(spinner).hasClass('hidden') ? spinner.classList.remove('hidden') : spinner.classList.add('hidden');
 
@@ -6770,15 +8327,67 @@ var messages = {
 
 /***/ }),
 
+/***/ "./resources/js/pages/user/payment.js":
+/*!********************************************!*\
+  !*** ./resources/js/pages/user/payment.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    var paymentForm = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_0__["paymentFormFactory"].createForm({
+      form: document.getElementById('payment'),
+      type: 'payment'
+    });
+    paymentForm.init();
+  });
+})();
+
+/***/ }),
+
+/***/ "./resources/js/pages/welcome.js":
+/*!***************************************!*\
+  !*** ./resources/js/pages/welcome.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
+/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    var proceedPaymentForm = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_0__["proceedPaymentFormFactory"].createForm({
+      form: document.getElementById('proceed-payment'),
+      type: 'proceed-payment'
+    });
+    proceedPaymentForm.init();
+  });
+})();
+
+/***/ }),
+
 /***/ 1:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/components/sliders.js ./resources/js/components/_register-form.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/pages/welcome.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\welcome.js */"./resources/js/pages/welcome.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\user\payment.js */"./resources/js/pages/user/payment.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_register-form.js */"./resources/js/components/_register-form.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\register.js */"./resources/js/components/register.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_nav.js */"./resources/js/components/_nav.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");

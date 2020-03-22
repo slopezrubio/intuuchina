@@ -1,0 +1,10 @@
+.o-triangle {
+  position: absolute;
+  color: $neutralColor;
+  width: 0;
+  height: 0;
+  border-color: $neutralColor transparent transparent $neutralColor;
+  border-width: 100px 100px;
+  border-style: solid;
+  z-index: 2;
+}

@@ -1,0 +1,17 @@
+section.o-oblique {
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  background-color: $primaryRed;
+
+  &:before {
+    content: "";
+    border-style: inset;
+    border-width: 0px 100vw 100px 0px;
+    border-color: $primaryRed $primaryRed transparent $primaryRed;
+    float: left;
+    z-index: -1;
+    position: absolute;
+    height: calc(100% + 8em);
+  }
+}

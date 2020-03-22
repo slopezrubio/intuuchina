@@ -56,9 +56,9 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="duration" class="col-md-3 col-form-label text-md-left">{{ __('content.duration') }}</label>
+                    <label for="duration" class="col-md-3 col-form-label text-md-left">{{ __('Duration') }}</label>
                     <div class="col-md-9">
-                        <input type="text" id="duration" class="form-control" name="duration" value="{{old('duration')}}" placeholder="{{ __('content.amount of months') }}">
+                        <input type="text" id="duration" class="form-control" name="duration" value="{{old('duration')}}" placeholder="{{ __('Amount of Months') }}">
                         @if ($errors->has('duration'))
                                 <div class="alert alert-danger" role="alert">
                                 {{ $errors->first('duration') }}
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="picture" class="col-md-3 col-form-label text-md-left">{{ __('content.picture') }}</label>
+                    <label for="picture" class="col-md-3 col-form-label text-md-left">{{ __('Picture') }}</label>
                     <div class="col-md-9">
                         <input type="file" id="picture" class="form-control" name="picture">
                         @if ($errors->has('picture'))
@@ -92,8 +92,8 @@
                 </div>
                 <div class="form-group row">
                     <div class="row justify-content-center col-12 my-4">
-                        <button type="submit" class="shutter-button col-4">{{ __('content.submit') }}</button>
-                        <button type="reset" class="shutter-button col-4 offset-2 dropdown-button">{{ __('content.cancel') }}</button>
+                        <button type="submit" class="shutter-button col-4">{{ __('Submit') }}</button>
+                        <button type="reset" class="shutter-button col-4 offset-2 dropdown-button">{{ __('Cancel') }}</button>
                     </div>
                 </div>
             </div>

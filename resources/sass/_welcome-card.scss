@@ -1,4 +1,4 @@
-@import './forms/dialog-box-confirmed';
+//@import './forms/dialog-box-confirmed';
 
 .user-card {
   padding: 1em 1em;
@@ -44,7 +44,7 @@
 
   #dialog-box {
     form {
-      @include inputText();
+      //@include inputText();
       @include select();
       label {
         font-weight: 700;

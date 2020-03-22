@@ -59,7 +59,7 @@ class IndexController extends Controller
     public function applicationForm(Request $request) {
         session()->pull('preferences');
         session()->flash('preferences', [
-            'program' => $request->get('program'),
+            'program' => $request->get('program') !== 'industry' ? $request->get('program') : 'inter_relocat',
             $request->get('product') => $request->get($request->get('program'))
         ]);
 

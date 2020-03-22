@@ -1,10 +1,10 @@
 
 <section class="readable_section">
-    <h3 class="readable_section_title">{{ __('content.job description') }}</h3>
+    <h3 class="readable_section_title">{{ __('Job Description') }}</h3>
     <p class="readable_section_body" id="jobDescription" data-html="{{ $offer->description }}"></p>
 </section>
 <section class="readable_section">
-    <h3 class="readable_section_title">{{ __('content.details') }}</h3>
+    <h3 class="readable_section_title">{{ __('Details') }}</h3>
     <div class="card_background-image" data-content="/../../storage/images/details_{{$offer->location }}.jpg">
         <div class="card_background-image_info">
             <p class="card-title">{{ ucfirst($offer->location) }}</p>
@@ -19,7 +19,7 @@
                 @csrf
                 <input type="hidden" value="{{ Auth::user()->program }}" name="program">
                 <input type="hidden" value="{{ $offer->industry }}" name="industry">
-                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="/internship/{{ $offer->id }}">{{ __('content.description') }}</a></button>
+                <button class="cta col-12 col-xs-5 col-sm-12 col-md-5 mt-0"><a href="/internship/{{ $offer->id }}">{{ __('Description') }}</a></button>
             </form>
         @endif
     @else
@@ -27,7 +27,7 @@
             @csrf
             <input type="hidden" value="inter_relocat" name="program" id="program">
             <input type="hidden" value="{{ $offer->industry }}" name="inter_relocat">
-            <button class="cta col-8 col-md-5 mt-0" type="submit" value="industry" name="product">{{ __('content.apply for') }}</button>
+            <button class="cta col-8 col-md-5 mt-0" type="submit" value="industry" name="product">{{ __('Apply For') }}</button>
         </form>
     @endauth
 </section>

@@ -3,9 +3,17 @@ import axios from 'axios';
 var api = (function() {
     var _ = {
         routes: {
+            hostname: window.location.protocol + '//' + window.location.hostname,
             offers: '/internship',
-            learn: '/learn'
-        },
+            learn: '/learn',
+            payment_method: '/payment-method',
+            rates: 'https://api.exchangeratesapi.io/latest?base=EUR',
+            paid: '/paid',
+            payments: {
+                study: 'payments/study',
+            },
+
+},
         getParams: function(url = window.location.search) {
             let params = {};
             if (url.charAt(0) !== '?') {
@@ -19,19 +27,6 @@ var api = (function() {
                 });
 
             return params;
-        },
-        setLaravelParams: function(url, params = []) {
-            if (params.length === 0) {
-                return url;
-            }
-
-            params.forEach(function(param) {
-                if (param !== null) {
-                    url = url.concat('/', param);
-                }
-            });
-
-            return url;
         },
         setParams: function(url, params = {}) {
             if (params.length === 0) {
@@ -53,7 +48,7 @@ var api = (function() {
     };
 
     return {
-        jQueryGet: function(url, data = null, params = null, callback) {
+        jQueryGet: function(url, data = null, params = null, callback = null) {
             if (params !== null) {
                 url = _.setLaravelParams(url, params);
             }
@@ -67,13 +62,80 @@ var api = (function() {
                     console.log(error);
                 },
                 success: function(data, status, xhr) {
-                    callback(data);
+                    if (callback !== null) {
+                        return callback(data);
+                    }
+
+                    return data;
                 }
             });
         },
+        validate: async function(validationObject) {
+            let validationURL = '/validate/' + validationObject.name;
+
+            return await this.axiosRequest(validationURL, 'post', validationObject)
+        },
+        fetchExternalApi: function(url, data = null, method = 'get') {
+            return $.ajax({
+                url: url,
+                cache: false,
+                data: data,
+                dataType: 'json',
+                error: function(xhr, status, error) {
+                    console.log(error);
+                },
+            });
+        },
+        getToken: function() {
+            return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
+        },
+        axiosRequest: async function(url, method = 'get', data = null) {
+            axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+            if (method === 'post') {
+                axios.defaults.headers.common['X-CSRF-TOKEN'] = this.getToken();
+            }
+
+            try {
+                const response = await axios({
+                    method: method,
+                    url: url,
+                    data: data
+                });
+
+                return await response.data;
+            } catch(error) {
+                // console.log(error.response);
+                if (error.response.status === 422) {
+                    return error.response.data;
+                }
+
+                return await error.response;
+            }
+        },
         getRoute: function(name) {
             return _.routes[name];
-        }
+        },
+        getResource: function(name, value = null) {
+            if (value !== null) {
+                return this.getRoute('hostname') + '/api/' + name + '/' + value;
+            }
+
+            return this.getRoute('hostname') + '/api/' + name
+        },
+        setLaravelParams: function(url, params = []) {
+            if (params.length === 0) {
+                return url;
+            }
+
+            params.forEach(function(param) {
+                if (param !== null) {
+                    url = url.concat('/', param);
+                }
+            });
+
+            return url;
+        },
     }
 }());
 

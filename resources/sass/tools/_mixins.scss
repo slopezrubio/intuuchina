@@ -1,0 +1,343 @@
+@mixin prefixed($property, $value) {
+  -webkit-#{$property}: #{$value};
+  -moz-#{$property}: #{$value};
+  -ms-#{$property}: #{$value};
+  -o-#{$property}: #{$value};
+  #{$property}: #{$value};
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * -- Animations --
+ * ----------------
+ */
+
+@mixin animation($animationName) {
+  animation: $animationName 1s ease-in-out;
+  -moz-animation: $animationName 1s ease-in-out;
+  -webkit-animation: $animationName 1s ease-in-out;
+  -ms-animation: $animationName 1s ease-in-out;
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * -- Transforms --
+ * ----------------
+ */
+
+@mixin flip($axis) {
+  @if ($axis == 'horizontal') {
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
+  } @else if($axis == 'vertical') {
+    -webkit-transform: scaleY(-1);
+    -ms-transform: scaleY(-1);
+    transform: scaleY(-1);
+  }
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * ---- Hacks -----
+ * ----------------
+ */
+
+@mixin hardwareAccel() {
+
+  // Mejora el rendimiento en dispositivos móvil/tablet de los botones
+  // La propiedad 'perspectie(1px)' reduce la borrosidad del texto en Chrome
+  @include prefixed(transform, perspective(1px) translateZ(0));
+}
+
+@mixin improveAntiAlias() {
+  // Mejora el aliasing en dispositivos móvil/tablet
+  box-shadow: 0 0 1px rgba(0,0,0,0);
+}
+
+@mixin forceBlockLevel() {
+  // La propiedad 'transform' necesita que el elemento esté en bloque para funcionar
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin ie10($selector, $map) {
+  @media all and (-ms-high-contrast:none) {
+    *::-ms-backdrop, #{$selector} {
+      @each $property, $value in ($map) {
+        #{$property}: $value;
+      }
+    }
+  }
+}
+
+/* Centrar verticalmente (el elemento padre tiene que
+ * tener el atributo 'position: relative' para que
+ * funcione)
+ */
+@mixin verticalAlign() {
+  position: absolute;
+  top: calc(50% + 32px);
+  @include prefixed(transform, translateY(-50%));
+}
+
+// Arreglos para los botones
+@mixin hacks() {
+  @include forceBlockLevel();
+  @include hardwareAccel();
+  @include improveAntiAlias();
+}
+
+@mixin clearfix() {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Placeholder -
+ * ----------------
+ */
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Grid Layout --
+ * ----------------
+ */
+
+@mixin grid {
+  display: -ms-grid;
+  display: grid;
+  display: -moz-grid;
+}
+
+@mixin grid-template-rows($value) {
+  -ms-grid-rows: $value;
+  grid-template-rows: $value;
+}
+
+@mixin grid-template-columns($value) {
+  -ms-grid-columns: $value;
+  grid-template-columns: $value;
+}
+
+@mixin grid-child($col-start: 1, $col-end: 2, $row-start: 1, $row-end: 2) {
+  -ms-grid-column: $col-start;
+  -ms-grid-column-span: $col-end - $col-start;
+  -ms-grid-row: $row-start;
+  -ms-grid-row-span: $row-end - $row-start;
+  grid-column: #{$col-start} / #{$col-end};
+  grid-row: #{$row-start} / #{$row-end};
+}
+
+@mixin grid-child-align($columnsAlign: start, $rowsAlign: start) {
+  -ms-grid-column-align: $columnsAlign;
+  -ms-grid-row-align: $rowsAlign;
+  align-self: $rowsAlign;
+  justify-self: $columnsAlign;
+}
+
+@mixin grid-column-gap($value) {
+  grid-column-gap: $value;
+  $width: 100% - $value;
+  $map: (width: #{$width});
+  @include ie10('& > *', $map);
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * --- Flexbox ----
+ * ----------------
+ */
+
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin inline-flex {
+  display: -webkit-inline-flex;
+  display: -moz-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+@mixin flex-direction($value: row) {
+  @if $value == row-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -moz-box-orient: horizontal;
+  } @else if $value == column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: normal;
+    -moz-box-orient: vertical;
+  } @else if $value == column-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: reverse;
+    -moz-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -moz-box-orient: horizontal;
+  }
+
+  -webkit-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+
+@mixin flex-wrap($value: mowrap) {
+  -webkit-flex-wrap: $value;
+  @if ($value == nowrap) {
+    -ms-flex-wrap: none;
+  } @else {
+    -ms-flex-wrap: $value;
+  }
+  flex-wrap: $value;
+}
+
+@mixin align-items($value: stretch) {
+  @if $value == flex-start {
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -ms-box-align: start;
+  } @else if $value == flex-end {
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    -ms-box-align: end;
+  } @else {
+    -webkit-box-align: $value;
+    -moz-box-align: $value;
+    -ms-box-align: $value;
+  }
+
+  -webkit-align-items: $value;
+  align-items: $value;
+}
+
+@mixin justify-content($value) {
+  @if $value == space-between {
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+  }
+  justify-content: $value;
+  -webkit-justify-content: $value;
+}
+
+@mixin align-content($value: stretch) {
+  // No Webkit Box Fallback.
+  -webkit-align-content: $value;
+  @if $value == flex-start {
+    -ms-flex-line-pack: start;
+  } @else if $value == flex-end {
+    -ms-flex-line-pack: end;
+  } @else {
+    -ms-flex-line-pack: $value;
+  }
+  align-content: $value;
+}
+
+@mixin align-self($value: auto) {
+  // No Webkit Box Fallback.
+  -webkit-align-self: $value;
+  @if $value == flex-start {
+    -ms-flex-item-align: start;
+  } @else if $value == flex-end {
+    -ms-flex-item-align: end;
+  } @else {
+    -ms-flex-item-align: $value;
+  }
+  align-self: $value;
+}
+
+@mixin reset-input($element: input) {
+  @if $element == 'select' {
+    #{$element} {
+      @include prefixed(appearance, none);
+      padding-left: 0px;
+    }
+  }
+
+  @if $element == 'input' {
+    #{$element} {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  @if $element == 'button' {
+    #{$element} {
+      border: none;
+      padding: 0;
+      background: none;
+      @include prefixed(appearance, none);
+      margin: 0;
+    }
+  }
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * ----- Text -----
+ * ----------------
+ */
+
+@mixin line-clamping($line-height, $max-line-number) {
+  height: $line-height * $max-line-number * 1em;
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    height: $line-height * 1em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);;
+  }
+}
+
+/* -----------------
+ * -- Transitions --
+ * -----------------
+ */
+@mixin fade {
+  @include hacks();
+  overflow: hidden;
+  @include prefixed(transition-duration, $mediumDuration);
+  @include prefixed(transition-property, "color, background");
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: $primaryRed;
+    color: $primaryWhite;
+  }
+}

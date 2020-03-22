@@ -86,7 +86,6 @@ a {
 /* Toggle Menu Button */
 #app {
   .navbar-toggler {
-    @include squareWithBorder();
     &-icon {
       color: $primaryDark;
     }

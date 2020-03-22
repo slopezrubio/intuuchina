@@ -1,4 +1,7 @@
-@include('partials.modal-login')
+@component('components.modal')
+    @include('partials.forms._login')
+@endcomponent
+
 <nav>
     <div class="navbar">
         <div class="col-12 navbar-expand-lg navbar_container">

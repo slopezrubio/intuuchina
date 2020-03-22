@@ -67,68 +67,6 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | WebSite Map
-    |--------------------------------------------------------------------------
-    */
-
-    'webmap' => [
-        'internship' => [
-            'heading' => 'Internship',
-            'options' => function() {
-                return array(
-                    'job offers' => [
-                        'text' => 'Job Offers',
-                        'url' => url('whyus'),
-                        'method' => 'GET',
-                    ]
-                );
-            }
-        ],
-        'learn-chinese' => [
-            'heading' => 'Learn Chinese',
-            'options' => function() {
-                $options = [];
-                foreach (__('content.courses') as $key => $value) {
-                    $option = array(
-                        'method' => 'GET',
-                        'text' => $value['text'],
-                        'url' => url('learn?param=' . $key)
-                    );
-                    $options[$key] = $option;
-                }
-                return $options;
-            }
-        ],
-        'university' => [
-            'heading' => 'University',
-            'options' => function() {
-                $options = [];
-                foreach (__('content.universities') as $key => $value) {
-                    $option = array(
-                        'method' => 'GET',
-                        'text' => $value['heading'],
-                        'url' => url('university?param=' . $key)
-                    );
-                    $options[$key] = $option;
-                }
-                return $options;
-            }
-        ],
-        'why intuuchina' => [
-            'heading' => 'Why Us',
-            'options' => function() {
-                return array(
-                    'why us' => [
-                        'text' => 'Why Us',
-                        'url' => url('why'),
-                        'method' => 'GET',
-                    ]
-                );
-            }
-        ]
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -144,30 +82,6 @@ return [
             'text' => 'Why IntuuChina',
             'url' => url('why'),
         ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Social Media
-    |--------------------------------------------------------------------------
-    */
-
-    'social' => [
-        'facebook' => [
-            'text' => 'Facebook',
-            'url' => 'https://www.facebook.com/intuuchina',
-            'square' => true,
-        ],
-        'instagram' => [
-            'text' => 'Instagram',
-            'url' => 'https://www.instagram.com/intuuchina/',
-            'square' => false,
-        ],
-        'linkedin' => [
-            'text' => 'Linkedin',
-            'url' => 'https://www.linkedin.com/company/intuuchina',
-            'square' => false,
-        ]
     ],
 
     'home' => 'Home',

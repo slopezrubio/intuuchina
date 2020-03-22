@@ -1,196 +1,180 @@
-@mixin header($background, $height: 30em, $text-transform: none) {
-  height: $height;
-  position: relative;
-  background-color:$primaryWhite;
-  text-transform: $text-transform;
-
-  @if ($background) {
+header {
+  &.primary, &.secondary, &.stats {
     background-size: cover;
     background-repeat: no-repeat;
-    @if map_has_key($background, "position") {
-      background-position: map_get($background, "position");
-    }
 
-    @if map_has_key($background, "position-y") {
-      background-position-y: map_get($background, "position-y");
-    }
-
-    @if map_has_key($background, "position-y") {
-      background-position-x: map_get($background, "position-x");
-    }
-  }
-
-  section.wrapper {
-    /** Vertically centered **/
-    @include verticalAlign();
-
-    display: block;
-    width: 100%;
-    z-index: 1;
-    padding: 0 1.5em;
-  }
-
-  .header-box {
-    @include header-box();
-    border: 2px solid $primaryDark;
-    background: none;
-
-    @if ($background) {
+    .header-box {
       border: 2px solid $primaryWhite;
       background: $sectionDark;
+
       &__title {
         color: $primaryWhite;
       }
     }
+  }
 
-    &__title {
-      font-size: 1.5em;
-      line-height: 1.4;
-      font-weight: 800;
-      text-align: center;
-      margin: .5em;
+  &.primary, &.secondary, &.tertiary {
+    .header-box {
+      @include header-box();
+    }
+  }
+
+  &.primary, &.tertiary {
+    height: 20em;
+    text-transform: uppercase;
+  }
+
+  &.primary, &.secondary, &.tertiary, &.stats {
+    position: relative;
+
+    section.wrapper {
+      /** Vertically centered **/
+      @include verticalAlign();
+
+      display: block;
+      width: 100%;
+      z-index: 1;
+      padding: 0 1.5em;
     }
 
-    &__subtitle {
-      font-size: 1.5em;
-      margin: .5em;
-      text-align: center;
+    .header-box {
+      color: $primaryWhite;
     }
 
-    .cta {
-      border: none;
-      margin: 2em auto 0 auto;
-      height: 45px;
-      padding: 0;
-      cursor: pointer;
-      @include fade();
-      border-radius: 34px;
-      background: $tertiaryRed;
-
-      a {
-        font-size: 1em;
+    .header-box {
+      &__title {
+        font-size: 1.5em;
+        line-height: 1.4;
+        font-weight: 800;
+        text-align: center;
+        margin: .5em;
       }
 
-      @media #{$small-devices} {
-        height: 35px;
+      &__subtitle {
+        font-size: 1.5em;
+        margin: .5em;
+        text-align: center;
+      }
+
+      .c-cta-button {
+        height: 45px;
+
         a {
-          line-height: 35px;
+          font-size: 1em;
+        }
+
+        @media #{$small-devices} {
+          height: 35px;
+          a {
+            line-height: 35px;
+          }
         }
       }
     }
-
-    a {
-      display: inline-block;
-      font-size: 1.5em;
-      line-height: 45px;
-      height: 100%;
-      width: 100%;
-      font-weight: 500;
-    }
-
-    &:hover,
-    &:focus,
-    &:active {
-      color: $primaryWhite;
-    }
-
-    i {
-      padding-left: 1em;
-    }
   }
-}
 
-@mixin stats($background, $rows, $height: 30em, $text-transform: none) {
-  $offset: 20em;
-  $stats: (
-    width: 250px,
-  );
-  $max_columns_per_row: 3;
+  &.primary {
+    background-position: center;
+  }
 
-  height: fromPxToEm($height) * $rows + $offset;
-  position: relative;
-  background-color:$primaryWhite;
-  text-transform: $text-transform;
+  &.secondary {
+    $map: (328: 480, 577: 480, 1656: 624, 1746: 766, 2500: 766);
+    height: minimosCuadrados($map);
+    background-position: center;
+    background-position-y: 4em;
+  }
 
-  @if ($background) {
-    background-size: cover;
-    background-repeat: no-repeat;
-    @if map_has_key($background, "position") {
-      background-position: map_get($background, "position");
-    }
-
-    @if map_has_key($background, "position-y") {
-      background-position-y: map_get($background, "position-y");
-    }
-
-    @if map_has_key($background, "position-y") {
-      background-position-x: map_get($background, "position-x");
+  &.tertiary {
+    .header-box {
+      border: 2px solid $primaryDark;
+      background: none;
+      &__title {
+        color: $primaryDark;
+      }
     }
   }
 
-  section.stats__container {
-    @include flexbox();
-    margin: 0 auto;
-    text-align: center;
-    justify-content: center;
-    top: 54%;
-    position: relative;
-    max-width: 1342px;
-    @include prefixed(transform, translateY(-50% * $rows));
-  }
+  &.stats {
+    // VARIABLES
+    $max_columns_per_row: 3;
+    $rows: 1;
+    $height: 207.6px;
+    $offset: 20em;
 
-  .stats {
-    &__item {
-      color: $primaryWhite;
-      font-size: 1.25em;
-      text-align: center;
-      width: map_get($stats, 'width');
-      float: left;
-      display: none;
-      margin: 0 auto;
-      @for $column from 1 through $max_columns_per_row {
-        @if ($column == 1) {
-          &:first-of-type {
-            display:block;
-          }
-        } @else {
-          @media only screen and (min-width: (map_get($stats, 'width') * $column)) {
-            &:nth-of-type(#{$column}) {
+    height: fromPxToEm(207.6px) * $rows + $offset;
+    background-color: $primaryWhite;
+    background-position: center;
+    text-transform: none;
+
+    .stats {
+      &__container {
+        @include flexbox();
+        margin: 0 auto;
+        text-align: center;
+        justify-content: center;
+        top: 54%;
+        position: relative;
+        max-width: 1342px;
+        @include prefixed(transform, translateY(-50% * $rows));
+      }
+
+      &__item {
+        $width: 250px;
+
+        color: $primaryWhite;
+        font-size: 1.25em;
+        text-align: center;
+        float: left;
+        width: $width;
+        display: none;
+        margin: 0 auto;
+        @for $column from 1 through $max_columns_per_row {
+          @if ($column == 1) {
+            &:first-of-type {
               display:block;
+            }
+          } @else {
+            @media only screen and (min-width: $width * $column) {
+              &:nth-of-type(#{$column}) {
+                display:block;
+              }
             }
           }
         }
-      }
 
-      &:last-of-type {
-        clear: right;
-      }
-
-      &-background {
-        background-color: $sectionDark;
-        border: 3px solid white;
-        margin: 0 auto;
-        width: 100px;
-        height: 100px;
-        @include prefixed(border-radius, 50%);
-
-        & ~ p {
-          margin-top: 0.5rem;
-          margin-bottom: 1rem;
+        &:last-of-type {
+          clear: right;
         }
-      }
 
-      &-counter {
-        color: $primaryWhite;
-        line-height: 100px;
-        text-align: center;
-        font-weight: 700;
-      }
+        &-background {
+          background-color: $sectionDark;
+          border: 3px solid white;
+          margin: 0 auto;
+          width: 100px;
+          height: 100px;
+          @include prefixed(border-radius, 50%);
 
-      p:first-of-type {
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
+          & ~ p {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+          }
+        }
+
+        &-counter {
+          color: $primaryWhite;
+          line-height: 100px;
+          text-align: center;
+          font-weight: 700;
+        }
+
+        p:first-of-type {
+          margin-top: 1rem;
+          margin-bottom: 0.5rem;
+        }
       }
     }
   }
 }
+
+
+

@@ -11,7 +11,7 @@
     __('content.first name') => $user->name,
     __('content.surnames') => $user->surnames,
     __('content.nationality') => $user->nationality,
-    __('content.phone number') => $user->getCompletePhoneNumber(),
+    __('content.phone number') => $user->getPrefixedPhoneNumber(),
     __('content.program') => __('content.programs.' . $user->program),
     __('content.resume') => $user->cv !== null ? __('content.attached') : __('content.not provided')
 ]])

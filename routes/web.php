@@ -20,6 +20,7 @@ Route::get('/', 'IndexController@index');
 Route::get('learn', 'IndexController@learn');
 Route::get('university', 'IndexController@university');
 Route::post('application-form','IndexController@applicationForm')->name('application.form');
+Route::post('contact-form','MailMessagesController@contactForm')->name('contact.form');
 Route::get('why', function() {
     return view('pages/why-intuuchina');
 })->name('whyus');
@@ -51,14 +52,19 @@ Route::get('/login', function() {
 Route::group([
         'middleware' => 'App\Http\Middleware\Admin', 'prefix' => 'admin'
     ], function(){
-        Route::match(['get', 'post'], '/','HomeController@admin')->name('admin');
-        Route::get('/offers', 'OffersController@admin')->name('admin.offers');
-        Route::post('/offers', 'OffersController@store');
-        Route::get('/users', 'AdminController@users')->name('admin.users');
-        Route::post('/offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+');
-        Route::get('/offers/edit/{offer}', 'OffersController@edit')->where('offer', '[0-9]+')->name('admin.edit-offer');
-        Route::get('/offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+');
-        Route::get('/offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
+        Route::match(['get', 'post'], '/','AdminController@index')->name('admin');
+        Route::get('users', 'AdminController@index')->name('admin.users');
+        Route::get('offers', 'AdminController@index')->name('admin.offers');
+        Route::get('testimonials', 'AdminController@index')->name('admin.testimonials');
+        Route::delete('users/delete/{user}', 'UsersController@destroy')->name('admin.delete-user');
+        Route::get('offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+')->name('admin.delete-offer');
+        Route::get('testimonials/delete/{testimonial}', 'TestimonialsController@destroy')->where('testimonial', '[0-9]+')->name('admin.delete-testimonial');
+        Route::get('users/edit/{user}', 'UsersController@single')->name('admin.edit-user');
+    Route::get('offers/edit/{offer}', 'OffersController@edit')->where('offer', '[0-9]+')->name('admin.edit-offer');
+        Route::post('users/edit/{offer}', 'UsersController@update')->where('offer', '[0-9]+');
+        Route::post('offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+');
+        Route::post('offers', 'OffersController@store')->name('admin.new-offer');
+        Route::get('offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
 });
 
 /**
@@ -70,13 +76,6 @@ Route::prefix('validate')->group(function() {
     Route::post('payment-details', 'CheckoutsController@validatePaymentDetails');
     Route::post('{field}', 'ValidationsController@validateField');
 });
-
-/**
- * |--------------------------------------------------------------------------
- * | Footer
- * |--------------------------------------------------------------------------
- */
-Route::post('/message','MailMessagesController@send')->name('mail');
 
 /**
  * |--------------------------------------------------------------------------
@@ -101,13 +100,14 @@ Auth::routes();
  */
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'payments'], function() {
-        Route::post('study', 'CheckoutsController@chineseCoursePayment')->name('payments.study');
-        Route::post('university', 'CheckoutsController@applicationFeeForm')->name('payments.university');
-        Route::post('internship', 'CheckoutsController@applicationFeeForm')->name('payments.internship');
-        Route::post('inter-relocat', 'CheckoutsController@applicationFeeForm')->name('payments.inter_relocat');
+        Route::post('study', 'CheckoutsController@processPayment')->name('payments.study');
+        Route::post('university', 'CheckoutsController@processPayment')->name('payments.university');
+        Route::post('internship', 'CheckoutsController@processPayment')->name('payments.internship');
+        Route::post('inter-relocat', 'CheckoutsController@processPayment')->name('payments.inter_relocat');
     });
     Route::get('welcome', 'WelcomeController@index')->name('welcome');
     Route::get('home', 'HomeController@index')->name('home');
+    Route::get('paid/{charge}', 'CheckoutsController@showPaymentConfirmation')->name('payment_confirmation');
     Route::post('confirm', 'UsersController@confirm')->name('confirm');
     Route::post('payment-method', 'CheckoutsController@newPaymentIntent')->name('payment_method');
     Route::get('{user}/profile', 'UsersController@single')->where('user', '[0-9]+')->name('edit_user');

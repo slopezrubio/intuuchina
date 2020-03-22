@@ -83,9 +83,25 @@ var UI = (function() {
                 // }
             },
 
+            toggleSpinnerButtonState: function(button) {
+                let spinner = button.querySelector('.spinner-border');
+
+                if (spinner !== null) {
+                    $(spinner).hasClass('hidden') ? spinner.classList.remove('hidden') : spinner.classList.add('hidden');
+
+                    if (!$(spinner).hasClass('hidden')) {
+                        spinner.parentElement.previousElementSibling.style.display = "none";
+                        spinner.parentElement.style.display = "block";
+                    } else {
+                        spinner.parentElement.previousElementSibling.style.display = "block";
+                        spinner.parentElement.style.display = "none";
+                    }
+                }
+            },
+
             // Sets the loader in the submit button of the given form.
             changeLoadingButtonState: function(form) {
-                if (form.querySelector('.loading-button') !== null) {
+                if (form.querySelector('.spinner-border') !== null) {
                     let spinner = form.querySelector('.spinner-border');
                     $(spinner).hasClass('hidden') ? spinner.classList.remove('hidden') : spinner.classList.add('hidden');
 

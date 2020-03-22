@@ -1,0 +1,38 @@
+.letter-spacing {
+  &--location {
+    font-size: 0.85em;
+    letter-spacing: 0.3em;
+  }
+}
+
+.alert-message {
+  &--empty-list {
+    @include flexbox();
+    @include flex-direction(column);
+
+    & > *:not(:first-child) {
+      margin-top: 1em;
+    }
+
+    i {
+      font-size: 6em;
+      color: $neutralColor;
+      margin: 0 auto;
+    }
+    color: $quaternaryRed;
+    text-align: center !important;
+    font-weight: 700;
+  }
+}
+
+.price-tag {
+
+
+  &--secondary {
+    b {
+      font-size: 1.5em;
+      color: $quaternaryRed;
+      font-weight: 700;
+    }
+  }
+}

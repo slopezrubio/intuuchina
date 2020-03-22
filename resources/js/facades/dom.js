@@ -60,7 +60,7 @@ var dom = (function() {
             }
 
             if (element !== null) {
-                element.style.display = displayValue;
+                element.style.display = element.style.display === 'none' ? '' : element.style.display;
                 if (element.hasAttribute('aria-hidden')) {
                     element.setAttribute('aria-hidden', 'false')
                 }
@@ -68,7 +68,7 @@ var dom = (function() {
             }
 
             for (let i = 0; i < elements.length; i++) {
-                elements[i].style.display = displayValue;
+                elements[i].style.display = elements[i].style.display === 'none' ? '' : elements[i].style.display;
                 if (elements[i].hasAttribute('aria-hidden')) {
                     elements[i].setAttribute('aria-hidden', 'false')
                 }

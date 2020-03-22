@@ -4,7 +4,7 @@
   position: relative;
   select {
     @include resetSelect;
-    @include marginBottom;
+    @extend %input-margins;
     z-index: -1;
     cursor: pointer;
     &:focus {
@@ -31,7 +31,7 @@ div.editor {
 
 .form {
   input {
-    @include marginBottom;
+    @extend %input-margins;
     &:focus {
       border-color: $primaryRed;
     }

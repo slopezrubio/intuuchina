@@ -1,0 +1,35 @@
+main#home {
+  h2 {
+    font-size: 1.25em;
+  }
+
+  section#testimonials {
+    @include people-slider(2);
+  }
+
+  section#press {
+    @include media-slider();
+  }
+
+  section#services {
+    .c-info-box {
+      @include c-info-box();
+
+      &__container:first-of-type {
+        padding-top: 10em;
+      }
+
+      @include media-breakpoint-up(md) {
+        &__container:nth-child(2) {
+          padding-top: 10em;
+        }
+      }
+
+      @include media-breakpoint-up(lg) {
+        &__container:nth-child(3) {
+          padding-top: 10em;
+        }
+      }
+    }
+  }
+}

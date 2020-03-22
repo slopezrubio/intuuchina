@@ -6,6 +6,15 @@ return [
                                     If you’re having trouble clicking buttons, copy and paste the links below into your web browser',
         'payment notification' => 'Payment Notification'
     ],
+    'visitor-query' => [
+        'subject' => 'Requested made by :name',
+        'title' => 'New visitor request',
+        'body' =>   "
+                        <p>
+                             A new visitor has asked for an issue. Here are the query details:
+                        </p>
+                    "
+    ],
     'new-user' => [
         'subject' => 'Welcome :name to our :program Program',
         'title' => 'Welcome to IntuuChina',

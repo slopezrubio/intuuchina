@@ -3,6 +3,10 @@
 namespace App;
 
 use App\Notifications\NewUserNotification;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Notification;
@@ -44,11 +48,23 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'industry' => 'array',
+        'phone_number' => 'array',
+        'study' => 'array',
+        'university' => 'array',
     ];
 
     public static function getAdmins() {
         return User::where('type', 'admin')
             ->get();
+    }
+
+    public function getCurrentStatus() {
+        return DB::table('users')
+            ->where('users.id', $this->id)
+            ->join('states', 'users.status_id', '=', 'states.id')
+            ->select('states.*')
+            ->first();
     }
 
     public function updateStatus(string $status) {
@@ -97,39 +113,26 @@ class User extends Authenticatable implements MustVerifyEmail
             ->get()->first();
     }
 
-    public static function adminReadableList() {
-        $users = DB::table('users')
-            ->join('states', function($join) {
-                $join->on('users.status_id', '=', 'states.id');
-            })
-            ->where('users.type', 'user')
-            ->select('users.name as name',
-                    'users.surnames',
-                    'users.email',
-                    'users.program as preferences',
-                    'users.industry as industries',
-                    'users.study as studies',
-                    'users.university as degrees',
-                    'users.phone_number as phone',
-                    'users.stripe_id as stripe',
-                    'users.created_at',
-                    'states.name as status')
-            ->get();
+    public function getPrefixedPhoneNumber() {
+        return '(' . __('prefixes.' . $this->phone_number['prefix'] . '.prefix') . ')' . $this->phone_number['number'];
+    }
 
-        foreach ($users as $key => $user) {
-            $date = new Carbon($user->created_at);
-            $user->created_at = $date->diffForHumans();
+    public function destroyAssociatedFiles() {
+        if (file_exists(Storage::url('profile/' . $this->id))) {
+            File::deleteDirectory(Storage::url('profile/' . $this->id));
         }
 
-        return $users;
+        return $this;
     }
 
-    public function getStudies() {
-        return json_decode($this->study);
-    }
+    public static function setCompletePhoneNumber($collection = null) {
+        if ($collection !== null) {
+            foreach ($collection as $value) {
+                $value->phone_number = '(' . __('prefixes.' . json_decode($value->phone_number)->prefix . '.prefix') . ')'. json_decode($value->phone_number)->number;
+            }
+        }
 
-    public function getCompletePhoneNumber() {
-        return '(' . __('prefixes.' . json_decode($this->phone_number)->prefix . '.prefix') . ')'. json_decode($this->phone_number)->number;
+        return $collection;
     }
 
     public function getIndustries() {
@@ -143,9 +146,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function hasChineseStudies() {
-        if (is_array($this->getStudies())) {
-            return count($this->getStudies()) > 0;
-        }
-        return null;
+        return count($this->study) > 0;
     }
 }

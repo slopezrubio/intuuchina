@@ -46,7 +46,7 @@ main.full-viewport {
           }
 
           input {
-            @include marginBottom;
+            @extend %input-margins;
             &:focus {
               border-color: $primaryRed;
             }

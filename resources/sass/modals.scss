@@ -1,26 +1,19 @@
-#loginModal, #offerModal, #termsAndConditionsModal, #GDPRModal, #privacyPolicy {
-  .modal-button {
-    @include shutter-in-horizontal();
-  }
-
-  .medium-icon {
-    font-size: 3em;
-  }
-
-  .modal-link {
-    color: $primaryRed;
-
-    &:hover,
-    &:focus,
-    &:active {
-      text-decoration: underline;
-    }
-  }
-
-  [class^="modal-button"] {
-    color: $primaryWhite;
-  }
-}
+//#loginModal, #offerModal, #termsAndConditionsModal, #GDPRModal, #privacyPolicy {
+//
+//  .medium-icon {
+//    font-size: 3em;
+//  }
+//
+//  .modal-link {
+//    color: $primaryRed;
+//
+//    &:hover,
+//    &:focus,
+//    &:active {
+//      text-decoration: underline;
+//    }
+//  }
+//}
 
 #loginModal {
   text-transform: none;
@@ -32,22 +25,6 @@
 
     > :not(:last-child) {
       margin: 6px 0;
-    }
-  }
-
-  .modal-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 20px;
-  }
-
-  .switch {
-    @include switchButton();
-    margin-top: 0;
-    input {
-      opacity: 0;
-      height: 0;
-      width: 0;
     }
   }
 }

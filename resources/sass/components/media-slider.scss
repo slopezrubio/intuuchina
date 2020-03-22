@@ -1,0 +1,157 @@
+@mixin media-slider($background: $primaryRed) {
+  $slider: (
+    width: 450px,
+  );
+
+  .media-slider {
+    background: $background;
+    .container {
+      position: relative;
+      z-index: 3;
+    }
+
+    &__body {
+      @include flexbox();
+      @include flex-direction(column);
+      @include justify-content(space-around);
+    }
+
+    &__title {
+      text-align: left;
+      padding: 1.5em 0;
+    }
+
+    &__holder {
+      //max-width: map_get($slider, 'width');
+      overflow: hidden;
+    }
+
+    &__carousel {
+      @include prefixed(transition, transform 0.5s);
+      @include inline-flex();
+    }
+
+    &__slide {
+      //max-width: map_get($slider, 'width');
+      a, p {
+        font-size: 0.9em;
+        font-style: italic;
+        color: $primaryWhite;
+        font-weight: 500;
+
+        img {
+          width: 70px;
+        }
+
+        &:hover {
+          color: $primaryWhite;
+        }
+      }
+
+      &-content {
+        margin-top: 1em;
+        p:nth-child(2) {
+          height: auto;
+          display: inline-block;
+        }
+      }
+    }
+
+    &__controllers {
+      display: block;
+
+      &::after {
+        @include clearfix();
+      }
+
+      li {
+        &:nth-child(odd) {
+          float: left;
+          clear: left;
+        }
+
+        &:nth-child(even) {
+          float: right;
+        }
+
+        a {
+          display: -moz-inline-block;
+          display: inline-block;
+          width: 55px;
+          height: 60px;
+
+          .helper {
+            height: 100%;
+            vertical-align: middle;
+            display: inline-block;
+          }
+
+          img {
+            position: relative;
+            vertical-align: middle;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+          }
+        }
+      }
+
+      @media only screen and(min-width: 3 * (55px + 16px + 30px)) {
+        @include flexbox();
+        @include flex-wrap(wrap);
+
+        @media only screen and(min-width: 3 * (55px + 16px + 30px)) {
+          & > li {
+            flex: 0 0 calc(100% / 3);
+          }
+        }
+
+        @media only screen and(min-width: 4 * (55px + 16px + 30px)) {
+          & > li {
+            flex: 0 0 calc(100% / 4);
+          }
+        }
+
+        li {
+          text-align: center;
+
+          &:nth-child(odd), &:nth-child(even) {
+            clear: both;
+            float: none;
+          }
+        }
+      }
+    }
+  }
+
+  @media #{$large-devices} {
+    .media-slider {
+      &__body {
+        @include flex-direction(row);
+      }
+
+      &__holder, &__slide {
+        max-width: map_get($slider, 'width');
+      }
+
+      &__controllers {
+        & > li {
+          flex: 0 0 calc(100% / 4);
+        }
+
+        li {
+          a {
+            position: relative;
+            @include prefixed(transform, translateY(-50%));
+            top: 50%;
+            height: 63px;
+
+            img {
+              width: 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

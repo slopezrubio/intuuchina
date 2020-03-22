@@ -21,4 +21,8 @@ class Offer extends Model
             $this['updated_at'] = Carbon::now();
         }
     }
+
+    public static function getAdminList() {
+        return Offer::all();
+    }
 }

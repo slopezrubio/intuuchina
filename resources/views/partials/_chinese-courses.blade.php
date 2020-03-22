@@ -1,4 +1,4 @@
-<section class="arrow-slider arrow-slider__holder">
+<section class="arrow-slider arrow-slider__holder"  id="{{ isset($slider) ? $slider['current']['key'] :  key(__('content.courses'))}}">
     <div class="arrow-slider__carousel">
         @foreach (__('content.courses') as $key => $course)
             @if (isset($slider))
@@ -37,7 +37,7 @@
                                     @csrf
                                     <input type="hidden" value="study" name="program">
                                     <input type="hidden" value="{{ $key }}" name="course" id="study">
-                                    <button type="submit" name="product" value="study" class="cta">{{ __('content.i\'m also interested') }}</button>
+                                    <button type="submit" name="product" value="study" class="cta">{{ __('I\'m Also Interested') }}</button>
                                 </form>
                             @endif
                         @else
@@ -45,7 +45,7 @@
                                 @csrf
                                 <input type="hidden" value="study" name="program" id="program">
                                 <input type="hidden" value="{{ $key }}" name="course">
-                                <button type="submit" name="product" value="study" class="cta">{{ __('content.change preference') }}</button>
+                                <button type="submit" name="product" value="study" class="cta">{{ __('Change Preference') }}</button>
                             </form>
                         @endif
                     @endif
@@ -54,7 +54,7 @@
                         @csrf
                         <input type="hidden" value="study" name="program" id="program">
                         <input type="hidden" value="{{ $key }}" name="study">
-                        <button type="submit" class="cta" name="product" value="study">{{ __('content.apply for') }}</button>
+                        <button type="submit" class="cta" name="product" value="study">{{ __('Apply For') }}</button>
                     </form>
                 @endauth
             </div>
@@ -67,9 +67,9 @@
     <div class="arrow-slider__controllers">
         @foreach (__('content.courses') as $key => $course)
             @if (isset($slider))
-                <a href="#" class="{{ $key === $slider['current']['key'] ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
+                <a href="#{{ $key }}" class="{{ $key === $slider['current']['key'] ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
             @else
-                <a href="#" class="{{ $key === array_key_first(__('content.courses')) ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
+                <a href="#{{ $key }}" class="{{ $key === array_key_first(__('content.courses')) ? 'selected' : '' }}"><span>{{ $course['text'] }}</span></a>
             @endif
         @endforeach
     </div>
