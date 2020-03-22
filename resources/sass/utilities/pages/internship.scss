@@ -1,0 +1,34 @@
+main#job-board {
+  $card:(
+    width: 320px,
+    height: 213.33px,
+  );
+
+  section#content {
+    .toolbox {
+      &__tool {
+        max-width: map_get($card, 'width');
+        margin: 0 auto;
+        > * {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        @include media-breakpoint-up(md) {
+          margin-left: 5px;
+          & > * {
+            max-width: 100%;
+          }
+        }
+
+        @include media-breakpoint-up(xl) {
+          margin-left: 50px;
+        }
+      }
+    }
+
+    .cards-list {
+      @include cards-list(map_get($card, 'width'), map_get($card, 'height'));
+    }
+  }
+}

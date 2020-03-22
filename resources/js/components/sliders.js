@@ -9,7 +9,7 @@ var pressNote = function() {
     var mediaSlider = null;
 
     function init() {
-        var mediaSlider = new mediaSliderFactory.createSlider({
+        var mediaSlider = mediaSliderFactory.createSlider({
             type: 'media',
         });
     }
@@ -28,6 +28,7 @@ var learnChinese = function() {
     function init() {
         var arrowSlider = arrowSliderFactory.createSlider({
             type: 'arrow',
+            sections: ['in-person', 'online'],
             controllersCallback: function (slider) {
                 let course = slider.querySelector("input[name='study'").getAttribute('value');
                 api.getCourseInfo(course, replaceCourseInfoSection);
@@ -49,6 +50,7 @@ var university = function() {
     function init() {
         var arrowSlider = arrowSliderFactory.createSlider({
             type: 'arrow',
+            sections: ['mba', 'mib', 'other']
         });
     }
 
@@ -70,9 +72,7 @@ var testimonials = function() {
 };
 
 window.addEventListener('load', function() {
-    if (document.querySelector('.note_carrousel') !== null) {
-        // $(document).ready(press.init);
-        // $(window).resize(press.init);
+    if (document.querySelector('section#press') !== null) {
         pressNote();
     }
 
@@ -84,7 +84,7 @@ window.addEventListener('load', function() {
         university();
     }
 
-    if (document.querySelector('section.people-slider') !== null) {
+    if (document.querySelector('section#testimonials') !== null) {
         testimonials();
     }
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\State;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Stripe;
 
 class HomeController extends Controller
 {
@@ -21,7 +22,7 @@ class HomeController extends Controller
     /**
      * Show the application welcome dialog or the user home.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -31,7 +32,11 @@ class HomeController extends Controller
             return redirect('/admin');
         }
 
-        return view('home', compact('status'));
+//        if ($user->getCurrentStatus()->name === 'verified') {
+//            return redirect()->action('CheckoutsController@processPayment');
+//        }
+
+        return view('pages.user.dashboard');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -14,11 +15,12 @@ use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
 {
-    const ELEMENTS_PER_PAGE = 2;
+    const ELEMENTS_PER_PAGE = 5;
     const PAGINATION_SCOPE = 4;
 
     /**
-     * Display a listing of the resource.
+     * Retrieved all the job offers or just the ones that
+     * matches the given filter.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -27,44 +29,21 @@ class OffersController extends Controller
         if ($filter !== null) {
             return $this->filter($filter, $request->ajax());
         }
-        /*
-         * Realiza la consulta a la base de datos para seleccionar todos los datos ordenados
-         * por la fecha de creación.
-         */
+
         $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
-        $this->setDaysRenewed($offers);
         $offers->onEachSide = self::PAGINATION_SCOPE / 2;
 
         return view('pages/offers', compact('offers'));
     }
 
     /**
-     * Sets a new field for each offer the time consummated since the offer was
-     * updated for the last time. This information will be shown in the view
-     * as the date of the offer.
-     *
-     * @param $offers
-     * @return mixed
-     */
-    public function setDaysRenewed($offers) {
-        if (count($offers) > 0) {
-            foreach ($offers as $offer) {
-                $offer->gone_by = Carbon::parse($offer->created_at)->diffForHumans(Carbon::now());
-            }
-        }
-
-        return $offers;
-    }
-
-    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function admin()
     {
         $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
-        $this->setDaysRenewed($offers);
 
         return view('pages/admin/offers', compact('offers'));
     }
@@ -72,7 +51,7 @@ class OffersController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -83,7 +62,7 @@ class OffersController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -113,7 +92,7 @@ class OffersController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -124,7 +103,7 @@ class OffersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -139,7 +118,7 @@ class OffersController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -187,11 +166,12 @@ class OffersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        $this->deleteUploadedFileAssociatedWithOffer($id);
+        $this->destroyAssociatedFiles($id);
+
         Offer::destroy($id);
 
         return redirect()->route('admin.offers');
@@ -202,12 +182,14 @@ class OffersController extends Controller
      * and send the partial view that comprises just the list of offers.
      */
     public function filter($filter, $ajax) {
-        $offers = Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE);
-        $this->setDaysRenewed($offers);
+        $offers = $filter !== 'default'
+                ? Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE)
+                : Offer::orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE);
+
         $offers->onEachSide = self::PAGINATION_SCOPE / 2;
 
         if ($ajax) {
-            return response()->json(view('partials/_offers-list', compact('offers'))->render());
+            return response()->json(view('components.cards-list', compact('offers'))->render());
         }
 
         return view('pages/offers', compact('offers'));
@@ -235,12 +217,14 @@ class OffersController extends Controller
         }
     }
 
-    public function deleteUploadedFileAssociatedWithOffer($id) {
+    public function destroyAssociatedFiles($id) {
         $offer = Offer::find($id);
 
         if (!preg_match('/generic/', $offer->picture)) {
             Storage::delete('public/images/' . $offer->picture);
         }
+
+        return $this;
     }
 
     /*

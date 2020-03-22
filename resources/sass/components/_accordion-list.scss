@@ -1,0 +1,69 @@
+.accordion-list {
+  $max-height: 220px;
+  $min-height: 170px;
+
+  @include media-breakpoint-up(xl) {
+    @include flexbox();
+    @include flex-wrap(wrap);
+    @include flex-direction(row);
+    @include align-items(flex-start);
+
+    &__card {
+      flex: 0 0 45%;
+      &:last-child:not(:nth-child(even)) {
+        margin-left: 1.25em;
+        margin-right: 1.25em;
+      }
+    }
+  }
+
+  &__card {
+    margin: 4em auto;
+
+    &-header {
+      position: relative;
+      max-height: $max-height;
+      min-height: $min-height;
+    }
+
+    &-image {
+      position: absolute;
+      background: $primaryWhite;
+      width: 100px;
+      top: -50px;
+      border: 6px solid $white;
+      border-radius: 20px;
+    }
+
+    &-subtitle, &-title, p {
+      text-align: right;
+      margin-left: auto;
+    }
+
+    &-title {
+      overflow: hidden;
+      max-width: calc(100% - 100px);
+      button {
+        padding: 0.5em 0;
+        text-align: right;
+        max-width: 300px;
+        font-size: 1em;
+        color: $primaryDark;
+        white-space: inherit;
+        &:hover {
+          color: $tertiaryRed;
+        }
+      }
+    }
+
+    &-subtitle {
+      font-weight: 700;
+    }
+
+    &-body {
+      .c-cta-button {
+        margin-top: 1em;
+      }
+    }
+  }
+}

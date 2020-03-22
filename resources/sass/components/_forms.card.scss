@@ -1,0 +1,29 @@
+form.card-form {
+
+  @include flexbox();
+  @include flex-direction(column);
+
+  .c-cta-button {
+    height: 45px;
+    margin-top: 1em;
+    a {
+      line-height: 45px;
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    @include flex-direction(row);
+    @include justify-content(space-between);
+
+    .c-cta-button {
+      width: 45%;
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}

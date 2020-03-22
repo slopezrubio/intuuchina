@@ -56,24 +56,25 @@ class NewUserNotification extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
-        if ($this->user->cv === null || !is_file(storage_path('app/' . $this->user->cv))) {
-            return (new MailMessage)
-                ->markdown(
-                    'vendor.notifications.admin.new-user', ['user' => $this->user, 'body' => $this->getMessage()]
-                )
-                ->subject(__('mails.admin.new-user.subject'));
+        $mail = (new MailMessage)
+                    ->markdown('vendor.notifications.admin.new-user',
+                        [
+                            'user' => $this->user,
+                            'body' => $this->getMessage()
+                        ]
+                    )
+                    ->subject(__('mails.admin.new-user.subject'));
+
+
+        if ($this->user->cv !== null && file_exists(storage_path('app/' . $this->user->cv))) {
+            $mail->attach(storage_path('app/' . $this->user->cv));
         }
 
-        return (new MailMessage)
-            ->markdown(
-                'vendor.notifications.admin.new-user', ['user' => $this->user, 'body' => $this->getMessage()]
-            )
-            ->subject(__('mails.admin.new-user.subject'))
-            ->attach(storage_path('app/' . $this->user->cv));
+        return $mail;
     }
 
     /**

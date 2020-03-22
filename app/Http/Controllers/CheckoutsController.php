@@ -8,15 +8,20 @@ use App\Mail\InvoicePaid;
 use App\Rules\InPersonCoursesScope;
 use App\Rules\OnlineCoursesScope;
 use Carbon\Carbon;
+use http\Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\UnauthorizedException;
+use Stripe\Charge;
 use Stripe\Checkout\Session as Checkout;
 use Stripe\Exception\ApiErrorException;
+use Stripe\Exception\InvalidRequestException;
 use Stripe\PaymentIntent;
 use Stripe\Invoice;
 use Stripe\InvoiceItem;
@@ -24,61 +29,53 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Exception\CardException;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
+use Stripe\TaxRate;
 use App\User;
+use Whoops\Exception\ErrorException;
 
 class CheckoutsController extends Controller
 {
     const APPLICATION_FEE = 30.00;
+    const VAT_PERCENTAGE = [
+        'ES' => 21,
+    ];
 
+    protected $amount = self::APPLICATION_FEE;
     protected $session;
 
-    /**
-     * Display the «Application Fee» payment form to the user.
-     *
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws ApiErrorException
-     */
-    public function applicationFeeForm()
-    {
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        try {
-            $intent = PaymentIntent::create([
-                'amount' => $this->convertToSmallerUnitOfMeasure(self::APPLICATION_FEE),
-                'currency' => config('services.stripe.cashier_currency')
-            ]);
-        } catch(Exception $e) {
-            throwException($e->getMessage());
+    public function getAmount($tax = null) {
+        if (Auth::user()-> hasChineseStudies()) {
+            $this->amount = $this->convertToSmallerUnitOfMeasure(__('content.courses.' . Auth()->user()->study[0] . '.price.eur'));
         }
 
-        $currencies = __('currencies');
+        if ($tax !== null) {
+            $this->amount = $this->amount + ($this->amount * $this->getLocaleVAT->percentage / 100);
+        }
 
-        return view('components.forms.dialog-box-application-fee', compact('intent', 'currencies'));
+        return $this->amount;
     }
 
-    public function chineseCoursePayment()
-    {
+
+    public function processPayment(Request $request) {
         Stripe::setApiKey(config('services.stripe.secret'));
-
-        $user = Auth::user();
-        $selectedCourse = array_keys(__('content.courses'))[0];
-
-        if($user->hasChineseStudies()) {
-            $selectedCourse = $user->getStudies()[0];
-        }
 
         try {
             $intent = PaymentIntent::create([
-                'amount' => $this->convertToSmallerUnitOfMeasure(__('content.courses.' . $selectedCourse . '.price.eur')),
+                'amount' => $this->getAmount(),
                 'currency' => config('services.stripe.cashier_currency')
             ]);
-        } catch(Exception $e) {
+        } catch(ApiErrorException $e) {
             throwException($e->getMessage());
         }
 
-        $currencies = __('currencies');
+        $view = $request->ajax()
+            ? 'partials.user.dialogs._payment'
+            : 'pages.user.payment';
 
-        return view('components.forms.dialog-box-study-payment', compact('intent', 'currencies'));
+        return view($view, [
+            'currencies' => __('currencies'),
+            'intent' => $intent,
+        ]);
     }
 
     /**
@@ -94,6 +91,7 @@ class CheckoutsController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         $intent = null;
+        $dialog = $request->get('dialog') ? $request->get('dialog') : null;
         $payment_method = $request->get('payment_method') ? $request->get('payment_method') : null;
         $payment_intent_id = $request->get('payment_intent_id') ? $request->get('payment_intent_id') : null;
 
@@ -141,12 +139,22 @@ class CheckoutsController extends Controller
                 // Gets the Payment Intent ID and confirms the payment.
                 $intent = PaymentIntent::retrieve($payment_intent_id);
 
-                $intent->confirm();
+                // Check for a confirmation if necessary
+                if ($intent->status !== 'succeeded') {
+                    $intent->confirm();
+                }
             };
 
-            $response = $this->generateStripeResponse($intent);
+            if (Auth::user()->getCurrentStatus() === 'paid') {
+                return $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
+            }
+
+            $response = $this->generateStripeResponse($intent, $dialog);
+
+            Auth::user()->updateStatus('paid');
 
             return $response;
+
         } catch (CardException $e) {
 
             $response = [
@@ -168,10 +176,42 @@ class CheckoutsController extends Controller
         }
     }
 
+    public function showPaymentConfirmation($charge) {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            $charge = Charge::retrieve($charge);
+
+            if ($charge->customer === Auth::user()->stripe_id) {
+                return view('pages.user.payment-confirmation', [
+                    'receipt_url' => $charge->receipt_url
+                ]);
+            }
+        } catch(InvalidRequestException|ErrorException $exception) {
+            return response()->view('errors.404', [], 403);
+        }
+    }
+
+    public function getLocaleVAT($locale = 'ES') {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            return TaxRate::create([
+                'display_name' => 'IVA',
+                'description' => 'VAT Spanish',
+                'jurisdiction' => $locale,
+                'percentage' => self::VAT_PERCENTAGE[$locale],
+                'inclusive' => false,
+            ]);
+        } catch(ApiErrorException $e) {
+            throwException($e->getMessage());
+        }
+    }
+
     public function validatePaymentDetails(Request $request)
     {
         $rules = [
-            'card_holder_name' => ['required', 'string', new Assert\ValidName],
+            'card_holder' => ['required', 'string', new Assert\ValidName],
             'phone_number' => ['required', 'numeric', new Assert\PhoneNumber],
             'email' => 'required|email:rfc',
         ];
@@ -198,7 +238,7 @@ class CheckoutsController extends Controller
          * which are going to be send it afterward in the client side.
          */
         $billingDetails = [
-            'name' => $request->get('card_holder_name'),
+            'name' => $request->get('card_holder'),
             'phone' => $request->get('phone_number'),
             'email' => $request->get('email'),
         ];
@@ -264,17 +304,23 @@ class CheckoutsController extends Controller
      * Generates the corresponding Invoice for the given PaymentIntent.
      *
      * @param array $options
-     * @param PaymentIntent $intent
-     * @return Invoice
+ * @return string
      * @throws ApiErrorException
      */
     private function getPaymentInvoice(array $options) :Invoice
     {
-        InvoiceItem::create([
-            'customer' => $options['customer'] !== null ? $options['customer'] : Auth::user()->stripe_id,
-            'currency' => config('services.stripe.cashier_currency'),
-            'amount' => $options['amount'],
-        ]);
+        try {
+            InvoiceItem::create([
+                'customer' => $options['customer'] !== null ? $options['customer'] : Auth::user()->stripe_id,
+                'currency' => config('services.stripe.cashier_currency'),
+                'amount' => $options['amount'],
+                'tax_rates' => [
+                    $this->getLocaleVAT()->id,
+                ]
+            ]);
+        } catch(ApiErrorException $e) {
+            return $e->getMessage();
+        }
 
         return Invoice::create([
             'customer' => $options['customer'] !== null ? $options['customer'] : Auth::user()->stripe_id,
@@ -285,13 +331,11 @@ class CheckoutsController extends Controller
     }
 
     /**
-     *
-     *
      * @param $intent
+     * @param null $dialog
      * @return array|ResponseFactory|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View|string|void
-     * @throws ApiErrorException
      */
-    private function generateStripeResponse($intent) {
+    private function generateStripeResponse($intent, $dialog = null) {
         // Note that if your API version is before 2019-02-11, 'requires_action'
         // appears as 'requires_source_action'.
         if ($intent->status == 'requires_action' &&
@@ -308,7 +352,8 @@ class CheckoutsController extends Controller
 
             // Now the user has paid and his state must be updated.
             // Auth::user()->updateStatus('paid');
-            $receipt_url =  $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
+
+            $receipt_url = $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
 
             $user = Auth::user();
 
@@ -332,15 +377,18 @@ class CheckoutsController extends Controller
                 Notification::send($admins, new NewPaymentNotification($user, $invoice));
 
             } catch(\Exception $e) {
-
                 return $e->getMessage();
             }
 
-
             // Redirects the user to the paid dialog box to report the user about
             // the successful payment.
-            return view('components/forms/dialog-box-payment-succeeded', compact('receipt_url'));
+            if ($dialog !== null) {
+                return view('partials.dialogs.user._' . Auth::user()->getCurrentStatus()->name, [
+                    'receipt_url' => $receipt_url,
+                ]);
+            }
 
+            return $intent;
         } else {
             // Invalid status.
             return response([

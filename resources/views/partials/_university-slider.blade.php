@@ -50,7 +50,7 @@
                         @csrf
                         <input type="hidden" value="university" name="program" id="program">
                         <input type="hidden" value="{{ $key }}" name="university">
-                        <button type="submit" class="cta" name="product" value="university">{{ __('content.apply for') }}</button>
+                        <button type="submit" class="cta" name="product" value="university">{{ __('Apply For') }}</button>
                     </form>
                 @endauth
             </div>

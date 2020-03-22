@@ -12,5 +12,6 @@ return [
     'user_verify_cartoon' => [
         'url' => asset('storage/images/verify-user.png'),
         'alt' => "User verify cartoon",
-    ]
+    ],
+    'a descriptive image' => "A descriptive picture of the :item",
 ];

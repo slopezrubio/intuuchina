@@ -1,4 +1,14 @@
 @import 'app';
+
+@import 'tools/functions';
+@import 'tools/mixins';
+
+@import 'objects/icons';
+@import 'objects/sections';
+@import 'objects/shapes';
+
+@import 'elements/forms';
+
 @import 'variables';
 @import 'mixins';
 @import 'animation';
@@ -13,9 +23,11 @@
 @import 'about';
 @import 'dashboard';
 @import 'verify';
-@import 'footer';
-@import 'index';
 @import 'home';
 @import 'offers';
 @import 'job-description';
 @import 'message-confirmation';
+
+@import 'utilities/helpers/text';
+@import 'utilities/pages/index';
+@import 'utilities/pages/internship';

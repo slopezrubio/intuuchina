@@ -14,10 +14,6 @@ class WelcomeController extends Controller
 
         $user->updateStatus('verified');
 
-        if (session()->get('program')) {
-            return view('pages.welcome', ['payment' => true]);
-        }
-
         return view('pages.welcome');
     }
 }

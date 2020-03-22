@@ -13,7 +13,6 @@
         "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "google/recaptcha": "^1.2",
-        "hisorange/browser-detect": "3.x",
         "laravel/cashier": "^10.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0"

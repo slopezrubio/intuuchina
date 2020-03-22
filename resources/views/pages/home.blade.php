@@ -1,27 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-    @component('components.header', ['href' => route('internship')])
-        @slot('variant')
-            {{ 'secondary' }}
-        @endslot
-
-        @slot('background_image')
-            {{ __('heading.' .$view_name. '.background') }}
-        @endslot
-
-        @slot('cta')
-            {{ __('content.open positions') }}
-        @endslot
-
-        @slot('title')
-            {!!  __('heading.' .$view_name. '.title') !!}
-        @endslot
+    @component('components.header')
+        @include('partials.headers._home')
     @endcomponent
 
     <main id="home">
         {{--Elemento Medios de TV--}}
-        @include('partials._news')
+        @include('partials._press')
 
         {{--Sección de los servicios ofrecidos--}}
         @include('partials._services')

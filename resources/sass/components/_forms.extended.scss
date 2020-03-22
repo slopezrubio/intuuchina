@@ -1,0 +1,31 @@
+form {
+  &.extended-form {
+    & > div:not(:first-of-type) {
+      margin-bottom: 2rem;
+    }
+
+    a {
+      color: $tertiaryRed;
+      &:hover,
+      &:active {
+        text-decoration: underline;
+      }
+    }
+
+    .form-group label:not(.c-switch-input__label) {
+      font-weight: 700;
+    }
+
+    .c-shutter-button {
+      height: 45px;
+    }
+  }
+
+  .invalid-feedback {
+    height: 100%;
+  }
+}
+
+form.extended-form {
+
+}

@@ -68,9 +68,9 @@ class RegisterController extends Controller
             'nationality' => ['required', 'max:255'],
             'cv' => [Rule::requiredIf($data['program'] !== 'study'), 'file', 'max:2000', 'mimes:pdf,doc,docx,odt,zip'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'terms-register' => 'required',
+            'terms' => 'required',
         ],[
-            'terms-register.required' => __('validation.custom.gdpr'),
+            'terms.required' => __('validation.custom.gdpr'),
             'cv.uploaded' => __('validation.custom.uploaded', ['file' => 'curriculum']),
             'cv.required' => __('validation.custom.required', ['attribute' => 'curriculum'])
         ]);
@@ -81,6 +81,11 @@ class RegisterController extends Controller
                 $validator->errors()->add('register.email', $validator->errors()->first('email'));
             }
         });
+
+        if ($validator->fails()) {
+            redirect('register')
+                ->withErrors($validator, 'register');
+        }
 
         return $validator;
     }
@@ -100,15 +105,15 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'surnames' => $data['surnames'],
             'email' => $data['email'],
-            'phone_number' => json_encode([
+            'phone_number' => [
                 'prefix' => $data['prefix'],
                 'number' => $data['phone_number']
-            ]),
+            ],
             'nationality' => $data['nationality'],
             'program' => $data['program'],
-            'industry' => isset($data['industry']) && $data['program'] === 'internship' || isset($data['industry']) && $data['program'] === 'inter_relocat' ? json_encode($data['industry']) : null,
-            'study' => $data['program'] === 'study' && isset($data['study']) ? json_encode($data[$data['program']]) : null,
-            'university' =>  $data['program'] === 'university' && !empty($data['university']) ? json_encode($data[$data['program']]) : null,
+            'industry' => isset($data['industry']) && $data['program'] === 'internship' || isset($data['industry']) && $data['program'] === 'inter_relocat' ? $data['industry'] : null,
+            'study' => $data['program'] === 'study' && isset($data['study']) ? $data[$data['program']] : null,
+            'university' =>  $data['program'] === 'university' && !empty($data['university']) ? $data[$data['program']] : null,
             'type' => 'user',
             'cv' => array_key_exists('cv', $data) ? $data['cv']->store('cv') : null,
             'status_id' => DB::table('states')
@@ -133,7 +138,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all(), $request->file('cv'))));
+        event(new Registered($user = $this->create($request->all())));
 
         $this->guard()->login($user);
 
@@ -154,17 +159,17 @@ class RegisterController extends Controller
          * Adds the user to the customer list of Stripe, so it can be manage from the
          * Stripe dashboard.
          */
-        /*$user->createAsStripeCustomer([
+        $user->createAsStripeCustomer([
             'name' => $user->name,
             'email' => $user->email,
-            'phone' => __('prefixes.' . json_decode($user->phone_number)->prefix . '.prefix') . json_decode($user->phone_number)->number,
-        ]);*/
+            'phone' => $user->getPrefixedPhoneNumber(),
+        ]);
 
+
+        $admins = User::getAdmins();
         /*
          * Sends a notification to the admin.
          */
-//        $admins = User::getAdmins();
-//
-//        Notification::send($admins, new NewUserNotification($user));
+        Notification::send($admins, new NewUserNotification($user));
     }
 }

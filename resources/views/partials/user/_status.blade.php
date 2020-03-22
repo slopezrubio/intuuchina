@@ -1,0 +1,1 @@
+@include('partials.forms.user._' . Auth::user()->getCurrentStatus()->name)

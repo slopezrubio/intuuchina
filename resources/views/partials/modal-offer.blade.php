@@ -15,8 +15,8 @@
                     </p>
                 </div>
                 <div class="modal-footer modal-column">
-                    <button type="submit" class="modal-button modal-button_primary">{{ __('content.agree') }}</button>
-                    <button type="button" class="modal-button modal-button_secondary" data-dismiss="modal">{{ __('content.cancel') }}</button>
+                    <button type="submit" class="modal-button modal-button_primary">{{ __('Agree') }}</button>
+                    <button type="button" class="modal-button modal-button_secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                 </div>
             </form>
         </div>

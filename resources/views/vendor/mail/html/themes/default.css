@@ -132,10 +132,17 @@ footer {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+
 .flexbox-nowrap {
     -webkit-flex-wrap: nowrap;
     -ms-flex-wrap: none;
     flex-wrap: nowrap;
+}
+
+.flexbox-ai-center {
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-box-align: center;
 }
 
 .flexbox-jc-space-between {

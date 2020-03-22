@@ -1,0 +1,20 @@
+.modal {
+  .modal-link {
+    color: $primaryRed;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+
+  .medium-icon {
+    font-size: 3em;
+  }
+
+  .shutter-button:not(:first-child),
+  .c-cta-button:not(:first-child) {
+    margin-top: 1em;
+  }
+}

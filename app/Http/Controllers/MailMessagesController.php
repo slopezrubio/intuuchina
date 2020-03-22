@@ -2,38 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\Captcha;
+use App\Mail\QueryReceived;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ReceivedMessage;
-use App\Rules\Captcha;
+use Illuminate\Support\Facades\Validator;
 
 class MailMessagesController extends Controller
 {
-    /*
-     * Fix: No secret provided (recaptcha) TODO
-     */
-    public function send(Request $request) {
+    public function contactForm(Request $request) {
         $request->flash();
-        $msg = $request->validate([
-            'name' => 'required|max:50',
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50|alpha',
             'email' => 'required|email',
             'subject' => 'required|string',
 //            'message' => 'required|max:355',
             'terms' => 'required',
-            'g-recaptcha-response' => new Captcha()
+            'g-recaptcha-response' => new Captcha(),
         ], [
             'name.required' => 'I need your name',
-            'subject.required' => 'The message must be accompanied by a subject',
+            'name.alpha' => __('validation.custom.alpha.contact_form'),
+            'subject.required' => __('validation.custom.subject.required'),
 //            'gdpr.required' => 'You must agree the General Data Protection Regulation',
-            'terms.required' => 'You must agree with our terms and conditions and GDPR'
+            'terms.required' => __('validation.custom.gdpr')
         ]);
 
-        Mail::to(config('mail.from.address'))->queue(new ReceivedMessage($msg));
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator, 'contact');
+        }
+
+        Mail::to(User::getAdmins()->first())
+            ->queue(new QueryReceived($validator->validated()));
 
         return view('pages.message-confirmation');
-    }
-
-    public function hasBeenSent() {
-        return Mail::failures();
     }
 }

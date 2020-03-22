@@ -5,10 +5,10 @@
                 <p>
                     @switch($course)
                         @case('in-person')
-                            <span style="text-transform: uppercase">{{ __('content.from') }}</span>
+                            <span style="text-transform: uppercase">{{ __('From') }}</span>
                             @break
                         @case('online')
-                            <span style="text-transform: uppercase">{{ __('content.hourly price') }}</span>
+                            <span style="text-transform: uppercase">{{ __('Hourly Price') }}</span>
                             @break
                     @endswitch
                 </p>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="info-box__footer">
-                <h3>{{ __('content.please note') }}</h3>
+                <h3>{{ __('Please Note') }}</h3>
                 <p>
                     <span class="info-box__advice">{{ __('content.courses.' . $course . '.warning') }}</span>
                 </p>
@@ -38,10 +38,10 @@
                 <p>
                     @switch(array_key_first(__('content.courses')))
                         @case('in-person')
-                            <span style="text-transform: uppercase">{{ __('content.from') }}</span>
+                            <span style="text-transform: uppercase">{{ __('From') }}</span>
                             @break
                         @case('online')
-                            <span style="text-transform: uppercase">{{ __('content.hourly price') }}</span>
+                            <span style="text-transform: uppercase">{{ __('Hourly Price') }}</span>
                             @break
                     @endswitch
                 </p>
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="info-box__footer">
-                <h3>{{ __('content.please note') }}</h3>
+                <h3>{{ __('Please Note') }}</h3>
                 <p>
                     <span class="info-box__advice">{{ __('content.courses.' . array_key_first(__('content.courses')) . '.warning') }}</span>
                 </p>

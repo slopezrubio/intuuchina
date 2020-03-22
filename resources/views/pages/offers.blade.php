@@ -16,17 +16,8 @@
     @endcomponent
 
     <main id="job-board" class="container-fluid">
-        <section id="search-tool">
-            @component('components.toolbars.job-board')
-
-            @endcomponent
-        </section>
-
-        <section id="content">
-            {{-- Tabla de ofertas --}}
-            @include('partials._offers-list')
-        </section>
-
+        {{-- Tabla de ofertas --}}
+        @include('partials._offers-list')
     </main>
 
     @include('partials._footer')

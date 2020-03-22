@@ -32,4 +32,8 @@ class Testimonial extends Model
             return $testimonials;
         });
     }
+
+    public static function getAdminList() {
+        return Testimonial::all();
+    }
 }

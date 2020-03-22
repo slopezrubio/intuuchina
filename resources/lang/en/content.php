@@ -11,6 +11,8 @@ return [
     | application.
     |
     */
+    'no such item has been found' => 'No :item has been found',
+    'are you sure you want to remove' => 'Are you sure you want to remove this :item?',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,8 +23,8 @@ return [
     'what the media think' => 'What <strong>the media</strong> think about IntuuChina',
     'those who have already tried it says' => 'Those who have already tried it says',
     'internship' => 'Internship',
+    'dashboard' => 'Dashboard',
     'learn chinese' => 'Learn Chinese',
-    'university' => 'University',
     'why intuuchina' => 'Why IntuuChina',
     'job offers' => 'Job Offers',
     'job description' => 'Job Description',
@@ -34,7 +36,6 @@ return [
     'what we offer' => 'What We Offer',
     'know us' => 'Know Us',
     'delete job offer modal' => 'Delete Job Offer',
-    'login' => 'Login',
     'those who have already tried it' => 'Those <strong>who have already tried it</strong>',
     'description' => 'Description',
     'details' => 'Details',
@@ -49,43 +50,71 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'application fee' => 'Application Fee',
     'attached' => 'Attached',
-    'el pais quote' => '"The statistics confirmed that IntuuChina hit the spot: They have managed to place 290 people of 46 nationalities ... The highest percentage of success (78%) is among those who arrived in China with the intention of staying"',
-    'el pais author' => 'Z. Aldama',
-    'el pais date' => '08/05/2016',
-    'eitb quote' => '"Chinese companies are hiring foreign talent to help them internationalize"',
-    'eitb date' => '05/04/2015',
-    'el mundo quote' => '"In just 9 months, an IntuuChina candidate went from being a fellow in a sales department to running that department"',
-    'el mundo date' => '26/10/2014',
-    'atresmedia quote' => '"They started helping their friends to disembark in the Asian market and ended up making it a successful career"',
-    'atresmedia author' => 'S. Romero',
-    'atresmedia date' => '02/05/2014',
-    'fortune quote' => '"In just 4 months since I arrived in China I found a job as an account manager ... I think it was the best decision I\'ve made"',
-    'fortune author' => 'I. Mount',
-    'fortune date' => '01/12/2015',
-    'tvc quote' => '"I prefer to work outside, is better paid, it is easier to find an opportunity with IntuuChina and it is a fantastic experience"',
-    'tvc date' => '19/07/2015',
-    'rtve quote' => '"The Internationalization Award, presented by the director of Casa de América, Santiago Miralles, has been for IntuuChina, who advises young people from various countries on how they can access the Chinese labor market"',
-    'rtve date' => '23/11/2016',
-    'abc quote' => '"80% of IntuuChinos continue their career in the country ... Ruben Sanchez got the job after the first 6 months of practice"',
-    'abc author' => 'Pablo M. Díez',
-    'abc date' => '09/11/2014',
-    'nationality' => 'Nationality',
-    'entrepeneur quote' => '"We help talented young people who do not find opportunities in their country, as would be the case in Spain, and we help them develop their career in China"',
-    'entrepeneur date' => '21/05/2015',
-    'internship service text' => 'Looking for a professional experience in China? We can place you in Startup or Multinational.',
-    'university service text' => 'We have worked with all major business schools in China placing 100% of our applicants. Let us help you!',
-    'learn chinese service text' => 'Study the most spoken first language in the world. Come to China for a full immersion or join classes on-line',
     'follow us' => 'Follow Us',
+    'we need you to pay' => 'We need you to pay in order to proceed with the process',
     'not provided' => 'Not Provided',
     'resume' => 'Resume',
     'website map' => 'WebSite Map',
     'contact us' => 'Contact Us!',
+    'paid user' =>  "
+                        <p>
+                            The payment has been carried out successfully. You should have received an email with the corresponding biling.
+                        </p>
+                        <p>
+                            In the next few hours we are going to get you in touch to arrange our first meeting with you. Before this to happen, let us know whether if you
+                            would be available or not to do an in-person meeting with us by reporting it at <a href='mailto:".config('mail.to.address')."'>".config('mail.from.address')."</a>
+                        </p>
+                        <p>
+                            Do you want to see the billing?
+                        </p>
+                    ",
+    'verified user' =>   "
+                        <p>
+                            You have been successfully registered. Nonetheless we remind you that in order to proceed with your application
+                            it is necessary to carry out the corresponding payment for your :program Program.
+                        </p>
+                    ",
+    'gdpr' =>   "
+                    <p>
+                        First of all we thank you for the interest you have shown in addressing IntuuChina Ltd. by providing us with your data and information.</p>' . '<p>We inform you that, in accordance with the data protection regulations, your data will be subject to treatment by IntuuChina Ltd. as Responsible for it with the purpose of managing your resume for the selection of personnel. If your profile is not conform to the relevant requirements in the current selection processes we will proceed to keep your data for future processes that do fit your profile, unless you. Tell us otherwise. We have your consent for the processing of the data you have provided us with voluntary, free and informed form in order to participate in the selection processes of the organization.
+                    </p>
+                    <p>
+                        On the other hand, we want to inform you that we will not transfer your data to third parties, unless express authorization or legal obligation. Nor are international transfers to other countries planned. You may exercise your rights of access, rectification, deletion, opposition, limitation of processing, portability, transparency in information and no longer be subject to automated individualized decisions (including profiling), communicating it in writing, by sending an email to: info@intuuchina.com
+                    </p>
+                    <p>
+                        For more information about our Privacy Policy, you can check the following email: <a href='#' data-toggle='modal' data-target='#privacyPolicy'>Privacy Policy</a>
+                    </p>
+                    <p>
+                        INTUUCHINA Ltd
+                    </p>
+                ",
+    'privacy policy',   "
+                            <p>
+                                First of all we would like to thank you for the interest you have shown in contacting IntuuChina Ltd. by providing us with your data and information.
+                            </p>
+                            <p>
+                                We inform you that, in accordance with data protection regulations, your data will be processed by IntuuChina Ltd. as the Responsible Party with the to manage your curriculum for the selection of personnel. If your profile is not to comply with the relevant requirements in the current selection processes we will proceed to keep your data for future processes that do fit your profile, unless you tell us otherwise. We have your consent for the processing of the data you have provided us with voluntary, free and informed in order to participate in the selection processes of the organization.
+                            </p>
+                            <p>
+                                On the other hand, we would like to inform you that we will not pass on your data to third parties, except express authorization or legal obligation. There is also no provision for transfers international to other countries. You may exercise your rights of access, rectification, deletion, opposition, limitation treatment, portability, transparency of information and not to be subject to automated individualized decisions (including profiling), by sending an e-mail to: info@intuuchina.com
+                            </p>
+                            <p>
+                                For more information about our Privacy Policy, you can consult the following link: www.intuuchina.com
+                            </p>
+                            <p>
+                                Without further ado, we take this opportunity to send you our warmest regards. 
+                                <br/>
+                                Yours sincerely, 
+                                <br/>
+                                INTUUCHINA Ltd
+                            </p>
+                        ",
+    'are you in doubt' => "Are you in doubt? Contact us at <a href='mailto:" .config('mail.to.address'). "'>" .config('mail.from.address'). "</a>",
+
+
+
     'no offers found' => 'There are no offers which fulfill the filter criteria',
-    'hourly price' => 'Hourly price',
-    'from' => 'From',
-    'please note' => 'Please note',
     'per hour symbol' => '/h',
     'intuuchina\'s first priority' => 'IntuuChina\'s first priority is to help people and organizations make a successful transition in China. To this end, we will guide you on your own path by making available the most valuable resources. An energetic and experienced team.',
     'awards and honours text' => '
@@ -104,6 +133,7 @@ return [
     'there are no' => 'There are no :item with such characteristic',
     'pending_deposit status text' => 'Pending the second deposit.',
     'done status text' => 'Ready to take off.',
+    'joined' => 'Joined',
 
 
     /*
@@ -151,7 +181,6 @@ return [
     'decline' => 'Decline',
     'duration' => 'Duration',
     'e-mail address' => 'E-Mail Address',
-    'email placeholder' => 'e.g. confucio@confucio.com',
     'first name' => 'First Name',
     'home' => 'Home',
     'issue' => 'Issue',
@@ -160,13 +189,12 @@ return [
     'industry' => 'Industry',
     'join also' => 'Join Also',
     'job position' => 'Job Position',
-    'loading...' => 'Loading...',
     'pay' => 'Pay :value',
+    'per month' => "<b>:price</b> per month",
+    'per hour' => '<b>:price</b> per hour',
     'pay now' => 'Pay Now',
     'see more' => 'See more',
     'open positions' => 'Open Positions',
-    'name placeholder' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
-    'subject placeholder' => 'Write down here your issue',
     'filter by:' => 'Filter by:',
     'picture' => 'Picture',
     'phone number' => 'Phone Number',
@@ -229,17 +257,26 @@ return [
         'mba' => [
             'heading' => 'MBA',
             'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
-            'key' => 'mba'
+            'key' => 'mba',
+            'text' => 'MBA',
         ],
         'mib' => [
             'heading' => 'M. Intl. Bsns.',
             'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
             'key' => 'mib',
+            'text' => 'M. Intl. Bsns.',
         ],
         'other' => [
             'heading' => 'Other',
             'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.',
-            'key' => 'other'
+            'key' => 'other',
+            'text' => 'Other',
+        ],
+    ],
+    'application fee' => [
+        'price' => [
+            'eur' => '30.00',
+            'usd' => '33.50',
         ],
     ],
     'courses' => [
@@ -285,6 +322,7 @@ return [
     'title' => 'Title',
     'offer location label' => 'Location',
     'save' => 'Save',
+    'testimonials' => 'Testimonials',
     'program' => 'Program',
 
 
@@ -295,5 +333,5 @@ return [
     */
 
     'made with love by ' => 'Made with love ❤ by ',
-    'copyright' => 'IntuuChina Copyright © 2019 All rights reserved',
+    'copyright' => 'IntuuChina Copyright © 2019 <br/>All rights reserved',
 ];

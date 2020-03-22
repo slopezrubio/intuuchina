@@ -1,188 +1,167 @@
-@mixin cards-list($card-pictures__width, $card-pictures__height, $shutter__height) {
-  $medium_devices__card-body__action: "only screen and (min-width: 576px)";
-  $medium-devices: "only screen and (min-width:" $card-pictures__width * 2 + (15 * 4) ")";
-  $large-devices: "only screen and (min-width:" $card-pictures__width * 3 + (15 * 5) ")";
+@mixin cards-list($card-width, $card-height) {
+  margin-bottom: 3em;
+  padding-top: 1em;
 
-  .cards-list {
-    margin-bottom: 3em;
+  &__empty {
+    text-align: center;
+    color: $primaryRed;
+    font-weight: 700;
+    padding: 3em;
+    margin: 0 auto;
+  }
 
-    &__empty {
-      text-align: center;
-      color: $primaryRed;
-      font-weight: 700;
-      padding: 3em;
-      width: $card-pictures__width;
-      margin: 0 auto;
-    }
+  padding-left: 0;
+  padding-right: 0;
+  .card-group {
+    @include flexbox();
 
-    @media #{$medium-devices} {
-      &__empty {
-        width: $card-pictures__width * 2 + (15 * 4);
+    .card {
+      max-width: $card-width;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      margin-bottom: 2.5em;
+
+      &__shutter {
+        position: absolute;
+        background: $primaryRed;
+        border-radius: 6px 6px 0 0;
+        width: 100%;
+        height: 50px;
+        opacity: 0.7;
+        color: white;
+        text-transform: uppercase;
+        line-height: 50px;
+        text-align: center;
+        padding: 0 1em;
+        font-size: 1em;
+        z-index: 1;
+      }
+
+      &__window {
+        width: 100%;
+        height: $card-height;
+        overflow: hidden;
+        position: relative;
+
+        img {
+          width: auto;
+          height: 100%;
+          @include prefixed(filter, grayscale(100%))
+        }
+      }
+
+      &-body {
+        &__title {
+          position: relative;
+          height: 60px;
+
+          &, & > a {
+            color: $primaryDark;
+            font-weight: 700;
+          }
+
+          a {
+            display: block;
+            width: 100%;
+            height: 100%
+          }
+
+          &:after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            left: 0px;
+            bottom: 0px;
+            @include prefixed(transform, translateX(-100%));
+            background: transparent;
+          }
+
+          &:hover:after {
+            @include prefixed(transform, translateX(0));
+            background: $primaryDark;
+            @include prefixed(transition, all ease-in-out 0.5s);
+          }
+        }
+
+        &__action {
+          @include flexbox();
+          @include flex-direction(column);
+
+          a {
+            font-size: 1em;
+          }
+        }
+      }
+
+      &-footer {
+
       }
     }
+  }
 
-    @media #{$large-devices} {
-      &__empty {
-        width: $card-pictures__width * 2 + (15 * 5);
-      }
-    }
+  @include media-breakpoint-up(sm) {
+    padding-left: 15px;
+    padding-right: 15px;
 
     .card-group {
-      @include flexbox();
       @include flex-direction(column);
-      @include align-items(center);
-      .card {
-        max-width: $card-pictures__width;
-        width: 100%;
-        margin-bottom: 2.5em;
-        &__shutter {
-          position: absolute;
-          background: $primaryRed;
-          border-radius: 6px 6px 0 0;
-          width: 100%;
-          height: $shutter__height;
-          opacity: 0.7;
-          color: white;
-          text-transform: uppercase;
-          line-height: $shutter__height;
-          text-align: center;
-          padding: 0 1em;
-          font-size: 1em;
-          z-index: 1;
-        }
+    }
+  }
 
-        &__window {
-          width: 100%;
-          height: $card-pictures__height;
-          overflow: hidden;
-          position: relative;
-          img {
-            width: auto;
-            height: 100%;
-            @include prefixed(filter, grayscale(100%))
-          }
-        }
+  @include media-breakpoint-up(md) {
+    .card-group {
+      @include flex-direction(row);
+      @include justify-content(flex-start);
+      .card {
+        flex: 0 0 $card-width;
+        margin-left: 5px;
+        margin-right: auto;
 
         &-body {
-          &__title {
-            position: relative;
-            height: 60px;
-            &, & > a {
-              color: $primaryDark;
-              font-weight: 700;
-            }
-
-            a {
-              display: block;
-              width: 100%;
-              height: 100%
-            }
-
-            &:after {
-              content: "";
-              position: absolute;
-              height: 2px;
-              width: 100%;
-              left: 0px;
-              bottom: 0px;
-              @include prefixed(transform, translateX(-100%));
-              background: transparent;
-            }
-
-            &:hover:after {
-              @include prefixed(transform, translateX(0));
-              background: $primaryDark;
-              @include prefixed(transition, all ease-in-out 0.5s);
-            }
-          }
-
-          &__action {
-            @include flexbox();
-            @include flex-direction(column);
-            a  {
-              font-size: 1em;
-            }
-
-            .cta {
-              margin-top: 0;
-              width: 100%;
-              margin-bottom: 0.75em;
-              height: 55px;
-              &:first-of-type {
-                margin-top: 1em;
+          &__subtitle {
+            p {
+              &:first-child {
+                float: left;
               }
 
-              a {
-                line-height: 55px;
-              }
-            }
-
-            .card-form {
-              @include flexbox();
-              @include flex-direction(column);
-            }
-          }
-
-          @media #{$medium_devices__card-body__action} {
-            &__action {
-              margin-top: 1em;
-
-              .cta {
-                width: 45%;
-                margin-right: 0;
-                &:first-of-type {
-                  margin-left: 0;
-                  margin-top: 0;
-                }
+              &:nth-child(2n) {
+                display: table;
+                margin: 0 0 0 auto;
               }
 
-              .card-form {
-                @include flex-direction(row);
-                @include justify-content(space-between);
-              }
-            }
-          }
-        }
-
-        &-footer {
-
-        }
-      }
-    }
-
-    @media #{$medium-devices} {
-      .card-group {
-        @include grid();
-        @include grid-template-columns($card-pictures__width $card-pictures__width);
-        @include grid-column-gap(1%);
-        @include justify-content(center);
-
-        .card {
-          &-body {
-            &__subtitle {
-              p {
-                &:first-child {
-                  float: left;
-                }
-
-                &:nth-child(2n) {
-                  display: table;
-                  margin: 0 0 0 auto;
-                }
-
-                &:last-child {
-                  clear: right;
-                }
+              &:last-child {
+                clear: right;
               }
             }
           }
         }
       }
     }
+  }
 
-    @media #{$large-devices} {
-      .card-group {
-        @include grid-template-columns($card-pictures__width $card-pictures__width $card-pictures__width);
+  @include media-breakpoint-up(lg) {
+    .card-group {
+      .card {
+        //margin-left: 5px;
+        margin-right: 5px;
+        flex: 0 0 ($card-width - (5px * 6));
+      }
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    .card-group {
+      .card {
+        flex: 0 0 ($card-width);
+        &:nth-child(3n+1) {
+          margin-left: 50px;
+        }
+
+        &:last-child {
+          margin-right: auto;
+        }
       }
     }
   }

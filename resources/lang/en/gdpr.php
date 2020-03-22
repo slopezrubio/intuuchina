@@ -1,8 +1,0 @@
-<?php
-
-return [
-    'title' => 'General Data Protection Regulation',
-    'text' =>   '<p>First of all we thank you for the interest you have shown in addressing IntuuChina Ltd. by providing us with your data and information.</p>' . '<p>We inform you that, in accordance with the data protection regulations, your data will be subject to treatment by IntuuChina Ltd. as Responsible for it with the purpose of managing your resume for the selection of personnel. If your profile is not conform to the relevant requirements in the current selection processes we will proceed to keep your data for future processes that do fit your profile, unless you. Tell us otherwise. We have your consent for the processing of the data you have provided us with voluntary, free and informed form in order to participate in the selection processes of the organization.</p>' .
-    '<p>On the other hand, we want to inform you that we will not transfer your data to third parties, unless express authorization or legal obligation. Nor are international transfers to other countries planned. You may exercise your rights of access, rectification, deletion, opposition, limitation of processing, portability, transparency in information and no longer be subject to automated individualized decisions (including profiling), communicating it in writing, by sending an email to: info@intuuchina.com</p>' .
-    '<p>For more information about our Privacy Policy, you can check the following email: <a href="#" data-toggle="modal" data-target="#privacyPolicy">Privacy Policy</a></p>' . '<p>INTUUCHINA Ltd</p>',
-];

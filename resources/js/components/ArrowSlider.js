@@ -1,9 +1,11 @@
 import MediaQueries from '../main/breakpoints';
 import DOM from '../main/dom';
+import browser from "../facades/browser";
 import { SliderFactory } from '../factories/SliderFactory';
 
 function ArrowSlider(options) {
     this.holder = document.querySelector('.arrow-slider__holder');
+    this.sliderKeys = options.sections !== undefined ? options.sections : null;
     this.offset = 1;
     this.currentSlideIndex = options.slide ? options.slide + this.offset : null;
     this.carousel = this.holder.children[0];
@@ -187,6 +189,12 @@ function ArrowSlider(options) {
         return this;
     };
 
+    this.setSliderId = function() {
+        this.holder.setAttribute('id', this.sliderKeys[this.currentSlideIndex - this.offset]);
+        browser.verticalScrollTo(this.holder);
+        return this;
+    };
+
     /**
      * Sets the width of all the slides comprised in the slider.
      *
@@ -280,8 +288,6 @@ function ArrowSlider(options) {
      * @param e
      */
     this.updateController = (e) => {
-        e.preventDefault();
-
         for (let x = 0; x < this.controllers.length; x++) {
             if (e.target.isEqualNode(this.controllers[x]) || e.target.parentElement.isEqualNode(this.controllers[x])) {
                 if (this.currentSlideIndex !== x + this.offset) {
@@ -292,6 +298,7 @@ function ArrowSlider(options) {
                         this.setCurrentSlide(slideSelected)
                             .setCurrentSlideIndex(slideSelected);
                     } else {
+                        e.preventDefault();
                         this.setCurrentSlideIndex(x)
                             .setCurrentSlide(x);
                     }
@@ -299,7 +306,8 @@ function ArrowSlider(options) {
                     DOM.toggleSingleClass(this.controllers[this.currentSlideIndex - this.offset], 'selected');
 
                     // Update the sliders.
-                    this.runAutoWidths()
+                    this.setSliderId()
+                        .runAutoWidths()
                         .moveCarousel()
                         .paint();
 

@@ -13,23 +13,14 @@
                     }
                 }
 
-                @include inputText();
-
-                & > div > label,
-                & > div > div > label{
-                    font-weight: 700;
-                }
-
-                & > div:not(:first-of-type) {
-                    margin-top: 19px;
-                }
+                //@include inputText();
 
                 .regular-select-wrapper {
                     z-index: 2;
                     position: relative;
                     select {
                         @include resetSelect;
-                        @include marginBottom;
+                        @extend %input-margins;
                         z-index: -1;
                         cursor: pointer;
                         &:focus {
@@ -123,7 +114,7 @@
 
 @media only screen and (min-width: 575px) {
     #industryFieldset, #universityFieldset, #studyFieldset {
-        div {
+        & > div {
             @include grid();
             @include grid-template-columns(1fr 1fr);
             @include grid-column-gap(5%);

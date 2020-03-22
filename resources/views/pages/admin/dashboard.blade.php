@@ -1,17 +1,29 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="header header--no-background-image" id="dashboard">
+    @component('components.header')
+        @slot('variant', 'tertiary')
 
-        {{--Elemento NAV--}}
-        @include('partials._nav')
-
-        {{--Título de la página--}}
-        @include('partials._header')
-    </header>
+        @slot('title', __('heading.admin.' .$view_name. '.title'))
+    @endcomponent
     <main>
-        @include('partials.admin._dashboard-options')
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-8">
+                    @component('components.tab', [
+                        'tabs' => __('component.dashboard.admin'),
+                        'data' => $data,
+                    ]);
+                        @slot('id', $view_name)
+                        @if(isset($data['selected']))
+                            @slot('selected', $data['selected'])
+                        @endif
+                    @endcomponent
+                </div>
+            </div>
+        </div>
     </main>
 
     {{--Elemento FOOTER--}}
     @include('partials._footer')
+@endsection

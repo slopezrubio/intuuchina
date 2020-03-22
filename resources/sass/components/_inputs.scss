@@ -1,0 +1,415 @@
+/**
+ * Text
+ */
+%input-margins {
+  border-radius: 0px;
+  border-width: 0px 0px 2px 0px;
+  background: transparent;
+  padding-left: 0px;
+  &:focus,
+  &:invalid {
+    box-shadow: none;
+  }
+
+  &:focus {
+    background: transparent;
+    border-color: $primaryRed;
+  }
+}
+
+input.c-text-input {
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.6;
+  @extend %input-margins;
+  @include prefixed(transition, 'border-color .15s ease-in-out, box-shadow .15s ease-in-out');
+  @include placeholder {
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+  &.is-invalid {
+    @include placeholder {
+      font-size: 0.85em;
+      font-weight: 500;
+      color: $primaryRed;
+    }
+  }
+}
+
+.StripeElement {
+  &::after {
+    background: $neutralColor;
+    height: 2px;
+    width: calc(100% + 16px);
+    position: relative;
+    top: 9px;
+    left: -9px;
+    content: "";
+    display: block;
+    @include prefixed(transition, 'background .15s ease-in-out, box-shadow .15s ease-in-out');
+  }
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 1.5rem;
+  line-height: 1.6;
+
+  &--webkit-autofill {
+    background-color: #fefde5 !important;
+  }
+
+  &--focus::after, &--invalid::after {
+    background: $primaryRed;
+    //border-color: $primaryRed;
+  }
+}
+
+
+/**
+ * Switch
+ */
+.c-switch-input {
+  $switch: (
+      width: 64px,
+      height: 34px,
+  );
+
+  @include flexbox();
+  @include justify-content(space-between);
+  @include flex-direction(row);
+  @include align-items(center);
+
+  label:nth-child(2) {
+    position: relative;
+    width: map_get($switch, 'width');
+    height: map_get($switch, 'height');
+    margin-top: 10px;
+    background: transparent;
+
+    @include reset-input();
+
+    input:checked + .c-switch-input__wrapper:before {
+      @include prefixed('transform', 'translateX(28px)');
+    }
+
+    input:checked + .c-switch-input__wrapper {
+      background: $primaryRed;
+    }
+
+    input:focus + .c-switch-input__wrapper {
+      box-shadow: 0 0 1px $primaryRed;
+    }
+
+    input:checked + .c-switch-input__wrapper:after {
+      font-family: 'Montserrat', sans-serif;
+      content: "YES";
+      left: 4px;
+      top: 11px;
+      color: $primaryWhite;
+    }
+  }
+
+  &__label {
+    margin: 0 0;
+    font-weight: 500;
+    width: 60%;
+  }
+
+  &__wrapper {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 34px;
+    background: $neutralColor;
+    @include prefixed('transition', '.4s');
+    padding-left: map_get($switch, 'width');
+
+    &:before {
+      position: absolute;
+      border-radius: 50%;
+      content: "";
+      width: 26px;
+      height: 26px;
+      background: $primaryWhite;
+      left: 4px;
+      bottom: 3px;
+      @include prefixed('transition', '.4s');
+      z-index: 10;
+    }
+
+    &::after {
+      font-family: $primary-font;
+      content: "NO";
+      color: $primaryDark;
+      top: 11px;
+      position: absolute;
+      font-size: 0.8em;
+      z-index: 1;
+      left: 35px;
+    }
+
+    &--grouped {
+      input:checked + .c-switch-input__wrapper:after {
+        top: 11px;
+      }
+
+      &::before {
+        bottom: 4px;
+      }
+
+      &::after {
+        top: 12px;
+      }
+    }
+  }
+}
+
+/**
+ * Checkbox
+ */
+.c-checkbox-input {
+  $checkbox: (
+      width: 28px,
+      height: 28px,
+  );
+
+  @include flexbox();
+  @include justify-content(space-between);
+  @include flex-direction(row);
+  @include align-items(center);
+
+  label:nth-child(2) {
+    position: relative;
+    float: left;
+    background: transparent;
+    margin-top: .5em;
+
+    @include reset-input();
+
+    input:checked + .c-checkbox-input__wrapper::after {
+      font-family: Font Awesome 5 Free, Arial, serif;
+      content: "\F00C";
+    }
+  }
+
+  &__label {
+    margin: 0 0;
+    width: 60%;
+  }
+
+  &__wrapper {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  &--footer {
+    label:nth-child(2) {
+      border: 1px solid $primaryWhite;
+      width: map_get($checkbox, 'width');
+      height: map_get($checkbox, 'height');
+
+      input:checked + .c-checkbox-input__wrapper {
+        background: $primaryRed;
+        color: $primaryWhite;
+      }
+
+      input:checked + .c-checkbox-input__wrapper::after {
+        font-size: map_get($checkbox, 'width');
+      }
+    }
+  }
+}
+
+/**
+ * Selector
+ */
+.c-select-input {
+  z-index: 2;
+  position: relative;
+  &:before {
+    @extend %arrow-icon;
+    top: 5px;
+  }
+
+  @include reset-input(select);
+
+  select {
+    @extend %input-margins;
+    z-index: -1;
+    cursor: pointer;
+    &::-ms-expand {
+      display: none;
+    }
+
+    option {
+      font-weight: 700;
+      font-family: $primary-font;
+    }
+  }
+
+  &--gradient {
+    max-width: 350px;
+    background-image: linear-gradient(to left, $primaryRed 62px, $primaryDark 62px);
+    &:before {
+      content: '';
+      top: 7px;
+      position: absolute;
+      left: calc(100% - 2.7em);
+      border-top: solid 1px $primaryWhite;
+      border-right: solid 1px $primaryWhite;
+    }
+
+    select, select:focus {
+      padding-right: 4.75em;
+      padding-left: 0.75em;
+      color: $neutralColor;
+      border: none;
+      option {
+        font-weight: 500;
+        background: $primaryDark;
+      }
+    }
+  }
+}
+
+/**
+ * Buttons
+ */
+.c-cta-button {
+  border: none;
+  margin: 2em auto 0 auto;
+  height: 45px;
+  padding: 0;
+  cursor: pointer;
+  @include fade();
+  border-radius: 34px;
+  width: 100%;
+  @include flexbox();
+  @include align-items(center);
+  @include justify-content(center);
+
+  &--primary {
+    background: $tertiaryRed;
+
+    a {
+      color: $primaryWhite;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &--secondary {
+    color: $primaryRed;
+  }
+
+  &__loader {
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: .25em;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  a {
+    display: inline-block;
+    font-size: 1em;;
+    line-height: 45px;
+    height: 100%;
+    width: 100%;
+    font-weight: 500;
+    &:hover,
+    &:focus,
+    &:active {
+      color: $primaryWhite;
+    }
+    i {
+      padding-left: 1em;
+    }
+  }
+}
+
+.c-shutter-button {
+  @include hacks();
+  position: relative;
+  background: $primaryWhite;
+  @include prefixed(transition-property,color);
+  @include prefixed(transition-duration, $mediumDuration);
+  border: 2px solid $primaryRed;
+  border-radius: 22px;
+  width: 100%;
+
+  &--modal {
+    height: 50px;
+    :not(:first-of-type) {
+      margin-top: 1em;
+      font-size: 1.15em;
+    }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $primaryRed;
+    border-radius: 20px;
+    @include prefixed(transform, scaleX(1));
+    @include prefixed(transform-origin, 50%);
+    @include prefixed(transform-property, transform);
+    @include prefixed(transition-duration, $mediumDuration);
+    @include prefixed(transition-timing-function, ease-out);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $primaryRed;
+
+    &:before {
+      @include prefixed(transform, scaleX(0));
+    }
+  }
+}
+
+.c-alternative-button {
+  font-weight: 700;
+  background: none;
+  border: none;
+  color: $primaryRed;
+  margin-top: 1em;
+
+  &:hover, a:hover {
+    text-decoration: underline;
+  }
+
+  &[type=submit] {
+    @include prefixed(appearance, none);
+  }
+}
+
+.c-cta-button, .c-shutter-button, .c-alternative-button {
+  margin-top: 0.5em;
+
+  @include media-breakpoint-up(md) {
+    margin-top: 0;
+  }
+}
+
+/**
+ * File
+ */
+.c-file-input {
+  @extend %input-margins;
+}

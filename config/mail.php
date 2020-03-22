@@ -70,10 +70,10 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-    'to' => [
-        'address' => env('MAIL_TO_ADDRESS', 'fernando.zavala@intuuchina.com'),
-        'name' => env('MAIL_TO_NAME', 'Fernando de Zavala')
-    ],
+//    'to' => [
+//        'address' => env('MAIL_TO_ADDRESS', 'fernando.zavala@intuuchina.com'),
+//        'name' => env('MAIL_TO_NAME', 'Fernando de Zavala')
+//    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -1,0 +1,92 @@
+.dialog-box {
+    height: 100vh;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(center);
+
+    &__container {
+        max-width: map_get($container-max-widths, 'md');
+    }
+
+    &__content {
+        background: $primaryWhite;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        @include border-radius(0 0 10px 10px);
+
+        & > *:not(:first-child) {
+            margin-top: 1em;
+        }
+    }
+
+    &__title {
+        background: $sectionDark;
+        margin-bottom: 0;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        @include border-radius(10px 10px 0 0);
+        font-size: 1.35em;
+        text-transform: uppercase;
+    }
+
+    &__dialog {
+
+    }
+
+    &__actions {
+        @include flexbox();
+        @include flex-direction(column-reverse);
+
+
+        @include media-breakpoint-up(sm) {
+            @include flex-direction(row);
+            @include align-items(center);
+        }
+
+
+
+        &--alternate {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        &--main {
+            > form {
+                @include flexbox();
+
+                @include media-breakpoint-up(sm) {
+                    @include justify-content(flex-end);
+
+                    .c-cta-button {
+                        margin-right: 0;
+                        width: calc(50% - 1em);
+                    }
+                }
+            }
+        }
+
+        &--alternate {
+            @include media-breakpoint-up(sm) {
+                text-align: left;
+            }
+        }
+    }
+
+    &__footer {
+        border-top: 1px solid $neutralColor;
+        padding-top: 1em;
+
+        a {
+            font-size: 1em;
+            color: $tertiaryRed;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        li,
+        p {
+            font-size: .85em;
+        }
+    }
+}
