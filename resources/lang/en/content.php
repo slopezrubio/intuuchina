@@ -155,8 +155,6 @@ return [
     'alt what makes us different' => 'A group of IntuuChina applicants',
     'alt logo' => 'The :brand logo',
 
-
-
     /*
     |--------------------------------------------------------------------------
     | Forms (labels, placeholder, options, items...)
@@ -189,6 +187,7 @@ return [
     'industry' => 'Industry',
     'join also' => 'Join Also',
     'job position' => 'Job Position',
+    'months' => '{1} Month|[2,*] Months',
     'pay' => 'Pay :value',
     'per month' => "<b>:price</b> per month",
     'per hour' => '<b>:price</b> per hour',
@@ -212,26 +211,11 @@ return [
         'other_industries' => 'Other',
         'marketing_business' => 'Marketing & Business Dev.',
     ],
-    'jobs' => [
-        'text' => 'Jobs',
-        'locations' => [
-            'honk-kong' => [
-                'key' => 'honk-kong',
-                'text' => 'Honk Kong',
-            ],
-            'shanghai' => [
-                'key' => 'shanghai',
-                'text' => 'Shanghai',
-            ],
-            'beijing' => [
-                'key' => 'beijing',
-                'text' => 'Beijing',
-            ],
-            'shenzen' => [
-                'key' => 'shenzhen',
-                'text' => 'Shenzhen',
-            ]
-        ]
+    'job-locations' => [
+        'hong-kong' => 'Hong Kong',
+        'shanghai' => 'Shanghai',
+        'beijing' => 'Beijing',
+        'shenzhen' => 'Shenzhen',
     ],
     'invoice' => [
         'internship' => [

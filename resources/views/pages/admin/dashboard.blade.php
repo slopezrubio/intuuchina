@@ -3,15 +3,14 @@
 @section('content')
     @component('components.header')
         @slot('variant', 'tertiary')
-
-        @slot('title', __('heading.admin.' .$view_name. '.title'))
+        @slot('header', __('component.header.admin.' .$view_name))
     @endcomponent
     <main>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">
                     @component('components.tab', [
-                        'tabs' => __('component.dashboard.admin'),
+                        'tabs' => __('component.tabs.dashboard.admin'),
                         'data' => $data,
                     ]);
                         @slot('id', $view_name)

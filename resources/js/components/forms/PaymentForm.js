@@ -1,5 +1,5 @@
 import { FormFactory } from "../../factories/FormsFactory";
-import {Dialog, dialogFactory} from "../Dialog";
+import { Dialog, dialogFactory } from "../Dialog";
 
 import str from '../../facades/str';
 import money from '../../facades/money';

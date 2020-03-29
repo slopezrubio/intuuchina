@@ -50,7 +50,7 @@ var api = (function() {
     return {
         jQueryGet: function(url, data = null, params = null, callback = null) {
             if (params !== null) {
-                url = _.setLaravelParams(url, params);
+                url = this.setLaravelParams(url, params);
             }
 
             $.get({

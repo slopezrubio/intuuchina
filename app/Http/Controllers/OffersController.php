@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Offer;
+use App\Testimonial;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
-use App\Offer;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
@@ -107,10 +105,9 @@ class OffersController extends Controller
      */
     public function edit($id)
     {
-
-        $offer = Offer::find($id);
-
-        return view('pages/admin/offer', compact('offer'));
+        return view('pages/admin/offer', [
+            'offer' => Offer::find($id)
+        ]);
     }
 
     /**
@@ -124,9 +121,16 @@ class OffersController extends Controller
     {
         //
         $offer = Offer::find($id);
-        $update = $this->setUpdatedAttributesToOffer($offer, $request->all(), $request);
-        $offer->renewUpdateAt($update);
-        $offer->save();
+
+        foreach ($request->all() as $key => $value) {
+            if ($key === 'picture') {
+                $offer->updateThumbnail($request->file($key));
+                $offer->save();
+            }
+        }
+//        $update = $this->setUpdatedAttributesToOffer($offer, $request->all(), $request);
+//        $offer->renewUpdateAt($update);
+//        $offer->save();
 
         return redirect()->route('admin.offers');
     }
@@ -141,11 +145,12 @@ class OffersController extends Controller
      */
     public function setUpdatedAttributesToOffer(Offer $offer, array $attributes, Request $request) {
         $updated = false;
+
         foreach ($attributes as $key => $value) {
             if ($key !== '_token') {
                 if ($key === 'picture') {
-                    $this->deleteUploadedFileAssociatedWithOffer($offer->id);
-                    $offer[$key] = $this->uploadFile($request);
+                    $offer->destroyThumbnail();
+                    $offer->saveThumbnail();
                     if (!$updated) {
                         $updated = true;
                     }
@@ -233,8 +238,9 @@ class OffersController extends Controller
      * @param string $id
      */
     public function single($id) {
-        $offer = Offer::find($id);
-
-        return view(('pages/job-description'), compact('offer'));
+        return view('pages.job-description', [
+            'offer' => Offer::find($id),
+            'testimonials' => Testimonial::getFromDistinctUsers(Testimonial::MAX_NUMBER_OF_TESTIMONIALS)
+        ]);
     }
 }

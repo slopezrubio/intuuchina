@@ -8,7 +8,7 @@
     </style>
     @component('components.header')
         @slot('variant', 'tertiary')
-        @slot('title', __('component.header.register.title'))
+        @slot('header', __('component.header.register'))
     @endcomponent
 
     <div class="container">
@@ -132,11 +132,17 @@
                     </div>
 
                     <div class="form-group row">
-                        @component('components.inputs.file')
-                            @slot('name', 'cv')
-                            @slot('label', __('CV'))
-                            @slot('muted',  __('auth.allowed cv document formats'))
-                        @endcomponent
+                        <div class="col-md-3">
+                            @component('components.inputs.label', ['name' => 'cv'])
+                                {{ __('CV') }}
+                            @endcomponent
+                        </div>
+                        <div class="col-md-9">
+                            @component('components.inputs.file')
+                                @slot('name', 'cv')
+                                @slot('muted',  __('auth.allowed cv document formats'))
+                            @endcomponent
+                        </div>
                     </div>
 
                     <div class="form-group row">

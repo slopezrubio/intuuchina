@@ -1,17 +1,34 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="header" id="internship">
-        {{--Elemento NAV--}}
-        @include('partials._nav')
 
-        {{--Título de la página--}}
-        @include('partials._header')
-    </header>
+    @component('components.header')
+        @slot('variant', 'tertiary')
+        @slot('header', [
+            'title' => __('content.industries.' .$offer->industry),
+            'subtitle' => $offer->title,
+        ])
+    @endcomponent
+
+    <main id="{{ $view_name }}">
+
+        <section id="toolbar">
+            @component('components.breadcrumb')
+            @endcomponent
+        </section>
+
+        <section id="content" class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-8">
+                    @include('partials.forms.admin._edit-offer')
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     {{--Formulario de edición de oferta--}}
-    @include('partials._edit-offer')
+{{--    @include('partials._edit-offer')--}}
 
     @include('partials._footer')
-
 @endsection

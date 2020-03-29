@@ -11,7 +11,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">
                     @component('components.tab')
-                        @slot('tabs', __('component.dashboard.user'))
+                        @slot('tabs', __('component.tabs.dashboard.user'))
                         @slot('id', $view_name)
                     @endcomponent
                 </div>

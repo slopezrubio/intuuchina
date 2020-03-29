@@ -15,7 +15,7 @@
     'items' => $data['offers'],
 ])
     @slot('id', 'offers')
-    @slot('body', 'partials.forms.admin._offers-list')
+    @slot('action', 'partials.forms.admin._offers-list')
     @slot('pagination')
         {{ $data['offers']->links('vendor.pagination.semantic-ui') }}
     @endslot

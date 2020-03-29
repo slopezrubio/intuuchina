@@ -2,17 +2,8 @@
 
 @section('content')
     @component('components.header')
-        @slot('variant')
-            {{ 'primary' }}
-        @endslot
-
-        @slot('background_image')
-            {{ __('heading.' .$view_name. '.background') }}
-        @endslot
-
-        @slot('title')
-            {!!  __('heading.' .$view_name. '.title') !!}
-        @endslot
+        @slot('variant', 'primary')
+        @slot('header', __('component.header.offers'))
     @endcomponent
 
     <main id="job-board" class="container-fluid">

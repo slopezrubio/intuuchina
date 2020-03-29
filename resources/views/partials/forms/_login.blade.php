@@ -3,25 +3,33 @@
 @slot('title', __('Login'))
 
 @slot('body')
-    <form method="POST" action="{{ route('login') }}" class="modal__form">
+    <form method="POST" action="{{ route('login') }}" class="modal__form" id="login">
         @csrf
         <div class="form-group">
-            <label for="login-email" class="col-form-label">{{ __('auth.e-mail address') }}</label>
-            <input type="text" class="form-control{{ $errors->login->has('email') ? ' is-invalid' : '' }}" id="login-email" name="email" placeholder="{{ __('content.email placeholder') }}" value="{{ old('email') }}" required autofocus>
-            @if ($errors->login->has('email'))
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->login->first('email') }}</strong>
-                </span>
-            @endif
+            @component('components.inputs.label')
+                @slot('bag', 'login')
+                @slot('name', 'email')
+                {{ __('auth.e-mail address') }}
+            @endcomponent
+            @component('components.inputs.text')
+                @slot('bag', 'login')
+                @slot('name', 'email')
+                @slot('placeholder', __('placeholder.email.default'))
+                @slot('autofocus', true)
+                @slot('required', true)
+            @endcomponent
         </div>
         <div class="form-group">
-            <label for="login-password" class="col-form-label">{{ __('auth.password') }}</label>
-            <input type="password" class="form-control{{ $errors->login->has('password') ? ' is-invalid' : '' }}" id="login-password" name="password" required>
-            @if ($errors->login->has('password'))
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->login->first('password') }}</strong>
-                </span>
-            @endif
+            @component('components.inputs.label')
+                @slot('bag', 'login')
+                @slot('name', 'password')
+                {{ __('auth.password') }}
+            @endcomponent
+            @component('components.inputs.text')
+                @slot('bag', 'login')
+                @slot('name', 'password')
+                @slot('type', 'password')
+            @endcomponent
         </div>
         <div class="form-group">
             @component('components.inputs.switch')

@@ -1,0 +1,28 @@
+.bottom-navigation {
+  z-index: 1000;
+  width: 100%;
+  background: $primaryWhite;
+  margin-top: 2.2em;
+  @include prefixed(transition, all .3 ease-in-out);
+
+  &--fixed {
+    position: fixed;
+    background: $neutralColor;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__item {
+
+  }
+
+  .c-cta-button {
+    max-width: 325px;
+    margin-bottom: 1em;
+  }
+
+  .card-form {
+    @include flexbox();
+    @include justify-content(center);
+  }
+}

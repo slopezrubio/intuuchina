@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\URL;
 
 class IndexController extends Controller
 {
-    const MAX_NUMBER_OF_TESTIMONIALS = 3;
-
     public function __construct()
     {
         $this->middleware(StripFromUrl::class)->only([
@@ -22,7 +20,7 @@ class IndexController extends Controller
     public function index() {
 
         return view('pages/home', [
-            'testimonials' => Testimonial::getFromDistinctUsers(self::MAX_NUMBER_OF_TESTIMONIALS)
+            'testimonials' => Testimonial::getFromDistinctUsers(Testimonial::MAX_NUMBER_OF_TESTIMONIALS)
         ]);
     }
 

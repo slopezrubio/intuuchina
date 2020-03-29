@@ -1,0 +1,64 @@
+.card-image {
+  &__background {
+    @include flexbox();
+    @include justify-content(flex-end);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+
+    @include media-breakpoint-up(sm) {
+      min-height: 400px;
+    }
+  }
+
+  &__shower-screen {
+    width: 100%;
+    background: rgba(0,0,0, 0.4);
+    color: $primaryWhite;
+    text-align: center;
+
+    @media screen and (min-width: 320px) {
+      width: 50%;
+    }
+
+    @include media-breakpoint-up(sm) {
+      width: 200px;
+      @include flexbox();
+      @include flex-direction(column);
+      @include justify-content(center);
+    }
+  }
+
+  &__title {
+    font-size: 1em;
+    color: $primaryWhite;
+    padding: 1em 0.5em;
+    letter-spacing: .2em;
+    font-weight: 700;
+    margin-bottom: 0;
+    word-wrap: anywhere;
+
+    @include media-breakpoint-up(sm) {
+      font-size: initial;
+    }
+  }
+
+  &__text {
+    font-size: 1em;
+    @include flexbox();
+    @include flex-direction(column);
+    padding: 1em 0;
+  }
+
+  &__unit {
+    @media screen and (min-width: 320px) {
+      font-size: 4.5em;
+    }
+
+    @include media-breakpoint-up(sm) {
+      font-size: 6em;
+    }
+
+    font-size: 1.75em;
+  }
+}

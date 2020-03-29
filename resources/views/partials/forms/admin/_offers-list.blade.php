@@ -1,8 +1,4 @@
 <form class="row" action="{{ route('admin.delete-offer', ['id' => $item->id]) }}" method="POST">
-    <p>
-        {{ $item->description }}
-    </p>
-    <h6 class="text-uppercase letter-spacing letter-spacing--location">{{ $item->location }}</h6>
     @method('DELETE')
     @csrf
     <div class="col-12 col-sm-6">
