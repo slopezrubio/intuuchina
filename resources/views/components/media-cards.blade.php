@@ -9,7 +9,13 @@
                         </div>
                         <div class="media-card__card-content">
                             <h4 class="media-card__heading"><a href="">{{ $item->title }}</a></h4>
-                            @include($body)
+                            <p>
+                                {{ $item->description }}
+                            </p>
+                            <h6 class="text-uppercase letter-spacing letter-spacing--location">{{ $item->location }}</h6>
+                            @if(isset($action))
+                                @include($action)
+                            @endif
                         </div>
                     </div>
                 </li>

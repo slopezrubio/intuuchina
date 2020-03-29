@@ -8,6 +8,8 @@
 @import 'objects/shapes';
 
 @import 'elements/forms';
+@import 'elements/headings';
+@import 'elements/lists';
 
 @import 'variables';
 @import 'mixins';
@@ -28,6 +30,8 @@
 @import 'job-description';
 @import 'message-confirmation';
 
+@import 'utilities/helpers/general';
 @import 'utilities/helpers/text';
 @import 'utilities/pages/index';
 @import 'utilities/pages/internship';
+@import 'utilities/pages/job-description';

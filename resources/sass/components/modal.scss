@@ -13,7 +13,20 @@
     font-size: 3em;
   }
 
-  .shutter-button:not(:first-child),
+  input {
+    border-top: 1px solid $neutralColor;
+    border-right: 1px solid $neutralColor;
+    border-left: 1px solid $neutralColor;
+    border-radius: 0.25em;
+
+    &:focus,
+    &:active, {
+      border-color: $secondaryRed;
+      @include prefixed(box-shadow, '0 0 0 .35rem rgba(244, 67, 54, .25)');
+    }
+  }
+
+  .c-shutter-button:not(:first-child),
   .c-cta-button:not(:first-child) {
     margin-top: 1em;
   }

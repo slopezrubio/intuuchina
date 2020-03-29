@@ -1,7 +1,9 @@
 import ContactForm from '../components/forms/ContactForm';
+import EditOfferForm from '../components/forms/EditOfferForm';
 import SignUpForm from '../components/forms/SignUpForm';
 import ProceedPaymentForm from '../components/forms/ProceedPaymentForm';
 import PaymentForm from '../components/forms/PaymentForm';
+import LoginForm from '../components/forms/LoginForm';
 
 import UI from '../main/UI';
 
@@ -25,6 +27,12 @@ FormFactory.prototype.createForm = function(options) {
             break;
         case 'payment':
             this.formClass = PaymentForm;
+            break;
+        case 'login':
+            this.formClass = LoginForm;
+            break;
+        case 'edit-offer':
+            this.formClass = EditOfferForm;
             break;
     }
 
@@ -122,6 +130,26 @@ FormFactory.prototype.createForm = function(options) {
         });
 
         formClass.disabled = !formClass.isDisabled();
+    };
+
+    formClass.previewUploadedFiles = function() {
+        let previews = formClass.el.querySelectorAll('.c-file-input__img-preview');
+
+        for (let i = 0; i <= previews.length; i++) {
+            let input = $(previews[i]).next('.c-file-input');
+            console.log(input);
+
+            $(input).on('click touchstart', function() {
+                $(this).val('');
+            });
+
+            $(input).change(function(ev) {
+                console.log(ev.target.files.item(0));
+                $(previews[i]).attr('src', URL.createObjectURL(ev.target.files.item(0)));
+            });
+        }
+
+        return formClass;
     };
 
     return formClass;

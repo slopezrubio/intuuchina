@@ -1,7 +1,7 @@
-    <div class="row" id="breadcrumb">
+    <div class="breadcrumb-chunks">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-10 col-xl-7">
+                <div class="col-md-12 col-lg-10 col-xl-10">
                     <ul>
                         <li>
                             <a href="{{ url('/') }}"><span class="fas fa-home"></span></a>

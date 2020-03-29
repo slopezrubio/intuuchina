@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 class Testimonial extends Model
 {
+    const MAX_NUMBER_OF_TESTIMONIALS = 3;
     //
     protected $fillable = ['id', 'quotes', 'occupation', 'company', 'user_id'];
 

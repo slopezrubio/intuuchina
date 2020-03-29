@@ -1,4 +1,4 @@
-<header class="{{ isset($variant) ? $variant : '' }}" style="background-image: {{ isset($background_image) ? 'url(' .$background_image. ')' : 'none' }}">
+<header class="{{ isset($variant) ? $variant : '' }}" style="background-image: {{ isset($header['background']) ? 'url(' .$header['background']. ')' : 'none' }}">
     @include('partials._nav')
 
     @if(isset($header['title']) || key_exists('title', $header))

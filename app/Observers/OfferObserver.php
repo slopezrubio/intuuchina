@@ -69,7 +69,7 @@ class OfferObserver
      * @return void
      */
     public function retrieved(Offer $offer) {
-        $offer->gone_by = $this->humanDateFormat($offer);
+//        $offer->updated_at = $this->humanDateFormat($offer);
     }
 
     private function humanDateFormat(Offer $offer) {

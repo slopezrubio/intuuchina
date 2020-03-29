@@ -41,14 +41,14 @@
                                         @endcomponent
                                     @endif
                                 @else
-                                    @component('components.components.forms.card-form', [
+                                    @component('components.forms.card-form', [
                                         'hidden' => [
                                             'program' => 'industry',
                                             'industry' => $offer->industry
                                         ],
                                         'buttons' => [
                                             [
-                                                'content' => __('content.content.change preference'),
+                                                'content' => __('Change Preference'),
                                                 'value' => 'inter_relocat',
                                             ],
                                             [
@@ -88,8 +88,8 @@
                             @endauth
                         </div>
                     </div>
-                    <div class="card-footer mb-2">
-                        <small class="text-muted">{{ $offer->gone_by }}</small>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ \Carbon\Carbon::parse($offer->created_at)->diffForHumans(Carbon\Carbon::now()) }}</small>
                     </div>
                 </div>
             @endforeach

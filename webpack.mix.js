@@ -16,7 +16,10 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/bootstrap.js',
     ], 'js/vendor.js')
     .js([
+        'resources/js/pages/home.js',
+        'resources/js/pages/job-description.js',
         'resources/js/pages/welcome.js',
+        'resources/js/pages/admin/offer.js',
         'resources/js/pages/user/payment.js',
         'resources/js/components/sliders.js',
         'resources/js/components/register.js',

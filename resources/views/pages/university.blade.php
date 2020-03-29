@@ -3,8 +3,7 @@
 @section('content')
     @component('components.header')
         @slot('variant', 'primary')
-        @slot('background_image', __('heading.' .$view_name. '.background') )
-        @slot('title', __('heading.' .$view_name. '.title'))
+        @slot('header', __('component.header.university'))
     @endcomponent
 
     <main id="university">

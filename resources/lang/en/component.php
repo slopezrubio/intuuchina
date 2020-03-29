@@ -91,34 +91,36 @@ return [
     | Tabs
     |--------------------------------------------------------------------------
     */
-    'dashboard' => [
-        'user' => [
-            'status' => [
-                'text' => trans('Status'),
-                'icon' => '',
-                'content' => 'partials.user._status',
+    'tabs' => [
+        'dashboard' => [
+            'user' => [
+                'status' => [
+                    'text' => trans('Status'),
+                    'icon' => '',
+                    'content' => 'partials.user._status',
+                ],
+                'profile' => [
+                    'text' => trans('Profile'),
+                    'icon' =>  'fas fa-user',
+                    'content' => 'partials.forms.user._profile'
+                ],
             ],
-            'profile' => [
-                'text' => trans('Profile'),
-                'icon' =>  'fas fa-user',
-                'content' => 'partials.forms.user._profile'
-            ],
-        ],
-        'admin' => [
-            'users' => [
-                'text' => trans('Users'),
-                'icon' => 'fas fa-user',
-                'content' => 'partials.forms.admin._users'
-            ],
-            'offers' => [
-                'text' => trans('Offers'),
-                'icon' => 'fas fa-user-md',
-                'content' => 'partials.forms.admin._offers'
-            ],
-            'testimonials' => [
-                'text' => trans('Testimonials'),
-                'icon' => 'fas fa-eye',
-                'content' => 'partials.forms.admin._testimonials'
+            'admin' => [
+                'users' => [
+                    'text' => trans('Users'),
+                    'icon' => 'fas fa-user',
+                    'content' => 'partials.forms.admin._users'
+                ],
+                'offers' => [
+                    'text' => trans('Offers'),
+                    'icon' => 'fas fa-user-md',
+                    'content' => 'partials.forms.admin._offers'
+                ],
+                'testimonials' => [
+                    'text' => trans('Testimonials'),
+                    'icon' => 'fas fa-eye',
+                    'content' => 'partials.forms.admin._testimonials'
+                ]
             ]
         ]
     ],
@@ -250,6 +252,10 @@ return [
             'title' => 'Job Board',
             'background' => asset('storage/images/practicass.jpg'),
         ],
+        'job-description' => [
+            'title' => ':title',
+            'background' => ':background'
+        ],
         'register' => [
             'title' => 'Sign Up',
         ],
@@ -304,6 +310,21 @@ return [
                                                                 Proceed with the payment?
                                                             </p>
                                                         ",
+            ]
+        ]
+    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Navs
+    |--------------------------------------------------------------------------
+    */
+    'navs' => [
+        'bottom' => [
+            'job-description' => [
+                'items' => [
+                    'content' => trans('Home'),
+                    'icon' => 'fas fa-home',
+                ]
             ]
         ]
     ]

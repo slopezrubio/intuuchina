@@ -3,46 +3,33 @@
 @section('content')
 
     @component('components.header')
-        @slot('variant')
-            {{ 'primary' }}
-        @endslot
-
-        @slot('background_image')
-            {{ $offer->picture }}
-        @endslot
-
-        @slot('title')
-            {!!  __('content.industries' .$offer->industry) !!}
-        @endslot
-
-        @slot('subtitle')
-            {{ $offer->title }}
-        @endslot
+        @slot('variant', 'primary')
+        @slot('header', [
+            'title' => __('content.industries.' .$offer->industry),
+            'background' => asset('images/' . $offer->picture),
+            'subtitle' => $offer->title,
+        ])
     @endcomponent
 
-    <main id="offer">
-        <section id="content">
 
-            {{-- Breadcrumb --}}
+    <main id="job-description">
+
+        <section id="toolbar">
             @component('components.breadcrumb')
             @endcomponent
+        </section>
 
-            <div class="row">
-                <div class="container single-item">
-                    <div class="row justify-content-center">
-                        <div class="col-10 col-xl-7 mb-4">
-                            {{-- Job Description --}}
-                            @include('partials._single-offer')
-                        </div>
-                    </div>
+        <section id="content" class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-10">
+                    {{-- Job Description --}}
+                    @include('partials._single-offer')
                 </div>
             </div>
         </section>
 
-        <section id="testimonials">
-            {{-- Testimonials --}}
-            @include('partials._testimonials')
-        </section>
+        {{-- Testimonials --}}
+        @include('partials._testimonials')
     </main>
 
 

@@ -102,7 +102,7 @@ input.c-text-input {
       font-family: 'Montserrat', sans-serif;
       content: "YES";
       left: 4px;
-      top: 11px;
+      top: 12px;
       color: $primaryWhite;
     }
   }
@@ -411,5 +411,11 @@ input.c-text-input {
  * File
  */
 .c-file-input {
+
+  &__img-preview {
+    max-width: 250px;
+    margin-bottom: 1em;
+  }
+
   @extend %input-margins;
 }

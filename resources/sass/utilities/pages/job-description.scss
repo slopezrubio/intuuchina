@@ -1,0 +1,5 @@
+main#job-description {
+  section#testimonials {
+    @include people-slider(2);
+  }
+}

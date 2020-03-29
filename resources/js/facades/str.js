@@ -15,6 +15,9 @@ var str = (function() {
         },
         kebabCase: function(str) {
             return str.replace(/\s+/g, '-').toLowerCase();
+        },
+        capitalizeFirst: function(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
     }
 }());
