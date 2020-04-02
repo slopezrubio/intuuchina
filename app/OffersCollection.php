@@ -38,8 +38,10 @@ class OffersCollection extends Collection implements Searchable
     }
 
     public function setShortDescription($collection) {
-        $collection->each(function($item, $key) {
-            $item->description = Str::words(json_decode($item->description)->ops[0]->insert, self::SHORT_DESCRIPTION_LENGTH);
+        $collection->each(function($item) {
+            if (preg_match('/\w/', $item->description) && $item->description !== null) {
+                $item->description = Str::words(json_decode($item->description)->ops[0]->insert, self::SHORT_DESCRIPTION_LENGTH);
+            }
         });
 
         return $this;

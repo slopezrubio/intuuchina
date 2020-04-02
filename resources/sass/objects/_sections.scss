@@ -15,3 +15,42 @@ section.o-oblique {
     height: calc(100% + 8em);
   }
 }
+
+section#content-tab {
+  .toolbox {
+    @include flexbox();
+    @include align-items(flex-end);
+    margin-top: 1em;
+
+    &__tool:nth-child(even) > * {
+      margin-right: 0;
+    }
+
+    .c-cta-button {
+      height: 40px;
+
+      a {
+        line-height: 40px;
+      }
+
+      @include media-breakpoint-down(sm) {
+        width: 40px;
+
+        a {
+          color: transparent;
+          font-size: 0;
+          i {
+            color: $primaryWhite;
+            padding: 0.75em 0 0 0;
+            font-size: initial;
+          }
+        }
+      }
+
+    }
+
+    @include media-breakpoint-up(sm) {
+      @include flex-direction(row);
+    }
+  }
+}

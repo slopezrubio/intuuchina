@@ -78,6 +78,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return User::find($this->id);
     }
 
+    public function getFormattedPhoneNumber() {
+        return '(' . __('prefixes.' . $this->phone_number['prefix'] . '.prefix') . ')' . $this->phone_number['number'];
+    }
+
     public function sendEmailVerificationNotification() {
         $this->notify(new NewUserNotification());
     }
@@ -111,10 +115,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return DB::table('users')
             ->orderByDesc('id')
             ->get()->first();
-    }
-
-    public function getPrefixedPhoneNumber() {
-        return '(' . __('prefixes.' . $this->phone_number['prefix'] . '.prefix') . ')' . $this->phone_number['number'];
     }
 
     public function destroyAssociatedFiles() {

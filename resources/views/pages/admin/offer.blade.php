@@ -3,19 +3,20 @@
 @section('content')
 
     @component('components.header')
-        @slot('variant', 'tertiary')
+        @slot('variant', 'primary')
         @slot('header', [
             'title' => __('content.industries.' .$offer->industry),
+            'background' => asset('storage/images/' . $offer->picture),
             'subtitle' => $offer->title,
         ])
     @endcomponent
 
     <main id="{{ $view_name }}">
 
-        <section id="toolbar">
-            @component('components.breadcrumb')
-            @endcomponent
-        </section>
+
+        @component('components.breadcrumb')
+        @endcomponent
+
 
         <section id="content" class="container">
             <div class="row justify-content-center">

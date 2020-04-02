@@ -59,11 +59,12 @@ Route::group([
         Route::delete('users/delete/{user}', 'UsersController@destroy')->name('admin.delete-user');
         Route::get('offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+')->name('admin.delete-offer');
         Route::get('testimonials/delete/{testimonial}', 'TestimonialsController@destroy')->where('testimonial', '[0-9]+')->name('admin.delete-testimonial');
+        Route::get('offers/new', 'OffersController@create')->name('admin.new-offer');
         Route::get('users/edit/{user}', 'UsersController@single')->name('admin.edit-user');
         Route::get('offers/edit/{offer}', 'OffersController@edit')->where('offer', '[0-9]+')->name('admin.edit-offer');
         Route::post('users/edit/{offer}', 'UsersController@update')->where('offer', '[0-9]+');
         Route::post('offers/edit/{offer}', 'OffersController@update')->where('offer', '[0-9]+')->name('admin.update-offer');
-        Route::post('offers', 'OffersController@store')->name('admin.new-offer');
+        Route::post('offers/new', 'OffersController@store')->name('admin.new-offer');
         Route::get('offers/filter={industry}', 'OffersController@filterBy')->where('industry', '[a-z]+_?[a-z]*');
 });
 

@@ -29,10 +29,10 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'type' => 'user',
         'cv' => Storage::putFile('cv', new File(public_path('storage/images/test_files/fake_cv.docx'))),
-        'phone_number' => json_encode([
+        'phone_number' => array(
             'prefix' => 'fra',
             'number' => substr($faker->e164PhoneNumber, strlen($faker->e164PhoneNumber) - 9),
-        ]),
+        ),
         'status_id' => function() {
             return DB::table('states')
                 ->select(DB::raw('id'))
@@ -40,7 +40,7 @@ $factory->define(User::class, function (Faker $faker) {
                 ->get()->first()->id;
         },
         'program' => $faker->randomElement(array('internship', 'inter_relocat')),
-        'industry' =>  json_encode([$faker->randomElement(array_keys(__('content.industries')))]),
+        'industry' =>  [$faker->randomElement(array_keys(__('content.industries')))],
         'university' => null,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'api_token' => Str::random(60),

@@ -408,6 +408,15 @@ input.c-text-input {
 }
 
 /**
+ * WYSIWYG
+ */
+.ql-snow .ql-editor {
+  h3, h4, h5 {
+    color: $primaryDark;
+  }
+}
+
+/**
  * File
  */
 .c-file-input {

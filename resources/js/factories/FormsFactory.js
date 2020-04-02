@@ -1,5 +1,6 @@
 import ContactForm from '../components/forms/ContactForm';
 import EditOfferForm from '../components/forms/EditOfferForm';
+import CreateOfferForm from '../components/forms/CreateOfferForm';
 import SignUpForm from '../components/forms/SignUpForm';
 import ProceedPaymentForm from '../components/forms/ProceedPaymentForm';
 import PaymentForm from '../components/forms/PaymentForm';
@@ -30,6 +31,9 @@ FormFactory.prototype.createForm = function(options) {
             break;
         case 'login':
             this.formClass = LoginForm;
+            break;
+        case 'create-offer':
+            this.formClass = CreateOfferForm;
             break;
         case 'edit-offer':
             this.formClass = EditOfferForm;
@@ -84,6 +88,23 @@ FormFactory.prototype.createForm = function(options) {
                 $($(input).parents('.form-group')[0]).toggleClass('hidden');
             }
         });
+    };
+
+    formClass.mountWYSIWYGEditor = function() {
+        if (this.editor !== undefined) {
+            return new Quill(this.el.querySelector('.editor'), {
+                modules: {
+                    toolbar: [
+                        [{ header: [3, 4, 5, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }, 'blockquote'],
+                        [{ 'indent' : '-1'}, { 'indent' : '+1'}, 'link', 'code-block']
+                    ]
+                },
+                placeholder: this.editor.getAttribute('data-value'),
+                theme: 'snow'
+            });
+        }
     };
 
     formClass.isDisabled = function() {

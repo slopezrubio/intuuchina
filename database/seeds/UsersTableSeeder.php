@@ -18,15 +18,15 @@ class UsersTableSeeder extends Seeder
         //
         $admin = factory(User::class, 1)->create([
             'id' => $faker->unique()->randomDigit,
-            'name' => 'Confucio',
-            'surnames' => 'Shandong',
-            'email' => 'confucio@confucio.es',
+            'name' => 'Fernando',
+            'surnames' => 'de Zavala Carvajal',
+            'email' => 'fernando.zavala@intuuchina.com',
             'type' => 'admin',
             'cv' => null,
-            'phone_number' => json_encode([
-                'prefix' => 'chn',
-                'number' => substr($faker->e164PhoneNumber, strlen($faker->e164PhoneNumber) - 9),
-            ]),
+            'phone_number' => array(
+                'prefix' => 'esp',
+                'number' => '659566062',
+             ),
             'status_id' => null,
             'program' => null,
             'industry' => null,

@@ -49,11 +49,11 @@ class OffersController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('pages.admin.new-offer');
     }
 
     /**
@@ -67,10 +67,8 @@ class OffersController extends Controller
         //
         $request->validate([
             'title' => 'required|max:255|string',
-            'location' => 'required|string',
-            'industry' => 'required|string',
             'duration' => 'required|string',
-            'description' => 'max:4000',
+            'description' => 'max:6000',
             'picture' => 'mimes:jpg,jpeg,bmp,png',
         ]);
 
@@ -80,7 +78,6 @@ class OffersController extends Controller
             'industry' => $request->get('industry'),
             'duration' => $request->get('duration'),
             'description' => $request->get('description'),
-            'picture' => $this->uploadFile($request),
         ]);
 
         return redirect()->route('admin.offers');
@@ -120,14 +117,10 @@ class OffersController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $offer = Offer::find($id);
+        $offer = Offer::find($id)->setChanges($request);
 
-        foreach ($request->all() as $key => $value) {
-            if ($key === 'picture') {
-                $offer->updateThumbnail($request->file($key));
-                $offer->save();
-            }
-        }
+        $offer->setChanges($request);
+        $offer->save();
 //        $update = $this->setUpdatedAttributesToOffer($offer, $request->all(), $request);
 //        $offer->renewUpdateAt($update);
 //        $offer->save();

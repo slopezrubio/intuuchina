@@ -6,7 +6,7 @@
         @slot('variant', 'primary')
         @slot('header', [
             'title' => __('content.industries.' .$offer->industry),
-            'background' => asset('images/' . $offer->picture),
+            'background' => asset('storage/images/' . $offer->picture),
             'subtitle' => $offer->title,
         ])
     @endcomponent

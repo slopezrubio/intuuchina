@@ -114,7 +114,7 @@ return [
                 'offers' => [
                     'text' => trans('Offers'),
                     'icon' => 'fas fa-user-md',
-                    'content' => 'partials.forms.admin._offers'
+                    'content' => 'partials.admin._offers'
                 ],
                 'testimonials' => [
                     'text' => trans('Testimonials'),
@@ -239,6 +239,9 @@ return [
             'users' => [
                 'title' => 'Users',
             ],
+            'new-offer' => [
+                'title' => 'New Job Offer'
+            ]
         ],
         'home' => [
             'title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',

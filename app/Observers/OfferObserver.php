@@ -18,6 +18,10 @@ class OfferObserver
         //
     }
 
+    public function creating(Offer $offer) {
+        $offer->saveThumbnail();
+    }
+
     /**
      * Handle the offer "updated" event.
      *

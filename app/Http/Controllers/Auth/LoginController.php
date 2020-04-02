@@ -98,6 +98,8 @@ class LoginController extends Controller
     }
 
     protected function authenticated(Request $request, $user) {
-        $this->redirectTo = $user->type === 'admin' ? '/admin' : $this->redirectTo;
+        if ($user->type === 'admin') {
+            $this->redirectTo = '/admin';
+        }
     }
 }

@@ -8,9 +8,14 @@
                             <img src="{{ asset('storage/images/' . $item->picture) }}" alt="{{ __('pictures.a descriptive image', ['item' => Str::singular($id)]) }}">
                         </div>
                         <div class="media-card__card-content">
-                            <h4 class="media-card__heading"><a href="">{{ $item->title }}</a></h4>
+                            <h4 class="media-card__heading">
+                                <a href="{{ Str::contains(URL::current(), $id) ? URL::current() . '/edit/' . $item->id : URL::current() . '/' . $id . '/edit/' . $item->id }}">
+                                    {{ $item->title }}
+                                </a>
+                            </h4>
+
                             <p>
-                                {{ $item->description }}
+                                {{ $item->description !== null ? $item->description : __('messages.resource not provided', ['resource' => ucfirst('description')])}}
                             </p>
                             <h6 class="text-uppercase letter-spacing letter-spacing--location">{{ $item->location }}</h6>
                             @if(isset($action))

@@ -2,7 +2,12 @@
     <h3>
         {{ __('Job Description') }}
     </h3>
-    {!! $offer->getRenderedDescription() !!}
+
+    @if($offer->hasDescription())
+        {!! $offer->getRenderedDescription() !!}
+    @else
+        <p>{{ __('messages.resource not provided', ['resource' => ucfirst('description')]) }}</p>
+    @endif
 </article>
 <article>
     <h3>{{ __('Details') }}</h3>

@@ -12803,6 +12803,52 @@ section.o-oblique:before {
   height: calc(100% + 8em);
 }
 
+section#content-tab .toolbox {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: end;
+  -ms-box-align: end;
+  align-items: flex-end;
+  margin-top: 1em;
+}
+
+section#content-tab .toolbox__tool:nth-child(even) > * {
+  margin-right: 0;
+}
+
+section#content-tab .toolbox .c-cta-button {
+  height: 40px;
+}
+
+section#content-tab .toolbox .c-cta-button a {
+  line-height: 40px;
+}
+
+@media (max-width: 767.98px) {
+  section#content-tab .toolbox .c-cta-button {
+    width: 40px;
+  }
+
+  section#content-tab .toolbox .c-cta-button a {
+    color: transparent;
+    font-size: 0;
+  }
+
+  section#content-tab .toolbox .c-cta-button a i {
+    color: white;
+    padding: 0.75em 0 0 0;
+    font-size: initial;
+  }
+}
+
+@media (min-width: 576px) {
+  section#content-tab .toolbox {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    flex-direction: row;
+  }
+}
+
 .o-triangle {
   position: absolute;
   color: #d1d1d1;
@@ -14589,6 +14635,16 @@ input.c-text-input.is-invalid:-ms-input-placeholder {
   .c-alternative-button {
     margin-top: 0;
   }
+}
+
+/**
+ * WYSIWYG
+ */
+
+.ql-snow .ql-editor h3,
+.ql-snow .ql-editor h4,
+.ql-snow .ql-editor h5 {
+  color: black;
 }
 
 /**

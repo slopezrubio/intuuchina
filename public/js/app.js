@@ -5519,6 +5519,44 @@ var contactFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0_
 
 /***/ }),
 
+/***/ "./resources/js/components/forms/CreateOfferForm.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/forms/CreateOfferForm.js ***!
+  \**********************************************************/
+/*! exports provided: createOfferFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOfferFormFactory", function() { return createOfferFormFactory; });
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+
+
+function CreateOfferForm() {
+  this.fields = {};
+
+  this.init = function () {
+    var _this = this;
+
+    this.fields.title = this.el.querySelector('#title');
+    this.fields.location = this.el.querySelector('#location');
+    this.fields.industry = this.el.querySelector('#industry');
+    this.fields.description = this.el.querySelector('#description');
+    this.editor = this.el.querySelector('#description-editor');
+    this.previewUploadedFiles();
+    this.editor = this.mountWYSIWYGEditor();
+    this.el.addEventListener('submit', function (ev) {
+      _this.fields.description.value = JSON.stringify(_this.editor.getContents());
+    });
+    return this;
+  };
+}
+
+var createOfferFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (CreateOfferForm);
+
+/***/ }),
+
 /***/ "./resources/js/components/forms/EditOfferForm.js":
 /*!********************************************************!*\
   !*** ./resources/js/components/forms/EditOfferForm.js ***!
@@ -5555,26 +5593,6 @@ function EditOfferForm(options) {
     this.editor = this.mountWYSIWYGEditor();
     this.editor.setContents(JSON.parse(description));
     return this;
-  };
-
-  this.mountWYSIWYGEditor = function () {
-    return new Quill(this.el.querySelector('.editor'), {
-      modules: {
-        toolbar: [[{
-          header: [3, 5, false]
-        }], ['bold', 'italic', 'underline'], [{
-          'list': 'ordered'
-        }, {
-          'list': 'bullet'
-        }, 'blockquote'], [{
-          'indent': '-1'
-        }, {
-          'indent': '+1'
-        }, 'link', 'code-block']]
-      },
-      placeholder: 'Write down the job description...',
-      theme: 'snow'
-    });
   };
 }
 
@@ -7456,18 +7474,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_forms_ContactForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/forms/ContactForm */ "./resources/js/components/forms/ContactForm.js");
 /* harmony import */ var _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/forms/EditOfferForm */ "./resources/js/components/forms/EditOfferForm.js");
-/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
-/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
-/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
-/* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
-/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
-/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
-/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
+/* harmony import */ var _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/CreateOfferForm */ "./resources/js/components/forms/CreateOfferForm.js");
+/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
+/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
+/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+/* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -7488,19 +7508,23 @@ FormFactory.prototype.createForm = function (options) {
       break;
 
     case 'sign-up':
-      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_3__["default"];
+      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_4__["default"];
       break;
 
     case 'proceed-payment':
-      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_4__["default"];
+      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_5__["default"];
       break;
 
     case 'payment':
-      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_5__["default"];
+      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_6__["default"];
       break;
 
     case 'login':
-      this.formClass = _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_6__["default"];
+      this.formClass = _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_7__["default"];
+      break;
+
+    case 'create-offer':
+      this.formClass = _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_3__["default"];
       break;
 
     case 'edit-offer':
@@ -7536,7 +7560,7 @@ FormFactory.prototype.createForm = function (options) {
   };
 
   formClass.toggleLoadingState = function () {
-    _main_UI__WEBPACK_IMPORTED_MODULE_7__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
+    _main_UI__WEBPACK_IMPORTED_MODULE_8__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
     formClass.disable(!formClass.isDisabled());
     return formClass;
   };
@@ -7553,6 +7577,28 @@ FormFactory.prototype.createForm = function (options) {
         $($(input).parents('.form-group')[0]).toggleClass('hidden');
       }
     });
+  };
+
+  formClass.mountWYSIWYGEditor = function () {
+    if (this.editor !== undefined) {
+      return new Quill(this.el.querySelector('.editor'), {
+        modules: {
+          toolbar: [[{
+            header: [3, 4, 5, false]
+          }], ['bold', 'italic', 'underline'], [{
+            'list': 'ordered'
+          }, {
+            'list': 'bullet'
+          }, 'blockquote'], [{
+            'indent': '-1'
+          }, {
+            'indent': '+1'
+          }, 'link', 'code-block']]
+        },
+        placeholder: this.editor.getAttribute('data-value'),
+        theme: 'snow'
+      });
+    }
   };
 
   formClass.isDisabled = function () {
@@ -7578,7 +7624,7 @@ FormFactory.prototype.createForm = function (options) {
                 validators: validators
               };
               _context.next = 3;
-              return _facades_api__WEBPACK_IMPORTED_MODULE_9__["default"].validate(validationObject);
+              return _facades_api__WEBPACK_IMPORTED_MODULE_10__["default"].validate(validationObject);
 
             case 3:
               response = _context.sent;
@@ -8705,10 +8751,33 @@ var messages = {
 
 /***/ }),
 
-/***/ "./resources/js/pages/admin/offer.js":
-/*!*******************************************!*\
-  !*** ./resources/js/pages/admin/offer.js ***!
-  \*******************************************/
+/***/ "./resources/js/pages/admin/new-offer.js":
+/*!***********************************************!*\
+  !*** ./resources/js/pages/admin/new-offer.js ***!
+  \***********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/forms/CreateOfferForm */ "./resources/js/components/forms/CreateOfferForm.js");
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    var createOfferForm = _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_0__["createOfferFormFactory"].createForm({
+      form: document.getElementById('create-offer'),
+      type: 'create-offer'
+    }).init();
+  });
+})();
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/show-offer.js":
+/*!************************************************!*\
+  !*** ./resources/js/pages/admin/show-offer.js ***!
+  \************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8826,16 +8895,17 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 1:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/welcome.js ./resources/js/pages/admin/offer.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/welcome.js ./resources/js/pages/admin/show-offer.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\home.js */"./resources/js/pages/home.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\job-description.js */"./resources/js/pages/job-description.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\welcome.js */"./resources/js/pages/welcome.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\offer.js */"./resources/js/pages/admin/offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\show-offer.js */"./resources/js/pages/admin/show-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\new-offer.js */"./resources/js/pages/admin/new-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\user\payment.js */"./resources/js/pages/user/payment.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\register.js */"./resources/js/components/register.js");

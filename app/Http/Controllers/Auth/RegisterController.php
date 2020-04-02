@@ -162,7 +162,7 @@ class RegisterController extends Controller
         $user->createAsStripeCustomer([
             'name' => $user->name,
             'email' => $user->email,
-            'phone' => $user->getPrefixedPhoneNumber(),
+            'phone' => $user->getFormattedNumber(),
         ]);
 
 

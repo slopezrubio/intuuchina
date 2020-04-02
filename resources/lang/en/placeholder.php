@@ -13,5 +13,9 @@ return [
     ],
     'subject' => [
         'default' => 'Write down here your issue',
+    ],
+    'offer' => [
+        'title' => 'Maximum of 80 characters',
+        'description' => 'Write down the job description',
     ]
 ];

@@ -1,9 +1,11 @@
 <?php
 
+use App\Traits\Archivable;
 use Illuminate\Database\Seeder;
 
 class OffersTableSeeder extends Seeder
 {
+    use Archivable;
     /**
      * Run the database seeds.
      *
@@ -11,6 +13,12 @@ class OffersTableSeeder extends Seeder
      */
     public function run()
     {
-        $offers = factory(App\Offer::class,5)->create();
+        $offers = $this->loadDataFromFile('offers');
+
+        foreach ($offers as $offer) {
+            App\Offer::create($offer);
+        }
+
+       //$offers = factory(App\Offer::class,5)->create();
     }
 }

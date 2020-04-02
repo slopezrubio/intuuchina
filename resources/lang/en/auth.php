@@ -23,6 +23,7 @@ return [
     'done it' => 'Done It!',
     'register' => 'Register',
     'send it again' => 'Send It Again',
+    'allowed thumbnail formats' => 'Only .JPG, .BMP and .PNG formats are allowed',
     'allowed cv document formats' => 'Only .PDF, .DOC, .DOCX, and .ODT documents are allowed',
     'back to home' => 'Back to Home',
     'verify your email address' => '<p>Please, <br>Verify your Email Address!</p>',

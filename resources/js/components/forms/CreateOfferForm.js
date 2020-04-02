@@ -1,9 +1,7 @@
-import { FormFactory } from '../../factories/FormsFactory';
+import { FormFactory } from "../../factories/FormsFactory";
 
-function EditOfferForm(options) {
+function CreateOfferForm() {
     this.fields = {};
-
-    this.editor = null;
 
     this.init = function() {
         this.fields.title = this.el.querySelector('#title');
@@ -11,24 +9,17 @@ function EditOfferForm(options) {
         this.fields.industry = this.el.querySelector('#industry');
         this.fields.description = this.el.querySelector('#description');
         this.editor = this.el.querySelector('#description-editor');
-        this.previewUploadedFiles()
-            .loadDescription();
+        this.previewUploadedFiles();
+        this.editor = this.mountWYSIWYGEditor();
 
         this.el.addEventListener('submit', (ev) => {
             this.fields.description.value = JSON.stringify(this.editor.getContents());
-        })
-    };
+        });
 
-    this.loadDescription = function() {
-        let description = this.editor.getAttribute('data-html');
-
-        this.editor = this.mountWYSIWYGEditor();
-        this.editor.setContents(JSON.parse(description));
-
-        return this
+        return this;
     };
 }
 
-export var editOfferFormFactory = new FormFactory();
+export var createOfferFormFactory = new FormFactory();
 
-export default EditOfferForm;
+export default CreateOfferForm;

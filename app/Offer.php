@@ -2,19 +2,28 @@
 
 namespace App;
 
+use App\Traits\Archivable;
 use Carbon\Carbon;
 use DBlackborough\Quill\Render as QuillRender;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class Offer extends Model
 {
+
+    const THUMBNAILS_FOLDER = 'thumbnails/';
+
     protected $fillable = ['created_at', 'updated_at','title', 'location', 'industry', 'duration', 'description', 'picture'];
 
     public function getRenderedDescription() {
         $quill = new QuillRender($this->description, 'HTML');
-
         return $quill->render();
+    }
+
+    public function hasDescription() {
+        return preg_match('/\w/', $this->description) && $this->description !== null;
     }
 
     public static function getAdminList() {
@@ -27,15 +36,26 @@ class Offer extends Model
         }
     }
 
-    public function saveThumbnail($picture) {
-        $filename = 'generic_' . request()->get('industry') . '_picture.jpg';
+    public function saveThumbnail() {
+        $filename = $this->generateThumbnailFileName();;
 
         if (request()->file('picture') !== null) {
-            $filename = $this->generateThumbnailFileName();
-            $picture->storeAs('public/images/thumbnails/' . $this->id, $filename);
+            $this->removeThumbnail();
+            request()->file('picture')->storeAs('public/images/thumbnails/', $filename);
         }
 
-        $this->picture = 'thumbnails/' . $this->id . '/'. $filename;
+        $this->picture = self::THUMBNAILS_FOLDER . $filename;
+
+        return $this;
+    }
+
+    public function removeThumbnail() {
+        if (Storage::exists('public/images/' . $this->picture)) {
+            Storage::delete('public/images/' . $this->picture);
+            return $this;
+        }
+
+        return false;
     }
 
     public function updateThumbnail($picture) {
@@ -43,9 +63,27 @@ class Offer extends Model
         $this->saveThumbnail($picture);
     }
 
-    public static function generateThumbnailFileName() {
-        if (method_exists(request(), 'get')) {
-            return request()->get('location') . '_' . request()->get('industry') . '_' . Carbon::now()->micro . '.' . request()->file('picture')->getClientOriginalExtension();
+    public function setChanges(Request $request) {
+        foreach ($request->all() as $key => $value) {
+            if ($key !== '_token') {
+                if ($key === 'picture') {
+                    $this->updateThumbnail($request->file($key));
+                } else {
+                    if ($this[$key] != $request->get($key)) {
+                        $this[$key] = $request->get($key);
+                    }
+                }
+            }
+        };
+
+        return $this;
+    }
+
+    public function generateThumbnailFileName() {
+        if (method_exists(request(), 'get') && request()->get('location') && request()->get('industry')) {
+            return $this->id . '/' . request()->get('location') . '_' . request()->get('industry') . '_' . Carbon::now()->micro . '.' . request()->file('picture')->getClientOriginalExtension();
         }
+
+        return 'default/generic_' . $this->industry . '_picture_'. Arr::random([1,2,3]) . '.jpg';
     }
 }
