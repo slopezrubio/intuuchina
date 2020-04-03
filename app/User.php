@@ -146,6 +146,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function hasChineseStudies() {
-        return count($this->study) > 0;
+        if ($this->study !== null) {
+            return count($this->study) > 0;
+        }
+
+        return $this->study;
     }
 }

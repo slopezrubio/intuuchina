@@ -44,12 +44,22 @@ class CheckoutsController extends Controller
     protected $session;
 
     public function getAmount($tax = null) {
-        if (Auth::user()-> hasChineseStudies()) {
-            $this->amount = $this->convertToSmallerUnitOfMeasure(__('content.courses.' . Auth()->user()->study[0] . '.price.eur'));
+
+        switch(Auth::user()->program) {
+            case 'internship':
+            case 'inter_relocat':
+            case 'university':
+                $this->amount =  $this->toSmallestUnit(self::APPLICATION_FEE);;
+                break;
+            case 'study':
+                if (Auth::user()->hasChineseStudies()) {
+                    $this->amount = $this->toSmallestUnit(__('content.courses.' . Auth()->user()->study[0] . '.price.eur'));
+                }
+                break;
         }
 
-        if ($tax !== null) {
-            $this->amount = $this->amount + ($this->amount * $this->getLocaleVAT->percentage / 100);
+        if ($tax === null) {
+            return $this->amount + ($this->amount * $this->getLocaleVAT()->percentage / 100);
         }
 
         return $this->amount;
@@ -294,7 +304,7 @@ class CheckoutsController extends Controller
         return $this->convertToSmallerUnitOfMeasure($amount);
     }
 
-    public function convertToSmallerUnitOfMeasure($value)
+    public function toSmallestUnit($value)
     {
         $multiplier = intval('1e'. __('currencies.' . config('services.stripe.cashier_currency') . '.decimal_digits'));
         return $value * $multiplier;

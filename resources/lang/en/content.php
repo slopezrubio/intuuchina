@@ -59,7 +59,7 @@ return [
     'contact us' => 'Contact Us!',
     'paid user' =>  "
                         <p>
-                            The payment has been carried out successfully. You should have received an email with the corresponding biling.
+                            The payment has been carried out successfully. You should have received an email with the corresponding billing.
                         </p>
                         <p>
                             In the next few hours we are going to get you in touch to arrange our first meeting with you. Before this to happen, let us know whether if you
@@ -252,7 +252,7 @@ return [
         ],
         'other' => [
             'heading' => 'Other',
-            'description' => 'Lorem fistrum de la pradera pupita mamaar hasta luego Lucas. Jarl qué dise usteer diodeno a wan qué dise usteer. Pupita por la gloria de mi madre a peich llevame al sircoo ahorarr ese pedazo de benemeritaar al ataquerl se calle ustée a gramenawer me cago en tus muelas.',
+            'description' => 'Not Provided',
             'key' => 'other',
             'text' => 'Other',
         ],

@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Factory;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $state = $faker->randomElement(array('verified', 'paid'));
+
     return [
         'name' => $faker->lastName,
         'surnames' => $faker->name,
@@ -36,7 +38,9 @@ $factory->define(User::class, function (Faker $faker) {
         'status_id' => function() {
             return DB::table('states')
                 ->select(DB::raw('id'))
-                ->where('name', 'unverified')
+                ->where('name', 'verified')
+                ->orWhere('name', 'paid')
+                ->inRandomOrder()
                 ->get()->first()->id;
         },
         'program' => $faker->randomElement(array('internship', 'inter_relocat')),

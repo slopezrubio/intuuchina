@@ -24,10 +24,6 @@ class StatesTableSeeder extends Seeder
         ]);
 
         $states = factory(App\State::class, 1)->create([
-           'name' => ''
-        ]);
-
-        $states = factory(App\State::class, 1)->create([
             'name' => 'accepted',
         ]);
 

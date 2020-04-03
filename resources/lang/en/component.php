@@ -58,6 +58,28 @@ return [
             'date' => '21/05/2015',
         ]
     ],
+    'arrow' => [
+        'university' => [
+            'mba' => [
+                'heading' => 'MBA',
+                'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
+                'key' => 'mba',
+                'text' => 'MBA',
+            ],
+            'mib' => [
+                'heading' => 'M. Intl. Bsns.',
+                'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
+                'key' => 'mib',
+                'text' => 'M. Intl. Bsns.',
+            ],
+            'other' => [
+                'heading' => 'Other',
+                'description' => 'Not Provided',
+                'key' => 'other',
+                'text' => 'Other',
+            ],
+        ]
+    ],
 
     /*
     |--------------------------------------------------------------------------
