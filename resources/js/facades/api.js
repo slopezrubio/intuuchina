@@ -63,9 +63,11 @@ var api = (function() {
                 },
                 success: function(data, status, xhr) {
                     if (callback !== null) {
+                        console.log(data);
                         return callback(data);
                     }
 
+                    console.log(data);
                     return data;
                 }
             });
