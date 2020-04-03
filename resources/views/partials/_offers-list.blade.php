@@ -1,12 +1,9 @@
 <section id="content" class="container">
     <div class="toolbox col-12 px-0 px-md-3">
         <div class="toolbox__tool">
-            @component('components.inputs.filter', [
-                'filters' => __('content.industries'),
-                'label' => __('Filter by:'),
-                'name' => 'industry',
-            ])
-
+            @component('components.filter', ['filters' => __('component.filters.industry')])
+                @slot('label', __('Industry'))
+                @slot('name', 'industry')
             @endcomponent
         </div>
     </div>

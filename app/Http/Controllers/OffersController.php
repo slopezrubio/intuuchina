@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class OffersController extends Controller
 {
-    const ELEMENTS_PER_PAGE = 5;
+    const ELEMENTS_PER_PAGE = 9;
     const PAGINATION_SCOPE = 4;
 
     /**
@@ -180,7 +180,7 @@ class OffersController extends Controller
      * and send the partial view that comprises just the list of offers.
      */
     public function filter($filter, $ajax) {
-        $offers = $filter !== 'default'
+        $offers = $filter !== 'all'
                 ? Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE)
                 : Offer::orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE);
 

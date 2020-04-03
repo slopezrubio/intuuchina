@@ -107,6 +107,24 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Filters
+    |--------------------------------------------------------------------------
+    */
+    'filters' => [
+        'industry' => (function() {
+            $filters = [
+                'all' => trans('All')
+            ];
+
+            foreach(array_keys(trans('content.industries')) as $industry) {
+                $filters[$industry] = trans('content.industries')[$industry];
+            }
+
+            return $filters;
+        })()
+    ],
 
     /*
     |--------------------------------------------------------------------------

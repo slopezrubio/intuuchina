@@ -208,7 +208,7 @@ return [
         'hospitality' => 'Hospitality',
         'it' => 'IT',
         'legal' => 'Legal',
-        'other_industries' => 'Other',
+        'other' => 'Other',
         'marketing_business' => 'Marketing & Business Dev.',
     ],
     'job-locations' => [
@@ -250,7 +250,7 @@ return [
             'key' => 'mib',
             'text' => 'M. Intl. Bsns.',
         ],
-        'other' => [
+        'other_degrees' => [
             'heading' => 'Other',
             'description' => 'Not Provided',
             'key' => 'other',
