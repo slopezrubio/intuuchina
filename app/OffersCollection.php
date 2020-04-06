@@ -39,6 +39,8 @@ class OffersCollection extends Collection implements Searchable
 
     public function setShortDescription($collection) {
         $collection->each(function($item) {
+//            var_dump($item->id);
+//            var_dump(json_decode($item->description));
             if (preg_match('/\w/', $item->description) && $item->description !== null) {
                 $item->description = Str::words(json_decode($item->description)->ops[0]->insert, self::SHORT_DESCRIPTION_LENGTH);
             }

@@ -68,7 +68,7 @@ class OffersController extends Controller
         $request->validate([
             'title' => 'required|max:255|string',
             'duration' => 'required|string',
-            'description' => 'max:6000',
+            'description' => 'max:30000',
             'picture' => 'mimes:jpg,jpeg,bmp,png',
         ]);
 
@@ -116,11 +116,10 @@ class OffersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $offer = Offer::find($id)->setChanges($request);
+        Offer::find($id)->setChanges($request)->save();
 
-        $offer->setChanges($request);
-        $offer->save();
+//        $offer->setChanges($request);
+//        $offer->save();
 //        $update = $this->setUpdatedAttributesToOffer($offer, $request->all(), $request);
 //        $offer->renewUpdateAt($update);
 //        $offer->save();

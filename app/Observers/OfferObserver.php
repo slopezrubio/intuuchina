@@ -18,8 +18,18 @@ class OfferObserver
         //
     }
 
+    /**
+     * Handle the offer "creating" event.
+     *
+     * @param  \App\Offer  $offer
+     * @return void
+     */
     public function creating(Offer $offer) {
         $offer->saveThumbnail();
+
+        if (!$offer->hasDescription()) {
+            $offer->description = null;
+        }
     }
 
     /**
@@ -31,6 +41,18 @@ class OfferObserver
     public function updated(Offer $offer)
     {
         //
+    }
+
+    /**
+     * Handle the offer "updating" event.
+     *
+     * @param  \App\Offer  $offer
+     * @return void
+     */
+    public function updating(Offer $offer) {
+        if (!$offer->hasDescription()) {
+            $offer->description = null;
+        }
     }
 
     /**

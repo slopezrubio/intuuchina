@@ -13629,6 +13629,7 @@ section article ul li {
   -webkit-box-direction: normal;
   -webkit-box-orient: vertical;
   flex-direction: column;
+  width: 100%;
 }
 
 .media-card__card-content .media-card__heading,

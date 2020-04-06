@@ -158,14 +158,12 @@ FormFactory.prototype.createForm = function(options) {
 
         for (let i = 0; i <= previews.length; i++) {
             let input = $(previews[i]).next('.c-file-input');
-            console.log(input);
 
             $(input).on('click touchstart', function() {
                 $(this).val('');
             });
 
             $(input).change(function(ev) {
-                console.log(ev.target.files.item(0));
                 $(previews[i]).attr('src', URL.createObjectURL(ev.target.files.item(0)));
             });
         }

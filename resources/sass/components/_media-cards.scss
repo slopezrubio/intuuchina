@@ -56,6 +56,7 @@ $card:(
     &-content {
       @include flexbox();
       @include flex-direction(column);
+      width: 100%;
 
       .media-card__heading, .media-card__heading > a {
         color: $primaryDark;

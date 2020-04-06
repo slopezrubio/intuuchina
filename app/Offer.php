@@ -23,7 +23,7 @@ class Offer extends Model
     }
 
     public function hasDescription() {
-        return preg_match('/\w/', $this->description) && $this->description !== null;
+        return strlen($this->description) > 0 && strlen(trim($this->description)) && $this->description !== null;
     }
 
     public static function getAdminList() {
