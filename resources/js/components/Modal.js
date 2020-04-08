@@ -6,6 +6,8 @@ function Modal(options) {
 
     this.init = function() {
         $(this.el).on('shown.bs.modal', (event) => this.setAutofocus(event));
+
+        return this;
     };
 
     this.setAutofocus = function(event) {
@@ -14,6 +16,14 @@ function Modal(options) {
         }
 
         return this;
+    };
+
+    this.getAllTriggerElements = function() {
+        return $('[data-target="#' + this.el.getAttribute('id') + '"]');
+    };
+
+    this.setModalTitle = function(title) {
+        this.el.querySelector('.modal-title').innerText = title;
     };
 
     this.init();

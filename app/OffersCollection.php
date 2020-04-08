@@ -19,12 +19,16 @@ class OffersCollection extends Collection implements Searchable
     public function __construct($items = [], $type = 'admin')
     {
         if ($type !== null) {
-            $this->collection = $this->$type();
+            $currentPage = 1;
+
+            $this->$type();
         }
+
+        return $this;
     }
 
     public function admin() {
-        $collection = (new Collection(DB::table('offers')
+        $this->collection = (new Collection(DB::table('offers')
             ->select('offers.id',
                 'offers.title',
                 'offers.location',
@@ -32,15 +36,13 @@ class OffersCollection extends Collection implements Searchable
                 'offers.duration',
                 'offers.picture',
                 'offers.created_at')->get()));
-        $this->setShortDescription($collection);
+        $this->setShortDescription();
 
-        return $collection;
+        return $this;
     }
 
-    public function setShortDescription($collection) {
-        $collection->each(function($item) {
-//            var_dump($item->id);
-//            var_dump(json_decode($item->description));
+    public function setShortDescription() {
+        $this->collection->each(function($item) {
             if (preg_match('/\w/', $item->description) && $item->description !== null) {
                 $item->description = Str::words(json_decode($item->description)->ops[0]->insert, self::SHORT_DESCRIPTION_LENGTH);
             }
@@ -49,9 +51,20 @@ class OffersCollection extends Collection implements Searchable
         return $this;
     }
 
+    public function hasSearchKeys() {
+        return request()->query('search') !== null;
+    }
+
+    public function getSearchKeys() {
+        return explode(' ', strtolower(request()->query('search')));
+    }
+
     public function match() {
+
         $this->collection = $this->collection->filter(function($value, $key) {
-            return Str::is('*'.strtoupper(request()->query('search')).'*', strtoupper($value->title)) || Str::is('*'.strtoupper(request()->query('search')).'*', strtoupper($value->location));
+            return Str::contains(strtolower($value->title), $this->getSearchKeys()) || Str::contains(strtolower($value->location), $this->getSearchKeys());
         });
+
+        return $this;
     }
 }

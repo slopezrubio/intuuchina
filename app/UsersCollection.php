@@ -12,19 +12,19 @@ use Illuminate\Support\Str;
 
 class UsersCollection extends Collection implements Searchable
 {
-    const ELEMENTS_PER_PAGE = 2;
-
     protected $collection;
 
     public function __construct($items = [], $type = 'admin')
     {
         if ($type !== null) {
-            $this->collection = $this->$type();
+            $this->$type();
         }
+
+        return $this;
     }
 
     public function admin() {
-        $collection = (new Collection(DB::table('users')
+        $this->collection = (new Collection(DB::table('users')
             ->join('states', function($join) {
                 $join->on('users.status_id', '=', 'states.id');
             })
@@ -42,22 +42,32 @@ class UsersCollection extends Collection implements Searchable
                 'users.stripe_id as stripe',
                 'users.created_at',
                 'states.name as status')->get()));
-        $this->setCompletePhoneNumber($collection);
+        $this->setCompletePhoneNumber();
 
-        return $collection;
+        return $this;
     }
 
-    public function setCompletePhoneNumber($collection) {
-        $collection->each(function($item, $key) {
+    public function getSearchKeys() {
+        return explode(' ', strtolower(request()->query('search')));
+    }
+
+    public function setCompletePhoneNumber() {
+        $this->collection->each(function($item, $key) {
             $item->phone_number = '(' . __('prefixes.' . json_decode($item->phone_number)->prefix . '.prefix') . ')'. json_decode($item->phone_number)->number;
         });
 
         return $this;
     }
 
+    public function hasSearchKeys() {
+        return request()->query('search') !== null;
+    }
+
     public function match() {
         $this->collection = $this->collection->filter(function($value, $key) {
-            return Str::is('*'.strtoupper(request()->query('search')).'*', strtoupper($value->name)) || Str::is('*'.strtoupper(request()->query('search')).'*', strtoupper($value->surnames));
+            return Str::contains(strtolower($value->name), $this->getSearchKeys()) || Str::contains(strtolower($value->surnames), $this->getSearchKeys());
         });
+
+        return $this;
     }
 }

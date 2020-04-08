@@ -15,13 +15,6 @@
         </div>
     </div>
 
-    @component('components.modal', [
-    'name' => 'deleteOffer',
-    'title' => $data['offers']->first()->id
-])
-        @include('partials.forms.admin._delete-item')
-    @endcomponent
-
     @component('components.media-cards', ['items' => $data['offers']])
         @slot('id', 'offers')
         @slot('action', 'partials.forms.admin._offers-list')

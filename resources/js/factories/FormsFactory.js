@@ -1,15 +1,19 @@
 import ContactForm from '../components/forms/ContactForm';
+import DeleteOfferForm from "../components/forms/DeleteOfferForm";
 import EditOfferForm from '../components/forms/EditOfferForm';
+import DeleteUserForm from '../components/forms/DeleteUserForm';
 import CreateOfferForm from '../components/forms/CreateOfferForm';
 import SignUpForm from '../components/forms/SignUpForm';
 import ProceedPaymentForm from '../components/forms/ProceedPaymentForm';
 import PaymentForm from '../components/forms/PaymentForm';
 import LoginForm from '../components/forms/LoginForm';
 
+
 import UI from '../main/UI';
 
 import dom from '../facades/dom';
 import api from '../facades/api';
+
 
 export function FormFactory() {}
 
@@ -38,6 +42,12 @@ FormFactory.prototype.createForm = function(options) {
         case 'edit-offer':
             this.formClass = EditOfferForm;
             break;
+        case 'delete-offer':
+            this.formClass = DeleteOfferForm;
+            break;
+        case 'delete-user':
+            this.formClass = DeleteUserForm;
+            break;
     }
 
     let formClass = new this.formClass(options);
@@ -64,6 +74,18 @@ FormFactory.prototype.createForm = function(options) {
         });
 
         return formClass;
+    };
+
+    formClass.setItemAction = function(id) {
+        let url = new URL(this.el.action);
+        let oldPathname = url.pathname.split('/');
+        let newPathname = '';
+
+        for (let i = 1; i < oldPathname.length; i++) {
+            newPathname += i === oldPathname.length - 1 ? '/' + id : '/' + oldPathname[i];
+        }
+
+        this.el.action = url.origin + newPathname;
     };
 
     formClass.getActionUrl = function() {

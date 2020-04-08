@@ -149,7 +149,7 @@ return [
                 'users' => [
                     'text' => trans('Users'),
                     'icon' => 'fas fa-user',
-                    'content' => 'partials.forms.admin._users'
+                    'content' => 'partials.admin._users'
                 ],
                 'offers' => [
                     'text' => trans('Offers'),
@@ -159,7 +159,7 @@ return [
                 'testimonials' => [
                     'text' => trans('Testimonials'),
                     'icon' => 'fas fa-eye',
-                    'content' => 'partials.forms.admin._testimonials'
+                    'content' => 'partials.admin._testimonials'
                 ]
             ]
         ]

@@ -13,16 +13,19 @@ use Illuminate\Support\Str;
 class TestimonialsCollection extends Collection implements Searchable
 {
     protected $collection;
+    protected $name;
 
     public function __construct($items = [], $type = 'admin')
     {
         if ($type !== null) {
-            $this->collection = $this->$type();
+            $this->$type();
         }
+
+        return $this;
     }
 
     public function admin() {
-        return (new Collection(DB::table('testimonials')
+        $this->collection = (new Collection(DB::table('testimonials')
             ->join('users', function($join) {
                 $join->on('testimonials.user_id', '=', 'users.id');
             })
@@ -38,11 +41,23 @@ class TestimonialsCollection extends Collection implements Searchable
                 'users.phone_number',
                 'testimonials.created_at',
                 'testimonials.quotes')->get()));
+
+        return $this;
+    }
+
+    public function hasSearchKeys() {
+        return request()->query('search') !== null;
+    }
+
+    public function getSearchKeys() {
+        return explode(' ', strtolower(request()->query('search')));
     }
 
     public function match()  {
-        return $this->collection = $this->collection->filter(function($value, $key) {
-            return Str::is('*'.request()->query('search').'*', $value->name) || Str::is('*'.request()->query('search').'*', $value->surnames);
+        $this->collection = $this->collection->filter(function($value, $key) {
+            return Str::contains(strtolower($value->name), $this->getSearchKeys()) || Str::contains(strtolower($value->surnames), $this->getSearchKeys());
         });
+
+        return $this;
     }
 }

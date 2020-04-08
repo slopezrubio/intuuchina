@@ -1,11 +1,25 @@
 @slot('body')
-    <p>
-
-    </p>
-    <div class="form-group">
-        <button type="submit" class="modal-button modal-button_primary">{{ __('Agree') }}</button>
-        <button type="button" class="modal-button modal-button_secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
-    </div>
+    <form id="delete-{{ Str::singular($name) }}" action="{{ route('admin.delete-' .  Str::singular($name), [Str::singular($name) => $collection->first()->id]) }}">
+        @method('DELETE')
+        @csrf
+        <p>
+          {{ isset($message) ? $message : __('messages.deletion.' . Str::singular($name)) }}
+        </p>
+        <div class="form-group row">
+            <div class="col-12 col-sm-6">
+                @component('components.inputs.cta-button')
+                    @slot('variant', 'primary')
+                    @slot('content', __('Sure'))
+                @endcomponent
+            </div>
+            <div class="col-12 col-sm-6">
+                @component('components.inputs.cta-button')
+                    @slot('variant', 'primary')
+                    @slot('content', __('No'))
+                @endcomponent
+            </div>
+        </div>
+        </form>
 @endslot
 
 @slot('footer')

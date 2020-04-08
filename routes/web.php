@@ -56,7 +56,7 @@ Route::group([
         Route::get('users', 'AdminController@index')->name('admin.users');
         Route::get('offers', 'AdminController@index')->name('admin.offers');
         Route::get('testimonials', 'AdminController@index')->name('admin.testimonials');
-        Route::delete('users/delete/{user}', 'UsersController@destroy')->name('admin.delete-user');
+        Route::get('users/delete/{user}', 'UsersController@destroy')->name('admin.delete-user');
         Route::get('offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+')->name('admin.delete-offer');
         Route::get('testimonials/delete/{testimonial}', 'TestimonialsController@destroy')->where('testimonial', '[0-9]+')->name('admin.delete-testimonial');
         Route::get('offers/new', 'OffersController@create')->name('admin.new-offer');

@@ -10,4 +10,5 @@ use Illuminate\Support\Collection;
 interface Searchable
 {
     public function match() ;
+    public function hasSearchKeys() ;
 }
