@@ -80,8 +80,10 @@ class Offer extends Model
     }
 
     public function generateThumbnailFileName() {
-        if (method_exists(request(), 'get') && request()->get('location') && request()->get('industry')) {
-            return $this->id . '/' . request()->get('location') . '_' . request()->get('industry') . '_' . Carbon::now()->micro . '.' . request()->file('picture')->getClientOriginalExtension();
+        if (method_exists(request(), 'get') && request()->file('picture')) {
+            if (request()->get('location') && request()->get('industry')) {
+                return $this->id . '/' . request()->get('location') . '_' . request()->get('industry') . '_' . Carbon::now()->micro . '.' . request()->file('picture')->getClientOriginalExtension();
+            }
         }
 
         return 'default/generic_' . $this->industry . '_picture_'. Arr::random([1,2,3]) . '.jpg';
