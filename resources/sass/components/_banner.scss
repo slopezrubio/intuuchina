@@ -9,12 +9,12 @@
   }
 
   &__container {
-    & > * {
-      margin-bottom: 2.5em;
-    }
+
   }
 
   &__thumbnail {
+    margin: 1.5em auto;
+
     i {
       width: 100%;
       text-align: center;
@@ -25,5 +25,9 @@
 
   &__supporting-text {
 
+  }
+
+  &__action {
+    margin-bottom: 1rem;
   }
 }

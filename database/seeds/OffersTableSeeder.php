@@ -1,6 +1,7 @@
 <?php
 
 use App\Traits\Archivable;
+use App\Offer;
 use Illuminate\Database\Seeder;
 
 class OffersTableSeeder extends Seeder
@@ -13,10 +14,20 @@ class OffersTableSeeder extends Seeder
      */
     public function run()
     {
-        $offers = $this->loadDataFromFile('offers');
+        $offers = $this->loadDataFromXMLFile([
+            'root' => 'offers',
+            'path_file' => storage_path('app/jobs/items.xml')
+        ]);
 
         foreach ($offers as $offer) {
-            App\Offer::create($offer);
+            Offer::create([
+                'id' => $offer['id'],
+                'title' => $offer['title'],
+                'location' => $offer['location'],
+                'duration' => $offer['duration'],
+                'category_id' => $offer['category_id'],
+                'description' => $offer['description'],
+            ]);
         }
 
        //$offers = factory(App\Offer::class,5)->create();

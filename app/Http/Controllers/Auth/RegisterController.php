@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Program;
 use App\Rules\PhoneNumber;
+use App\Status;
 use Faker\Generator as Faker;
 use App\User;
+use App\Category;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -75,12 +78,12 @@ class RegisterController extends Controller
             'cv.required' => __('validation.custom.required', ['attribute' => 'curriculum'])
         ]);
 
-        $validator->after(function($validator) {
-
-            if ($validator->errors()->has('email')) {
-                $validator->errors()->add('register.email', $validator->errors()->first('email'));
-            }
-        });
+//        $validator->after(function($validator) {
+//
+//            if ($validator->errors()->has('email')) {
+//                $validator->errors()->add('register.email', $validator->errors()->first('email'));
+//            }
+//        });
 
         if ($validator->fails()) {
             redirect('register')
@@ -102,6 +105,7 @@ class RegisterController extends Controller
          * Creates a new user into the database.
          */
         $user = User::create([
+            'id' => DB::table('users')->orderBy('id', 'desc')->first()->id + 1,
             'name' => $data['name'],
             'surnames' => $data['surnames'],
             'email' => $data['email'],
@@ -110,19 +114,17 @@ class RegisterController extends Controller
                 'number' => $data['phone_number']
             ],
             'nationality' => $data['nationality'],
-            'program' => $data['program'],
-            'industry' => isset($data['industry']) && $data['program'] === 'internship' || isset($data['industry']) && $data['program'] === 'inter_relocat' ? $data['industry'] : null,
-            'study' => $data['program'] === 'study' && isset($data['study']) ? $data[$data['program']] : null,
-            'university' =>  $data['program'] === 'university' && !empty($data['university']) ? $data[$data['program']] : null,
+            'program_id' => Program::where('value', $data['program'])->first()->id,
             'type' => 'user',
-            'cv' => array_key_exists('cv', $data) ? $data['cv']->store('cv') : null,
-            'status_id' => DB::table('states')
-                            ->select(DB::raw('id'))
-                            ->where('name', 'unverified')
-                            ->get()->first()->id,
+            'status_id' => Status::where('value', 'unverified')->first()->id,
             'email_verified' => now(),
             'password' => Hash::make($data['password']),
             'api_token' => Str::random(60),
+        ]);
+
+        $user->update([
+            'program_id' => Program::where('value', $data['program'])->first()->id,
+            'categories' => isset($data['categories']) ? $data['categories'] : null,
         ]);
 
         return $user;
@@ -162,11 +164,11 @@ class RegisterController extends Controller
         $user->createAsStripeCustomer([
             'name' => $user->name,
             'email' => $user->email,
-            'phone' => $user->getFormattedNumber(),
+            'phone' => User::e164NumberFormat($user->phone_number),
         ]);
 
 
-        $admins = User::getAdmins();
+        $admins = User::admins();
         /*
          * Sends a notification to the admin.
          */

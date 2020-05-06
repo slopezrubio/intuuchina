@@ -34,7 +34,7 @@ class MailMessagesController extends Controller
                 ->withErrors($validator, 'contact');
         }
 
-        Mail::to(User::getAdmins()->first())
+        Mail::to(User::admins()->first())
             ->queue(new QueryReceived($validator->validated()));
 
         return view('pages.message-confirmation');

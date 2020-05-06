@@ -88,7 +88,7 @@ header {
     .header-box {
       border: 2px solid $primaryDark;
       background: none;
-      &__title {
+      &__title, &__subtitle {
         color: $primaryDark;
       }
     }

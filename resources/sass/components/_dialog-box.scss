@@ -1,11 +1,17 @@
 .dialog-box {
-    height: 100vh;
+    // Variables
+    $nav-height: 60px;
+
+    min-height: 100vh;
+    height: 100%;
     @include flexbox();
     @include align-items(center);
     @include justify-content(center);
 
     &__container {
         max-width: map_get($container-max-widths, 'md');
+        padding-bottom: 4em;
+        padding-top: calc(4em + #{$nav-height});
     }
 
     &__content {
@@ -33,7 +39,7 @@
 
     }
 
-    &__actions {
+    &__action {
         @include flexbox();
         @include flex-direction(column-reverse);
 

@@ -13,11 +13,11 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-8 col-xl-8">
+            <div class="col-md-12 col-lg-8 py-3">
                 <form id="signup-form" class="extended-form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <div class="p-0 col-12 col-md-6 form-group d-flex flex-wrap flex-md-row">
+                        <div class="col-12 col-md-6 form-group d-flex flex-wrap flex-md-row p-0 mb-0">
                             <div class="col-12 col-md-4">
                                 @component('components.inputs.label', ['name' => 'name', 'bag' => 'register'])
                                     {{ __('Name') }}
@@ -29,15 +29,9 @@
                                     @slot('name', 'name')
                                     @slot('value', old('name'))
                                 @endcomponent
-{{--                                <input id="name" type="text" class="c-text-input form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" autofocus>--}}
-{{--                                @if ($errors->has('name'))--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $errors->first('name') }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @endif--}}
                             </div>
                         </div>
-                        <div class="p-0 col-12 col-md-6 form-group d-flex flex-wrap flex-md-row">
+                        <div class="p-0 col-12 col-md-6 form-group d-flex flex-wrap flex-md-row mb-0">
                             <div class="col-12 col-md-4">
                                 @component('components.inputs.label', ['name' => 'surnames', 'bag' => 'register'])
                                     {{ __('Surnames') }}
@@ -78,7 +72,6 @@
                         <div class="col-md-9 d-flex p-0">
                             @component('components.inputs.phone')
                                 @slot('name', 'phone_number')
-                                @slot('value', old('phone_number'))
                             @endcomponent
                         </div>
                     </div>
@@ -92,6 +85,7 @@
                         <div class="col-md-9">
                             @component('components.inputs.select', ['options' =>  __('countries.nationalities')])
                                 @slot('name', 'nationality')
+                                @slot('value', old('nationality'))
                             @endcomponent
                         </div>
                     </div>
@@ -103,30 +97,39 @@
                             @endcomponent
                         </div>
                         <div class="col-md-9">
-                            @component('components.inputs.select', ['options' => __('content.programs')])
+                            @component('components.inputs.select', ['options' => App\Program::getOptions()])
                                 @slot('name', 'program')
-                                @slot('value', session()->has('preferences.program') ? session('preferences.program') : array_key_first(__('content.programs')))
+                                @slot('value', session()->has('preferences.program') ? session('preferences.program') : array_key_first(App\Program::getOptions()))
                             @endcomponent
                         </div>
                     </div>
 
                     <div class="form-group row" id="industryFieldset" style="{{ !session()->has('preferences') || session()->has('preferences.industry') ? '' : 'display:none' }}">
-                        @component('components.inputs.checkbox-group', ['inputs' => __('content.industries')])
-                            @slot('name', 'inter_relocat')
+                        @component('components.inputs.checkbox-group', [
+                            'inputs' => App\Category::getOptionsFrom('App\Program', 'inter_relocat'),
+                            'checked' => session()->has('preferences.inter_relocat') ? [session('preferences.inter_relocat')] : [],
+                        ])
+                            @slot('name', 'categories')
                             @slot('label', __('Industry'))
                         @endcomponent
                     </div>
 
                     <div class="form-group row" id="studyFieldset" style="{{ session()->has('preferences') && session()->has('preferences.study') ? '' : 'display:none'}}">
-                        @component('components.inputs.checkbox-group', ['inputs' => __('content.courses')])
-                            @slot('name', 'study')
+                        @component('components.inputs.checkbox-group', [
+                            'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
+                            'checked' => session()->has('preferences.study') ? [session('preferences.study')] : [],
+                        ])
+                            @slot('name', 'categories')
                             @slot('label', __('Study Chinese Via'))
                         @endcomponent
                     </div>
 
                     <div class="form-group row" id="universityFieldset" style="{{ session()->has('preferences') && session()->has('preferences.university') ? '' : 'display:none'}}">
-                        @component('components.inputs.checkbox-group', ['inputs' => __('content.universities')])
-                            @slot('name', 'university')
+                        @component('components.inputs.checkbox-group', [
+                            'inputs' => App\Category::getOptionsFrom('App\Program', 'university'),
+                            'checked' => session()->has('preferences.university') ? [session('preferences.university')] : [],
+                        ])
+                            @slot('name', 'categories')
                             @slot('label',  __('University'))
                         @endcomponent
                     </div>

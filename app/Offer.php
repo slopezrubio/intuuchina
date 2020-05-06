@@ -8,6 +8,7 @@ use DBlackborough\Quill\Render as QuillRender;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class Offer extends Model
@@ -17,6 +18,10 @@ class Offer extends Model
 
     protected $fillable = ['created_at', 'updated_at','title', 'location', 'industry', 'duration', 'description', 'picture'];
 
+    public function category() {
+        return $this->belongsTo('App\Category');
+    }
+
     public function getRenderedDescription() {
         $quill = new QuillRender($this->description, 'HTML');
         return $quill->render();
@@ -24,6 +29,12 @@ class Offer extends Model
 
     public function hasDescription() {
         return strlen($this->description) > 0 && strlen(trim($this->description)) && $this->description !== null;
+    }
+
+    public static function getCardList() {
+        return DB::table('offers')
+                ->select('offers.id', 'category_id', 'categories.name as category', 'picture as thumbnail', 'title', 'location as subtitle', 'duration as time', 'offers.created_at')
+                ->join('categories', 'offers.category_id', '=','categories.id')->paginate();
     }
 
     public static function getAdminList() {
@@ -58,9 +69,9 @@ class Offer extends Model
         return false;
     }
 
-    public function updateThumbnail($picture) {
+    public function updateThumbnail() {
         $this->destroyThumbnail();
-        $this->saveThumbnail($picture);
+        $this->saveThumbnail();
     }
 
     public function setChanges(Request $request) {
@@ -86,6 +97,6 @@ class Offer extends Model
             }
         }
 
-        return 'default/generic_' . $this->industry . '_picture_'. Arr::random([1,2,3]) . '.jpg';
+        return 'default/generic_' . $this->category->value . '_picture_'. Arr::random([1,2,3]) . '.jpg';
     }
 }

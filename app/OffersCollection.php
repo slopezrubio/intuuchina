@@ -19,8 +19,6 @@ class OffersCollection extends Collection implements Searchable
     public function __construct($items = [], $type = 'admin')
     {
         if ($type !== null) {
-            $currentPage = 1;
-
             $this->$type();
         }
 

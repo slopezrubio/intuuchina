@@ -109,25 +109,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Filters
-    |--------------------------------------------------------------------------
-    */
-    'filters' => [
-        'industry' => (function() {
-            $filters = [
-                'all' => trans('All')
-            ];
-
-            foreach(array_keys(trans('content.industries')) as $industry) {
-                $filters[$industry] = trans('content.industries')[$industry];
-            }
-
-            return $filters;
-        })()
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Tabs
     |--------------------------------------------------------------------------
     */
@@ -160,6 +141,11 @@ return [
                     'text' => trans('Testimonials'),
                     'icon' => 'fas fa-eye',
                     'content' => 'partials.admin._testimonials'
+                ],
+                'fees' => [
+                    'text' => trans('Fees'),
+                    'icon' => 'fas fa-money-bill-alt',
+                    'content' => 'partials.admin._fees'
                 ]
             ]
         ]
@@ -281,7 +267,7 @@ return [
             ],
             'new-offer' => [
                 'title' => 'New Job Offer'
-            ]
+            ],
         ],
         'home' => [
             'title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',
@@ -343,17 +329,15 @@ return [
     ],
     'dialog' => [
         'user' => [
-            'verified' => [
-                'the verification process is done' =>   "
-                                                            <p>
-                                                                The verification process is done. We just want to thank you for applying and your trust in our services.
-                                                                <p>As soon as we receive the corresponding payment for your :program Program we will contact you to arrange our first meeting.</p>
-                                                            </p>
-                                                            <p>
-                                                                Proceed with the payment?
-                                                            </p>
-                                                        ",
-            ]
+            'verified' =>   "
+                            <p>
+                                The verification process is done. We just want to thank you for applying and your trust in our services.
+                                <p>As soon as we receive the corresponding payment for your :program Program we will contact you to arrange our first meeting.</p>
+                            </p>
+                            <p>
+                                Proceed with the payment?
+                            </p>
+                            ",
         ]
     ],
     /*

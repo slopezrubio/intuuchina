@@ -1,6 +1,9 @@
 <div class="col-4 col-md-3">
     @component('components.inputs.select', ['options' => array_column(__('prefixes'), 'prefix', key(current(__('prefixes'))))])
         @slot('name', 'prefix')
+        @if(isset($prefix))
+            @slot('value', strtoupper($prefix))
+        @endif
     @endcomponent
 </div>
 <div class="col-8 col-md-9">

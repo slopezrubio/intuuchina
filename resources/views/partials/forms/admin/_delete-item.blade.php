@@ -1,9 +1,9 @@
 @slot('body')
-    <form id="delete-{{ Str::singular($name) }}" action="{{ route('admin.delete-' .  Str::singular($name), [Str::singular($name) => $collection->first()->id]) }}">
+    <form id="delete-{{ Str::singular($key) }}" action="{{ route('admin.delete-' .  Str::singular($key), [Str::singular($key) => $collection->first()->id]) }}">
         @method('DELETE')
         @csrf
         <p>
-          {{ isset($message) ? $message : __('messages.deletion.' . Str::singular($name)) }}
+          {{ isset($message) ? $message : __('messages.deletion.' . Str::singular($key)) }}
         </p>
         <div class="form-group row">
             <div class="col-12 col-sm-6">

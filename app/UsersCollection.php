@@ -3,6 +3,7 @@
 
 namespace App;
 
+use App\User;
 use App\Interfaces\Searchable;
 use App\Support\Collection;
 use Illuminate\Database\Query\Builder;
@@ -25,38 +26,34 @@ class UsersCollection extends Collection implements Searchable
 
     public function admin() {
         $this->collection = (new Collection(DB::table('users')
-            ->join('states', function($join) {
-                $join->on('users.status_id', '=', 'states.id');
+            ->join('statuses', function($join) {
+                $join->on('users.status_id', '=', 'statuses.id');
+            })
+            ->join('programs', function($join) {
+                $join->on('users.program_id', '=', 'programs.id');
             })
             ->where('users.type', 'user')
             ->select('users.name as name',
                 'users.id',
                 'users.surnames',
                 'users.email',
-                'users.program as subtext',
-                'users.industry as internship',
-                'users.study',
+                'programs.name as subtext',
                 'users.avatar as picture',
-                'users.university',
                 'users.phone_number',
                 'users.stripe_id as stripe',
                 'users.created_at',
-                'states.name as status')->get()));
-        $this->setCompletePhoneNumber();
+                'statuses.value as status')
+            ->orderBy('id', 'ASC')->get()
+            ->each(function($item, $key) {
+                $item->categories = User::find($item->id)->categories;
+                $item->phone_number = User::e164NumberFormat((array) json_decode($item->phone_number));
+            })));
 
         return $this;
     }
 
     public function getSearchKeys() {
         return explode(' ', strtolower(request()->query('search')));
-    }
-
-    public function setCompletePhoneNumber() {
-        $this->collection->each(function($item, $key) {
-            $item->phone_number = '(' . __('prefixes.' . json_decode($item->phone_number)->prefix . '.prefix') . ')'. json_decode($item->phone_number)->number;
-        });
-
-        return $this;
     }
 
     public function hasSearchKeys() {

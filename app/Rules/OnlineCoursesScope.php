@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Fee;
 use Illuminate\Contracts\Validation\Rule;
 
 class OnlineCoursesScope implements Rule
@@ -25,7 +26,7 @@ class OnlineCoursesScope implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value >= intval(__('content.courses.online.scope.min'));
+        return $value >= intval(Fee::where('value', 'chinese_online_course')->first()->minimum);
     }
 
     /**
@@ -35,8 +36,11 @@ class OnlineCoursesScope implements Rule
      */
     public function message()
     {
-        $minimumHours = __('content.courses.online.scope.min');
+        $course = Fee::where('value', 'chinese_online_course')->first();
 
-        return trans_choice('validation.custom.minimum_hours', $minimumHours ,['value' => $minimumHours]);
+        return trans_choice('validation.custom.minimum', $course->minimum ,[
+            'value' => $course->minimum,
+            'unit' => $course->unit
+        ]);
     }
 }

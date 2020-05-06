@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Fee;
+use App\FeeType;
 use App\Notifications\NewPaymentNotification;
 use App\Rules as Assert;
 use App\Mail\InvoicePaid;
 use App\Rules\InPersonCoursesScope;
 use App\Rules\OnlineCoursesScope;
-use Carbon\Carbon;
-use http\Exception;
+use App\Status;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,9 +19,9 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\UnauthorizedException;
 use Stripe\Charge;
-use Stripe\Checkout\Session as Checkout;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\InvalidRequestException;
 use Stripe\PaymentIntent;
@@ -35,57 +37,68 @@ use Whoops\Exception\ErrorException;
 
 class CheckoutsController extends Controller
 {
-    const APPLICATION_FEE = 30.00;
-    const VAT_PERCENTAGE = [
-        'ES' => 21,
-    ];
 
-    protected $amount = self::APPLICATION_FEE;
     protected $session;
+    protected $fee;
+    protected $total;
+    protected $subtotal;
 
-    public function getAmount($tax = null) {
-
-        switch(Auth::user()->program) {
-            case 'internship':
-            case 'inter_relocat':
-            case 'university':
-                $this->amount =  $this->toSmallestUnit(self::APPLICATION_FEE);;
-                break;
-            case 'study':
-                if (Auth::user()->hasChineseStudies()) {
-                    $this->amount = $this->toSmallestUnit(__('content.courses.' . Auth()->user()->study[0] . '.price.eur'));
-                }
-                break;
+    public static function toStripeUnit($value, $currency = null) {
+        if ($currency !== null) {
+            return $value * intval('1e'.__('currencies.'.$currency.'.decimal_digits'));
         }
 
-        if ($tax === null) {
-            return $this->amount + ($this->amount * $this->getLocaleVAT()->percentage / 100);
-        }
-
-        return $this->amount;
+        return $value * intval('1e'.__('currencies.'.config('services.stripe.cashier_currency').'.decimal_digits'));
     }
 
+    public function setPaymentValues($category = null) {
+        $this->fee = Auth::user()->getFirstCategory()->fee;
+
+        if ($category !== null) {
+            $this->fee = Category::where('value', $category)->first()->fee;
+        }
+
+        $this->subtotal = $this->fee->minimum !== null ? $this->fee->amount * $this->fee->minimum : $this->fee->amount;
+
+        $this->total = $this->subtotal + ($this->subtotal * floatval($this->fee->getTaxRate()['percentage'] / 100));
+
+        return $this;
+    }
 
     public function processPayment(Request $request) {
         Stripe::setApiKey(config('services.stripe.secret'));
 
+        $this->setPaymentValues();
+
         try {
             $intent = PaymentIntent::create([
-                'amount' => $this->getAmount(),
+                'amount' => self::toStripeUnit($this->total),
                 'currency' => config('services.stripe.cashier_currency')
             ]);
         } catch(ApiErrorException $e) {
-            throwException($e->getMessage());
+            return $e->getMessage();
         }
 
-        $view = $request->ajax()
-            ? 'partials.user.dialogs._payment'
-            : 'pages.user.payment';
+        $view = $request->ajax() ? 'partials.dialogs.user._payment' : 'pages.user.payment';
 
         return view($view, [
             'currencies' => __('currencies'),
             'intent' => $intent,
+            'total' => $this->total,
+            'subtotal' => $this->subtotal,
         ]);
+    }
+
+    public function getPaymentFee(Request $request) {
+        $course = $request->get('course') !== null ? $request->get('course') : null;
+
+        if ($course !== null) {
+            return Category::where('value', $course)->first()->fee;
+        }
+
+        return Auth::user()->categories->count() > 0
+            ? Auth::user()->categories->first()->fee
+            : Auth::user()->program->feeType->fees->first();
     }
 
     /**
@@ -100,6 +113,14 @@ class CheckoutsController extends Controller
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 
+        $this->fee = Auth::user()->categories->count() > 0
+                        ? Auth::user()->categories->first()->fee
+                        : Auth::user()->program->feeType->fees->first();
+
+        if ($request->get('course') !== null ) {
+            $this->fee = Category::where('value', $request->get('course'))->first()->fee;
+        }
+
         $intent = null;
         $dialog = $request->get('dialog') ? $request->get('dialog') : null;
         $payment_method = $request->get('payment_method') ? $request->get('payment_method') : null;
@@ -112,29 +133,37 @@ class CheckoutsController extends Controller
                 $user = Auth::user();
 
                 if (!$user->hasStripeId()) {
-                    $user->createAsStripeCustomer();
+                    $user->createAsStripeCustomer([
+                        'name' => $request->get('card_holder'),
+                        'phone' => $user::e164NumberFormat([
+                            'prefix' => $request->get('prefix'),
+                            'number' => $request->get('phone_number'),
+                        ]),
+                    ]);
                 };
-
-                $course = $this->getCourseSelected($request->all());
 
                 $payment_method = PaymentMethod::retrieve($payment_method);
                 $payment_method->attach([
                     'customer' => $user->stripe_id
                 ]);
 
+                $this->setPaymentValues($request->get('course'));
+
                 $invoice = $this->getPaymentInvoice([
                     'customer' => $user->stripe_id,
-                    'amount' =>  $this->getPaymentAmount($request->all()),
+                    'amount' =>  self::toStripeUnit($this->total),
                     'currency' => config('services.stripe.cashier_currency'),
-                    'description' =>  __('content.invoice.' . $user->program . '.description'),
+                    'description' =>  $this->fee->name,
+                    'customer_name' => $request->get('card_holder'),
                     'customer_email' => $request->get('email'),
                     'customer_phone' => $request->get('phone_number'),
+                    'quantity' => $request->get('quantity') !== null ? intval($request->get('quantity')) : 1,
                     'metadata' => [
-                        'program' => __('content.programs.' . $user->program),
-                        'course' => $request->get('study') !== null ? $request->get('study') : null,
-                        'duration' => $course['duration'] !== null ? $course['duration'] : null,
+                        'program' => Auth::user()->program->value,
+                        'fee' => $this->fee->id,
+                        'course' => $request->get('course') !== null ? $request->get('course') : null,
                     ],
-                    'payment_method' => $payment_method ->id,
+                    'payment_method' => $payment_method->id,
                 ]);
 
                 // Retrieves the Payment Intent.
@@ -155,13 +184,11 @@ class CheckoutsController extends Controller
                 }
             };
 
-            if (Auth::user()->getCurrentStatus() === 'paid') {
+            if (Auth::user()->status->name === 'paid') {
                 return $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
             }
 
             $response = $this->generateStripeResponse($intent, $dialog);
-
-            Auth::user()->updateStatus('paid');
 
             return $response;
 
@@ -202,22 +229,6 @@ class CheckoutsController extends Controller
         }
     }
 
-    public function getLocaleVAT($locale = 'ES') {
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        try {
-            return TaxRate::create([
-                'display_name' => 'IVA',
-                'description' => 'VAT Spanish',
-                'jurisdiction' => $locale,
-                'percentage' => self::VAT_PERCENTAGE[$locale],
-                'inclusive' => false,
-            ]);
-        } catch(ApiErrorException $e) {
-            throwException($e->getMessage());
-        }
-    }
-
     public function validatePaymentDetails(Request $request)
     {
         $rules = [
@@ -226,15 +237,15 @@ class CheckoutsController extends Controller
             'email' => 'required|email:rfc',
         ];
 
-        // Get the course selected by the user.
-        $course = $this->getCourseSelected($request->all());
+        $course = $request->get('course');
 
         /*
          * If there is a course selected, pushes the corresponding
          * rules to the array of rules.
          */
         if ($course !== null) {
-            $rules[$course['field']] = $course['rules'];
+            $courseValidationRuleClass = '\\App\\Rules\\' . Str::studly($course) . 'CoursesScope';
+            $rules[Str::plural(Category::where('value', $course)->first()->fee->unit)] = new $courseValidationRuleClass();
         }
 
         // Makes the validators for each field.
@@ -258,86 +269,38 @@ class CheckoutsController extends Controller
     }
 
     /**
-     * Get the course selected by the user in the payment form.
-     *
-     * @param $data
-     * @return array|null
-     */
-    public function getCourseSelected($data) {
-        $course = null;
-
-        if (array_key_exists('study', $data)) {
-            switch($data['study']) {
-                case 'in-person':
-                    $course = [
-                        'field' => 'staying',
-                        'duration' => $data['staying'],
-                        'rules' => ['required', 'numeric', new InPersonCoursesScope()],
-                        'amount' => intval(__('content.courses.' . $data['study'] . '.price.' . config('services.stripe.cashier_currency'))) * $data['staying'],
-                    ];
-                    break;
-                case 'online':
-                    $course = [
-                        'field' => 'hours',
-                        'duration' => $data['hours'],
-                        'rules' => ['required', 'numeric', new OnlineCoursesScope()],
-                        'amount' => intval(__('content.courses.' . $data['study'] . '.price.' . config('services.stripe.cashier_currency'))) * $data['hours'],
-                    ];
-                    break;
-            }
-        }
-
-        return $course;
-    }
-
-    /**
-     * Gets the corresponding payment amount according to the program
-     * and the duration selected.
-     *
-     * @param $data
-     * @return float|int
-     */
-    private function getPaymentAmount($data)
-    {
-        $course = $this->getCourseSelected($data);
-        $amount = $course !== null ? $course['amount'] : self::APPLICATION_FEE;
-        return $this->convertToSmallerUnitOfMeasure($amount);
-    }
-
-    public function toSmallestUnit($value)
-    {
-        $multiplier = intval('1e'. __('currencies.' . config('services.stripe.cashier_currency') . '.decimal_digits'));
-        return $value * $multiplier;
-    }
-
-    /**
      * Generates the corresponding Invoice for the given PaymentIntent.
      *
      * @param array $options
  * @return string
      * @throws ApiErrorException
      */
-    private function getPaymentInvoice(array $options) :Invoice
+    private function getPaymentInvoice(array $options)
     {
+        $fee = Fee::find($options['metadata']['fee']);
+
         try {
             InvoiceItem::create([
                 'customer' => $options['customer'] !== null ? $options['customer'] : Auth::user()->stripe_id,
                 'currency' => config('services.stripe.cashier_currency'),
-                'amount' => $options['amount'],
-                'tax_rates' => [
-                    $this->getLocaleVAT()->id,
-                ]
+                'quantity' => $options['quantity'],
+                'unit_amount_decimal' => self::toStripeUnit($fee->amount),
             ]);
+
+            return Invoice::create([
+                'customer' => $options['customer'] !== null ? $options['customer'] : Auth::user()->stripe_id,
+                'description' => isset($options['description']) ? $options['description'] : null,
+                'default_payment_method' => $options['payment_method'],
+                'metadata' => $options['metadata'],
+                'default_tax_rates' => [
+                    TaxRate::create($fee->getTaxRate())->id
+                ],
+//                'subtotal' => $fee->amount * $options['quantity'] * intval('1e'. __('currencies.' . config('services.stripe.cashier_currency') . '.decimal_digits')),
+            ])->finalizeInvoice();
+
         } catch(ApiErrorException $e) {
             return $e->getMessage();
         }
-
-        return Invoice::create([
-            'customer' => $options['customer'] !== null ? $options['customer'] : Auth::user()->stripe_id,
-            'description' => isset($options['description']) ? $options['description'] : null,
-            'default_payment_method' => $options['payment_method'],
-            'metadata' => $options['metadata'],
-        ])->finalizeInvoice();
     }
 
     /**
@@ -360,9 +323,6 @@ class CheckoutsController extends Controller
             // The payment didn’t need any additional actions and completed!
             // Handle post-payment fulfillment
 
-            // Now the user has paid and his state must be updated.
-            // Auth::user()->updateStatus('paid');
-
             $receipt_url = $intent->charges->data[count($intent->charges->data) - 1]->receipt_url;
 
             $user = Auth::user();
@@ -370,21 +330,28 @@ class CheckoutsController extends Controller
             try {
                 $invoice = Invoice::retrieve($intent->invoice);
 
-                if ($invoice->custom_fields['course'] !== null) {
-                    $user->addPreference('study', $invoice->custom_fields->course);
+                if ($invoice->metadata['course'] !== null) {
+                    $user->categories()->sync([
+                        Category::where('value', $invoice->metadata['course'])->first()->id
+                    ]);
                 }
 
+                $user->update([
+                    'status_id' => Status::where('value', 'paid')->first()->id,
+                ]);
+
+                $user = User::find($user->id);
+
                 Mail::to($invoice->customer_email)
-                    ->queue(new InvoicePaid($invoice, $user));
+                    ->send(new InvoicePaid($invoice, $user));
 
-
-                $admins = User::getAdmins();
+                $admin = User::admins()->first();
 
                 /*
                  * Sends a notification message to all the admins to report
                  * a new user has made the corresponding payment.
                  */
-                Notification::send($admins, new NewPaymentNotification($user, $invoice));
+                $admin->notify(new NewPaymentNotification($user, $invoice));
 
             } catch(\Exception $e) {
                 return $e->getMessage();
@@ -393,7 +360,7 @@ class CheckoutsController extends Controller
             // Redirects the user to the paid dialog box to report the user about
             // the successful payment.
             if ($dialog !== null) {
-                return view('partials.dialogs.user._' . Auth::user()->getCurrentStatus()->name, [
+                return view('partials.dialogs.user._' . $user->status->value, [
                     'receipt_url' => $receipt_url,
                 ]);
             }
@@ -407,33 +374,4 @@ class CheckoutsController extends Controller
                 ->header('Content-Type', 'json/application');
         }
     }
-
-    //    public function newCheckout($id, $hashedProperty) {
-//        $user = User::find($id);
-//
-//        // Set Stripe API key to proceed with the Checkout Session.
-//        Stripe::setApiKey(config('services.stripe.secret'));
-//
-//        /**
-//         * Creates a Checkout Session according to the chosen program.
-//         */
-//        $stripeSession = Checkout::create([
-//            'cancel_url' => route('home'),
-//            'customer' => $user->stripe_id,
-//            'line_items' => [
-//                [
-//                    'name' => 'Application Fee',
-//                    'amount' => 3000,
-//                    'currency' => 'eur',
-//                    'description' => 'Application Fee for ' . $user->name . ' ' . $user->surnames,
-//                    'quantity' => '1',
-//                ]
-//            ],
-//            'locale' => config('app.locale'),
-//            'mode' => 'payment',
-//            'payment_method_types' => ['card'],
-//            'submit_type' => 'pay',
-//            'success_url' => route('home'),
-//        ]);
-//    }
 }

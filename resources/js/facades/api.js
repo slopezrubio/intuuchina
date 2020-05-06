@@ -105,10 +105,13 @@ var api = (function() {
                     data: data
                 });
 
+                console.log(response.data);
+
                 return await response.data;
             } catch(error) {
                 // console.log(error.response);
                 if (error.response.status === 422) {
+                    console.log(error.response.data);
                     return error.response.data;
                 }
 
@@ -118,12 +121,12 @@ var api = (function() {
         getRoute: function(name) {
             return _.routes[name];
         },
-        getResource: function(name, value = null) {
+        getResource: function(resource, value = null) {
             if (value !== null) {
-                return this.getRoute('hostname') + '/api/' + name + '/' + value;
+                return this.getRoute('hostname') + '/api/' + resource + '/' + value;
             }
 
-            return this.getRoute('hostname') + '/api/' + name
+            return this.getRoute('hostname') + '/api/' + resource
         },
         setLaravelParams: function(url, params = []) {
             if (params.length === 0) {

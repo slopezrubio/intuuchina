@@ -1,1 +1,1 @@
-@include('partials.user._' . Auth::user()->getCurrentStatus()->name)
+@include('partials.user._' . Auth::user()->status->value)

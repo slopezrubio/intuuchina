@@ -7,13 +7,15 @@
                     @break
             @endswitch
         </div>
+
         <div class="banner__supporting-text col-12 p-0">
             {!! $text !!}
         </div>
-        <div class="banner__action d-flex flex-column flex-md-row align-items-md-center">
-            @if(isset($action))
+
+        @if(isset($action))
+            <div class="banner__action d-flex flex-column flex-md-row align-items-md-center">
                 {!! $action !!}
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 </div>

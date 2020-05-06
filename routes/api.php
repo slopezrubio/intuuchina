@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+use App\Http\Resources\Category as CategoryResource;
 use Illuminate\Http\Request;
 
 /*
@@ -18,8 +20,7 @@ use Illuminate\Http\Request;
 //});
 
 Route::get('/courses/{course}', function($course) {
-    return response()
-            ->json(__('content.courses.' . $course));
+    return new CategoryResource(Category::where('value', $course)->first());
 })->where('course', '([a-z]+[_-]?[a-z])*');
 
 // Gets a particular course information.

@@ -6,6 +6,7 @@ use App\Notifications\NewUserNotification;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\File as UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
@@ -29,7 +30,14 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'surnames', 'email','phone_number', 'type', 'cv', 'nationality', 'status_id', 'program', 'industry', 'study', 'university', 'password', 'api_token',
+       'id', 'name', 'surnames', 'email','phone_number', 'type', 'cv', 'nationality', 'status_id', 'program_id', /*'industry', 'study', 'university'*/ 'password', 'api_token',
+    ];
+
+    /**
+     * The attributes that are uploadables.
+     */
+    protected $uploadable = [
+        'cv'
     ];
 
     /**
@@ -48,34 +56,68 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'industry' => 'array',
         'phone_number' => 'array',
-        'study' => 'array',
-        'university' => 'array',
     ];
 
-    public static function getAdmins() {
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($model) {
+            $model->saveUploadables()
+                    ->savePhoneNumber();
+        });
+    }
+
+    public function categories() {
+        return $this->belongsToMany('App\Category');
+    }
+
+    public function status() {
+        return $this->belongsTo('App\Status');
+    }
+
+    public function program() {
+        return $this->belongsTo('App\Program');
+    }
+
+    /**
+     * Save all the files belonging to the uploadable fields.
+     *
+     * @return $this
+     */
+    public function saveUploadables() {
+        foreach ($this->uploadable as $value) {
+            if (request()->file($value) !== null) {
+
+                if (Storage::exists($this->$value)) {
+                    Storage::delete($this->$value);
+                }
+
+                $this->$value = $this->saveFileToProfile(request()->file($value));
+            }
+
+            if (request()->file($value) === null && $this->$value === null) {
+                $this->$value = Storage::putFile($this->profilePath(), new UploadedFile(storage_path('app/profiles/default_' . $value . '.docx')));
+            }
+        }
+
+        return $this;
+    }
+
+    public function savePhoneNumber() {
+        if (request()->get('phone_number') !== null && request()->get('phone_number')) {
+            $this->phone_number = [
+                'prefix' => request()->get('prefix'),
+                'number' => request()->get('phone_number'),
+            ];
+        }
+
+        return $this;
+    }
+
+    public static function admins() {
         return User::where('type', 'admin')
             ->get();
-    }
-
-    public function getCurrentStatus() {
-        return DB::table('users')
-            ->where('users.id', $this->id)
-            ->join('states', 'users.status_id', '=', 'states.id')
-            ->select('states.*')
-            ->first();
-    }
-
-    public function updateStatus(string $status) {
-        $first = DB::table('states')
-            ->where('states.name', $status)->value('id');
-
-        DB::table('users')
-            ->where('id', $this->id)
-            ->update(['status_id' => $first]);
-
-        return User::find($this->id);
     }
 
     public function getFormattedPhoneNumber() {
@@ -83,12 +125,25 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function sendEmailVerificationNotification() {
-        $this->notify(new NewUserNotification());
+        $this->notify(new NewUserNotification($this));
     }
 
-    public function update(array $fields = [], array $options = []) {
-        User::where('id', $this->id)
-            ->update($fields);
+    public function update(array $attributes = [], array $options = []) {
+        if (isset($attributes['categories'])) {
+            $categories = [];
+
+            foreach ($attributes['categories'] as $key => $category) {
+                foreach (Category::find($category)->programs as $program) {
+                    if ($program->is(Program::find($attributes['program_id']))) {
+                        array_push($categories, $category);
+                    }
+                }
+            }
+
+            $this->categories()->sync($categories);
+        }
+
+        $this->fill($attributes)->save($options);
     }
 
     /**
@@ -111,10 +166,30 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function getFirstCategory() {
+        if ($this->categories->count() > 0) {
+            return $this->categories->first();
+        }
+
+        return $this->program->categories->first();
+    }
+
     public static function getLastUserCreated() {
         return DB::table('users')
             ->orderByDesc('id')
             ->get()->first();
+    }
+
+    public function profilePath() {
+        return 'profiles/' . $this->id;
+    }
+
+    public function saveFileToProfile($file) {
+        if ($file !== null) {
+            return $file->store($this->profilePath());
+        }
+
+        return null;
     }
 
     public function destroyAssociatedFiles() {
@@ -125,18 +200,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this;
     }
 
-    public static function setCompletePhoneNumber($collection = null) {
-        if ($collection !== null) {
-            foreach ($collection as $value) {
-                $value->phone_number = '(' . __('prefixes.' . json_decode($value->phone_number)->prefix . '.prefix') . ')'. json_decode($value->phone_number)->number;
-            }
-        }
-
-        return $collection;
-    }
-
-    public function getIndustries() {
-        return json_decode($this->industry);
+    public static function e164NumberFormat(array $phone_number) {
+        return __('prefixes.' . $phone_number['prefix'] . '.prefix') . $phone_number['number'];
     }
 
     public static function allOrderBy($field, $order) {

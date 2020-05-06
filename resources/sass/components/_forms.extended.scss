@@ -1,7 +1,7 @@
 form {
   &.extended-form {
-    & > div:not(:first-of-type) {
-      margin-bottom: 2rem;
+    .form-group {
+      margin-bottom: 1.75em;
     }
 
     a {
@@ -12,8 +12,10 @@ form {
       }
     }
 
-    .form-group label:not(.c-switch-input__label) {
-      font-weight: 700;
+    .form-group {
+      label:not(.c-switch-input__label):not(.radio-chips__item-label) {
+        font-weight: 700;
+      }
     }
 
     .c-shutter-button {
@@ -24,8 +26,4 @@ form {
   .invalid-feedback {
     height: 100%;
   }
-}
-
-form.extended-form {
-
 }

@@ -31,16 +31,9 @@ class InvoicePaid extends Mailable
     }
 
     protected function getMessage() {
-        switch($this->user->program) {
-            case 'internship':
-            case 'inter_relocat':
-            case 'university':
-                return __('mails.invoice.paid.body.application-fee', ['program' => __('content.programs.' . $this->user->program)]);
-                break;
-            default:
-                return __('mails.invoice.paid.body.' . $this->user->program, ['program' => __('content.programs.' . $this->user->program)]);
-                break;
-        }
+        return __('mails.invoice.paid.body.'.$this->user->getFirstCategory()->fee->value, [
+            'program' => $this->user->program->name,
+        ]);
     }
 
     /**
@@ -57,15 +50,15 @@ class InvoicePaid extends Mailable
                     ])
                     ->markdown('emails.invoices.paid')
                     ->with([
-                        'userName' => $this->user->name,
+                        'user' => $this->user->name,
                         'program' => $this->user->program,
                         'message' => $this->message,
-                        'invoiceDetails' => [
+                        'invoice_details' => [
                             'total' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), floatval($this->invoice->amount_paid / 100), config('services.stripe.cashier_currency')),
                             'date' => Carbon::parse($this->invoice->due_date, config('app.timezone'))->format('Y-m-d')
                         ],
-                        'hostedInvoice' => $this->invoice->hosted_invoice_url,
-                        'invoicePDF' => $this->invoice->invoice_pdf,
+                        'hosted_invoice' => $this->invoice->hosted_invoice_url,
+                        'invoice_pdf' => $this->invoice->invoice_pdf,
                     ]);
     }
 }

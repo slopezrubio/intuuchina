@@ -20,10 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 100)->unique();
             $table->longText('phone_number');
             $table->string('nationality');
-            $table->string('program')->nullable();
-            $table->string('industry')->nullable();
-            $table->string('study')->nullable();
-            $table->string('university')->nullable();
+            $table->unsignedBigInteger('program_id');
             $table->string('type');
             $table->longText('cv')->nullable();
             $table->longText('avatar')->nullable();
@@ -32,7 +29,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('status_id')->references('id')->on('states');
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('program_id')->references('id')->on('programs');
         });
     }
 

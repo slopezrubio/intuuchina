@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Program;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -45,13 +46,12 @@ class NewPaymentNotification extends Notification
      * @return string
      */
     public function getMessage() {
-        foreach (__('content.programs') as $key => $program) {
-            if ($key === $this->user->program && array_key_exists($key, __('mails.new-payment.body'))) {
-                return trans_choice('mails.new-payment.body.' . $key . '.' . $this->invoice->metadata->course, $this->invoice->metadata->duration, ['user' => $this->user->name, 'amount' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), intval($this->invoice->amount_paid . 'e-2') , config('services.stripe.cashier_currency')), 'duration' => $this->invoice->metadata->duration]);
-            }
-        }
-
-        return __('mails.new-payment.body.application-fee', ['user' => $this->user->name, 'amount' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), intval($this->invoice->amount . 'e-2') , config('services.stripe.cashier_currency'))]);
+        return trans_choice('mails.new-payment.body.' . $this->user->getFirstCategory()->fee->value, intval($this->invoice->quantity), [
+            'user' => $this->user->name,
+            'amount' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), intval($this->invoice->amount_paid . 'e-2'), config('services.stripe.cashier_currency')),
+            'program' => $this->user->program->name,
+            'duration' =>  $this->invoice->quantity !== null ? $this->invoice->quantity : 1,
+        ]);
     }
 
     /**
@@ -68,11 +68,14 @@ class NewPaymentNotification extends Notification
                             [
                                 'user' => $this->user,
                                 'total' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), floatval($this->invoice->amount_paid / 100), config('services.stripe.cashier_currency')),
-                                'description' => __('content.invoice.' . $this->user->program . '.description'),
+                                'description' => $this->user->getFirstCategory()->fee->name,
                                 'message' => $this->message
                             ]
                         )
-                        ->subject(__('mails.new-payment.subject', ['user' => $this->user->name, 'program' => __('content.programs.' . $this->user->program)]));
+                        ->subject(__('mails.new-payment.subject', [
+                            'user' => $this->user->name,
+                            'program' => $this->user->program->name,
+                        ]));
 
     }
 

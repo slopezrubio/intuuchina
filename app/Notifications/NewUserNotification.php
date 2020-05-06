@@ -14,14 +14,25 @@ class NewUserNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    protected $verification_urls;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($notifiable)
     {
-        //
+        $this->verification_urls = [
+            'email' => URL::temporarySignedRoute('verification.email',
+                Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
+                ['id' => $notifiable->getKey(), 'program' => $notifiable->program->value, 'payment' => true]
+            ),
+            'checkout' => URL::temporarySignedRoute('verification.email',
+                Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
+                ['id' => $notifiable->getKey(), 'program' => $notifiable->program->value, 'payment' => true]
+            ),
+        ];
     }
 
     /**
@@ -50,17 +61,15 @@ class NewUserNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $verificationUrls = $this->verificationUrls($notifiable);
-
         if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrls);
+            return call_user_func(static::$toMailCallback, $notifiable, $this->verification_urls);
         }
 
         return (new MailMessage)
             ->markdown(
-            'vendor.notifications.new-user', ['user' => $notifiable, 'verificationURLs' => $verificationUrls]
+            'vendor.notifications.new-user', ['user' => $notifiable, 'URLs' => $this->verification_urls]
             )
-            ->subject(__('mails.new-user.subject', ['name' => $notifiable->name, 'program' => __('content.programs.' . $notifiable->program)]));
+            ->subject(__('mails.new-user.subject', ['name' => $notifiable->name, 'program' => $notifiable->program->name]));
 
     }
 
@@ -70,21 +79,10 @@ class NewUserNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    protected function verificationUrls($notifiable)
-    {
-        return [
-            'email' => URL::temporarySignedRoute('verification.email',
-                Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
-                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true]
-            ),
-            'checkout' => URL::temporarySignedRoute('verification.email',
-                Carbon::now()->addDays(Config::get('auth.verification.expire', 5)),
-                ['id' => $notifiable->getKey(), 'program' => $notifiable->program, 'payment' => true]
-            ),
-        ];
-
-
-    }
+//    protected function verificationUrls($notifiable)
+//    {
+//
+//    }
 
     /**
      * Get the array representation of the notification.

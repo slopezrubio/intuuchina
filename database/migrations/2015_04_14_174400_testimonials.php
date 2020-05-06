@@ -14,10 +14,11 @@ class Testimonials extends Migration
     public function up()
     {
         Schema::create('testimonials', function (Blueprint $table){
-            $table->bigINcrements('id');
+            $table->bigIncrements('id');
             $table->longText('quotes');
             $table->string('occupation');
             $table->string('company')->nullable();
+            $table->string('university')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

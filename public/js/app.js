@@ -2665,6 +2665,8 @@ try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "accordionListFactory", function() { return accordionListFactory; });
 /* harmony import */ var _factories_ListFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../factories/ListFactory */ "./resources/js/factories/ListFactory.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
+
 
 
 function AccordionList(options) {
@@ -2672,16 +2674,45 @@ function AccordionList(options) {
 
   this.init = function () {
     this.items = this.el.getElementsByClassName('accordion-list__card');
+    this.clampCardHeader();
     return this;
   };
 
-  this.getCard = function (key) {
-    return this.items[key];
+  this.clampCardHeader = function () {
+    for (var i = 0; i < this.items.length; i++) {
+      if (_facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].isElement(this.items[i]) || _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].isNode(this.items[i])) {
+        $clamp(this.getCardTitle(this.items[i]), {
+          clamp: 1
+        });
+        $clamp(this.getCardSubtitle(this.items[i]), {
+          clamp: 1
+        });
+        $clamp(this.getCardDescription(this.items[i]), {
+          clamp: 2
+        });
+      }
+    }
   };
 
-  this.getCardTitle = function (key) {
-    if (this.getCard(key) !== null) {
-      return this.getCard(key).querySelector('.accordion-list__card-title').innerText;
+  this.getCardTitle = function (element) {
+    if (element !== null) {
+      return element.querySelector('.accordion-list__card-title');
+    }
+
+    return null;
+  };
+
+  this.getCardSubtitle = function (element) {
+    if (element !== null) {
+      return element.querySelector('.accordion-list__card-subtitle');
+    }
+
+    return null;
+  };
+
+  this.getCardDescription = function (element) {
+    if (element !== null) {
+      return element.querySelector('.accordion-list__card-description');
     }
 
     return null;
@@ -5714,6 +5745,62 @@ var deleteUserFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE
 
 /***/ }),
 
+/***/ "./resources/js/components/forms/EditFeeForm.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/forms/EditFeeForm.js ***!
+  \******************************************************/
+/*! exports provided: editFeeFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editFeeFormFactory", function() { return editFeeFormFactory; });
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _EditOfferForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditOfferForm */ "./resources/js/components/forms/EditOfferForm.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../facades/dom */ "./resources/js/facades/dom.js");
+
+
+
+
+function EditFeeForm(options) {
+  this.fields = {};
+
+  this.init = function () {
+    var _this = this;
+
+    this.fields.name = this.el.querySelector('#name');
+    this.fields.fee_type = this.el.querySelector('#fee_type');
+    this.fields.unit = this.el.querySelector('#unit');
+    this.fields.amount = this.el.querySelector('#amount');
+    this.fields.minimum = this.el.querySelector('#minimum');
+    this.fields.tax = this.el.querySelector('#tax');
+    this.updateFields();
+    this.setInputFilter(this.fields.amount, function (value) {
+      return _this.filters["float"].test(value);
+    });
+    this.setInputFilter(this.fields.minimum, function (value) {
+      return _this.filters.integer.test(value);
+    });
+    this.fields.fee_type.addEventListener('change', function (ev) {
+      _this.updateFields();
+    });
+  };
+
+  this.updateFields = function () {
+    if (this.fields.fee_type.value === 'unit_rate') {
+      _facades_dom__WEBPACK_IMPORTED_MODULE_2__["default"].show($(this.fields.unit).parents('.form-group')[0]);
+      return this;
+    }
+
+    _facades_dom__WEBPACK_IMPORTED_MODULE_2__["default"].hide($(this.fields.unit).parents('.form-group')[0]);
+  };
+}
+
+var editFeeFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (EditFeeForm);
+
+/***/ }),
+
 /***/ "./resources/js/components/forms/EditOfferForm.js":
 /*!********************************************************!*\
   !*** ./resources/js/components/forms/EditOfferForm.js ***!
@@ -5755,6 +5842,52 @@ function EditOfferForm(options) {
 
 var editOfferFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
 /* harmony default export */ __webpack_exports__["default"] = (EditOfferForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/EditUserForm.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/forms/EditUserForm.js ***!
+  \*******************************************************/
+/*! exports provided: editUserFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editUserFormFactory", function() { return editUserFormFactory; });
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+
+
+function EditUserForm() {
+  this.fields = {};
+  this.fieldsets = {
+    industry: document.getElementById('industryFieldset'),
+    study: document.getElementById('studyFieldset'),
+    university: document.getElementById('universityFieldset')
+  };
+
+  this.init = function () {
+    var _this = this;
+
+    this.fields = {
+      name: this.el.querySelector('#name'),
+      surnames: this.el.querySelector('#surnames'),
+      email: this.el.querySelector('#email'),
+      phone_number: {
+        prefix: document.getElementById('prefix'),
+        number: document.getElementById('phone-number')
+      },
+      program: document.getElementById('program'),
+      cv: document.getElementById('cv')
+    };
+    this.fields.program.addEventListener('change', function () {
+      _this.updateFieldset(_this);
+    }, this);
+  };
+}
+
+var editUserFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (EditUserForm);
 
 /***/ }),
 
@@ -5842,18 +5975,17 @@ function PaymentForm(options) {
   /**
    * Form fields
    *
-   * @type {{duration: {hours: HTMLElement, staying: HTMLElement}, card_holder: HTMLElement, study: HTMLElement, stripe: {}, phone_number: HTMLElement, currency: HTMLElement, payment: Element, email: HTMLElement, card: {number: HTMLElement, cvc: HTMLElement, expiry: HTMLElement}}}
+   * @type {{duration: {lessons: HTMLElement, months: HTMLElement}, card_holder: HTMLElement, courses: HTMLElement, stripe: {}, phone_number: HTMLElement, currency: HTMLElement, payment: Element, email: HTMLElement, card: {number: HTMLElement, cvc: HTMLElement, expiry: HTMLElement}}}
    */
 
   this.fields = {
     card_holder: document.getElementById('card_holder'),
+    prefix: document.getElementById('prefix'),
     phone_number: document.getElementById('phone_number'),
     email: document.getElementById('payment-email'),
-    study: document.getElementById('study'),
-    duration: {
-      hours: document.getElementById('hours'),
-      staying: document.getElementById('staying')
-    },
+    course: document.getElementById('course'),
+    lessons: document.getElementById('lessons'),
+    months: document.getElementById('months'),
     card: {
       number: document.getElementById('card-number'),
       cvc: document.getElementById('card-cvc'),
@@ -5868,7 +6000,7 @@ function PaymentForm(options) {
   this.dialog = null;
   this.paymentIntent = null; // Selected course
 
-  this.selectedCourse = null; // Payment details
+  this.course = null; // Payment details
 
   this.paymentDetails = null;
   this.stripe = null; // Used patterns
@@ -5877,31 +6009,18 @@ function PaymentForm(options) {
     getActionText: new RegExp(/^([A-Z]?[\s\D][^A-Z\u00A5-\u20BF\u0024\u00A3\d.]+)/)
   };
   this.dialog = null;
+  this.price = {};
   this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
   this.getCourseDuration = function () {
-    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-    if (this.fields.study !== null) {
-      switch (this.fields.study.value) {
-        case 'in-person':
-          if (obj) {
-            obj['staying'] = this.fields.duration.staying.value;
-            return obj;
-          }
-
-          return this.fields.duration.staying.value;
-
-        case 'online':
-          if (obj) {
-            obj['hours'] = this.fields.duration.hours.value;
-            return obj;
-          }
-
-          return this.fields.duration.hours.value;
-
-        default:
-          return this.fields.duration.staying.value;
+    if (this.fields.course !== null) {
+      if (obj !== null) {
+        obj[pluralize.plural(this.course.data.fee.unit)] = this.fields[pluralize.plural(this.course.data.fee.unit)].value;
+        return obj;
       }
+
+      return this.fields[pluralize.plural(this.course.data.fee.unit)].value;
     }
 
     return 1;
@@ -5917,91 +6036,105 @@ function PaymentForm(options) {
         switch (_context6.prev = _context6.next) {
           case 0:
             if (!(this.el !== null)) {
-              _context6.next = 15;
+              _context6.next = 14;
               break;
             }
 
             this.dialog = _Dialog__WEBPACK_IMPORTED_MODULE_2__["dialogFactory"].createDialog();
             this.loadStripeElements();
-            this.setPaymentAmount();
+
+            if (!(this.fields.course !== null)) {
+              _context6.next = 9;
+              break;
+            }
+
             _context6.next = 6;
-            return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', this.fields.study.value));
+            return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', this.fields.course.value));
 
           case 6:
-            this.selectedCourse = _context6.sent;
-            this.fields.study.addEventListener('change',
+            this.course = _context6.sent;
+            this.setSubtotal().setTotal();
+            this.fields.course.addEventListener('change',
             /*#__PURE__*/
             function () {
               var _ref2 = _asyncToGenerator(
-              /*#__PURE__*/
-              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        _this.toggleInputs([_this.fields.duration.staying, _this.fields.duration.hours]);
-
-                        _context.next = 3;
-                        return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', event.target.value));
-
-                      case 3:
-                        _this.selectedCourse = _context.sent;
-
-                        _this.setTotalCoursePrice('eur').setPaymentAmount();
-
-                      case 5:
-                      case "end":
-                        return _context.stop();
-                    }
-                  }
-                }, _callee);
-              }));
-
-              return function (_x) {
-                return _ref2.apply(this, arguments);
-              };
-            }());
-            this.fields.duration.staying.addEventListener('change',
-            /*#__PURE__*/
-            function () {
-              var _ref3 = _asyncToGenerator(
-              /*#__PURE__*/
-              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-                  while (1) {
-                    switch (_context2.prev = _context2.next) {
-                      case 0:
-                        _this.validateField(event.target, ['required', 'integer', 'InPersonCoursesScope']);
-
-                        _this.setMinimumDuration().setPaymentAmount();
-
-                      case 2:
-                      case "end":
-                        return _context2.stop();
-                    }
-                  }
-                }, _callee2);
-              }));
-
-              return function (_x2) {
-                return _ref3.apply(this, arguments);
-              };
-            }());
-            this.fields.duration.hours.addEventListener('change',
-            /*#__PURE__*/
-            function () {
-              var _ref4 = _asyncToGenerator(
               /*#__PURE__*/
               _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(event) {
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                   while (1) {
                     switch (_context3.prev = _context3.next) {
                       case 0:
-                        _this.validateField(event.target, ['required', 'integer', 'OnlineCoursesScope']);
+                        _this.toggleInputs([_this.fields.months, _this.fields.lessons]);
 
-                        _this.setMinimumDuration().setPaymentAmount();
+                        _context3.next = 3;
+                        return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', event.target.value));
 
-                      case 2:
+                      case 3:
+                        _this.course = _context3.sent;
+
+                        _this.setSubtotal().setTotal();
+
+                        _this.fields.months.addEventListener('change',
+                        /*#__PURE__*/
+                        function () {
+                          var _ref3 = _asyncToGenerator(
+                          /*#__PURE__*/
+                          _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
+                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                              while (1) {
+                                switch (_context.prev = _context.next) {
+                                  case 0:
+                                    // this.validateField(event.target, [
+                                    //     'required',
+                                    //     'integer',
+                                    //     'InPersonCoursesScope'
+                                    // ]);
+                                    _this.setSubtotal().setTotal();
+
+                                  case 1:
+                                  case "end":
+                                    return _context.stop();
+                                }
+                              }
+                            }, _callee);
+                          }));
+
+                          return function (_x2) {
+                            return _ref3.apply(this, arguments);
+                          };
+                        }());
+
+                        _this.fields.lessons.addEventListener('change',
+                        /*#__PURE__*/
+                        function () {
+                          var _ref4 = _asyncToGenerator(
+                          /*#__PURE__*/
+                          _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
+                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                              while (1) {
+                                switch (_context2.prev = _context2.next) {
+                                  case 0:
+                                    // this.validateField(event.target, [
+                                    //     'required',
+                                    //     'integer',
+                                    //     'OnlineCoursesScope'
+                                    // ]);
+                                    _this.setSubtotal().setTotal();
+
+                                  case 1:
+                                  case "end":
+                                    return _context2.stop();
+                                }
+                              }
+                            }, _callee2);
+                          }));
+
+                          return function (_x3) {
+                            return _ref4.apply(this, arguments);
+                          };
+                        }());
+
+                      case 7:
                       case "end":
                         return _context3.stop();
                     }
@@ -6009,10 +6142,12 @@ function PaymentForm(options) {
                 }, _callee3);
               }));
 
-              return function (_x3) {
-                return _ref4.apply(this, arguments);
+              return function (_x) {
+                return _ref2.apply(this, arguments);
               };
             }());
+
+          case 9:
             this.fields.card_holder.addEventListener('change', function (event) {
               _this.validateField(event.target, ['ValidName']);
             });
@@ -6052,7 +6187,7 @@ function PaymentForm(options) {
               var _ref6 = _asyncToGenerator(
               /*#__PURE__*/
               _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(event) {
-                var validation, _ref7, paymentMethod, error;
+                var validation, _ref7, paymentMethod, error, paymentInformation;
 
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
                   while (1) {
@@ -6064,7 +6199,7 @@ function PaymentForm(options) {
 
                         _this.disableStripeInputs();
 
-                        _this.paymentDetails = _this.createPaymentDetails(['card_holder', 'email', 'phone_number', 'duration']);
+                        _this.paymentDetails = _this.createPaymentDetails();
                         /*
                          * If the validation succeeds returns an object with the billing
                          * details.
@@ -6081,8 +6216,12 @@ function PaymentForm(options) {
                           break;
                         }
 
-                        Object.keys(validation.errors).forEach(function (fieldName) {
-                          _this.displayFieldError(_this.fields[fieldName], validation.errors[fieldName][0]);
+                        Object.keys(_this.paymentDetails).forEach(function (fieldName) {
+                          if (validation.errors[fieldName] !== undefined) {
+                            _this.displayFieldError(_this.fields[fieldName], validation.errors[fieldName][0]);
+                          } else {
+                            _this.removeFieldError(_this.fields[fieldName]);
+                          }
                         });
 
                         _this.toggleLoadingState();
@@ -6114,17 +6253,24 @@ function PaymentForm(options) {
                         return _context5.abrupt("return", false);
 
                       case 21:
-                        _this.sendPaymentInformation({
-                          token: _this.fields.token.value,
-                          card_holder: _this.fields.card_holder.value,
+                        paymentInformation = {
+                          _token: _this.fields.token !== null ? _this.fields.token.value : null,
+                          card_holder: _this.fields.card_holder !== null ? _this.fields.card_holder.value : null,
                           email: paymentMethod.billing_details.email,
+                          prefix: _this.fields.prefix.value,
                           phone_number: paymentMethod.billing_details.phone,
-                          currency: _this.fields.currency.value,
+                          currency: _this.fields.currency !== null ? _this.fields.currency.value : null,
                           dialog: _this.dialog !== null,
+                          quantity: _this.course !== null ? _this.fields[pluralize.plural(_this.course.data.fee.unit)].value : null,
+                          course: _this.fields.course !== null ? _this.fields.course.value : null,
                           payment_method: paymentMethod.id
-                        });
+                        };
 
-                      case 22:
+                        _this.getCourseDuration(paymentInformation);
+
+                        _this.sendPaymentInformation(paymentInformation);
+
+                      case 24:
                       case "end":
                         return _context5.stop();
                     }
@@ -6137,7 +6283,7 @@ function PaymentForm(options) {
               };
             }());
 
-          case 15:
+          case 14:
           case "end":
             return _context6.stop();
         }
@@ -6150,31 +6296,20 @@ function PaymentForm(options) {
   function () {
     var _ref8 = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(data) {
-      var paymentInformation, result;
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(paymentInformation) {
+      var result;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              paymentInformation = {
-                _token: data.token ? data.token : null,
-                card_holder: data.card_holder ? data.card_holder : null,
-                email: data.email ? data.email : null,
-                phone_number: data.phone_number ? data.phone_number : null,
-                currency: data.currency ? data.currency : null,
-                payment_method: data.payment_method ? data.payment_method : null,
-                payment_intent_id: data.payment_intent_id,
-                dialog: data.dialog ? data.dialog : null
-              };
-              paymentInformation = this.getCourseDuration(paymentInformation);
-              _context7.next = 4;
+              _context7.next = 2;
               return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getRoute('payment_method'), 'post', paymentInformation);
 
-            case 4:
+            case 2:
               result = _context7.sent;
 
               if (!result.error) {
-                _context7.next = 10;
+                _context7.next = 8;
                 break;
               }
 
@@ -6183,10 +6318,10 @@ function PaymentForm(options) {
               this.disableStripeInputs(false);
               return _context7.abrupt("return", this);
 
-            case 10:
+            case 8:
               this.handlePaymentResponse(result);
 
-            case 11:
+            case 9:
             case "end":
               return _context7.stop();
           }
@@ -6233,17 +6368,22 @@ function PaymentForm(options) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
+              console.log(response);
+              /*
+               * Gets the server response and checks whether the payment has failed.
+               */
+
               if (!response.error) {
-                _context8.next = 3;
+                _context8.next = 4;
                 break;
               }
 
               this.displayStripeErrors('submit', response.error.message);
               return _context8.abrupt("return", this);
 
-            case 3:
+            case 4:
               if (!response.requires_action) {
-                _context8.next = 6;
+                _context8.next = 7;
                 break;
               }
 
@@ -6259,22 +6399,21 @@ function PaymentForm(options) {
 
               return _context8.abrupt("return", this);
 
-            case 6:
+            case 7:
               if (!(this.dialog !== null)) {
-                _context8.next = 9;
+                _context8.next = 10;
                 break;
               }
 
               this.dialog.replace(response);
               return _context8.abrupt("return", this);
 
-            case 9:
+            case 10:
               this.paymentIntent = response;
               this.sendPaymentInformation({
                 token: this.fields.token.value,
                 payment_intent_id: this.paymentIntent.id
               });
-              console.log(response);
               window.location.href = _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].setLaravelParams(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getRoute('paid'), [this.getCharge()]);
 
             case 13:
@@ -6294,22 +6433,20 @@ function PaymentForm(options) {
     return this.paymentIntent.charges.data[0].id;
   };
 
-  this.createPaymentDetails = function (fields) {
-    var _this3 = this;
+  this.createPaymentDetails = function () {
+    var obj = {
+      name: 'payment-details',
+      card_holder: this.fields.card_holder.value,
+      phone_number: this.fields.phone_number.value,
+      email: this.fields.email.value
+    };
 
-    var obj = {};
-    obj.name = 'payment-details';
-    fields.forEach(function (field) {
-      switch (field) {
-        case 'duration':
-          obj = _this3.getCourseDuration(obj);
-          break;
+    if (this.course !== null) {
+      obj['course'] = this.course.data.value;
+      obj[pluralize.plural(this.course.data.fee.unit)] = this.fields[pluralize.plural(this.course.data.fee.unit)].value;
+    }
 
-        default:
-          obj[field] = _this3.fields[field].value;
-          break;
-      }
-    });
+    ;
     return obj;
   };
 
@@ -6336,16 +6473,10 @@ function PaymentForm(options) {
     }, _callee9, this);
   }));
 
-  this.setMinimumDuration = function () {
-    if (this.fields.study !== null) {
-      switch (this.fields.study.value) {
-        case 'in-person':
-          this.fields.duration.staying.value = this.fields.duration.staying.value < this.selectedCourse.scope.min ? this.selectedCourse.scope.min : this.fields.duration.staying.value;
-          break;
-
-        case 'online':
-          this.fields.duration.hours.value = this.fields.duration.hours.value < this.selectedCourse.scope.min ? this.selectedCourse.scope.min : this.fields.duration.hours.value;
-          break;
+  this.setMinimumDuration = function (unit) {
+    if (this.fields.course !== null) {
+      if (this.course.data.fee.minimum > this.fields[unit].value) {
+        this.fields[unit].value = this.course.data.fee.minimum;
       }
     }
 
@@ -6357,11 +6488,11 @@ function PaymentForm(options) {
   };
 
   this.disableStripeInputs = function () {
-    var _this4 = this;
+    var _this3 = this;
 
     var disabled = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     Object.keys(this.fields.stripe).forEach(function (key) {
-      _this4.fields.stripe[key].update({
+      _this3.fields.stripe[key].update({
         disabled: disabled
       });
     });
@@ -6393,27 +6524,25 @@ function PaymentForm(options) {
   };
 
   this.mountStripeFields = function () {
-    var _this5 = this;
+    var _this4 = this;
 
     this.stripeElements.forEach(function (element) {
-      var elementName = element;
-
-      if (_this5.fields[element] !== null && _this5.fields[element][Symbol.iterator] !== 'function') {
-        Object.keys(_this5.fields[element]).map(function (key) {
+      if (_this4.fields[element] !== null && _this4.fields[element][Symbol.iterator] !== 'function') {
+        Object.keys(_this4.fields[element]).map(function (key) {
           var fieldName = _facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].kebabCase(element + ' ' + key);
-          _this5.fields.stripe[fieldName] = _this5.stripe.create(_facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(element + ' ' + key), {
-            style: _this5.stripeElementsStyles.generic
+          _this4.fields.stripe[fieldName] = _this4.stripe.create(_facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(element + ' ' + key), {
+            style: _this4.stripeElementsStyles.generic
           });
 
-          _this5.fields.stripe[fieldName].mount('#' + _this5.fields[element][key].getAttribute('id'));
+          _this4.fields.stripe[fieldName].mount('#' + _this4.fields[element][key].getAttribute('id'));
 
-          _this5.fields.stripe[fieldName].addEventListener('change', function (_ref11) {
+          _this4.fields.stripe[fieldName].addEventListener('change', function (_ref11) {
             var error = _ref11.error;
 
             if (error !== undefined) {
-              _this5.displayStripeErrors(fieldName, error.message);
+              _this4.displayStripeErrors(fieldName, error.message);
             } else {
-              _this5.removeStripeErrors(fieldName);
+              _this4.removeStripeErrors(fieldName);
             }
           });
         });
@@ -6422,15 +6551,27 @@ function PaymentForm(options) {
 
       ;
 
-      _this5.fields.stripe.create(element, {
-        style: _this5.stripeElementsStyles.generic
+      _this4.fields.stripe.create(element, {
+        style: _this4.stripeElementsStyles.generic
       });
     });
   };
 
-  this.setTotalCoursePrice = function () {
+  this.setSubtotal = function () {
+    if (this.course !== null) {
+      this.price.subtotal = this.course.data.fee.amount * this.fields[pluralize.plural(this.course.data.fee.unit)].value;
+      return this;
+    }
+
+    this.price.subtotal = this.pricePerUnit;
+    return this;
+  };
+
+  this.setTotal = function () {
     var currency = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'eur';
-    this.pricePerUnit = this.selectedCourse.price[currency];
+    var percentage = this.course.data.fee.applicable_vat.percentage / 100;
+    this.price.total = this.price.subtotal + this.price.subtotal * percentage;
+    this.displayTotalPrice();
     return this;
   };
 
@@ -6444,35 +6585,37 @@ function PaymentForm(options) {
     return this;
   };
 
-  this.setPaymentAmount =
+  this.displayTotalPrice =
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
   _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
     var currency,
+        verb,
         total,
-        tmp,
         _args10 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
             currency = _args10.length > 0 && _args10[0] !== undefined ? _args10[0] : 'eur';
-            _context10.next = 3;
-            return _facades_money__WEBPACK_IMPORTED_MODULE_4__["default"].exchangeCurrency(this.pricePerUnit, currency);
+            verb = $(this.fields.payment).children('span')[0].textContent.match(this.patterns.getActionText)[0];
+            _context10.t0 = parseFloat;
+            _context10.next = 5;
+            return _facades_money__WEBPACK_IMPORTED_MODULE_4__["default"].exchangeCurrency(this.price.total, currency);
 
-          case 3:
-            total = _context10.sent;
-            total *= this.getCourseDuration();
-            tmp = $(this.fields.payment).children('span')[0].textContent.match(this.patterns.getActionText)[0];
-            total = parseFloat(total).toLocaleString(document.documentElement.lang, {
+          case 5:
+            _context10.t1 = _context10.sent;
+            _context10.t2 = document.documentElement.lang;
+            _context10.t3 = {
               style: 'currency',
               currency: currency
-            });
-            $(this.fields.payment).children('span')[0].textContent = tmp + total;
+            };
+            total = (0, _context10.t0)(_context10.t1).toLocaleString(_context10.t2, _context10.t3);
+            $(this.fields.payment).children('span')[0].textContent = verb + total;
             return _context10.abrupt("return", this);
 
-          case 9:
+          case 11:
           case "end":
             return _context10.stop();
         }
@@ -6647,39 +6790,34 @@ function SignUpForm(options) {
     this.fields.program.addEventListener('change', function () {
       _this.updateFieldset(_this);
     }, this);
-  };
+  }; // this.getSelectedProgram = function() {
+  //     return this.fields.program.options[this.fields.program.selectedIndex].value;
+  // };
+  //
+  // this.updateFieldset = function(self = this) {
+  //     switch (self.getSelectedProgram()) {
+  //         case 'internship':
+  //         case 'inter_relocat':
+  //             dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+  //             dom.show(self.fieldsets.industry, 'flex');
+  //             dom.hide(self.fieldsets.university);
+  //             dom.hide(self.fieldsets.study);
+  //             break;
+  //         case 'study':
+  //             dom.show(self.fieldsets.study, 'flex');
+  //             dom.hide(self.fields.cv.parentElement.parentElement);
+  //             dom.hide(self.fieldsets.industry);
+  //             dom.hide(self.fieldsets.university);
+  //             break;
+  //         case 'university':
+  //             dom.show(self.fieldsets.university, 'flex');
+  //             dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+  //             dom.hide(self.fieldsets.study);
+  //             dom.hide(self.fieldsets.industry);
+  //             break;
+  //     }
+  // }
 
-  this.getSelectedProgram = function () {
-    return this.fields.program.options[this.fields.program.selectedIndex].value;
-  };
-
-  this.updateFieldset = function () {
-    var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
-
-    switch (self.getSelectedProgram()) {
-      case 'internship':
-      case 'inter_relocat':
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fieldsets.industry, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.university);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.study);
-        break;
-
-      case 'study':
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fieldsets.study, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fields.cv.parentElement.parentElement);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.industry);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.university);
-        break;
-
-      case 'university':
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fieldsets.university, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.study);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].hide(self.fieldsets.industry);
-        break;
-    }
-  };
 
   this.init();
 }
@@ -7009,36 +7147,38 @@ var api = function () {
 
               case 7:
                 response = _context2.sent;
-                _context2.next = 10;
+                console.log(response.data);
+                _context2.next = 11;
                 return response.data;
 
-              case 10:
+              case 11:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 13:
-                _context2.prev = 13;
+              case 14:
+                _context2.prev = 14;
                 _context2.t0 = _context2["catch"](4);
 
                 if (!(_context2.t0.response.status === 422)) {
-                  _context2.next = 17;
+                  _context2.next = 19;
                   break;
                 }
 
+                console.log(_context2.t0.response.data);
                 return _context2.abrupt("return", _context2.t0.response.data);
 
-              case 17:
-                _context2.next = 19;
+              case 19:
+                _context2.next = 21;
                 return _context2.t0.response;
 
-              case 19:
+              case 21:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 20:
+              case 22:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[4, 13]]);
+        }, _callee2, this, [[4, 14]]);
       }));
 
       function axiosRequest(_x2) {
@@ -7050,14 +7190,14 @@ var api = function () {
     getRoute: function getRoute(name) {
       return _.routes[name];
     },
-    getResource: function getResource(name) {
+    getResource: function getResource(resource) {
       var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       if (value !== null) {
-        return this.getRoute('hostname') + '/api/' + name + '/' + value;
+        return this.getRoute('hostname') + '/api/' + resource + '/' + value;
       }
 
-      return this.getRoute('hostname') + '/api/' + name;
+      return this.getRoute('hostname') + '/api/' + resource;
     },
     setLaravelParams: function setLaravelParams(url) {
       var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -7231,6 +7371,8 @@ var browser = function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./browser */ "./resources/js/facades/browser.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 
 var dom = function () {
@@ -7238,6 +7380,7 @@ var dom = function () {
     isNodeList: function isNodeList(nodes) {
       return NodeList.prototype.isPrototypeOf(nodes);
     },
+    // Returns true if is a HTMLCollection
     isHTMLCollection: function isHTMLCollection(collection) {
       return HTMLCollection.prototype.isPrototypeOf(collection);
     }
@@ -7320,18 +7463,14 @@ var dom = function () {
       return this;
     },
     replaceElements: function replaceElements(replacement, replaced) {},
+    // Returns true if it is a DOM node
+    isNode: function isNode(obj) {
+      return (typeof Node === "undefined" ? "undefined" : _typeof(Node)) === 'object' ? obj instanceof Node : obj && _typeof(obj) === 'object' && typeof obj.nodeType === 'number' && typeof obj.nodeName === 'string';
+    },
+    // Returns true if it is a DOM element
     isElement: function isElement(obj) {
-      var tag = obj.tagName;
-
-      try {
-        obj.tagName = ''; // Read-only for DOM, should throw exception
-
-        obj.tagName = tag; // Restore for normal objects
-
-        return false;
-      } catch (e) {
-        return true;
-      }
+      return (typeof HTMLElement === "undefined" ? "undefined" : _typeof(HTMLElement)) === 'object' ? obj instanceof HTMLElement : // DOM Level 2
+      obj && _typeof(obj) === 'object' && true && obj.nodeType === 1 && typeof obj.nodeName === 'string';
     }
   };
 }();
@@ -7663,22 +7802,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_forms_ContactForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/forms/ContactForm */ "./resources/js/components/forms/ContactForm.js");
-/* harmony import */ var _components_forms_DeleteOfferForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/forms/DeleteOfferForm */ "./resources/js/components/forms/DeleteOfferForm.js");
-/* harmony import */ var _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/EditOfferForm */ "./resources/js/components/forms/EditOfferForm.js");
+/* harmony import */ var _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/forms/CreateOfferForm */ "./resources/js/components/forms/CreateOfferForm.js");
+/* harmony import */ var _components_forms_DeleteOfferForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/DeleteOfferForm */ "./resources/js/components/forms/DeleteOfferForm.js");
 /* harmony import */ var _components_forms_DeleteUserForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms/DeleteUserForm */ "./resources/js/components/forms/DeleteUserForm.js");
-/* harmony import */ var _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/CreateOfferForm */ "./resources/js/components/forms/CreateOfferForm.js");
-/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
-/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
-/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
-/* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
-/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
-/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
-/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
+/* harmony import */ var _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/EditFeeForm */ "./resources/js/components/forms/EditFeeForm.js");
+/* harmony import */ var _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms/EditOfferForm */ "./resources/js/components/forms/EditOfferForm.js");
+/* harmony import */ var _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/forms/EditUserForm */ "./resources/js/components/forms/EditUserForm.js");
+/* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
+/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
+/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -7702,41 +7845,53 @@ FormFactory.prototype.createForm = function (options) {
       break;
 
     case 'sign-up':
-      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_6__["default"];
+      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_11__["default"];
       break;
 
     case 'proceed-payment':
-      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_7__["default"];
+      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_9__["default"];
       break;
 
     case 'payment':
-      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_8__["default"];
+      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_10__["default"];
       break;
 
     case 'login':
-      this.formClass = _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_9__["default"];
+      this.formClass = _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"];
       break;
 
     case 'create-offer':
-      this.formClass = _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_5__["default"];
+      this.formClass = _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_2__["default"];
+      break;
+
+    case 'edit-fee':
+      this.formClass = _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_5__["default"];
       break;
 
     case 'edit-offer':
-      this.formClass = _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_3__["default"];
+      this.formClass = _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_6__["default"];
       break;
 
     case 'delete-offer':
-      this.formClass = _components_forms_DeleteOfferForm__WEBPACK_IMPORTED_MODULE_2__["default"];
+      this.formClass = _components_forms_DeleteOfferForm__WEBPACK_IMPORTED_MODULE_3__["default"];
       break;
 
     case 'delete-user':
       this.formClass = _components_forms_DeleteUserForm__WEBPACK_IMPORTED_MODULE_4__["default"];
+      break;
+
+    case 'edit-user':
+      this.formClass = _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_7__["default"];
       break;
   }
 
   var formClass = new this.formClass(options);
   formClass.el = options.form;
   formClass.disabled = false;
+  formClass.filters = {
+    "float": /^-?\d*[.,]?\d*$/,
+    integer: /^-?\d*$/
+  };
 
   formClass.hasErrorMessages = function () {
     var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : formClass.el;
@@ -7773,8 +7928,49 @@ FormFactory.prototype.createForm = function (options) {
     return formClass.el.getAttribute('action');
   };
 
+  formClass.getSelectedProgram = function () {
+    if (typeof this.fields.program === 'undefined') {
+      return null;
+    }
+
+    return this.fields.program.options[this.fields.program.selectedIndex].value;
+  };
+
+  formClass.updateFieldset = function () {
+    var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
+
+    switch (self.getSelectedProgram()) {
+      case 'internship':
+      case 'inter_relocat':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fieldsets.industry, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.university);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.study);
+        break;
+
+      case 'study':
+        console.log(self.fieldsets.study);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fieldsets.study, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fields.cv.parentElement.parentElement);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.industry);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.university);
+        break;
+
+      case 'university':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fieldsets.university, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.study);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.industry);
+        break;
+
+      default:
+        return null;
+        break;
+    }
+  };
+
   formClass.toggleLoadingState = function () {
-    _main_UI__WEBPACK_IMPORTED_MODULE_10__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
+    _main_UI__WEBPACK_IMPORTED_MODULE_12__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
     formClass.disable(!formClass.isDisabled());
     return formClass;
   };
@@ -7838,7 +8034,7 @@ FormFactory.prototype.createForm = function (options) {
                 validators: validators
               };
               _context.next = 3;
-              return _facades_api__WEBPACK_IMPORTED_MODULE_12__["default"].validate(validationObject);
+              return _facades_api__WEBPACK_IMPORTED_MODULE_14__["default"].validate(validationObject);
 
             case 3:
               response = _context.sent;
@@ -7889,6 +8085,24 @@ FormFactory.prototype.createForm = function (options) {
       $(element).prop('disabled', disabled);
     });
     formClass.disabled = !formClass.isDisabled();
+  };
+
+  formClass.setInputFilter = function (textbox, inputFilter) {
+    var inputEvents = ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'];
+    inputEvents.forEach(function (event) {
+      textbox.addEventListener(event, function () {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          this.value = "";
+        }
+      });
+    });
   };
 
   formClass.previewUploadedFiles = function () {
@@ -9031,7 +9245,6 @@ __webpack_require__.r(__webpack_exports__);
     }).init();
     $(usersList.form.modal.getAllTriggerElements()).each(function (key, element) {
       element.addEventListener('click', function (ev) {
-        console.log(usersList.getCardTitle(key));
         usersList.form.modal.setModalTitle(usersList.getCardTitle(key));
         usersList.form.setItemAction(ev.target.getAttribute('data-value'));
       });
@@ -9042,6 +9255,29 @@ __webpack_require__.r(__webpack_exports__);
         offersCards.form.setItemAction(ev.target.getAttribute('data-value'));
       });
     }));
+  });
+})();
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/fee.js":
+/*!*****************************************!*\
+  !*** ./resources/js/pages/admin/fee.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/forms/EditFeeForm */ "./resources/js/components/forms/EditFeeForm.js");
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    var editUserForm = _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_0__["editFeeFormFactory"].createForm({
+      form: document.getElementById('edit-fee'),
+      type: 'edit-fee'
+    }).init();
   });
 })();
 
@@ -9070,10 +9306,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/admin/show-offer.js":
-/*!************************************************!*\
-  !*** ./resources/js/pages/admin/show-offer.js ***!
-  \************************************************/
+/***/ "./resources/js/pages/admin/offer.js":
+/*!*******************************************!*\
+  !*** ./resources/js/pages/admin/offer.js ***!
+  \*******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9087,6 +9323,29 @@ __webpack_require__.r(__webpack_exports__);
     var editOfferForm = _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_0__["editOfferFormFactory"].createForm({
       form: document.getElementById('edit-offer'),
       type: 'edit-offer'
+    }).init();
+  });
+})();
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/user.js":
+/*!******************************************!*\
+  !*** ./resources/js/pages/admin/user.js ***!
+  \******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/forms/EditUserForm */ "./resources/js/components/forms/EditUserForm.js");
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    var editUserForm = _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_0__["editUserFormFactory"].createForm({
+      form: document.getElementById('edit-user'),
+      type: 'edit-user'
     }).init();
   });
 })();
@@ -9134,6 +9393,29 @@ __webpack_require__.r(__webpack_exports__);
     var offerNavigation = _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_0__["bottomNavigationFactory"].createNavigation({
       el: document.querySelector('.bottom-navigation'),
       type: 'bottom'
+    }).init();
+  });
+})();
+
+/***/ }),
+
+/***/ "./resources/js/pages/user/dashboard.js":
+/*!**********************************************!*\
+  !*** ./resources/js/pages/user/dashboard.js ***!
+  \**********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/forms/EditUserForm */ "./resources/js/components/forms/EditUserForm.js");
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    var editUserForm = _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_0__["editUserFormFactory"].createForm({
+      form: document.getElementById('edit-user'),
+      type: 'edit-user'
     }).init();
   });
 })();
@@ -9191,18 +9473,21 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 1:
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/welcome.js ./resources/js/pages/admin/show-offer.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/admin/dashboard.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/welcome.js ./resources/js/pages/user/dashboard.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/admin/dashboard.js ./resources/js/pages/admin/fee.js ./resources/js/pages/admin/offer.js ./resources/js/pages/admin/user.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\home.js */"./resources/js/pages/home.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\job-description.js */"./resources/js/pages/job-description.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\welcome.js */"./resources/js/pages/welcome.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\show-offer.js */"./resources/js/pages/admin/show-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\user\dashboard.js */"./resources/js/pages/user/dashboard.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\new-offer.js */"./resources/js/pages/admin/new-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\dashboard.js */"./resources/js/pages/admin/dashboard.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\fee.js */"./resources/js/pages/admin/fee.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\offer.js */"./resources/js/pages/admin/offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\user.js */"./resources/js/pages/admin/user.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\user\payment.js */"./resources/js/pages/user/payment.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\sliders.js */"./resources/js/components/sliders.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\register.js */"./resources/js/components/register.js");

@@ -5,9 +5,11 @@ var dom = (function() {
         isNodeList: function(nodes) {
             return NodeList.prototype.isPrototypeOf(nodes);
         },
+
+        // Returns true if is a HTMLCollection
         isHTMLCollection: function(collection) {
             return HTMLCollection.prototype.isPrototypeOf(collection);
-        }
+        },
     };
 
     return {
@@ -83,15 +85,20 @@ var dom = (function() {
         replaceElements: function(replacement, replaced) {
 
         },
-        isElement: function(obj) {
-            var tag = obj.tagName;
-            try {
-                obj.tagName = '';  // Read-only for DOM, should throw exception
-                obj.tagName = tag; // Restore for normal objects
-                return false;
-            } catch (e) {
-                return true;
-            }
+        // Returns true if it is a DOM node
+        isNode(obj) {
+            return (
+                typeof Node === 'object' ? obj instanceof Node :
+                    obj && typeof obj === 'object' && typeof obj.nodeType === 'number' && typeof obj.nodeName === 'string'
+            );
+        },
+
+        // Returns true if it is a DOM element
+        isElement(obj) {
+            return (
+                typeof HTMLElement === 'object' ? obj instanceof HTMLElement : // DOM Level 2
+                    obj && typeof obj === 'object' && true && obj.nodeType === 1 && typeof obj.nodeName === 'string'
+            );
         }
     }
 }());

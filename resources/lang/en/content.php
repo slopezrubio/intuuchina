@@ -161,7 +161,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'agree' => 'Agree',
-    'amount received' => 'Amount Received',
     'amount of months' => 'Amount of months roughly',
     'apply for' => 'Apply for',
     'back to home' => 'Back to Home',
@@ -190,7 +189,9 @@ return [
     'months' => '{1} Month|[2,*] Months',
     'pay' => 'Pay :value',
     'per month' => "<b>:price</b> per month",
-    'per hour' => '<b>:price</b> per hour',
+    'per hour' => "<b>:price</b> per hour",
+    'per unit' => "<b>:price</b> per unit",
+    'per lesson' => "<b>:price</b> per :time lesson",
     'pay now' => 'Pay Now',
     'see more' => 'See more',
     'open positions' => 'Open Positions',
@@ -216,20 +217,6 @@ return [
         'shanghai' => 'Shanghai',
         'beijing' => 'Beijing',
         'shenzhen' => 'Shenzhen',
-    ],
-    'invoice' => [
-        'internship' => [
-            'description' => 'Internship Application Fee',
-        ],
-        'inter_relocat' => [
-            'description' => 'Internship + Relocation Application Fee'
-        ],
-        'university' => [
-            'description' => 'Chinese University Application Fee'
-        ],
-        'study' => [
-            'description' => 'Chinese Language Course Payment',
-        ],
     ],
     'programs' => [
         'internship' => 'Internship',

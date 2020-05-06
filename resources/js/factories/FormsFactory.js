@@ -1,12 +1,14 @@
 import ContactForm from '../components/forms/ContactForm';
-import DeleteOfferForm from "../components/forms/DeleteOfferForm";
-import EditOfferForm from '../components/forms/EditOfferForm';
-import DeleteUserForm from '../components/forms/DeleteUserForm';
 import CreateOfferForm from '../components/forms/CreateOfferForm';
-import SignUpForm from '../components/forms/SignUpForm';
+import DeleteOfferForm from "../components/forms/DeleteOfferForm";
+import DeleteUserForm from '../components/forms/DeleteUserForm';
+import EditFeeForm from '../components/forms/EditFeeForm';
+import EditOfferForm from '../components/forms/EditOfferForm';
+import EditUserForm from '../components/forms/EditUserForm';
+import LoginForm from '../components/forms/LoginForm';
 import ProceedPaymentForm from '../components/forms/ProceedPaymentForm';
 import PaymentForm from '../components/forms/PaymentForm';
-import LoginForm from '../components/forms/LoginForm';
+import SignUpForm from '../components/forms/SignUpForm';
 
 
 import UI from '../main/UI';
@@ -39,6 +41,9 @@ FormFactory.prototype.createForm = function(options) {
         case 'create-offer':
             this.formClass = CreateOfferForm;
             break;
+        case 'edit-fee':
+            this.formClass = EditFeeForm;
+            break;
         case 'edit-offer':
             this.formClass = EditOfferForm;
             break;
@@ -48,6 +53,9 @@ FormFactory.prototype.createForm = function(options) {
         case 'delete-user':
             this.formClass = DeleteUserForm;
             break;
+        case 'edit-user':
+            this.formClass = EditUserForm;
+            break;
     }
 
     let formClass = new this.formClass(options);
@@ -55,6 +63,11 @@ FormFactory.prototype.createForm = function(options) {
     formClass.el = options.form;
 
     formClass.disabled = false;
+
+    formClass.filters = {
+        float: /^-?\d*[.,]?\d*$/,
+        integer: /^-?\d*$/,
+    }
 
     formClass.hasErrorMessages = function(element = formClass.el) {
         return $(element).find('.invalid-feedback').length > 0 && $(element).find('.is-invalid').length > 0;
@@ -91,6 +104,42 @@ FormFactory.prototype.createForm = function(options) {
     formClass.getActionUrl = function() {
         return formClass.el.getAttribute('action');
     };
+
+    formClass.getSelectedProgram = function() {
+        if (typeof this.fields.program  === 'undefined') {
+            return null;
+        }
+
+        return this.fields.program.options[this.fields.program.selectedIndex].value;
+    }
+
+    formClass.updateFieldset = function(self = this) {
+        switch (self.getSelectedProgram()) {
+            case 'internship':
+            case 'inter_relocat':
+                dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+                dom.show(self.fieldsets.industry, 'flex');
+                dom.hide(self.fieldsets.university);
+                dom.hide(self.fieldsets.study);
+                break;
+            case 'study':
+                console.log(self.fieldsets.study);
+                dom.show(self.fieldsets.study, 'flex');
+                dom.hide(self.fields.cv.parentElement.parentElement);
+                dom.hide(self.fieldsets.industry);
+                dom.hide(self.fieldsets.university);
+                break;
+            case 'university':
+                dom.show(self.fieldsets.university, 'flex');
+                dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+                dom.hide(self.fieldsets.study);
+                dom.hide(self.fieldsets.industry);
+                break;
+            default:
+                return null;
+                break;
+        }
+    }
 
     formClass.toggleLoadingState = function() {
         UI.toggleSpinnerButtonState(formClass.getSubmitInput());
@@ -173,6 +222,26 @@ FormFactory.prototype.createForm = function(options) {
         });
 
         formClass.disabled = !formClass.isDisabled();
+    };
+
+    formClass.setInputFilter = function(textbox, inputFilter) {
+        let inputEvents = ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop']
+
+        inputEvents.forEach(function(event) {
+            textbox.addEventListener(event, function() {
+
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if(this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd)
+                } else {
+                    this.value = "";
+                }
+            })
+        })
     };
 
     formClass.previewUploadedFiles = function() {

@@ -381,7 +381,8 @@ footer {
 }
 
 .notification-card {
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     border-radius: 11px;
     box-shadow: 1px 0px 7px -1px;
     -o-box-shadow: 1px 0px 7px -1px;

@@ -16,19 +16,19 @@
                 {!! $message !!}
                 <table class="details">
                     <tr>
-                        <th><p>{{ __('content.user') }}</p></th>
+                        <th><p>{{ __('User') }}</p></th>
                         <td><p>{{ $user->name }} {{ $user->surnames }}</p></td>
                     </tr>
                     <tr>
-                        <th><p>{{ __('content.program') }}</th>
-                        <td><p>{{ __('content.programs.' . $user->program) }}</p></td>
+                        <th><p>{{ __('Program') }}</th>
+                        <td><p>{{ $user->program->name }}</p></td>
                     </tr>
                     <tr>
-                        <th><p>{{ __('content.issue') }}</p></th>
-                        <td><p>{{ $description }}</td>
+                        <th><p>{{ __('Issue') }}</p></th>
+                        <td><p>{{ $user->getFirstCategory()->fee->name }}</td>
                     </tr>
                     <tr>
-                        <th><p>{{ __('content.amount received') }}</p></th>
+                        <th><p>{{ __('Amount Received') }}</p></th>
                         <td><p>{{ $total }}</p></td>
                     </tr>
                 </table>

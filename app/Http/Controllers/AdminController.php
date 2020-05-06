@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    protected $collectables = ['users', 'testimonials', 'offers'];
+    protected $collectables = ['users', 'testimonials', 'offers', 'fees'];
     protected $current = null;
 
-    const ADMIN_ELEMENTS_PER_PAGE = 9;
+    const ADMIN_ELEMENTS_PER_PAGE = 5;
 
     public function index(Request $request) {
-        $collections = $this->getCollections($request);
+        $collections = $this->getCollectables($request);
 
         return view('pages.admin.dashboard', [
             'data' => $collections,
@@ -23,11 +23,14 @@ class AdminController extends Controller
         ]);
     }
 
-    public function getCollections(Request $request) {
+    public function getCollectables(Request $request) {
         $collections = [];
 
         foreach($this->collectables as $key => $collectable) {
-            $currentPage = 1;
+            $currentPage = $this->isCollectionRequested($collectable)
+                            ? $request->query('page')
+                            : 1;
+
             $collectionClass = 'App\\' . ucfirst($collectable) . 'Collection';
             $collection = new $collectionClass([], 'admin');
 
@@ -35,6 +38,7 @@ class AdminController extends Controller
 
             if ($this->isCollectionRequested($collectable)) {
                 $this->current = $collectable;
+                $currentPage = $request->query('page');
 
                 if (method_exists($collection, 'hasSearchKeys')) {
                     if ($collection->hasSearchKeys()) {

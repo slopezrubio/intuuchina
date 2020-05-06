@@ -12,14 +12,13 @@
         </div>
         @isset($receipt_url)
             <div class="col-12 col-md-8 p-0">
-
-                    @component('components.inputs.cta-button', ['variant' => 'primary'])
-                        @slot('name', 'billing')
-                        @slot('id', 'billing')
-                        @slot('href', $receipt_url)
-                        @slot('fas', 'file-alt')
-                        @slot('content', __('See Billing'))
-                    @endcomponent
+                @component('components.inputs.cta-button', ['variant' => 'primary'])
+                    @slot('name', 'billing')
+                    @slot('id', 'billing')
+                    @slot('href', $receipt_url)
+                    @slot('fas', 'file-alt')
+                    @slot('content', __('See Billing'))
+                @endcomponent
             </div>
         @else
             <div class="col-12 p-0">

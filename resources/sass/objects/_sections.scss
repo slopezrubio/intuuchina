@@ -16,7 +16,7 @@ section.o-oblique {
   }
 }
 
-section#content-tab {
+section.content-tab {
   .toolbox {
     @include flexbox();
     @include align-items(flex-end);
@@ -39,6 +39,7 @@ section#content-tab {
         a {
           color: transparent;
           font-size: 0;
+
           i {
             color: $primaryWhite;
             padding: 0.75em 0 0 0;
@@ -46,7 +47,6 @@ section#content-tab {
           }
         }
       }
-
     }
 
     @include media-breakpoint-up(sm) {

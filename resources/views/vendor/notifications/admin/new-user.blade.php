@@ -6,14 +6,15 @@
 
 @section('content')
 <main>
-{!! $body !!}
+{!! __('mails.admin.new-user.body', ['program' => $user->program->name]) !!}
+
 @component('mail::card', ['fields' => [
-    __('content.first name') => $user->name,
-    __('content.surnames') => $user->surnames,
-    __('content.nationality') => $user->nationality,
-    __('content.phone number') => $user->getPrefixedPhoneNumber(),
-    __('content.program') => __('content.programs.' . $user->program),
-    __('content.resume') => $user->cv !== null ? __('content.attached') : __('content.not provided')
+    __('First Name') => $user->name,
+    __('Surnames') => $user->surnames,
+    __('Nationality') => $user->nationality,
+    __('Phone Number') => App\User::e164NumberFormat($user->phone_number),
+    __('Program Interested') => $user->program->name,
+    __('Resume') => $user->cv !== null ? __('Attached') : __('Not Provided')
 ]])
     @slot('header')
         {{ __('mails.admin.new-user.title') }}

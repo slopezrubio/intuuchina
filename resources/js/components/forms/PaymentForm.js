@@ -18,17 +18,16 @@ function PaymentForm(options) {
     /**
      * Form fields
      *
-     * @type {{duration: {hours: HTMLElement, staying: HTMLElement}, card_holder: HTMLElement, study: HTMLElement, stripe: {}, phone_number: HTMLElement, currency: HTMLElement, payment: Element, email: HTMLElement, card: {number: HTMLElement, cvc: HTMLElement, expiry: HTMLElement}}}
+     * @type {{duration: {lessons: HTMLElement, months: HTMLElement}, card_holder: HTMLElement, courses: HTMLElement, stripe: {}, phone_number: HTMLElement, currency: HTMLElement, payment: Element, email: HTMLElement, card: {number: HTMLElement, cvc: HTMLElement, expiry: HTMLElement}}}
      */
     this.fields = {
         card_holder: document.getElementById('card_holder'),
+        prefix: document.getElementById('prefix'),
         phone_number: document.getElementById('phone_number'),
         email: document.getElementById('payment-email'),
-        study: document.getElementById('study'),
-        duration: {
-            hours: document.getElementById('hours'),
-            staying: document.getElementById('staying'),
-        },
+        course: document.getElementById('course'),
+        lessons: document.getElementById('lessons'),
+        months: document.getElementById('months'),
         card: {
             number: document.getElementById('card-number'),
             cvc: document.getElementById('card-cvc'),
@@ -46,7 +45,7 @@ function PaymentForm(options) {
     this.paymentIntent = null;
 
     // Selected course
-    this.selectedCourse = null;
+    this.course = null;
 
     // Payment details
     this.paymentDetails = null;
@@ -60,30 +59,25 @@ function PaymentForm(options) {
 
     this.dialog = null;
 
+    this.price = {};
+
     this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
 
-    this.getCourseDuration = function(obj = false) {
-        if (this.fields.study !== null) {
-            switch(this.fields.study.value) {
-                case 'in-person':
-                    if (obj) {
-                        obj['staying'] = this.fields.duration.staying.value;
-                        return obj;
-                    }
-                    return this.fields.duration.staying.value;
-                case 'online':
-                    if (obj) {
-                        obj['hours'] = this.fields.duration.hours.value;
-                        return obj;
-                    }
-                    return this.fields.duration.hours.value;
-                default:
-                    return this.fields.duration.staying.value;
+    this.getCourseDuration = function(obj = null) {
+        if (this.fields.course !== null) {
+
+            if (obj !== null) {
+                obj[pluralize.plural(this.course.data.fee.unit)] = this.fields[pluralize.plural(this.course.data.fee.unit)].value;
+
+                return obj;
             }
+
+            return this.fields[pluralize.plural(this.course.data.fee.unit)].value;
         }
 
         return 1;
     },
+
 
     this.init = async function() {
         if (this.el !== null) {
@@ -91,43 +85,46 @@ function PaymentForm(options) {
 
             this.loadStripeElements();
 
-            this.setPaymentAmount();
+            if (this.fields.course !== null) {
+                this.course = await api.axiosRequest(api.getResource('courses', this.fields.course.value));
 
-            this.selectedCourse = await api.axiosRequest(api.getResource('courses', this.fields.study.value));
+                this.setSubtotal()
+                    .setTotal();
 
-            this.fields.study.addEventListener('change', async (event) => {
-                this.toggleInputs([
-                    this.fields.duration.staying,
-                    this.fields.duration.hours,
-                ]);
+                this.fields.course.addEventListener('change', async (event) => {
+                    this.toggleInputs([
+                        this.fields.months,
+                        this.fields.lessons,
+                    ]);
 
-                this.selectedCourse = await api.axiosRequest(api.getResource('courses', event.target.value));
+                    this.course = await api.axiosRequest(api.getResource('courses', event.target.value));
 
-                this.setTotalCoursePrice('eur')
-                    .setPaymentAmount();
-            });
+                    this.setSubtotal()
+                        .setTotal();
 
-            this.fields.duration.staying.addEventListener('change', async (event) => {
-                this.validateField(event.target, [
-                    'required',
-                    'integer',
-                    'InPersonCoursesScope'
-                ]);
+                    this.fields.months.addEventListener('change', async (event) => {
+                        // this.validateField(event.target, [
+                        //     'required',
+                        //     'integer',
+                        //     'InPersonCoursesScope'
+                        // ]);
 
-                this.setMinimumDuration()
-                    .setPaymentAmount();
-            });
+                        this.setSubtotal()
+                            .setTotal();
+                    });
 
-            this.fields.duration.hours.addEventListener('change', async (event) => {
-                this.validateField(event.target, [
-                    'required',
-                    'integer',
-                    'OnlineCoursesScope'
-                ]);
+                    this.fields.lessons.addEventListener('change', async (event) => {
+                        // this.validateField(event.target, [
+                        //     'required',
+                        //     'integer',
+                        //     'OnlineCoursesScope'
+                        // ]);
 
-                this.setMinimumDuration()
-                    .setPaymentAmount();
-            });
+                        this.setSubtotal()
+                            .setTotal();
+                    });
+                });
+            }
 
             this.fields.card_holder.addEventListener('change', (event) => {
                 this.validateField(event.target, [
@@ -160,12 +157,7 @@ function PaymentForm(options) {
                 this.toggleLoadingState();
                 this.disableStripeInputs();
 
-                this.paymentDetails = this.createPaymentDetails([
-                    'card_holder',
-                    'email',
-                    'phone_number',
-                    'duration',
-                ]);
+                this.paymentDetails = this.createPaymentDetails();
 
                 /*
                  * If the validation succeeds returns an object with the billing
@@ -178,8 +170,12 @@ function PaymentForm(options) {
                  * messages.
                  */
                 if (validation.errors) {
-                    Object.keys(validation.errors).forEach((fieldName) => {
-                        this.displayFieldError(this.fields[fieldName], validation.errors[fieldName][0]);
+                    Object.keys(this.paymentDetails).forEach((fieldName) => {
+                        if (validation.errors[fieldName] !== undefined) {
+                            this.displayFieldError(this.fields[fieldName], validation.errors[fieldName][0]);
+                        } else {
+                            this.removeFieldError(this.fields[fieldName]);
+                        }
                     });
 
                     this.toggleLoadingState();
@@ -203,32 +199,27 @@ function PaymentForm(options) {
                     return false;
                 }
 
-                this.sendPaymentInformation({
-                    token: this.fields.token.value,
-                    card_holder: this.fields.card_holder.value,
+                let paymentInformation = {
+                    _token: this.fields.token !== null ? this.fields.token.value : null,
+                    card_holder: this.fields.card_holder !== null ? this.fields.card_holder.value : null,
                     email: paymentMethod.billing_details.email,
+                    prefix: this.fields.prefix.value,
                     phone_number: paymentMethod.billing_details.phone,
-                    currency: this.fields.currency.value,
+                    currency: this.fields.currency !== null ? this.fields.currency.value : null,
                     dialog: this.dialog !== null,
+                    quantity: this.course !== null ? this.fields[pluralize.plural(this.course.data.fee.unit)].value : null,
+                    course: this.fields.course !== null ? this.fields.course.value : null,
                     payment_method: paymentMethod.id
-                });
+                };
+
+                this.getCourseDuration(paymentInformation);
+
+                this.sendPaymentInformation(paymentInformation);
             })
         }
     };
 
-    this.sendPaymentInformation = async function(data) {
-        let paymentInformation = {
-            _token: data.token ? data.token : null,
-            card_holder: data.card_holder ? data.card_holder : null,
-            email: data.email ? data.email : null,
-            phone_number: data.phone_number ? data.phone_number : null,
-            currency: data.currency ? data.currency : null,
-            payment_method: data.payment_method ? data.payment_method : null,
-            payment_intent_id: data.payment_intent_id,
-            dialog: data.dialog ? data.dialog : null,
-        };
-
-        paymentInformation = this.getCourseDuration(paymentInformation);
+    this.sendPaymentInformation = async function(paymentInformation) {
 
         const result = await api.axiosRequest(api.getRoute('payment_method'), 'post', paymentInformation);
 
@@ -268,6 +259,8 @@ function PaymentForm(options) {
     };
 
     this.handlePaymentResponse = async function(response) {
+
+        console.log(response);
 
         /*
          * Gets the server response and checks whether the payment has failed.
@@ -315,8 +308,6 @@ function PaymentForm(options) {
             payment_intent_id: this.paymentIntent.id,
         });
 
-        console.log(response);
-
         window.location.href = api.setLaravelParams(api.getRoute('paid'), [
             this.getCharge(),
         ]);
@@ -326,21 +317,18 @@ function PaymentForm(options) {
         return this.paymentIntent.charges.data[0].id;
     };
 
-    this.createPaymentDetails = function(fields) {
-        let obj = {};
+    this.createPaymentDetails = function() {
+        let obj = {
+            name: 'payment-details',
+            card_holder: this.fields.card_holder.value,
+            phone_number: this.fields.phone_number.value,
+            email: this.fields.email.value,
+        };
 
-        obj.name = 'payment-details';
-
-        fields.forEach((field) => {
-            switch (field) {
-                case 'duration':
-                    obj = this.getCourseDuration(obj);
-                    break;
-                default:
-                    obj[field] = this.fields[field].value;
-                    break;
-            }
-        });
+        if (this.course !== null) {
+            obj['course'] = this.course.data.value;
+            obj[pluralize.plural(this.course.data.fee.unit)] = this.fields[pluralize.plural(this.course.data.fee.unit)].value;
+        };
 
         return obj;
     };
@@ -349,19 +337,10 @@ function PaymentForm(options) {
         return await api.validate(this.paymentDetails);
     };
 
-    this.setMinimumDuration = function() {
-        if (this.fields.study !== null) {
-            switch(this.fields.study.value) {
-                case 'in-person':
-                    this.fields.duration.staying.value = this.fields.duration.staying.value < this.selectedCourse.scope.min
-                        ? this.selectedCourse.scope.min
-                        : this.fields.duration.staying.value;
-                    break;
-                case 'online':
-                    this.fields.duration.hours.value = this.fields.duration.hours.value < this.selectedCourse.scope.min
-                        ? this.selectedCourse.scope.min
-                        : this.fields.duration.hours.value;
-                    break;
+    this.setMinimumDuration = function(unit) {
+        if (this.fields.course !== null) {
+            if (this.course.data.fee.minimum > this.fields[unit].value) {
+                this.fields[unit].value = this.course.data.fee.minimum;
             }
         }
 
@@ -414,8 +393,6 @@ function PaymentForm(options) {
     this.mountStripeFields = function() {
 
         this.stripeElements.forEach((element) => {
-            let elementName = element;
-
             if (this.fields[element] !== null && this.fields[element][Symbol.iterator] !== 'function') {
                 Object.keys(this.fields[element]).map(((key) => {
                     let fieldName = str.kebabCase(element + ' ' + key);
@@ -441,8 +418,22 @@ function PaymentForm(options) {
         });
     };
 
-    this.setTotalCoursePrice = function(currency = 'eur') {
-        this.pricePerUnit = this.selectedCourse.price[currency];
+    this.setSubtotal = function() {
+        if (this.course !== null) {
+            this.price.subtotal = this.course.data.fee.amount * this.fields[pluralize.plural(this.course.data.fee.unit)].value;
+            return this;
+        }
+
+        this.price.subtotal = this.pricePerUnit;
+        return this;
+    };
+
+    this.setTotal = function(currency = 'eur') {
+        let percentage = this.course.data.fee.applicable_vat.percentage / 100;
+
+        this.price.total = this.price.subtotal + (this.price.subtotal * percentage);
+
+        this.displayTotalPrice();
 
         return this;
     };
@@ -459,20 +450,16 @@ function PaymentForm(options) {
         return this;
     };
 
-    this.setPaymentAmount = async function(currency = 'eur') {
-        let total = await money.exchangeCurrency(this.pricePerUnit, currency);
+    this.displayTotalPrice = async function(currency = 'eur') {
+        let verb = $(this.fields.payment).children('span')[0]
+            .textContent.match(this.patterns.getActionText)[0];
 
-        total *= this.getCourseDuration();
-
-        let tmp = $(this.fields.payment).children('span')[0]
-                    .textContent.match(this.patterns.getActionText)[0];
-
-        total = parseFloat(total).toLocaleString(document.documentElement.lang, {
+        let total = parseFloat(await money.exchangeCurrency(this.price.total, currency)).toLocaleString(document.documentElement.lang, {
             style: 'currency',
             currency: currency
         });
 
-        $(this.fields.payment).children('span')[0].textContent = tmp + total;
+        $(this.fields.payment).children('span')[0].textContent = verb + total;
 
         return this;
     }

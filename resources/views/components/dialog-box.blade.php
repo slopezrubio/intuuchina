@@ -10,9 +10,9 @@
                     {!! $dialog !!}
                 </div>
             @endif
-            <div class="dialog-box__actions">
-                @if(isset($actions))
-                    {{ $actions }}
+            <div class="dialog-box__action">
+                @if(isset($action))
+                    {{ $action }}
                 @endif
             </div>
 

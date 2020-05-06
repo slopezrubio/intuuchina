@@ -1,0 +1,4 @@
+Psy Shell v0.9.12 (PHP 7.2.1 — cli) by Justin Hileman
+PHP Warning:  include(User::find(2)-): failed to open stream: No such file or directory in E:/Salva/Proyectos/XAMPP/intuuchina/vendor/psy/psysh/src/ExecutionLoop.php on line 48
+
+Exit:  Ctrl+D

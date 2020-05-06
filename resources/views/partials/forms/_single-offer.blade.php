@@ -2,12 +2,12 @@
     @csrf
     @component('components.inputs.hidden')
         @slot('name', 'program')
-        @slot('value', 'industry')
+        @slot('value', 'category')
     @endcomponent
 
     @component('components.inputs.hidden')
         @slot('name', 'industry')
-        @slot('value', $offer->industry)
+        @slot('value', $offer->category->value)
     @endcomponent
 
     @component('components.inputs.cta-button')

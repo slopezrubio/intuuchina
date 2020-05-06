@@ -35,12 +35,12 @@ class TestimonialsCollection extends Collection implements Searchable
                 'users.surnames',
                 'users.email',
                 'testimonials.occupation',
-                'testimonials.company',
+                'testimonials.company as place',
                 'users.avatar as picture',
-                'users.university',
                 'users.phone_number',
                 'testimonials.created_at',
-                'testimonials.quotes')->get()));
+                'testimonials.quotes')
+            ->get()));
 
         return $this;
     }

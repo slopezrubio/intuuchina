@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Offer;
 use App\Testimonial;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
@@ -100,7 +101,7 @@ class OffersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         return view('pages/admin/offer', [
             'offer' => Offer::find($id)
@@ -112,17 +113,18 @@ class OffersController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        Offer::find($id)->setChanges($request)->save();
+        $request->validate([
+            'title' => 'required|max:255|string',
+            'duration' => 'required|string',
+            'description' => 'max:30000',
+            'picture' => 'mimes:jpg,jpeg,bmp,png',
+        ]);
 
-//        $offer->setChanges($request);
-//        $offer->save();
-//        $update = $this->setUpdatedAttributesToOffer($offer, $request->all(), $request);
-//        $offer->renewUpdateAt($update);
-//        $offer->save();
+        Offer::find($id)->setChanges($request)->save();
 
         return redirect()->route('admin.offers');
     }
@@ -163,7 +165,7 @@ class OffersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy($id)
     {

@@ -136,14 +136,19 @@ return [
             'contact_form' => 'Do not type a nickname please, use your real name',
         ],
         'invalid' => 'The :field has an invalid format',
-        'minimum_hours' => 'A minimum of at least :value hours is required.',
-        'minimum_staying' => '{1} A minimum of :value month is required.|[2,*] A minimum of :value months is required.',
+        'minimum' => '{1} A minimum of :value :unit is required.|[2,*] A minimum of :value ' . Str::plural(':unit') . ' is required.',
         'gdpr' => 'You must agree with our terms and conditions and GDPR',
         'required' => 'We need your :attribute to keep you in the process.',
         'subject' => [
             'required' => 'We need to know a description of your issue',
         ],
+        'unit' => [
+            'required' => 'Due the nature of the fee type selected, this field is required',
+        ],
         'uploaded' => 'The :file file cannot overpass ' . ini_get('upload_max_filesize') . '.',
+        'tax' => [
+            'required' => 'A particular tax must be applied'
+        ],
     ],
 
     /*

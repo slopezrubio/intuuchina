@@ -25,7 +25,6 @@ import { deleteUserFormFactory } from "../../components/forms/DeleteUserForm";
 
         $(usersList.form.modal.getAllTriggerElements()).each((key, element) => {
             element.addEventListener('click', (ev) => {
-                console.log(usersList.getCardTitle(key));
                 usersList.form.modal.setModalTitle(usersList.getCardTitle(key));
                 usersList.form.setItemAction(ev.target.getAttribute('data-value'));
             })

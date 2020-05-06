@@ -1,6 +1,6 @@
 .accordion-list {
-  $max-height: 220px;
-  $min-height: 170px;
+
+  $image-width: 100px;
 
   @include media-breakpoint-up(xl) {
     @include flexbox();
@@ -22,36 +22,43 @@
 
     &-header {
       position: relative;
-      max-height: $max-height;
-      min-height: $min-height;
     }
 
     &-image {
       position: absolute;
       background: $primaryWhite;
-      width: 100px;
+      width: $image-width;
       top: -50px;
       border: 6px solid $white;
       border-radius: 20px;
     }
 
-    &-subtitle, &-title, p {
-      margin-left: auto;
-    }
-
     &-title {
+      $line-height: 1.6;
+      $font-size: 1em;
       overflow: hidden;
-      max-width: calc(100% - 100px);
-      button {
-        padding: 0.5em 0;
-        text-align: right;
-        max-width: 300px;
-        font-size: 1em;
-        color: $primaryDark;
-        white-space: inherit;
-        &:hover {
-          color: $tertiaryRed;
-        }
+      margin-top: 2.5em;
+      margin-bottom: 1em;
+      text-align: left;
+      padding: 0;
+      font-size: $font-size;
+      color: $primaryDark;
+      white-space: inherit;
+      &:hover {
+        color: $tertiaryRed;
+      }
+
+      @include media-breakpoint-up(sm) {
+        margin-top: 0;
+        margin-left: auto;
+        width: calc(100% - #{$image-width} - 10px);
+        display: block;
+      }
+
+      @include media-breakpoint-up(xl) {
+        margin-top: 2.5em;
+        margin-left: 0;
+        width: 100%;
       }
     }
 
@@ -59,9 +66,25 @@
       font-weight: 700;
     }
 
+    &-description {
+      $line-height: 1.6;
+      $font-size: 1em;
+      $rows: 2;
+      font-size: $font-size;
+      line-height: $line-height;
+      min-height: $line-height * $font-size * $rows;
+    }
+
     &-body {
+      padding-top: 15px;
+      padding-bottom: 15px;
+
+      ul {
+        line-height: 2;
+      }
+
       .c-cta-button {
-        margin-top: 1em;
+        margin: 0;
       }
     }
   }

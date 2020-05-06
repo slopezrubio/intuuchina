@@ -10,9 +10,12 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">
-                    @component('components.tab')
-                        @slot('tabs', __('component.tabs.dashboard.user'))
+                    @component('components.tab', ['tabs' =>  __('component.tabs.dashboard.user')])
                         @slot('id', $view_name)
+
+                        @if(isset($selected))
+                            @slot('selected', $selected)
+                        @endif
                     @endcomponent
                 </div>
             </div>

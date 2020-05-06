@@ -1,4 +1,5 @@
-$breakpoint: 'only screen and (min-width: 520px)';
+$extended: 'only screen and (min-width: 768px)';
+$semi-extended: 'only screen and (min-width: 420px)';
 
 .items-pagination {
   @include flexbox();
@@ -19,7 +20,14 @@ $breakpoint: 'only screen and (min-width: 520px)';
 
     &:not(.active) {
       display: none;
-      @media #{$breakpoint} {
+      @media #{$extended} {
+        display: block;
+      }
+    }
+
+
+    @media #{$semi-extended} {
+      &.next, &.previous {
         display: block;
       }
     }
@@ -42,7 +50,7 @@ $breakpoint: 'only screen and (min-width: 520px)';
 
     &:not(.icon), &--splitter {
       text-align: center;
-      width: 45px;
+      width: auto;
     }
 
     &.icon:first-of-type span {
@@ -64,7 +72,7 @@ $breakpoint: 'only screen and (min-width: 520px)';
       display: none;
       padding: .5em;
 
-      @media #{$breakpoint} {
+      @media #{$extended} {
         display: block;
       }
     }

@@ -7,7 +7,7 @@
 @section('content')
 
 <main>
-@component('mail::card', ['fields' => $invoiceDetails, 'actions' => __('mails.invoice.paid.action'), 'URLs' => [$hostedInvoice]])
+@component('mail::card', ['fields' => $invoice_details, 'actions' => __('mails.invoice.paid.action'), 'URLs' => [$hosted_invoice]])
     @slot('header')
         {{ __('mails.invoice.paid.title') }}
     @endslot

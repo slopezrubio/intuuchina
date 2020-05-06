@@ -19,7 +19,12 @@
 
                 @if ($page == $paginator->currentPage())
                     <a class="items-pagination__link active" href="{{ $url }}" aria-current="page">{{ $page }}</a>
+                @elseif($page == $paginator->currentPage() - 1)
+                    <a class="items-pagination__link previous" href="{{ $url }}">{{ $page }}</a>
+                @elseif($page == $paginator->currentPage() + 1)
+                    <a class="items-pagination__link next" href="{{ $url }}">{{ $page }}</a>
                 @else
+
                     @if ($page <= $paginator->lastPage())
                         <a class="items-pagination__link" href="{{ $url }}">{{ $page }}</a>
                     @endif

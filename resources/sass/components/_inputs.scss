@@ -278,6 +278,127 @@ input.c-text-input {
 }
 
 /**
+ * Chips
+ */
+.radio-chips {
+  &__container {
+    @include flexbox();
+    @include flex-wrap(wrap);
+  }
+
+  .radio-chips__item-input:checked + .radio-chips__item {
+    background-color: $secondaryRed;
+  }
+
+  &__item {
+    @include flexbox();
+    @include flex-direction(row-reverse);
+
+    position: relative;
+    width: 100%;
+    margin: 5px 0;
+
+    @include media-breakpoint-up(sm) {
+      width: 33.33%;
+      &:nth-child(3n+1) {
+        @include justify-content(flex-end);
+      }
+
+      &:nth-child(3n+2) {
+        @include justify-content(center);
+      }
+
+      &:nth-child(3n+3) {
+        @include justify-content(flex-start);
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 25%;
+      &:nth-child(4n+1) {
+        @include justify-content(flex-end);
+      }
+
+      &:nth-child(4n+2) {
+        @include justify-content(center);
+      }
+
+      &:nth-child(4n+3) {
+        @include justify-content(center);
+      }
+
+      &:nth-child(4n+4) {
+        @include justify-content(flex-start);
+      }
+    }
+
+    &-label {
+      @include flexbox();
+      @include justify-content(flex-end);
+      @include align-items(center);
+
+      overflow: hidden;
+      font-weight: 500;
+      position: relative;
+      background-color: $neutralColor;
+      flex-shrink: 0;
+      margin: 0;
+      user-select: none;
+      border-radius: 19px;;
+      width: auto;
+      color: $primaryDark;
+      height: 36px;
+      font-size: 0.9em;
+      cursor: pointer;
+
+      &::before {
+        @include flexbox();
+        @include justify-content(center);
+        @include align-items(center);
+
+        font-family: "Font Awesome 5 Free", serif;
+        left: 0;
+        content: attr(data-icon);
+        border-radius: 50%;
+        position: absolute;
+        background-color: $tertiaryRed;
+        width: 36px;
+        height: 100%;
+        color: white;
+        font-size: 1.25em;
+        user-select: none;
+        font-weight: 600;
+      }
+
+      span {
+        margin-right: 1em;
+        margin-left: 50px;
+      }
+    }
+
+    &-input {
+      opacity: 0;
+      width: 0;
+      margin: 0;
+      visibility: hidden;
+      cursor: pointer;
+      position: absolute;
+      left: -9999px;
+
+      &:checked + label {
+        @include prefixed(transition, 'all 300ms linear');
+        background-color: $secondaryRed;
+        color: $primaryWhite;
+      }
+
+      &:not(:checked) + label {
+        @include prefixed(transition, 'all 300ms linear');
+      }
+    }
+  }
+}
+
+/**
  * Buttons
  */
 .c-cta-button {

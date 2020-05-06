@@ -12,6 +12,8 @@ window.Popper = require('popper.js').default;
 try {
     window.$ = window.jQuery = require('jquery');
     window.Quill = require('quill');
+    window.pluralize = require('pluralize');
+    window.$clamp = require('clamp-js');
 
     require('bootstrap');
 } catch (e) {}

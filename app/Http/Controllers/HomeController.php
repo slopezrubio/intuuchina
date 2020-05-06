@@ -39,6 +39,18 @@ class HomeController extends Controller
         return view('pages.user.dashboard');
     }
 
+    public function profile() {
+        return view('pages.user.dashboard', [
+            'selected' => 'profile',
+        ]);
+    }
+
+    public function status() {
+        return view('pages.user.dashboard', [
+            'selected' => 'status',
+        ]);
+    }
+
     /**
      * Show the application dashboard for administrators.
      *

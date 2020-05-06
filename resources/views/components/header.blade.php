@@ -35,6 +35,6 @@
     @endif
 
     @if(isset($dialog))
-        @include('partials.dialogs' . isset($dir) ? $dir.'.' : '.' . $dialog)
+        @include($dialog)
     @endif
 </header>

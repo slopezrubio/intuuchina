@@ -3,14 +3,14 @@
 
     @slot('dialog')
         <div class="col-12">
-            {!! __('component.dialog.user.verified.the verification process is done', [
-                'program' => __('content.programs.'. Auth::user()->program)
-            ]) !!}
+            {!!
+                __('component.dialog.user.verified', ['program' => Auth::user()->program->name])
+            !!}
         </div>
     @endslot
 
-    @slot('actions')
-        <div class="col-12 col-sm-4 dialog-box__actions--alternate">
+    @slot('action')
+        <div class="col-12 col-sm-4 dialog-box__action--alternate">
             <form action="{{ route('home') }}" method="GET">
                 @component('components.inputs.alternative-button')
                     @slot('content', __('Home'))
@@ -18,8 +18,8 @@
             </form>
         </div>
 
-        <div class="col-12 col-sm-8 dialog-box__actions--main">
-            <form action="{{ route('payments.' . Auth::user()->program) }}" method="POST" id="proceed-payment">
+        <div class="col-12 col-sm-8 dialog-box__action--main">
+            <form action="{{ route('payments.' . Auth::user()->program->value) }}" method="POST" id="proceed-payment">
                 @csrf
                 @component('components.inputs.cta-button')
                     @slot('content', __('Pay Now'))

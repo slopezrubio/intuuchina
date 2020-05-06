@@ -33,6 +33,7 @@
             <div class="col-12 col-lg-9 d-flex p-0">
                 @component('components.inputs.phone')
                     @slot('name', 'phone_number')
+                    @slot('prefix', Auth::user()->phone_number['prefix'])
                     @slot('value', Auth::user()->phone_number['number'])
                 @endcomponent
             </div>
@@ -57,57 +58,6 @@
             </div>
             <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="email-errors">
                 <!-- Stripe Email errors -->
-            </div>
-        </div>
-
-        <div class="form-group align-items-end row">
-            <div class="col-12 col-lg-3">
-                @component('components.inputs.label', ['name' => 'study'])
-                    {{ __('Chinese Studies') }}
-                @endcomponent
-            </div>
-            <div class="col-12 col-lg-9">
-                @component('components.inputs.select', ['options' =>  array_column(__('content.courses'), 'text', key(current(__('content.courses'))))])
-                    @slot('name', 'study')
-                    @slot('value', Auth::user()->study[0])
-                @endcomponent
-            </div>
-        </div>
-
-        <div class="form-group align-items-end row {{ Auth::user()->study[0] !== 'online' ? 'hidden' : '' }}">
-            <div class="col-12 col-lg-3">
-                @component('components.inputs.label', ['name' => 'hours'])
-                    {{ __('Duration') }}
-                @endcomponent
-            </div>
-            <div class="col-12 col-lg-9 input-group">
-                @component('components.inputs.prepended-text')
-                    @slot('name', 'hours')
-                    @slot('value', __('content.courses.online.scope.min'))
-                    {{ __('Hours') }}
-                @endcomponent
-            </div>
-            <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="hours-errors">
-                <!-- Stripe Hours errors -->
-            </div>
-        </div>
-
-        <div class="form-group align-items-end row {{ Auth::user()->study[0] !== 'in-person' && Auth::user()->study[0] !== null ? 'hidden' : '' }}">
-            <div class="col-12 col-lg-3">
-                @component('components.inputs.label', ['name' => 'staying'])
-                    {{ __('Duration') }}
-                @endcomponent
-            </div>
-            <div class="col-12 col-lg-9 input-group">
-                @component('components.inputs.prepended-text')
-                    @slot('name', 'staying')
-                    @slot('value', __('content.courses.in-person.scope.min'))
-                    {{ __('Months') }}
-                @endcomponent
-            </div>
-
-            <div class="offset-lg-3 col-12 invalid-feedback" role="alert" id="staying-errors">
-                <!-- Stripe Staying errors -->
             </div>
         </div>
 

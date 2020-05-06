@@ -7,18 +7,9 @@
                     ?
                         (old($name) == $k || (isset($multiple) && $multiple && is_array(old($name)) && in_array($k, old($name))) ? ' selected="selected" aria-selected=true' : ' aria-selected=false')
                     :
-                        (isset($value) && in_array($k, (array) $value) ? ' selected="selected" aria-selected=true' : ' aria-selected=false')
+                        (isset($value) && in_array($k, (array) $value) ? " selected=selected aria-selected=true" : " aria-selected=false")
 
             }}>{{ strip_tags($op) }}</option>
-{{--                @if(isset($selected))--}}
-{{--                    <option value="{{ $key }}" aria-selected="{{ $selected === $key ? 'true' : 'false' }}" {!! $selected === $key ? 'selected' : '' !!}>--}}
-{{--                        {{ $option }}--}}
-{{--                    </option>--}}
-{{--                @else--}}
-{{--                    <option value="{{ $key }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}" {!! $loop->first ? 'selected' : '' !!}>--}}
-{{--                        {{ $option }}--}}
-{{--                    </option>--}}
-{{--                @endif--}}
         @endforeach
     </select>
 </div>

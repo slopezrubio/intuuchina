@@ -61,12 +61,7 @@ class NewUserNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $mail = (new MailMessage)
-                    ->markdown('vendor.notifications.admin.new-user',
-                        [
-                            'user' => $this->user,
-                            'body' => $this->getMessage()
-                        ]
-                    )
+                    ->markdown('vendor.notifications.admin.new-user', ['user' => $this->user])
                     ->subject(__('mails.admin.new-user.subject'));
 
 

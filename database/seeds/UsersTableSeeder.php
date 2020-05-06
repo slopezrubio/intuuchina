@@ -1,13 +1,17 @@
 <?php
 
+use App\Preference;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Faker\Generator as Faker;
 
 class UsersTableSeeder extends Seeder
 {
+    const AMOUNT_OF_TESTING_SEEDS = 3;
+
     /**
      * Run the database seeds.
      *
@@ -17,7 +21,7 @@ class UsersTableSeeder extends Seeder
     {
         //
         $admin = factory(User::class, 1)->create([
-            'id' => $faker->unique()->randomDigit,
+            'id' => 1,
             'name' => 'Fernando',
             'surnames' => 'de Zavala Carvajal',
             'email' => 'fernando.zavala@intuuchina.com',
@@ -28,13 +32,25 @@ class UsersTableSeeder extends Seeder
                 'number' => '659566062',
              ),
             'status_id' => null,
-            'program' => null,
-            'industry' => null,
-            'university' => null,
+//            'program' => null,
+//            'industry' => null,
+//            'university' => null,
             'password' => Hash::make('***********'),
             'api_token' => Str::random(60),
         ]);
 
-        $users = factory(User::class, 3)->create();
+        for ($i = 0; $i <= self::AMOUNT_OF_TESTING_SEEDS; $i++) {
+            factory(User::class, 1)->create([
+                'id' => DB::table('users')->orderBy('id', 'desc')->first()->id + 1,
+            ])->each(function($user) use ($faker) {
+                $categories = DB::table('category_program')
+                                ->where('program_id', $user->program_id)
+                                ->inRandomOrder()
+                                ->limit($faker->numberBetween(0, DB::table('category_program')->where('program_id', $user->program_id)->count()))
+                                ->pluck('category_id');
+
+                $user->categories()->attach($categories);
+            });
+        }
     }
 }

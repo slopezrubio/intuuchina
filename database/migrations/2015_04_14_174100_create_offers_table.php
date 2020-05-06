@@ -18,9 +18,10 @@ class CreateOffersTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('location');
-            $table->string('industry');
+            $table->unsignedBigInteger('category_id');
             $table->integer('duration');
             $table->longText('description')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->string('picture',200);
         });
     }

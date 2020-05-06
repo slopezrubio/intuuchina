@@ -30,22 +30,22 @@ $factory->define(User::class, function (Faker $faker) {
         'nationality' => 'chinese',
         'email_verified_at' => now(),
         'type' => 'user',
-        'cv' => Storage::putFile('cv', new File(public_path('storage/images/test_files/fake_cv.docx'))),
         'phone_number' => array(
             'prefix' => 'fra',
             'number' => substr($faker->e164PhoneNumber, strlen($faker->e164PhoneNumber) - 9),
         ),
         'status_id' => function() {
-            return DB::table('states')
+            return DB::table('statuses')
                 ->select(DB::raw('id'))
-                ->where('name', 'verified')
-                ->orWhere('name', 'paid')
+                ->where('value', 'verified')
+                ->orWhere('value', 'paid')
                 ->inRandomOrder()
                 ->get()->first()->id;
         },
-        'program' => $faker->randomElement(array('internship', 'inter_relocat')),
-        'industry' =>  [$faker->randomElement(array_keys(__('content.industries')))],
-        'university' => null,
+        'program_id' => $faker->randomElement(DB::table('programs')->inRandomOrder()->get('id')->toArray())->id,
+//        'industry' =>  [$faker->randomElement(array_keys(__('content.industries')))],
+//        'university' => null,
+//        'study' => null,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'api_token' => Str::random(60),
         'remember_token' => Str::random(10),
