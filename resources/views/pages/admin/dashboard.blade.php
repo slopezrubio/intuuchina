@@ -9,7 +9,7 @@
     @foreach($data as $key => $collection)
         @if (count($collection) > 0)
             @component('components.modal')
-                @slot('name', $key)
+                @slot('name', 'delete'.ucfirst(Str::singular($key)))
 
                 @switch($key)
                     @case('testimonials')
@@ -29,7 +29,7 @@
         @endif
     @endforeach
 
-    <main>
+    <main id="dashboard">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">

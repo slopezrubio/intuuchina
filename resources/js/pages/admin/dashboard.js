@@ -2,6 +2,8 @@ import { accordionListFactory } from "../../components/AccordionList";
 import { mediaCardFactory } from "../../components/MediaCards";
 import { deleteOfferFormFactory } from "../../components/forms/DeleteOfferForm";
 import { deleteUserFormFactory } from "../../components/forms/DeleteUserForm";
+import { deleteFeeFormFactory } from "../../components/forms/DeleteFeeForm";
+import { flexTableFactory } from "../../components/FlexTable";
 
 (function() {
     window.addEventListener('DOMContentLoaded', function() {
@@ -23,18 +25,35 @@ import { deleteUserFormFactory } from "../../components/forms/DeleteUserForm";
             }).init(),
         }).init();
 
+        var feesTable = flexTableFactory.createTable({
+            el: document.getElementById('fees'),
+            type: 'flex',
+            form: deleteFeeFormFactory.createForm({
+                form: document.getElementById('delete-fee'),
+                type: 'delete-fee',
+            }).init(),
+        }).init();
+
         $(usersList.form.modal.getAllTriggerElements()).each((key, element) => {
             element.addEventListener('click', (ev) => {
-                usersList.form.modal.setModalTitle(usersList.getCardTitle(key));
-                usersList.form.setItemAction(ev.target.getAttribute('data-value'));
+                usersList.form.modal.setModalTitle(usersList.getCardTitle(usersList.getParentCard(element)).innerText);
+                usersList.form.setItemAction(ev.target);
             })
         });
 
         $(offersCards.form.modal.getAllTriggerElements().each((key, element) => {
             element.addEventListener('click', (ev) => {
-                offersCards.form.modal.setModalTitle(offersCards.getCardTitle(key));
-                offersCards.form.setItemAction(ev.target.getAttribute('data-value'));
+                offersCards.form.modal.setModalTitle(offersCards.getCardTitle(offersCards.getParentItem(element)).innerText);
+                offersCards.form.setItemAction(ev.target);
             })
         }));
+
+        $(feesTable.form.modal.getAllTriggerElements()).each((key, element) => {
+            element.addEventListener('click', (ev) => {
+                feesTable.form.modal.setModalTitle(feesTable.rowTitle(ev.target).innerText);
+                feesTable.form.setItemAction(ev.target);
+            })
+        });
+
     })
 })();

@@ -1,6 +1,8 @@
 import MediaQueries from '../main/breakpoints';
 import DOM from '../main/dom';
+
 import browser from "../facades/browser";
+
 import { SliderFactory } from '../factories/SliderFactory';
 
 function ArrowSlider(options) {
@@ -11,7 +13,8 @@ function ArrowSlider(options) {
     this.carousel = this.holder.children[0];
     this.slides = this.carousel.children;
     this.controllers = [];
-    this.controllersCallback = options.controllersCallback ? options.controllersCallback : null;
+    this.callbacks = options.callbacks ? options.callbacks : {};
+    // this.controllersCallback = options.controllersCallback ? options.controllersCallback : null;
     this.currentSlide = this.slides[this.currentSlideIndex - this.offset];
 
     this.init = function() {
@@ -175,6 +178,25 @@ function ArrowSlider(options) {
         return this;
     };
 
+    this.isSlide = function(element) {
+        return  $.inArray('arrow-slider__slide--left', element.classList) > -1 ||
+                $.inArray('arrow-slider__slide--current', element.classList) > -1 ||
+                $.inArray('arrow-slider__slide--right', element.classList) > -1 ||
+                $.inArray('arrow-slider__slide', element.classList) > -1;
+    };
+
+    this.isController = function(element) {
+        let isController = null;
+
+        $('.arrow-slider__controllers').children().each((key, controller) => {
+            if (controller.isEqualNode(element)) {
+                isController = true;
+            }
+        });
+
+        return isController;
+    };
+
     this.setCurrentSlideIndex = function(value = null) {
         if (value === null) {
             for (let i = 0; i < this.controllers.length; i++) {
@@ -191,7 +213,7 @@ function ArrowSlider(options) {
 
     this.setSliderId = function() {
         this.holder.setAttribute('id', this.sliderKeys[this.currentSlideIndex - this.offset]);
-        browser.verticalScrollTo(this.holder);
+        //browser.verticalScrollTo(this.holder);
         return this;
     };
 
@@ -288,8 +310,17 @@ function ArrowSlider(options) {
      * @param e
      */
     this.updateController = (e) => {
+        e.stopPropagation();
+
+
+        let controller = e.target;
+
+        while (!this.isSlide(controller) && !this.isController(controller)) {
+            controller = controller.parentElement;
+        }
+
         for (let x = 0; x < this.controllers.length; x++) {
-            if (e.target.isEqualNode(this.controllers[x]) || e.target.parentElement.isEqualNode(this.controllers[x])) {
+            if (controller.isEqualNode(this.controllers[x])) {
                 if (this.currentSlideIndex !== x + this.offset) {
                     // Update controllers.
                     DOM.toggleSingleClass(this.controllers[this.currentSlideIndex - this.offset], 'selected');
@@ -311,8 +342,8 @@ function ArrowSlider(options) {
                         .moveCarousel()
                         .paint();
 
-                    if (this.controllersCallback !== null) {
-                        this.controllersCallback(this.currentSlide);
+                    if (this.callbacks.controllers !== undefined) {
+                        this.callbacks.controllers(this.currentSlide);
                     }
 
                     this.setControllers();
@@ -328,6 +359,10 @@ function ArrowSlider(options) {
         for (let i = 0; i < this.controllers.length; i++) {
             this.controllers[i].removeEventListener('click', this.updateController);
             this.controllers[i].addEventListener('click', this.updateController);
+
+            if (this.isSlide(this.controllers[i])) {
+                $(this.controllers[i]).on('click', '*', this.updateController)
+            }
         }
     };
 

@@ -1,1 +1,1 @@
-<input type="hidden" id="{{ $name }}" value="{{ $value }}" name="{{ $name }}">
+<input type="hidden" id="{{ $name }}" value="{{ $value }}" name="{{ $name }}" {!! isset($id) ? 'id='.$id : '' !!}>

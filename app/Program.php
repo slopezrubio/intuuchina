@@ -17,6 +17,16 @@ class Program extends Model
         return $this->belongsToMany('App\Category');
     }
 
+    public function studies() {
+        return $this->belongsToMany('App\Category')
+            ->wherePivot('program_id', Program::where('value', 'study')->first()->id);
+    }
+
+    public function degrees() {
+        return $this->belongsToMany('App\Category')
+            ->wherePivot('program_id', Program::where('value', 'university')->first()->id);
+    }
+
     public static function getByValue($value) {
         $program = self::where('value', $value);
 

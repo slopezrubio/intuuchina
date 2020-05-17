@@ -13,7 +13,7 @@
                 @endcomponent
             </div>
             <div class="col-12 col-sm-6">
-                @component('components.inputs.cta-button')
+                @component('components.inputs.cta-close')
                     @slot('variant', 'primary')
                     @slot('content', __('No'))
                 @endcomponent

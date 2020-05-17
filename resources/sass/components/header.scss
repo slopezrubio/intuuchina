@@ -13,6 +13,22 @@ header {
     }
   }
 
+  &.error-found {
+    background-size: cover;
+    background-repeat: no-repeat;
+    $map: (328: 480, 577: 480, 1656: 624, 1746: 766, 2500: 766);
+    height: minimosCuadrados($map);
+    background-position: center;
+
+    .error-box {
+      width: 100%;
+
+      &__title {
+        color: $primaryDark;
+      }
+    }
+  }
+
   &.primary, &.secondary, &.tertiary {
     .header-box {
       @include header-box();
@@ -24,7 +40,7 @@ header {
     text-transform: uppercase;
   }
 
-  &.primary, &.secondary, &.tertiary, &.stats {
+  &.primary, &.secondary, &.tertiary, &.stats, &.error-found {
     position: relative;
 
     section.wrapper {

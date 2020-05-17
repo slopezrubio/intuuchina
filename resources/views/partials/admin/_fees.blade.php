@@ -16,6 +16,7 @@
     </div>
 
     @component('components.flex-table', ['items' => $data['fees']])
+        @slot('id', 'fees')
         @slot('action', 'partials.forms.admin._fees-list')
     @endcomponent
 </section>

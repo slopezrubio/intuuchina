@@ -1,4 +1,4 @@
-<button {!! isset($name) ? "name='" . $name . "'" : '' !!} type="{{ isset($href) ? 'button' : 'submit' }}" value="{{ isset($value) ? $value : '' }}" class="c-cta-button {{ isset($variant) ? 'c-cta-button--' . $variant : '' }}" {!! isset($id) ? "id='" . $id . "'" : '' !!}>
+<button {!! isset($name) ? "name='" . $name . "'" : '' !!} type="{{ isset($href) ? 'button' : 'submit' }}" {!! isset($value) ? 'value='.$value : '' !!} class="c-cta-button {{ isset($variant) ? 'c-cta-button--' . $variant : '' }}" {!! isset($id) ? "id='" . $id . "'" : '' !!}>
     @if(isset($href))
         <a href="{{ $href }}">
                 {{ isset($content) ? $content : '' }}

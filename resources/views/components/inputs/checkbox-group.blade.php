@@ -9,8 +9,8 @@
                 <div class="c-switch-input">
                     <label class="c-switch-input__label" aria-label="{{ $input['id'] }}">{{ is_string($input) ? $input : $input['name'] }}</label>
                     <label for="{{ $input['id'] }}">
-                            <input id="{{ $input['id'] }}" type="checkbox" value="{{ $input['value'] }}" name="{{ $name }}[]" aria-checked="{{ in_array($input['value'], array_column($checked, 'value')) ? 'true' : 'false' }}"
-                                    {!! in_array($input['value'], array_column($checked, 'value')) ? 'checked' : '' !!}/>
+                            <input id="{{ $input['id'] }}" type="checkbox" {!! isset($input['value']) ? 'value='.$input['value'] : '' !!} name="{{ $name }}[]" aria-checked="{{ in_array($input['id'], $checked) ? 'true' : 'false' }}"
+                                    {!! in_array($input['id'], $checked) ? 'checked' : '' !!}/>
                         <i class="c-switch-input__wrapper c-switch-input__wrapper--grouped wrapper fas"></i>
                     </label>
                 </div>

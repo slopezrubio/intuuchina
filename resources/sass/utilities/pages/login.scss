@@ -1,0 +1,36 @@
+main#login {
+  min-height: 100vh;
+  position: relative;
+  @include flexbox();
+  @include align-items(center);
+  @include justify-content(center);
+  @include flex-direction(column);
+
+  .container {
+    height: 100%;
+
+    > *:first-child {
+      position: relative;
+      margin: 0 auto;
+    }
+    .card {
+      border: none;
+      @include prefixed(box-shadow, '0 0 4px black');
+
+      &-header {
+        background: $primaryDark;
+        color: $primaryWhite;
+
+        > span:last-child {
+          float: right;
+        }
+      }
+
+      &-body {
+        a {
+          color: $quaternaryRed;
+        }
+      }
+    }
+  }
+}

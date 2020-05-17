@@ -17,27 +17,27 @@ var pressNote = function() {
     init();
 };
 
-var learnChinese = function() {
-    var arrowSlider = null;
-
-    function replaceCourseInfoSection(newCourseInfoSection) {
-        $('section#course-info').remove();
-        $('section.arrow-slider').after(newCourseInfoSection);
-    }
-
-    function init() {
-        var arrowSlider = arrowSliderFactory.createSlider({
-            type: 'arrow',
-            sections: ['in-person', 'online'],
-            controllersCallback: function (slider) {
-                let course = slider.querySelector("input[name='study'").getAttribute('value');
-                api.getCourseInfo(course, replaceCourseInfoSection);
-            }
-        });
-    }
-
-    init();
-};
+// var learnChinese = function() {
+//     var arrowSlider = null;
+//
+//     function replaceCourseInfoSection(newCourseInfoSection) {
+//         $('section#course-info').remove();
+//         $('section.arrow-slider').after(newCourseInfoSection);
+//     }
+//
+//     function init() {
+//         var arrowSlider = arrowSliderFactory.createSlider({
+//             type: 'arrow',
+//             sections: ['in-person', 'online'],
+//             controllersCallback: function (slider) {
+//                 let course = slider.querySelector("input[name='study'").getAttribute('value');
+//                 api.getCourseInfo(course, replaceCourseInfoSection);
+//             }
+//         });
+//     }
+//
+//     init();
+// };
 
 var university = function() {
     var arrowSlider = null;
@@ -76,9 +76,9 @@ window.addEventListener('load', function() {
         pressNote();
     }
 
-    if (document.querySelector('main#learn-chinese') !== null) {
-        learnChinese();
-    }
+    // if (document.querySelector('main#learn-chinese') !== null) {
+    //     learnChinese();
+    // }
 
     if (document.querySelector('main#university') !== null) {
         university();

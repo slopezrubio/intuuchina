@@ -74,9 +74,7 @@
             </div>
         </nav>
 
-        <main class="py-4 full-viewport">
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
 </body>
 </html>

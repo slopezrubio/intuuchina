@@ -7,5 +7,12 @@ return [
         'day' => ':count day ago|:count days ago',
         'month' => ':count month ago|:count months ago',
         'year' => ':count years ago|:count years ago'
+    ],
+    'unit' => [
+        'second' => 'second|seconds',
+        'hour' => 'second|hours',
+        'day' => 'second|days',
+        'month' => 'second|months',
+        'year' => 'second|years',
     ]
 ];

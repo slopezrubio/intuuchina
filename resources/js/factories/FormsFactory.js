@@ -2,6 +2,7 @@ import ContactForm from '../components/forms/ContactForm';
 import CreateOfferForm from '../components/forms/CreateOfferForm';
 import DeleteOfferForm from "../components/forms/DeleteOfferForm";
 import DeleteUserForm from '../components/forms/DeleteUserForm';
+import DeleteFeeForm from '../components/forms/DeleteFeeForm';
 import EditFeeForm from '../components/forms/EditFeeForm';
 import EditOfferForm from '../components/forms/EditOfferForm';
 import EditUserForm from '../components/forms/EditUserForm';
@@ -53,6 +54,9 @@ FormFactory.prototype.createForm = function(options) {
         case 'delete-user':
             this.formClass = DeleteUserForm;
             break;
+        case 'delete-fee':
+            this.formClass = DeleteFeeForm;
+            break;
         case 'edit-user':
             this.formClass = EditUserForm;
             break;
@@ -89,7 +93,12 @@ FormFactory.prototype.createForm = function(options) {
         return formClass;
     };
 
-    formClass.setItemAction = function(id) {
+    formClass.setItemAction = function(input) {
+
+        let id = input.getAttribute('data-value') !== null
+                    ? input.getAttribute('data-value')
+                    : $(input).parents('button[data-value], a[data-value]')[0].getAttribute('data-value');
+
         let url = new URL(this.el.action);
         let oldPathname = url.pathname.split('/');
         let newPathname = '';

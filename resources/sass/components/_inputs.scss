@@ -188,7 +188,7 @@ input.c-text-input {
     @include reset-input();
 
     input:checked + .c-checkbox-input__wrapper::after {
-      font-family: Font Awesome 5 Free, Arial, serif;
+      font-family: 'Font Awesome 5 Free', Arial, serif;
       content: "\F00C";
     }
   }

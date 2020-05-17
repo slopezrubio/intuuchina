@@ -263,7 +263,7 @@ return [
                 'max' => '24',
             ],
             'key' => 'in-person',
-            'description' => 'With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible. We have classes for all levels and for all types of learners. Want to study in a group class? With a private tutor? At your office? We have the perfect program for you!\',\'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.',
+            'description' => '',
             'warning' => 'The price above corresponds to the minimum staying of one month. Visa fees are not included.',
         ],
         'online' => [
@@ -279,7 +279,7 @@ return [
             ],
             'key' => 'online',
             'description' => 'Looking for convenience? We can help you through our video conferencing tools. With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible.', 'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.',
-            'warning' => 'A minimum number of 40 hours in order to apply for this course.'
+            'warning' => 'A minimum number of 40 hours in order to apply for this course.',
         ]
     ],
     'name' => 'Name',

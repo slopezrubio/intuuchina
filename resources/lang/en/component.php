@@ -63,22 +63,26 @@ return [
             'mba' => [
                 'heading' => 'MBA',
                 'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
-                'key' => 'mba',
-                'text' => 'MBA',
             ],
             'mib' => [
                 'heading' => 'M. Intl. Bsns.',
                 'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
-                'key' => 'mib',
-                'text' => 'M. Intl. Bsns.',
             ],
-            'other' => [
+            'other_degrees' => [
                 'heading' => 'Other',
-                'description' => 'Not Provided',
-                'key' => 'other',
-                'text' => 'Other',
+                'description' => 'Looking for to study something different? Let us know and we will try our best to help you!',
             ],
-        ]
+        ],
+        'study' => [
+            'in-person' => [
+                'heading' => ':header',
+                'description' => 'With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible. We have classes for all levels and for all types of learners. Want to study in a group class? With a private tutor? At your office? We have the perfect program for you! At IntuuChina, classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.',
+            ],
+            'online' => [
+                'heading' => ':header',
+                'description' => 'Looking for convenience? We can help you through our video conferencing tools. With our experienced teachers you will find yourself learning Mandarin Chinese much faster than you thought possible.', 'At IntuuChina classes always center around you and your teaching needs. We adjust the level of the class to fit your current skills as well as your ambitions. Let us know what your goal is, and our teachers will help you reach it.',
+            ],
+        ],
     ],
 
     /*
@@ -306,6 +310,10 @@ return [
                 'title' => trans('Payment Completed'),
             ]
         ],
+        '404' => [
+            'error-message' => trans('Page Not Found'),
+            'background' => asset('storage/images/content/errors/404-random-picture_1.jpg')
+        ],
         'why-us' => [
             'background' => asset('images/why-us_header.jpg'),
             'stats' => [
@@ -346,13 +354,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'navs' => [
-        'bottom' => [
-            'job-description' => [
-                'items' => [
-                    'content' => trans('Home'),
-                    'icon' => 'fas fa-home',
-                ]
-            ]
-        ]
+
     ]
 ];

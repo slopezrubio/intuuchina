@@ -1,4 +1,8 @@
-<div class="modal fade{{ isset($bag) && count($errors->$bag) > 0 ? ' show' : '' }}" tabindex="-1" id="{{ $name }}Modal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@if(isset($bag) )
+    <div class="modal fade{{ isset($errors->$bag) && count($errors->$bag) > 0 ? ' show' : '' }}" tabindex="-1" id="{{ $name }}Modal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@else
+    <div class="modal fade{{ isset($errors->$name) && count($errors->name) > 0 ? ' show' : '' }}" tabindex="-1" id="{{ $name }}Modal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@endif
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header align-items-center">

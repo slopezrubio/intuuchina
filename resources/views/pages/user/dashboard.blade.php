@@ -6,7 +6,7 @@
         @slot('header', __('component.header.user.dashboard'))
     @endcomponent
 
-    <main>
+    <main id="dashboard">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">

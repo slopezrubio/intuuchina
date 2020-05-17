@@ -1,9 +1,9 @@
 @if ($items->count() > 0)
-    <table class="flex-table">
+    <table class="flex-table" {{ isset($id) ? 'id=' . $id : '' }}>
             <thead>
                     @foreach(array_keys((array) $items->first()) as $header)
                         @if ($header !== 'id')
-                            <th scope="col">{{ str_replace('_', ' ', Str::title($header)) }}</th>
+                            <th data-value="{{ $header }}" scope="col">{{ str_replace('_', ' ', Str::title($header)) }}</th>
                         @endif
                     @endforeach
             </thead>
@@ -21,15 +21,13 @@
                                 </td>
                             @endif
                         @endforeach
-                    </tr>
 
-                    @if (isset($action))
-                        <tr class="flex-table__item-action">
-                            <td colspan="{{ round(count(array_keys((array) $item))) - 1 }}">
+                        @if (isset($action))
+                            <td class="flex-table__item-action">
                                 @include($action)
                             </td>
-                        </tr>
-                    @endif
+                        @endif
+                    </tr>
                 @endforeach
             </tbody>
 

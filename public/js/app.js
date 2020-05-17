@@ -2674,48 +2674,54 @@ function AccordionList(options) {
 
   this.init = function () {
     this.items = this.el.getElementsByClassName('accordion-list__card');
-    this.clampCardHeader();
+
+    for (var i = 0; i < this.items.length; i++) {
+      if (_facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].isElement(this.items[i]) || _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].isNode(this.items[i])) {
+        this.clampItem(this.items[i]);
+      }
+    }
+
     return this;
   };
 
-  this.clampCardHeader = function () {
-    for (var i = 0; i < this.items.length; i++) {
-      if (_facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].isElement(this.items[i]) || _facades_dom__WEBPACK_IMPORTED_MODULE_1__["default"].isNode(this.items[i])) {
-        $clamp(this.getCardTitle(this.items[i]), {
-          clamp: 1
-        });
-        $clamp(this.getCardSubtitle(this.items[i]), {
-          clamp: 1
-        });
-        $clamp(this.getCardDescription(this.items[i]), {
-          clamp: 2
-        });
-      }
-    }
+  this.clampItem = function (item) {
+    $clamp(this.getCardTitle(item), {
+      clamp: 1
+    });
+    $clamp(this.getCardSubtitle(item), {
+      clamp: 1
+    });
+    $clamp(this.getCardDescription(item), {
+      clamp: 2
+    });
   };
 
-  this.getCardTitle = function (element) {
-    if (element !== null) {
-      return element.querySelector('.accordion-list__card-title');
+  this.getCardTitle = function (item) {
+    if (item !== null) {
+      return item.querySelector('.accordion-list__card-title');
     }
 
     return null;
   };
 
-  this.getCardSubtitle = function (element) {
-    if (element !== null) {
-      return element.querySelector('.accordion-list__card-subtitle');
+  this.getCardSubtitle = function (item) {
+    if (item !== null) {
+      return item.querySelector('.accordion-list__card-subtitle');
     }
 
     return null;
   };
 
-  this.getCardDescription = function (element) {
-    if (element !== null) {
-      return element.querySelector('.accordion-list__card-description');
+  this.getCardDescription = function (item) {
+    if (item !== null) {
+      return item.querySelector('.accordion-list__card-description');
     }
 
     return null;
+  };
+
+  this.getParentCard = function (element) {
+    return $(element).parents('.accordion-list__card')[0];
   };
 }
 
@@ -2753,7 +2759,8 @@ function ArrowSlider(options) {
   this.carousel = this.holder.children[0];
   this.slides = this.carousel.children;
   this.controllers = [];
-  this.controllersCallback = options.controllersCallback ? options.controllersCallback : null;
+  this.callbacks = options.callbacks ? options.callbacks : {}; // this.controllersCallback = options.controllersCallback ? options.controllersCallback : null;
+
   this.currentSlide = this.slides[this.currentSlideIndex - this.offset];
 
   this.init = function () {
@@ -2919,6 +2926,20 @@ function ArrowSlider(options) {
     return this;
   };
 
+  this.isSlide = function (element) {
+    return $.inArray('arrow-slider__slide--left', element.classList) > -1 || $.inArray('arrow-slider__slide--current', element.classList) > -1 || $.inArray('arrow-slider__slide--right', element.classList) > -1 || $.inArray('arrow-slider__slide', element.classList) > -1;
+  };
+
+  this.isController = function (element) {
+    var isController = null;
+    $('.arrow-slider__controllers').children().each(function (key, controller) {
+      if (controller.isEqualNode(element)) {
+        isController = true;
+      }
+    });
+    return isController;
+  };
+
   this.setCurrentSlideIndex = function () {
     var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
@@ -2936,8 +2957,8 @@ function ArrowSlider(options) {
   };
 
   this.setSliderId = function () {
-    this.holder.setAttribute('id', this.sliderKeys[this.currentSlideIndex - this.offset]);
-    _facades_browser__WEBPACK_IMPORTED_MODULE_2__["default"].verticalScrollTo(this.holder);
+    this.holder.setAttribute('id', this.sliderKeys[this.currentSlideIndex - this.offset]); //browser.verticalScrollTo(this.holder);
+
     return this;
   };
   /**
@@ -3035,8 +3056,15 @@ function ArrowSlider(options) {
 
 
   this.updateController = function (e) {
+    e.stopPropagation();
+    var controller = e.target;
+
+    while (!_this2.isSlide(controller) && !_this2.isController(controller)) {
+      controller = controller.parentElement;
+    }
+
     for (var x = 0; x < _this2.controllers.length; x++) {
-      if (e.target.isEqualNode(_this2.controllers[x]) || e.target.parentElement.isEqualNode(_this2.controllers[x])) {
+      if (controller.isEqualNode(_this2.controllers[x])) {
         if (_this2.currentSlideIndex !== x + _this2.offset) {
           // Update controllers.
           _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(_this2.controllers[_this2.currentSlideIndex - _this2.offset], 'selected');
@@ -3055,8 +3083,8 @@ function ArrowSlider(options) {
 
           _this2.setSliderId().runAutoWidths().moveCarousel().paint();
 
-          if (_this2.controllersCallback !== null) {
-            _this2.controllersCallback(_this2.currentSlide);
+          if (_this2.callbacks.controllers !== undefined) {
+            _this2.callbacks.controllers(_this2.currentSlide);
           }
 
           _this2.setControllers();
@@ -3073,6 +3101,10 @@ function ArrowSlider(options) {
     for (var i = 0; i < this.controllers.length; i++) {
       this.controllers[i].removeEventListener('click', this.updateController);
       this.controllers[i].addEventListener('click', this.updateController);
+
+      if (this.isSlide(this.controllers[i])) {
+        $(this.controllers[i]).on('click', '*', this.updateController);
+      }
     }
   };
   /**
@@ -3252,6 +3284,54 @@ var dialogFactory = new _factories_DialogsFactory__WEBPACK_IMPORTED_MODULE_0__["
 
 /***/ }),
 
+/***/ "./resources/js/components/FlexTable.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/FlexTable.js ***!
+  \**********************************************/
+/*! exports provided: flexTableFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "flexTableFactory", function() { return flexTableFactory; });
+/* harmony import */ var _factories_TableFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../factories/TableFactory */ "./resources/js/factories/TableFactory.js");
+/* harmony import */ var _facades_str__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../facades/str */ "./resources/js/facades/str.js");
+
+
+
+function FlexTable(options) {
+  this.headers = null;
+
+  this.init = function () {
+    var _this = this;
+
+    this.headers = $(this.el).find('thead > tr > th');
+
+    var _loop = function _loop(i) {
+      var column = _facades_str__WEBPACK_IMPORTED_MODULE_1__["default"].camelCase(_this.headers[i].getAttribute('data-value'));
+
+      _this['row' + column.charAt(0).toUpperCase() + column.substr(1)] = function (element) {
+        return $(_this.row(element)).children('td[data-label=' + _facades_str__WEBPACK_IMPORTED_MODULE_1__["default"].titleCase(column) + ']')[0];
+      };
+    };
+
+    for (var i = 0; i < this.headers.length; i++) {
+      _loop(i);
+    }
+
+    return this;
+  };
+
+  this.row = function (element) {
+    return $(element).parents('.flex-table__item-content')[0];
+  };
+}
+
+var flexTableFactory = new _factories_TableFactory__WEBPACK_IMPORTED_MODULE_0__["TableFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (FlexTable);
+
+/***/ }),
+
 /***/ "./resources/js/components/MediaCards.js":
 /*!***********************************************!*\
   !*** ./resources/js/components/MediaCards.js ***!
@@ -3277,9 +3357,13 @@ function MediaCard(options) {
     return this.items[key];
   };
 
-  this.getCardTitle = function (key) {
-    if (this.getCard(key) !== null) {
-      return this.getCard(key).querySelector('.media-card__heading').innerText;
+  this.getParentItem = function (element) {
+    return $(element).parents('.media-card__list-item')[0];
+  };
+
+  this.getCardTitle = function (item) {
+    if (item !== null) {
+      return item.querySelector('.media-card__heading');
     }
 
     return null;
@@ -4496,97 +4580,6 @@ if (services.container !== null) {
 
 /***/ }),
 
-/***/ "./resources/js/components/_single-offer.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/_single-offer.js ***!
-  \**************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-
-var singleOffer = {
-  init: function init() {
-    window.addEventListener('load', singleOffer.setup);
-  },
-  currentViewport: window.innerWidth,
-  currentScrollY: window.scrollY,
-  setup: function setup(event) {
-    singleOffer.setImages();
-    window.addEventListener('resize', function () {
-      singleOffer.currentViewport = singleOffer.getViewport();
-    });
-    document.querySelector('#jobDescription').innerHTML = singleOffer.showDescription(document.querySelector('#jobDescription').getAttribute('data-html'));
-    singleOffer.toggleFixedButton(event);
-    window.addEventListener('scroll', function (event) {
-      singleOffer.currentScrollY = singleOffer.getScrollY();
-      singleOffer.toggleFixedButton(event);
-    });
-  },
-  setImages: function setImages() {
-    var picture = singleOffer.getDataContent(document.querySelector('.card_background-image'));
-    singleOffer.setProperty(document.querySelector('.card_background-image'), 'background-image', "url('".concat(picture, "')"));
-  },
-  getScrollY: function getScrollY() {
-    return window.scrollY;
-  },
-  getViewport: function getViewport() {
-    return window.innerWidth;
-  },
-  getDataContent: function getDataContent(element) {
-    return $(element).attr('data-content');
-  },
-  setProperty: function setProperty(element, property, value) {
-    element.style.setProperty(property, value);
-  },
-  toggleFixedButton: function toggleFixedButton(event) {
-    var lastSection = $('.readable_section').last();
-    var firstIndex = 0;
-    ;
-    var position = $(lastSection[firstIndex]).offset().top + lastSection[firstIndex].clientHeight;
-
-    if (singleOffer.theViewportPassedOverHere(position)) {
-      if (document.querySelector('.sendable_section--fixed')) {
-        var applyNowButton = document.querySelector('.sendable_section--fixed');
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleClass(applyNowButton, 'sendable_section--fixed', 'sendable_section');
-
-        if (event.type === 'scroll') {
-          position = window.scrollY + applyNowButton.clientHeight * 2;
-          singleOffer.scrollTo(position);
-        }
-      }
-    } else {
-      if (document.querySelector('.sendable_section')) {
-        var _applyNowButton = document.querySelector('.sendable_section');
-
-        _main_dom__WEBPACK_IMPORTED_MODULE_0__["default"].toggleClass(_applyNowButton, 'sendable_section', 'sendable_section--fixed');
-      }
-    }
-  },
-  scrollTo: function scrollTo(position) {
-    $("html").animate({
-      'scrollTop': position
-    }, 500, 'swing');
-  },
-  showDescription: function showDescription(inputDelta) {
-    inputDelta = JSON.parse(inputDelta);
-    var tempCont = document.createElement("div");
-    new Quill(tempCont).setContents(inputDelta);
-    return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
-  },
-  theViewportPassedOverHere: function theViewportPassedOverHere(y) {
-    return window.pageYOffset + window.innerHeight >= y;
-  }
-};
-
-if (document.querySelector('#job-description') !== null) {
-  singleOffer.init();
-}
-
-/***/ }),
-
 /***/ "./resources/js/components/_stats.js":
 /*!*******************************************!*\
   !*** ./resources/js/components/_stats.js ***!
@@ -5548,23 +5541,15 @@ function IndustryFilter(options) {
   this.init = function () {
     var _this = this;
 
-    this.el.addEventListener('change', function () {
-      _this.applyFilter(_this.callback);
+    this.el.addEventListener('change', function (ev) {
+      _this.applyFilter(_this.callback, ev.target.value);
     });
   };
 
-  this.getSelectedValue = function () {
-    return this.el.value;
-  };
-
-  this.applyFilter = function (callback) {
-    _facades_api__WEBPACK_IMPORTED_MODULE_1__["default"].jQueryGet(_facades_api__WEBPACK_IMPORTED_MODULE_1__["default"].getRoute('offers'), null, [this.getSelectedValue()], function (data) {
+  this.applyFilter = function (callback, filter) {
+    _facades_api__WEBPACK_IMPORTED_MODULE_1__["default"].jQueryGet(_facades_api__WEBPACK_IMPORTED_MODULE_1__["default"].getRoute('offers'), null, [filter], function (data) {
       callback(data);
     });
-  };
-
-  this.getSelectedIndex = function () {
-    return this.el.selectedIndex;
   };
 
   this.init();
@@ -5672,6 +5657,41 @@ function CreateOfferForm() {
 
 var createOfferFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
 /* harmony default export */ __webpack_exports__["default"] = (CreateOfferForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/DeleteFeeForm.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/forms/DeleteFeeForm.js ***!
+  \********************************************************/
+/*! exports provided: deleteFeeFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFeeFormFactory", function() { return deleteFeeFormFactory; });
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Modal */ "./resources/js/components/Modal.js");
+
+
+
+function DeleteFeeForm(options) {
+  this.fields = {};
+
+  this.init = function () {
+    if (this.modal !== null) {
+      this.modal = _components_Modal__WEBPACK_IMPORTED_MODULE_1__["modalsFactory"].createModal({
+        el: document.getElementById('deleteFeeModal')
+      }).init();
+    }
+
+    this.fields.token = this.el.querySelector('[name=token]');
+    return this;
+  };
+}
+
+var deleteFeeFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (DeleteFeeForm);
 
 /***/ }),
 
@@ -6900,29 +6920,28 @@ var pressNote = function pressNote() {
   }
 
   init();
-};
+}; // var learnChinese = function() {
+//     var arrowSlider = null;
+//
+//     function replaceCourseInfoSection(newCourseInfoSection) {
+//         $('section#course-info').remove();
+//         $('section.arrow-slider').after(newCourseInfoSection);
+//     }
+//
+//     function init() {
+//         var arrowSlider = arrowSliderFactory.createSlider({
+//             type: 'arrow',
+//             sections: ['in-person', 'online'],
+//             controllersCallback: function (slider) {
+//                 let course = slider.querySelector("input[name='study'").getAttribute('value');
+//                 api.getCourseInfo(course, replaceCourseInfoSection);
+//             }
+//         });
+//     }
+//
+//     init();
+// };
 
-var learnChinese = function learnChinese() {
-  var arrowSlider = null;
-
-  function replaceCourseInfoSection(newCourseInfoSection) {
-    $('section#course-info').remove();
-    $('section.arrow-slider').after(newCourseInfoSection);
-  }
-
-  function init() {
-    var arrowSlider = _ArrowSlider__WEBPACK_IMPORTED_MODULE_2__["arrowSliderFactory"].createSlider({
-      type: 'arrow',
-      sections: ['in-person', 'online'],
-      controllersCallback: function controllersCallback(slider) {
-        var course = slider.querySelector("input[name='study'").getAttribute('value');
-        _main_api_js__WEBPACK_IMPORTED_MODULE_5__["default"].getCourseInfo(course, replaceCourseInfoSection);
-      }
-    });
-  }
-
-  init();
-};
 
 var university = function university() {
   var arrowSlider = null;
@@ -6959,11 +6978,10 @@ var testimonials = function testimonials() {
 window.addEventListener('load', function () {
   if (document.querySelector('section#press') !== null) {
     pressNote();
-  }
+  } // if (document.querySelector('main#learn-chinese') !== null) {
+  //     learnChinese();
+  // }
 
-  if (document.querySelector('main#learn-chinese') !== null) {
-    learnChinese();
-  }
 
   if (document.querySelector('main#university') !== null) {
     university();
@@ -7052,10 +7070,11 @@ var api = function () {
         url = this.setLaravelParams(url, params);
       }
 
+      console.log(url);
       $.get({
         url: url,
         cache: false,
-        data: data,
+        data: data !== null ? data : null,
         dataType: 'json',
         error: function error(xhr, status, _error) {
           console.log(_error);
@@ -7353,6 +7372,12 @@ var browser = function () {
       if ($('nav').length > 0) {
         $(window).scrollTop(element.clientHeight - $('nav').height());
       }
+    },
+    preventScrolling: function preventScrolling() {
+      var position = $(document).scrollTop();
+      setTimeout(function () {
+        window.scrollTo(0, position);
+      }, 0);
     }
   };
 }();
@@ -7684,10 +7709,54 @@ var str = function () {
   _.init();
 
   return {
+    convertToString: function convertToString(str) {
+      if (str) {
+        if (typeof str === 'string') {
+          return str;
+        }
+
+        return String(str);
+      }
+
+      return null;
+    },
+    toWords: function toWords(str) {
+      str = this.convertToString(str);
+      var regexp = /[A-Z\xC0-\xD6\xD8-\xDE]?[a-z\xDF-\xF6\xF8-\xFF]+|[A-Z\xC0-\xD6\xD8-\xDE]+(?![a-z\xDF-\xF6\xF8-\xFF])|\d+/g;
+      return str.match(regexp);
+    },
+    titleCase: function titleCase(str) {
+      var result = '';
+
+      for (var i = 0, words = this.toWords(str); i < this.toWords(str).length; i++) {
+        var currentStr = words[i].substr(0, 1).toUpperCase() + words[i].substr(1);
+
+        if (i !== words.length - 1) {
+          currentStr += '';
+        }
+
+        result += currentStr;
+      }
+
+      return result;
+    },
     camelCase: function camelCase(str) {
-      return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-        return index === 0 ? word.toLowerCase() : word.toUpperCase();
-      }).replace(/\s+/g, '');
+      var result = "";
+
+      for (var i = 0, words = this.toWords(str); i < this.toWords(str).length; i++) {
+        var currentStr = words[i];
+        var tempStr = currentStr.toLowerCase();
+
+        if (i !== 0) {
+          tempStr = tempStr.substr(0, 1).toUpperCase() + tempStr.substr(1);
+        }
+
+        result += tempStr;
+      }
+
+      return result; // return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
+      //     return index === 0 ? word.toLowerCase() : word.toUpperCase();
+      // }).replace(/\s+|_*/g, '');
     },
     kebabCase: function kebabCase(str) {
       return str.replace(/\s+/g, '-').toLowerCase();
@@ -7805,21 +7874,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/forms/CreateOfferForm */ "./resources/js/components/forms/CreateOfferForm.js");
 /* harmony import */ var _components_forms_DeleteOfferForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/DeleteOfferForm */ "./resources/js/components/forms/DeleteOfferForm.js");
 /* harmony import */ var _components_forms_DeleteUserForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms/DeleteUserForm */ "./resources/js/components/forms/DeleteUserForm.js");
-/* harmony import */ var _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/EditFeeForm */ "./resources/js/components/forms/EditFeeForm.js");
-/* harmony import */ var _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms/EditOfferForm */ "./resources/js/components/forms/EditOfferForm.js");
-/* harmony import */ var _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/forms/EditUserForm */ "./resources/js/components/forms/EditUserForm.js");
-/* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
-/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
-/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
-/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
-/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
-/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
-/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
+/* harmony import */ var _components_forms_DeleteFeeForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/DeleteFeeForm */ "./resources/js/components/forms/DeleteFeeForm.js");
+/* harmony import */ var _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/forms/EditFeeForm */ "./resources/js/components/forms/EditFeeForm.js");
+/* harmony import */ var _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/forms/EditOfferForm */ "./resources/js/components/forms/EditOfferForm.js");
+/* harmony import */ var _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/forms/EditUserForm */ "./resources/js/components/forms/EditUserForm.js");
+/* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
+/* harmony import */ var _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/forms/ProceedPaymentForm */ "./resources/js/components/forms/ProceedPaymentForm.js");
+/* harmony import */ var _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/forms/PaymentForm */ "./resources/js/components/forms/PaymentForm.js");
+/* harmony import */ var _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/forms/SignUpForm */ "./resources/js/components/forms/SignUpForm.js");
+/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -7845,19 +7916,19 @@ FormFactory.prototype.createForm = function (options) {
       break;
 
     case 'sign-up':
-      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_11__["default"];
+      this.formClass = _components_forms_SignUpForm__WEBPACK_IMPORTED_MODULE_12__["default"];
       break;
 
     case 'proceed-payment':
-      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_9__["default"];
+      this.formClass = _components_forms_ProceedPaymentForm__WEBPACK_IMPORTED_MODULE_10__["default"];
       break;
 
     case 'payment':
-      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_10__["default"];
+      this.formClass = _components_forms_PaymentForm__WEBPACK_IMPORTED_MODULE_11__["default"];
       break;
 
     case 'login':
-      this.formClass = _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"];
+      this.formClass = _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_9__["default"];
       break;
 
     case 'create-offer':
@@ -7865,11 +7936,11 @@ FormFactory.prototype.createForm = function (options) {
       break;
 
     case 'edit-fee':
-      this.formClass = _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_5__["default"];
+      this.formClass = _components_forms_EditFeeForm__WEBPACK_IMPORTED_MODULE_6__["default"];
       break;
 
     case 'edit-offer':
-      this.formClass = _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_6__["default"];
+      this.formClass = _components_forms_EditOfferForm__WEBPACK_IMPORTED_MODULE_7__["default"];
       break;
 
     case 'delete-offer':
@@ -7880,8 +7951,12 @@ FormFactory.prototype.createForm = function (options) {
       this.formClass = _components_forms_DeleteUserForm__WEBPACK_IMPORTED_MODULE_4__["default"];
       break;
 
+    case 'delete-fee':
+      this.formClass = _components_forms_DeleteFeeForm__WEBPACK_IMPORTED_MODULE_5__["default"];
+      break;
+
     case 'edit-user':
-      this.formClass = _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_7__["default"];
+      this.formClass = _components_forms_EditUserForm__WEBPACK_IMPORTED_MODULE_8__["default"];
       break;
   }
 
@@ -7912,7 +7987,8 @@ FormFactory.prototype.createForm = function (options) {
     return formClass;
   };
 
-  formClass.setItemAction = function (id) {
+  formClass.setItemAction = function (input) {
+    var id = input.getAttribute('data-value') !== null ? input.getAttribute('data-value') : $(input).parents('button[data-value], a[data-value]')[0].getAttribute('data-value');
     var url = new URL(this.el.action);
     var oldPathname = url.pathname.split('/');
     var newPathname = '';
@@ -7942,25 +8018,25 @@ FormFactory.prototype.createForm = function (options) {
     switch (self.getSelectedProgram()) {
       case 'internship':
       case 'inter_relocat':
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fieldsets.industry, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.university);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.study);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].show(self.fieldsets.industry, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fieldsets.university);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fieldsets.study);
         break;
 
       case 'study':
         console.log(self.fieldsets.study);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fieldsets.study, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fields.cv.parentElement.parentElement);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.industry);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.university);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].show(self.fieldsets.study, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fields.cv.parentElement.parentElement);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fieldsets.industry);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fieldsets.university);
         break;
 
       case 'university':
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fieldsets.university, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.study);
-        _facades_dom__WEBPACK_IMPORTED_MODULE_13__["default"].hide(self.fieldsets.industry);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].show(self.fieldsets.university, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fieldsets.study);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_14__["default"].hide(self.fieldsets.industry);
         break;
 
       default:
@@ -7970,7 +8046,7 @@ FormFactory.prototype.createForm = function (options) {
   };
 
   formClass.toggleLoadingState = function () {
-    _main_UI__WEBPACK_IMPORTED_MODULE_12__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
+    _main_UI__WEBPACK_IMPORTED_MODULE_13__["default"].toggleSpinnerButtonState(formClass.getSubmitInput());
     formClass.disable(!formClass.isDisabled());
     return formClass;
   };
@@ -8034,7 +8110,7 @@ FormFactory.prototype.createForm = function (options) {
                 validators: validators
               };
               _context.next = 3;
-              return _facades_api__WEBPACK_IMPORTED_MODULE_14__["default"].validate(validationObject);
+              return _facades_api__WEBPACK_IMPORTED_MODULE_15__["default"].validate(validationObject);
 
             case 3:
               response = _context.sent;
@@ -8247,6 +8323,36 @@ SliderFactory.prototype.createSlider = function (options) {
   }
 
   return new this.sliderClass(options);
+};
+
+/***/ }),
+
+/***/ "./resources/js/factories/TableFactory.js":
+/*!************************************************!*\
+  !*** ./resources/js/factories/TableFactory.js ***!
+  \************************************************/
+/*! exports provided: TableFactory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TableFactory", function() { return TableFactory; });
+/* harmony import */ var _components_FlexTable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/FlexTable.js */ "./resources/js/components/FlexTable.js");
+
+function TableFactory() {}
+TableFactory.prototype.tableClass = null;
+
+TableFactory.prototype.createTable = function (options) {
+  switch (options.type) {
+    case 'flex':
+      this.tableClass = _components_FlexTable_js__WEBPACK_IMPORTED_MODULE_0__["default"];
+      break;
+  }
+
+  var tableClass = new this.tableClass(options);
+  tableClass.el = options.el !== null ? options.el : null;
+  tableClass.form = options.form !== null ? options.form : null;
+  return tableClass;
 };
 
 /***/ }),
@@ -9220,6 +9326,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_MediaCards__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/MediaCards */ "./resources/js/components/MediaCards.js");
 /* harmony import */ var _components_forms_DeleteOfferForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/forms/DeleteOfferForm */ "./resources/js/components/forms/DeleteOfferForm.js");
 /* harmony import */ var _components_forms_DeleteUserForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/forms/DeleteUserForm */ "./resources/js/components/forms/DeleteUserForm.js");
+/* harmony import */ var _components_forms_DeleteFeeForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/forms/DeleteFeeForm */ "./resources/js/components/forms/DeleteFeeForm.js");
+/* harmony import */ var _components_FlexTable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/FlexTable */ "./resources/js/components/FlexTable.js");
+
+
 
 
 
@@ -9243,18 +9353,32 @@ __webpack_require__.r(__webpack_exports__);
         type: 'delete-user'
       }).init()
     }).init();
+    var feesTable = _components_FlexTable__WEBPACK_IMPORTED_MODULE_5__["flexTableFactory"].createTable({
+      el: document.getElementById('fees'),
+      type: 'flex',
+      form: _components_forms_DeleteFeeForm__WEBPACK_IMPORTED_MODULE_4__["deleteFeeFormFactory"].createForm({
+        form: document.getElementById('delete-fee'),
+        type: 'delete-fee'
+      }).init()
+    }).init();
     $(usersList.form.modal.getAllTriggerElements()).each(function (key, element) {
       element.addEventListener('click', function (ev) {
-        usersList.form.modal.setModalTitle(usersList.getCardTitle(key));
-        usersList.form.setItemAction(ev.target.getAttribute('data-value'));
+        usersList.form.modal.setModalTitle(usersList.getCardTitle(usersList.getParentCard(element)).innerText);
+        usersList.form.setItemAction(ev.target);
       });
     });
     $(offersCards.form.modal.getAllTriggerElements().each(function (key, element) {
       element.addEventListener('click', function (ev) {
-        offersCards.form.modal.setModalTitle(offersCards.getCardTitle(key));
-        offersCards.form.setItemAction(ev.target.getAttribute('data-value'));
+        offersCards.form.modal.setModalTitle(offersCards.getCardTitle(offersCards.getParentItem(element)).innerText);
+        offersCards.form.setItemAction(ev.target);
       });
     }));
+    $(feesTable.form.modal.getAllTriggerElements()).each(function (key, element) {
+      element.addEventListener('click', function (ev) {
+        feesTable.form.modal.setModalTitle(feesTable.rowTitle(ev.target).innerText);
+        feesTable.form.setItemAction(ev.target);
+      });
+    });
   });
 })();
 
@@ -9390,10 +9514,44 @@ __webpack_require__.r(__webpack_exports__);
 
 (function () {
   window.addEventListener('DOMContentLoaded', function () {
-    var offerNavigation = _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_0__["bottomNavigationFactory"].createNavigation({
-      el: document.querySelector('.bottom-navigation'),
-      type: 'bottom'
-    }).init();
+    if (document.getElementById('job-description') !== null) {
+      var offerNavigation = _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_0__["bottomNavigationFactory"].createNavigation({
+        el: document.querySelector('.bottom-navigation'),
+        type: 'bottom'
+      }).init();
+    }
+  });
+})();
+
+/***/ }),
+
+/***/ "./resources/js/pages/learn-chinese.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/learn-chinese.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_ArrowSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ArrowSlider */ "./resources/js/components/ArrowSlider.js");
+/* harmony import */ var _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/BottomNavigation */ "./resources/js/components/BottomNavigation.js");
+
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    if (document.querySelector('main#learn-chinese') !== null) {
+      var learnChineseSlider = _components_ArrowSlider__WEBPACK_IMPORTED_MODULE_0__["arrowSliderFactory"].createSlider({
+        type: 'arrow',
+        sections: ['in-person', 'online'],
+        callbacks: {
+          controllers: function controllers(slider) {
+            console.log(slider);
+          }
+        }
+      });
+    }
   });
 })();
 
@@ -9473,14 +9631,15 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 1:
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/welcome.js ./resources/js/pages/user/dashboard.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/admin/dashboard.js ./resources/js/pages/admin/fee.js ./resources/js/pages/admin/offer.js ./resources/js/pages/admin/user.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_single-offer.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/learn-chinese.js ./resources/js/pages/welcome.js ./resources/js/pages/user/dashboard.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/admin/dashboard.js ./resources/js/pages/admin/fee.js ./resources/js/pages/admin/offer.js ./resources/js/pages/admin/user.js ./resources/js/pages/user/payment.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_nav.js ./resources/js/components/_page-title.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_edit-offer.js ./resources/js/components/_news.js ./resources/js/components/_services.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_filter-by.js ./resources/js/components/_stats.js ./resources/js/components/_motifs.js ./resources/js/components/_footer.js ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\home.js */"./resources/js/pages/home.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\job-description.js */"./resources/js/pages/job-description.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\learn-chinese.js */"./resources/js/pages/learn-chinese.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\welcome.js */"./resources/js/pages/welcome.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\user\dashboard.js */"./resources/js/pages/user/dashboard.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\new-offer.js */"./resources/js/pages/admin/new-offer.js");
@@ -9495,7 +9654,6 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_page-title.js */"./resources/js/components/_page-title.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_single-offer.js */"./resources/js/components/_single-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_news.js */"./resources/js/components/_news.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_services.js */"./resources/js/components/_services.js");

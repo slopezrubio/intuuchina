@@ -34,6 +34,14 @@
         </section>
     @endif
 
+    @if(isset($header['error-message']) || key_exists('error-message', $header))
+        <section class="wrapper">
+            <div class="error-box col-10 col-md-8">
+                <h1 class="error-box__title">{!! $header['error-message'] !!}</h1>
+            </div>
+        </section>
+    @endif
+
     @if(isset($dialog))
         @include($dialog)
     @endif

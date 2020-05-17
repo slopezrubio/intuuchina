@@ -86,7 +86,7 @@
          style="{{ ($user->program->value === 'inter_relocat' || $user->program->value === 'internship') ? '' : 'display: none'}}">
         @component('components.inputs.checkbox-group', [
             'inputs' => App\Category::getOptionsFrom('App\Program', 'inter_relocat'),
-            'checked' => $user->program->value === 'inter_relocat' || $user->program->value === 'internship' ? App\Category::getOptionsFrom('App\User', $user->id) : [],
+            'checked' => $user->program->value === 'inter_relocat' || $user->program->value === 'internship' ? array_column(App\Category::getOptionsFrom('App\User', $user->id), 'id') : [],
         ])
             @slot('name', 'categories')
             @slot('label', __('Industry'))
@@ -97,7 +97,7 @@
          style="{{ $user->program->value === 'study' ? '' : 'display: none' }}">
         @component('components.inputs.checkbox-group', [
             'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
-            'checked' =>  $user->program->value === 'study'? App\Category::getOptionsFrom('App\User', $user->id) : [],
+            'checked' =>  $user->program->value === 'study'? array_column(App\Category::getOptionsFrom('App\User', $user->id), 'id') : [],
         ])
             @slot('name', 'categories')
             @slot('label', __('Study Chinese Via'))
@@ -108,7 +108,7 @@
          style="{{ $user->program->value === 'university' ? '' : 'display: none' }}">
         @component('components.inputs.checkbox-group', [
             'inputs' =>  App\Category::getOptionsFrom('App\Program', 'university'),
-            'checked' =>  $user->program->value === 'study'? App\Category::getOptionsFrom('App\User', $user->id) : [],
+            'checked' =>  $user->program->value === 'study'? array_column(App\Category::getOptionsFrom('App\User', $user->id), 'id') : [],
         ])
             @slot('name', 'categories')
             @slot('label',  __('University'))

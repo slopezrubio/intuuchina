@@ -17,17 +17,11 @@
 @import 'components/main';
 @import 'general';
 @import 'nav';
-@import 'login';
 @import 'why-intuuchina';
-@import 'learn-chinese';
-@import 'university';
-@import 'register';
-@import 'about';
 @import 'dashboard';
 @import 'verify';
 @import 'home';
 @import 'offers';
-@import 'job-description';
 @import 'message-confirmation';
 
 @import 'utilities/helpers/general';
@@ -35,3 +29,7 @@
 @import 'utilities/pages/index';
 @import 'utilities/pages/internship';
 @import 'utilities/pages/job-description';
+@import 'utilities/pages/learn-chinese';
+@import 'utilities/pages/login';
+@import 'utilities/pages/university';
+@import 'utilities/pages/dashboard';

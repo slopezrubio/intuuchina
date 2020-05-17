@@ -5,7 +5,7 @@
 <nav>
     <div class="navbar">
         <div class="col-12 navbar-expand-lg navbar_container">
-            <a class="logo" href="{{ url('/') }}"><img src="{{ asset('./storage/images/logo.png') }}"></a>
+            <a class="logo" href="{{ url('/') }}"><img src="{{ asset('storage/images/logo.png') }}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
@@ -81,7 +81,7 @@
                                             <div class="toggleOption">{{ __('auth.profile') }}</div>
                                         </a>
                                     @else
-                                        <a href="{{ route('edit_user', ['user' => Auth::id()]) }}" class="dropdown-item">
+                                        <a href="{{ route('admin', ['user' => Auth::id()]) }}" class="dropdown-item">
                                             <div class="toggleOption">{{ __('auth.dashboard') }}</div>
                                         </a>
                                     @endif

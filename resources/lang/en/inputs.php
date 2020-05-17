@@ -42,4 +42,9 @@
                 'icon' => '',
             ],
         ],
+        'filter' => [
+            'inter_relocat' => [
+                'default' => 'All',
+            ]
+        ]
     ];

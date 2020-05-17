@@ -31,10 +31,29 @@ class Offer extends Model
         return strlen($this->description) > 0 && strlen(trim($this->description)) && $this->description !== null;
     }
 
-    public static function getCardList() {
-        return DB::table('offers')
-                ->select('offers.id', 'category_id', 'categories.name as category', 'picture as thumbnail', 'title', 'location as subtitle', 'duration as time', 'offers.created_at')
-                ->join('categories', 'offers.category_id', '=','categories.id')->paginate();
+    /**
+     * Gets all the job offers formatted to be embedded into a card component matching
+     * the given category and paginated according to the number of pages passed as a second
+     * argument.
+     *
+     * @param null $category
+     * @param null $num_pages
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getCardList($category = null, $num_pages = null) {
+        $cardList = DB::table('offers')
+            ->select('offers.id', 'category_id', 'categories.name as category', 'picture as thumbnail', 'title', 'location as subtitle', 'duration as time', 'offers.created_at')
+            ->join('categories', 'offers.category_id', '=','categories.id');
+
+        if ($category !== null) {
+            $cardList->where('category_id', Category::where('value', $category)->first()->id);
+        }
+
+        if ($num_pages !== null) {
+            return $cardList->paginate($num_pages);
+        }
+
+        return $cardList->paginate();
     }
 
     public static function getAdminList() {

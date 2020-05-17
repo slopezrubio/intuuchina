@@ -13,9 +13,13 @@ function MediaCard(options) {
         return this.items[key];
     };
 
-    this.getCardTitle = function(key) {
-        if (this.getCard(key) !== null) {
-            return this.getCard(key).querySelector('.media-card__heading').innerText;
+    this.getParentItem = function(element) {
+        return $(element).parents('.media-card__list-item')[0];
+    };
+
+    this.getCardTitle = function(item) {
+        if (item !== null) {
+            return item.querySelector('.media-card__heading');
         }
 
         return null;

@@ -53,10 +53,12 @@ var api = (function() {
                 url = this.setLaravelParams(url, params);
             }
 
+            console.log(url);
+
             $.get({
                 url: url,
                 cache: false,
-                data: data,
+                data: data !== null ? data : null,
                 dataType: 'json',
                 error: function(xhr, status, error) {
                     console.log(error);

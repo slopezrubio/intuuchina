@@ -25,6 +25,23 @@
   }
 }
 
+.attribution-text {
+  position: absolute;
+  top: 93%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: $primaryWhite;
+  text-align: center;
+  opacity: 0.5;
+  a {
+    font-weight: 500;
+    &:hover {
+      text-decoration: underline;
+      color: $neutralColor;
+    }
+  }
+}
+
 .price-tag {
 
 

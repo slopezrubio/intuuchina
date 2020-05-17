@@ -32,12 +32,10 @@ class FeesCollection extends Collection implements Searchable
             ->select('fees.id',
                 'fees.heading as title',
                 'fees.amount',
-                'fee_types.name as fee_type',
-                'fees.unit')
+                'fee_types.name as fee_type')
             ->get()))
         ->each(function($item) {
             $item->amount = Money::currencyFormat($item->amount);
-            $item->unit = Str::plural(Str::title($item->unit));
             $item->tax = __('taxes.'.Fee::find($item->id)->jurisdiction.'.display_name');
         });
 

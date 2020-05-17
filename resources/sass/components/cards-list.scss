@@ -116,7 +116,7 @@
       @include justify-content(flex-start);
       .card {
         flex: 0 0 $card-width;
-        margin-left: 5px;
+        margin-left: 2px;
         margin-right: auto;
 
         &-body {
@@ -145,7 +145,7 @@
     .card-group {
       .card {
         //margin-left: 5px;
-        margin-right: 5px;
+        margin-right: 2px;
         flex: 0 0 ($card-width - (5px * 6));
       }
     }

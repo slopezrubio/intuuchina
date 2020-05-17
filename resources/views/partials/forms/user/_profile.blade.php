@@ -78,7 +78,7 @@
              style="{{ (Auth::user()->program->value === 'inter_relocat' || Auth::user()->program->value === 'internship') ? '' : 'display: none'}}">
             @component('components.inputs.checkbox-group', [
                 'inputs' => App\Category::getOptionsFrom('App\Program', 'inter_relocat'),
-                'checked' => Auth::user()->program->value === 'inter_relocat' || Auth::user()->program->value === 'internship' ? App\Category::getOptionsFrom('App\User', Auth::user()->id) : [],
+                'checked' => Auth::user()->program->value === 'inter_relocat' || Auth::user()->program->value === 'internship' ? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
             ])
                 @slot('name', 'categories')
                 @slot('label', __('Industry'))
@@ -89,7 +89,7 @@
              style="{{ (Auth::user()->program->value === 'study') ? '' : 'display: none'}}">
             @component('components.inputs.checkbox-group', [
                 'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
-                'checked' =>  Auth::user()->program->value === 'study'? App\Category::getOptionsFrom('App\User', Auth::user()->id) : [],
+                'checked' =>  Auth::user()->program->value === 'study'? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
             ])
                 @slot('name', 'categories')
                 @slot('label', __('Study Chinese Via'))
@@ -101,7 +101,7 @@
 
             @component('components.inputs.checkbox-group', [
                 'inputs' =>  App\Category::getOptionsFrom('App\Program', 'university'),
-                'checked' =>  Auth::user()->program->value === 'university'? App\Category::getOptionsFrom('App\User', Auth::user()->id) : [],
+                'checked' =>  Auth::user()->program->value === 'university'? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
             ])
                 @slot('name', 'categories')
                 @slot('label',  __('University'))
@@ -113,7 +113,7 @@
                 }}">
             @component('components.inputs.checkbox-group', [
                 'inputs' => App\Category::getOptionsFrom('App\Program', 'inter_relocat'),
-                'checked' => Auth::user()->program->value === 'inter_relocat' || Auth::user()->program->value === 'internship' ? App\Category::getOptionsFrom('App\User', Auth::user()->id) : [],
+                'checked' => Auth::user()->program->value === 'inter_relocat' || Auth::user()->program->value === 'internship' ? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
             ])
                 @slot('name', 'categories')
                 @slot('label', __('Industry'))
@@ -124,7 +124,7 @@
              style="{{ (old('program') === 'study') ? '' : 'display: none'}}">
             @component('components.inputs.checkbox-group', [
                 'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
-                'checked' =>  Auth::user()->program->value === 'study'? App\Category::getOptionsFrom('App\User', Auth::user()->id) : [],
+                'checked' =>  Auth::user()->program->value === 'study'? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
             ])
                 @slot('name', 'categories')
                 @slot('label', __('Study Chinese Via'))
@@ -135,7 +135,7 @@
              style="{{ (old('program') === 'university') ? '' : 'display: none'}}">
             @component('components.inputs.checkbox-group', [
                 'inputs' => App\Category::getOptionsFrom('App\Program', 'university'),
-                'checked' =>  Auth::user()->program->value === 'university' ? App\Category::getOptionsFrom('App\User', Auth::user()->id) : [],
+                'checked' =>  Auth::user()->program->value === 'university' ? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
             ])
                 @slot('name', 'categories')
                 @slot('label', __('University'))

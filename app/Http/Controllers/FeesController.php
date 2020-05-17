@@ -84,19 +84,18 @@ class FeesController extends Controller
             'unit.required' => __('validation.custom.unit.required'),
             'tax.required' => __('validation.custom.tax.required')
         ]);
-
-        var_dump($request->all());
-        die();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Fee  $fee
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Fee $fee)
     {
-        //
+        Fee::destroy($fee->id);
+
+        return redirect()->route('admin.fees');
     }
 }

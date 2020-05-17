@@ -1,5 +1,5 @@
 <div class="cards-list col-12">
-    @if ($items->count() === 0)
+    @if ($items->count() === 0 || $items->currentPage() > $items->lastPage())
         <p class="cards-list__empty">{{ __('content.there are no', ['item' => 'offers']) }}</p>
     @else
         <div class="card-group">
@@ -17,75 +17,9 @@
                             <p class="card-text">{{ trans_choice('content.staying', $item->time, ['time' => $item->time ]) }}</p>
                         </div>
                         <div class="card-body__action">
-                            @auth
-                                @if (Auth::user()->program === 'internship' || Auth::user()->program === 'inter_relocat')
-                                    @if(!array_key_exists($item->category, Auth::user()->category))
-                                        @component('components.forms.card-form', [
-                                            'hidden' => [
-                                                'program' => 'category',
-                                                'category' => $item->category
-                                            ],
-                                            'buttons' => [
-                                                [
-                                                    'content' => Auth::user()->category === null ? __('content.apply for') : __('Add Preference'),
-                                                    'value' => 'inter_relocat',
-                                                ],
-                                                [
-                                                    'href' => '/internship/' . $item->id,
-                                                    'content' => __('content.description'),
-                                                ],
-                                            ],
-                                        ])
-                                        @slot('action', route('update.program', ['user' => Auth::user()->id, 'program' => Auth::user()->program]))
-
-                                        @endcomponent
-                                    @endif
-                                @else
-                                    @component('components.forms.card-form', [
-                                        'hidden' => [
-                                            'program' => 'category',
-                                            'category' => $item->category
-                                        ],
-                                        'buttons' => [
-                                            [
-                                                'content' => __('Change Preference'),
-                                                'value' => 'inter_relocat',
-                                            ],
-                                            [
-                                                'href' => '/internship/' . $item->id,
-                                                'content' => __('content.description'),
-                                                'value' => $item->category
-                                            ]
-                                        ],
-                                    ])
-
-                                        @slot('action', route('update.program', ['user' => Auth::user()->id, 'program' => Auth::user()->program]))
-
-                                    @endcomponent
-                                @endif
-                            @else
-                                @component('components.forms.card-form', [
-                                    'hidden' => [
-                                        'program' => 'category',
-                                        'category' => $item->category
-                                    ],
-                                    'buttons' => [
-                                        [
-                                            'content' => __('content.apply for'),
-                                            'value' => 'inter_relocat'
-                                        ],
-                                        [
-                                            'href' => '/internship/' . $item->id,
-                                            'content' => __('content.description'),
-                                            'value' => $item->category,
-                                        ],
-                                    ],
-                                ])
-
-                                    @slot('action', route('application.form'))
-
-                                @endcomponent
-                            @endauth
+                            @if(isset($action))
+                                @include($action)
+                            @endif
                         </div>
                     </div>
                     <div class="card-footer">
@@ -94,7 +28,7 @@
                 </div>
             @endforeach
         </div>
-    @endif
 
-    {!! isset($pagination) ? $pagination : $items->links('vendor.pagination.semantic-ui') !!}
+        {!! isset($pagination) ? $pagination : $items->links('vendor.pagination.semantic-ui') !!}
+    @endif
 </div>

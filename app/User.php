@@ -59,12 +59,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number' => 'array',
     ];
 
+    // Model Events
     protected static function boot() {
         parent::boot();
 
         static::saving(function($model) {
             $model->saveUploadables()
                     ->savePhoneNumber();
+        });
+
+        static::deleting(function($model) {
+            $model->categories()->detach();
         });
     }
 
@@ -208,13 +213,5 @@ class User extends Authenticatable implements MustVerifyEmail
         User::all()
             ->orderBy($field, $order)
             ->get();
-    }
-
-    public function hasChineseStudies() {
-        if ($this->study !== null) {
-            return count($this->study) > 0;
-        }
-
-        return $this->study;
     }
 }

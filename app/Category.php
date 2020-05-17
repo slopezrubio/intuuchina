@@ -28,8 +28,8 @@ class Category extends Model
     }
 
     public static function getFilter($program) {
-        $filter = Category::getOptionsFrom('program', $program);
-        $filter['default'] = 'all';
+        $filter = Category::getSelectorOptions(Program::where('value', $program)->first()->categories);
+        $filter['default'] = __('inputs.filter.'.$program.'.default');
 
         return $filter;
     }

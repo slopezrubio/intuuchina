@@ -3,9 +3,13 @@
 
   $grid-fix: 'screen and (min-width: 380px) and (max-width: 576px)';
 
+  $c-cta-button-height: 38px;
+  $columns-width: 200px;
+  $font-size: 0.85em;
+
   margin: 0.5em 0;
   border-collapse: collapse;
-  font-size: 0.9em;
+  font-size: $font-size;
   width: 100%;
   min-width: 280px;
 
@@ -13,20 +17,62 @@
     padding: .35em;
 
     .c-cta-button {
-      height: 38px;
+      height: $c-cta-button-height;
       a {
-        line-height: 38px;
+        line-height: $c-cta-button-height;;
       }
+    }
+  }
+
+  td {
+    width: $columns-width;
+  }
+
+  thead tr > th:first-child, tbody tr > td:first-child {
+    text-align: left;
+
+    @media #{$breakpoint} {
+      text-align: right;
     }
   }
 
   tbody {
     tr.flex-table__item-content {
       border-top: 1px solid $neutralColor;
-    }
 
-    tr.flex-table__item-action {
-      td {
+      .flex-table__item-action {
+        .c-cta-button {
+          &--primary {
+            width: $c-cta-button-height;
+            margin-top: 0;
+
+            a {
+              font-size: 0;
+              color: transparent;
+              & > i {
+                color: $primaryWhite;
+                padding: 0.75em 0 0 0;
+                font-size: initial;
+              }
+            }
+
+            @media #{$breakpoint} {
+              width: 100%;
+              margin-top: .5em;
+
+              a {
+                font-size: $font-size;
+                color: $primaryWhite;
+
+                & > i {
+                  margin-left: 0.5em;
+                  padding: 0;
+                }
+              }
+            }
+          }
+        }
+
         & > .col-12 {
           & > .row {
             & > .col-12.col-sm-6 {
@@ -83,6 +129,7 @@
       border-bottom: 1px;
       display: block;
       text-align: right;
+      width: auto;
 
       &::before {
         content: attr(data-label);

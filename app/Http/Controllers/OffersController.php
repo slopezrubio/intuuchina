@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Offer;
 use App\Testimonial;
 use Carbon\Carbon;
@@ -9,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,10 +31,12 @@ class OffersController extends Controller
             return $this->filter($filter, $request->ajax());
         }
 
-        $offers = Offer::orderBy('created_at','DESC')->paginate(self::ELEMENTS_PER_PAGE);
+        $offers = Offer::getCardList();
         $offers->onEachSide = self::PAGINATION_SCOPE / 2;
 
-        return view('pages/offers', compact('offers'));
+        return view('pages/offers', [
+            'offers' => $offers
+        ]);
     }
 
     /**
@@ -181,14 +185,27 @@ class OffersController extends Controller
      * and send the partial view that comprises just the list of offers.
      */
     public function filter($filter, $ajax) {
-        $offers = $filter !== 'all'
-                ? Offer::where('industry', $filter)->orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE)
-                : Offer::orderBy('created_at', 'DESC')->paginate(self::ELEMENTS_PER_PAGE);
+
+        $offers = $filter !== 'default'
+                ? Offer::getCardList($filter, self::ELEMENTS_PER_PAGE)
+                : Offer::getCardList();
 
         $offers->onEachSide = self::PAGINATION_SCOPE / 2;
 
         if ($ajax) {
-            return response()->json(view('components.cards-list', compact('offers'))->render());
+
+            $action = 'partials.forms._card-offer';
+
+            if (Auth::check()) {
+                if (Auth::user()->type !== 'admin') {
+                    $action = 'partials.forms.user._card.offer';
+                }
+            }
+
+            return response()->json(view('components.cards-list', [
+                'items' => $offers,
+                'action' => $action,
+            ])->render());
         }
 
         return view('pages/offers', compact('offers'));

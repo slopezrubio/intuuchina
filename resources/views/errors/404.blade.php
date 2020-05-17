@@ -1,5 +1,11 @@
-@extends('errors.minimal')
+@extends('layouts.master')
 
-@section('title', __('Not Found'))
-@section('code', '404')
-@section('message', __('Not Found'))
+@section('content')
+    @component('components.header', [
+        'header' => __('component.header.404')
+    ])
+        @slot('variant', 'error-found')
+    @endcomponent
+
+    @include('partials._footer')
+@endsection

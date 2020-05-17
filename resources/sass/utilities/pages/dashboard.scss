@@ -1,0 +1,7 @@
+main#dashboard {
+  .container {
+    & > .row {
+      margin-bottom: 2em;
+    }
+  }
+}

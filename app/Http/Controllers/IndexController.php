@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CategoriesCollection;
+use App\Category;
 use App\Http\Middleware\StripFromUrl;
+use App\Program;
 use App\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -29,12 +32,16 @@ class IndexController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function learn(Request $request) {
-        $courseSelected = session('param');
+        $category = Category::where('value', session('param'))->first();
+        $slides = [];
 
-        if ($courseSelected !== null) {
-            $slider = $this->buildSlider('courses', $courseSelected);
-            if (!empty($slider)) {
-                return view('pages/learn-chinese', compact('slider'));
+        if ($category !== null) {
+            $collection = new CategoriesCollection();
+            $slides = $collection->slider($category->programs()->first()->studies, $category);
+            if (!empty($slides)) {
+                return view('pages/learn-chinese', [
+                    'slides' => $slides,
+                ]);
             }
         }
 
@@ -42,23 +49,41 @@ class IndexController extends Controller
     }
 
     public function university(Request $request) {
-        $universitySelected = session('param');
+        $category = Category::where('value', session('param'))->first();
+        $slides = [];
 
-        if ($universitySelected !== null) {
-            $slider = $this->buildSlider('universities', $universitySelected);
-            if (!empty($slider)) {
-                return view('pages/university', compact('slider'));
+        if ($category !== null) {
+            $collection = new CategoriesCollection();
+            $slides = $collection->slider($category->programs()->first()->degrees, $category);
+            if (!empty($slides)) {
+                return view('pages/university', [
+                   'slides' => $slides,
+                ]);
             }
         }
+
+//        if ($universitySelected !== null) {
+//            $slider = $this->buildSlider('universities', $universitySelected);
+//            if (!empty($slider)) {
+//                return view('pages/university', compact('slider'));
+//            }
+//        }
 
         return view('pages/university');
     }
 
     public function applicationForm(Request $request) {
         session()->pull('preferences');
+
+        $category_program = $request->get('program') !== null ? $request->get('program') : null;
+
+        if ($category_program === null) {
+            $category_program = Category::where('value', $request->get('category'))->first()->programs->first()->value;
+        }
+
         session()->flash('preferences', [
-            'program' => $request->get('program') !== 'industry' ? $request->get('program') : 'inter_relocat',
-            $request->get('product') => $request->get($request->get('program'))
+            'program' => $category_program,
+            $category_program => $request->get('category')
         ]);
 
         return redirect()->route('register');
@@ -86,23 +111,5 @@ class IndexController extends Controller
 
         $options['program'] = $parameters['program'];
         return $options;
-    }
-
-    private function buildSlider($items, $selected) {
-        $slider = [];
-        ${$items} = __('content.' . $items);
-        $current = array_key_first( __('content.' . $items));
-
-        while ($current !== $selected) {
-            next(${$items});
-            $current = key(${$items});
-            if ($current === $selected) {
-                $slider['previous'] = prev(${$items});
-                $slider['current'] = next(${$items});
-                $slider['next'] = next(${$items});
-            }
-        }
-
-        return $slider;
     }
 }

@@ -18,6 +18,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
     .js([
         'resources/js/pages/home.js',
         'resources/js/pages/job-description.js',
+        'resources/js/pages/learn-chinese.js',
         'resources/js/pages/welcome.js',
         'resources/js/pages/user/dashboard.js',
         'resources/js/pages/admin/new-offer.js',
@@ -32,7 +33,6 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/components/_page-title.js',
         'resources/js/components/_offers.js',
         'resources/js/components/_offers-list.js',
-        'resources/js/components/_single-offer.js',
         'resources/js/components/_edit-offer.js',
         'resources/js/components/_news.js',
         'resources/js/components/_services.js',

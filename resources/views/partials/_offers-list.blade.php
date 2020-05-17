@@ -8,10 +8,12 @@
         </div>
     </div>
 
-    @component('components.cards-list', ['items' => App\Offer::getCardList()])
-        @slot('body')
-            @include('partials.forms._card-offer')
-        @endslot
+    @component('components.cards-list', ['items' => $offers])
+        @auth
+            @slot('action', 'partials.forms.user._card-offer')
+        @else
+            @slot('action', 'partials.forms._card-offer')
+        @endif
 
         @slot('pagination')
             {{ $offers->links('vendor.pagination.semantic-ui') }}

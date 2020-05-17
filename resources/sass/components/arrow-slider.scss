@@ -17,7 +17,7 @@
               color: map_get($first-slide-preset, secondary-title-color);
             }
           }
-          form > .cta {
+          form > .c-cta-button {
             background: map_get($first-slide-preset, primary-button-color);
             &:hover {
               background: map_get($first-slide-preset, secondary-button-color);
@@ -47,7 +47,7 @@
               color: map_get($second-slide-preset, secondary-title-color);
             }
           }
-          form > .cta {
+          form > .c-cta-button{
             background: map_get($second-slide-preset, primary-button-color);
             &:hover {
               background: map_get($second-slide-preset, secondary-button-color);
@@ -78,7 +78,7 @@
                 color: map_get($third-slide-preset, secondary-title-color);
               }
             }
-            form > .cta {
+            form > .c-cta-button {
               background: map_get($third-slide-preset, primary-button-color);
               &:hover {
                 background: map_get($third-slide-preset, secondary-button-color);
@@ -105,10 +105,9 @@
     &__slide {
       box-sizing: border-box;
       color: $white;
-      padding-bottom: 2em;
 
       p {
-        margin-bottom: 3em;
+        margin-bottom: 7em;
       }
 
       & > * {
@@ -121,7 +120,8 @@
       @include flex-direction(column);
       @include align-content(center);
 
-      form > .cta {
+      form > .c-cta-button {
+        max-width: 150px;
         margin-top: 0;
       }
 
@@ -193,6 +193,7 @@
         @include prefixed(border-radius, 25px);
         $map: (320: 16, 996: 12);
         font-size: 1em;
+        cursor: pointer;
 
         &:hover,
         &:active,
@@ -236,11 +237,6 @@
         .arrow-slider__slide-header {
           margin-bottom: 1em;
 
-          button {
-            margin-right: 0;
-            margin-left: auto;
-          }
-
           p {
             text-align: right;
             float: right;
@@ -255,10 +251,10 @@
           @include prefixed(transition, width .5s);
 
           p, .arrow-slider__slide-header {
-            width: 30%;
+            width: 28%;
             margin-left: auto;
             margin-right: auto;
-            text-align: center;
+            text-align: left;
           }
 
           p {
@@ -269,7 +265,7 @@
 
         &--current.first, &--current.last {
           .arrow-slider__slide-header, p {
-            width: 50%;
+            min-width: 60%;
           }
         }
 
@@ -278,11 +274,16 @@
             margin-left: 0;
             margin-right: auto;
             padding-left: 150px;
-            text-align: left;
           }
+        }
 
+        &--current.first, &--current.last {
           .arrow-slider__slide-header {
             @include align-items(flex-start);
+
+            > h2, p {
+              text-align: left;
+            }
           }
         }
 
@@ -291,14 +292,6 @@
             margin-right: 0;
             margin-left: auto;
             padding-right: 150px;
-          }
-
-          .arrow-slider__slide-header {
-            @include align-items(flex-end);
-          }
-
-          .arrow-slider__slide-header > h2, p {
-            text-align: right;
           }
         }
 
@@ -341,7 +334,7 @@
             width: 150px;
           }
 
-          button.cta {
+          button.c-cta-button {
             display: none;
           }
         }
@@ -368,6 +361,12 @@
 
         &--right {
           right: 150px;
+
+          .arrow-slider__slide-header {
+            left: -30px;
+            text-align: right;
+            @include prefixed(transform, 'translateY(-50%)');
+          }
 
           &:before {
             left: -102px;

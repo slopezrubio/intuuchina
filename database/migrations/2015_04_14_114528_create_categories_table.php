@@ -18,9 +18,9 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('acronym')->nullable();
             $table->string('value');
-            $table->unsignedBigInteger('fee_id');
+            $table->unsignedBigInteger('fee_id')->nullable();
             $table->timestamps();
-            $table->foreign('fee_id')->references('id')->on('fees');
+            $table->foreign('fee_id')->references('id')->on('fees')->onDelete('set null');
         });
     }
 

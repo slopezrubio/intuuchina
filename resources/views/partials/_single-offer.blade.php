@@ -17,19 +17,15 @@
         @slot('content', [
             'text' => __('Duration'),
             'value' => $offer->duration,
-            'unit' => trans_choice('content.months', $offer->duration)
+            'unit' => Str::title(trans_choice('time.unit.month', $offer->duration)),
         ])
     @endcomponent
 </article>
 
-@component('components.bottom-navigation')
-    @slot('items', __('component.navs.bottom.job-description.items'))
-
-    @auth
-        @if(Auth::user()->type !== 'admin')
-            @include('partials.user._single-offer')
-        @endif
-    @else
-        @include('partials.forms._single-offer')
-    @endauth
-@endcomponent
+@auth
+    @if(Auth::user()->type !== 'admin')
+        @include('partials.forms.user._single-offer')
+    @endif
+@else
+    @include('partials.forms._single-offer')
+@endauth

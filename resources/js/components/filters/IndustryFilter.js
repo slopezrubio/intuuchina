@@ -6,23 +6,15 @@ function IndustryFilter(options) {
     this.callback = options.callback;
 
     this.init = function() {
-        this.el.addEventListener('change', () => {
-            this.applyFilter(this.callback);
+        this.el.addEventListener('change', (ev) => {
+            this.applyFilter(this.callback, ev.target.value);
         });
     };
 
-    this.getSelectedValue = function() {
-        return this.el.value;
-    };
-
-    this.applyFilter = function(callback) {
-        api.jQueryGet(api.getRoute('offers'), null, [this.getSelectedValue()], function(data) {
+    this.applyFilter = function(callback, filter) {
+        api.jQueryGet(api.getRoute('offers'),null, [filter], function(data) {
             callback(data);
         });
-    };
-
-    this.getSelectedIndex = function() {
-        return this.el.selectedIndex;
     };
 
     this.init();

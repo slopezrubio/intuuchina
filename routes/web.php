@@ -17,7 +17,7 @@
  * |--------------------------------------------------------------------------
  */
 Route::get('/', 'IndexController@index');
-Route::get('learn', 'IndexController@learn');
+Route::get('learn', 'IndexController@learn')->name('learn');
 Route::get('university', 'IndexController@university');
 Route::post('application-form','IndexController@applicationForm')->name('application.form');
 Route::post('contact-form','MailMessagesController@contactForm')->name('contact.form');
@@ -60,7 +60,7 @@ Route::group([
         Route::get('users/delete/{user}', 'UsersController@destroy')->name('admin.delete-user');
         Route::get('offers/delete/{offer}', 'OffersController@destroy')->where('offer', '[0-9]+')->name('admin.delete-offer');
         Route::get('fees/delete/{fee}', 'FeesController@destroy')->where('fee', '[0-9]')->name('admin.delete-fee');
-        Route::get('testimonials/delete/{testimonial}', 'TestimonialsController@destroy')->where('testimonial', '[0-9]+')->name('admin.delete-testimonial');
+//        Route::get('testimonials/delete/{testimonial}', 'TestimonialsController@destroy')->where('testimonial', '[0-9]+')->name('admin.delete-testimonial');
         Route::get('offers/new', 'OffersController@create')->name('admin.new-offer');
         Route::get('fee/new', 'FeesController@create')->name('admin.new-fee');
         Route::get('users/edit/{user}', 'UsersController@edit')->name('admin.edit-user');

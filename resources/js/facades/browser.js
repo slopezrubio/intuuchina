@@ -141,7 +141,14 @@ var browser = (function() {
             if ($('nav').length > 0) {
                 $(window).scrollTop(element.clientHeight - $('nav').height());
             }
-        }
+        },
+        preventScrolling: function() {
+            var position = $(document).scrollTop();
+
+            setTimeout(function() {
+                window.scrollTo(0, position);
+            }, 0);
+        },
     }
 }());
 
