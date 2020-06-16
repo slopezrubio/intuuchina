@@ -19,29 +19,98 @@ class TestimonialsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        $users = [
+            [
+                'name' => 'Santiago',
+                'surname' => 'Barba Bullón de Mendoza',
+                'testimonial' => [
+                    'quotes' => json_encode([
+                        'es' => '',
+                        'en' => 'Inntuchina was my go-to partner for everything China related',
+                    ]),
+                    'occupation' => 'Junior Analyst',
+                    'company' => null,
+                ],
+            ],
+            [
+                'name' => 'Maria Alejandra',
+                'surname' => 'Sanabria Aguilar',
+                'testimonial' => [
+                    'quotes' => json_encode([
+                        'es' => '',
+                        'en' => 'They are a very focused and intelligent people who develop a very successful company',
+                    ]),
+                    'occupation' => 'BD Executive',
+                    'company' => 'SIP Project Management',
+                ]
+            ],
+            [
+                'name' => 'Mario',
+                'surname' => 'Juárez Camacho',
+                'testimonial' => [
+                    'quotes' => json_encode([
+                        'es' => '',
+                        'en' => 'IntuuChina is a great one-stop shop that really makes your life easier',
+                    ]),
+                    'occupation' => 'Digital Analyst',
+                    'company' => null,
+                ]
+            ],
+            [
+                'name' => 'Cesar',
+                'surname' => 'Vázquez Parra',
+                'testimonial' => [
+                    'quotes' => json_encode([
+                        'es' => '',
+                        'en' => 'With clear objectives, they led me to the best opportunities in the area of my interest.'
+                    ]),
+                    'occupation' => 'Marketing',
+                    'company' => null,
+                ]
+            ],
+            [
+                'name' => 'Rocco',
+                'surname' => 'Forgione',
+                'testimonial' => [
+                    'quotes' => json_encode([
+                        'es' => '',
+                        'en' => 'At first, I was a bit scared to come to China alone. But at the end I knew IntuuChina would help me in my first months',
+                    ]),
+                    'occupation' => 'Double Master\'s Degree Student',
+                    'company' => 'ZJU China Studies',
+                ]
+            ],
+            [
+                'name' => 'Angela',
+                'surname' => 'Blanco',
+                'testimonial' => [
+                    'quotes' => json_encode([
+                        'es' => '',
+                        'en' => 'Together we have all created the IntuuChina family, which is a big community with people having the same values and beliefs.',
+                    ]),
+                    'occupation' => 'Administrative',
+                    'company' => null,
+                ]
+            ],
+
+        ];
+
         //
-        foreach (range(0, 2) as $userIndex) {
+        foreach ($users as $key => $user) {
             $offset = 1;
             $id = User::getLastUserCreated()->id + $offset;
 
-            $user = factory(User::class, 1)->create([
+            factory(User::class, 1)->create([
                 'id' => $id,
-                'name' => ['Santiago', 'Maria Alejandra', 'Mario'][$userIndex],
-                'surnames' => ['Barba Bullón de Mendoza', 'Sanabria Aguilar', 'Juárez Camacho'][$userIndex],
-                'avatar' => Storage::putFile('public/profiles/'. $id, new File(public_path('storage/images/test_files/testimonial_' . ($userIndex + $offset) . '.jpg')), 'public'),
+                'name' => $user['name'],
+                'surnames' => $user['surname'],
+                'avatar' => Storage::putFile('public/profiles/'. $id, new File(public_path('storage/images/test_files/testimonial_' . ($key + $offset) . '.jpg')), 'public'),
             ]);
 
             $testimonial = factory(Testimonial::class)->create([
-                'quotes' => json_encode([
-                    'es' => '',
-                    'en' => [
-                        'Inntuchina was my go-to partner for everything China related',
-                        'They are a very focused and intelligent people who develop a very successful company',
-                        'IntuuChina is a great one-stop shop that really makes your life easier'
-                    ][$userIndex],
-                ]),
-                'occupation' => ['Junior Analyst', 'BD Executive', 'Digital Analyst'][$userIndex],
-                'company' => [null, 'SIP Project Management', null][$userIndex],
+                'quotes' => $user['testimonial']['quotes'],
+                'occupation' => $user['testimonial']['occupation'],
+                'company' => $user['testimonial']['company'],
                 'user_id' => $id,
             ]);
         }

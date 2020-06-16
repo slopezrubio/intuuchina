@@ -14,12 +14,24 @@
 
   &__thumbnail {
     margin: 1.5em auto;
+    text-align: center;
 
     i {
       width: 100%;
-      text-align: center;
-      font-size: 6em;
-      color: $successColor;
+    }
+
+    &--info {
+      i {
+        color: $neutralColor;
+        font-size: 6em;
+      }
+    }
+
+    &--success {
+      i {
+        font-size: 6em;
+        color: $successColor;
+      }
     }
   }
 

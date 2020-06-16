@@ -7,10 +7,12 @@ use App\Rules\CurriculumVitae;
 use App\Status;
 use App\User;
 use App\State;
+use DBlackborough\Quill\Render as QuillRender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -41,9 +43,9 @@ class UsersController extends Controller
             'surnames' => ['required', 'string', 'max:255'],
             'nationality' => ['required', 'max:255'],
             'cv' => [
-                Rule::requiredIf(function() use ($request) {
-                    if (request()->get('program') !== 'study') {
-                        return $request->user()->cv === null || !Storage::exists($request->user()->cv);
+                Rule::requiredIf(function() use ($request, $user) {
+                    if ($request->get('program') !== 'study') {
+                        return $user->cv === null || !Storage::exists($user->cv);
                     }
 
                     return false;
@@ -51,17 +53,19 @@ class UsersController extends Controller
                 'file', 'max:2000', 'mimes:pdf,doc,docx,odt,zip'
             ],
         ], [
-            'cv.required' => __('validation.custom.required', ['attribute' => __('CV')])
+            'cv.required' => Auth::user()->type !== 'admin'
+                                ? __('validation.custom.required', ['attribute' => __('CV')])
+                                : __('validation.custom.admin.required', ['attribute' => __('CV')])
         ]);
 
         if ($validator->errors()->any()) {
             $request->flash();
 
             if (auth()->user()->type === 'user') {
-                return Redirect::route('user.profile')->withErrors($validator->errors()->getMessages());
+                return Redirect::route('user.profile')->withErrors($validator->errors()->getMessages(), 'profile');
             }
 
-            return Redirect::back()->withErrors($validator->errors()->getMessages());
+            return Redirect::back()->withErrors($validator->errors()->getMessages(), 'profile');
         }
 
         $user->update([
@@ -74,20 +78,92 @@ class UsersController extends Controller
             'categories' => $request->get('categories'),
             'status_id' => Status::getByValue($request->get('status')) !== null
                                 ? Status::getByValue($request->get('status'))->id
-                                : null,
+                                : $user->status_id,
         ]);
 
         if (Auth::user()->type === 'admin') {
-            return redirect()->route('admin.users');
+            return redirect()->route('admin')
+                            ->with('status', trans('validation.custom.completed' , ['item' => 'profile']));
         }
 
-        return redirect()->route('user.profile');
+        return redirect()->route('user.profile')
+                            ->with('status', trans('validation.custom.completed' , ['item' => 'profile']));
     }
 
     public function edit($id) {
         return view('pages/admin/user', [
             'user' => User::find($id)
         ]);
+    }
+
+    public function showChangePasswordForm($token) {
+        return view('auth.passwords.change');
+    }
+
+    public function upgrade(Request $request, $id) {
+        if ($request->isMethod('post')) {
+
+            $quill = new QuillRender($request->get('message'));
+            $message = $quill->render();
+
+            $validator = Validator::make($request->all(), [
+                'attachments' => ['file', 'max:2000', 'mimes:pdf,doc,docx,odt,zip']
+            ]);
+
+            if ($validator->errors()->any()) {
+                $request->flash();
+
+                return Redirect::back()->withErrors($validator->errors()->getMessages());
+            }
+
+            $user = User::find($id);
+
+            $user->sendUserUpgradeNotification($message, $request->file('attachments'));
+
+            $user->update([
+                'status_id' => Status::getByValue($request->get('status')) !== null
+                    ? Status::getByValue($request->get('status'))->id
+                    : null,
+            ]);
+        }
+
+        return view('pages/admin/upgrade', [
+            'user' => User::find($id)
+        ]);
+    }
+
+    public function changePassword(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'current_password' => [
+                function($attribute, $value, $fail) use ($request) {
+                    $credentials = [
+                        'email' => Auth::user()->email,
+                        'password' => $request->get('current_password'),
+                    ];
+
+                    if (!Auth::attempt($credentials)) {
+                        return $fail(__('validation.custom.password.not current'));
+                    }
+                }
+            ],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator->errors()->getMessages());
+        }
+
+        $request->user()->fill([
+            'password' => Hash::make($request->get('password')),
+        ])->save();
+
+        if (Auth::user()->type === 'admin') {
+            return Redirect::route('admin')
+                ->with('status', trans('validation.custom.completed', ['item' => 'password']));
+        }
+
+        return Redirect::route('home')
+                ->with('status', trans('validation.custom.completed', ['item' => 'password']));
     }
 
     public function destroy($id) {

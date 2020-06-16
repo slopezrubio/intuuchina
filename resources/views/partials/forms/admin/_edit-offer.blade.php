@@ -1,6 +1,12 @@
 <form id="edit-offer" method="POST" enctype="multipart/form-data" action="{{ route('admin.update-offer', ['offer' => $offer->id]) }}" class="extended-form">
     @csrf
 
+    @component('components.inputs.hidden')
+        @slot('name', 'id')
+        @slot('id', 'id')
+        @slot('value', $offer->id)
+    @endcomponent
+
     <div class="form-group row">
         <div class="col-md-3">
             @component('components.inputs.label', ['name' => 'title'])
@@ -36,7 +42,7 @@
             @endcomponent
         </div>
         <div class="col-md-9">
-            @component('components.inputs.select', ['options' => __('content.industries')])
+            @component('components.inputs.select', ['options' => App\Category::getSelectorOptions(App\Category::all())])
                 @slot('name', 'industry')
                 @slot('value', $offer->industry)
             @endcomponent
@@ -81,7 +87,7 @@
         <div class="col-md-9">
             @component('components.inputs.file')
                 @slot('name', 'picture')
-                @slot('preview', $offer->picture)
+                @slot('preview', Storage::url('images/' . $offer->picture))
                 @slot('muted', __('Job picture'))
             @endcomponent
         </div>

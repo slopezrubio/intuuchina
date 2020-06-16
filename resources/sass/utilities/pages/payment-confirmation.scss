@@ -1,0 +1,7 @@
+#payment-confirmation {
+  > .container {
+    & > .row {
+      margin-bottom: 2em;
+    }
+  }
+}

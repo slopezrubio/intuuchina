@@ -32,10 +32,6 @@ class HomeController extends Controller
             return redirect('/admin');
         }
 
-//        if ($user->getCurrentStatus()->name === 'verified') {
-//            return redirect()->action('CheckoutsController@processPayment');
-//        }
-
         return view('pages.user.dashboard');
     }
 

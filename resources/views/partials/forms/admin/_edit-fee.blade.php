@@ -1,6 +1,28 @@
 <form method="POST" action="{{ route('admin.update-fee', ['fee' => $fee->id]) }}" id="edit-fee" class="extended-form">
     @csrf
 
+    @if($errors->any())
+        <div class="row">
+            <div class="error-message col-12">
+                <span>
+                    <i class="fas fa-times"></i>
+                    {{ __('validation.custom.forms.admin.edit-fee.invalid') }}
+                </span>
+            </div>
+        </div>
+    @endif
+
+    @if(session()->get('status') === 'completed')
+        <div class="row">
+            <div class="success-message col-12">
+                <span>
+                    <i class="fas fa-check"></i>
+                    {{ __('validation.custom.forms.admin.edit-fee.completed') }}
+                </span>
+            </div>
+        </div>
+    @endif
+
     <div class="form-group row">
         <div class="col-md-3">
             @component('components.inputs.label', ['name' => 'name'])
@@ -17,19 +39,19 @@
 
     <div class="form-group row">
         <div class="col-md-3">
-            @component('components.inputs.label', ['name' => 'fee_type'])
-                {{ __('Fee Type') }}
+            @component('components.inputs.label', ['name' => 'heading'])
+                {{ __('Heading') }}
             @endcomponent
         </div>
         <div class="col-md-9">
-            @component('components.inputs.select', ['options' =>  App\FeeType::getOptions()])
-                @slot('name', 'fee_type')
-                @slot('value', $fee->feeType)
+            @component('components.inputs.text')
+                @slot('name', 'heading')
+                @slot('value', $fee->heading)
             @endcomponent
         </div>
     </div>
 
-    @if($fee->feeType->value = 'unit_rate')
+    @if($fee->feeType->value === 'unit_rate')
         <div class="form-group row">
             <div class="col-md-3">
                 @component('components.inputs.label', ['name' => 'name'])

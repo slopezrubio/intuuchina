@@ -46,11 +46,11 @@ class NewPaymentNotification extends Notification
      * @return string
      */
     public function getMessage() {
-        return trans_choice('mails.new-payment.body.' . $this->user->getFirstCategory()->fee->value, intval($this->invoice->quantity), [
+        return trans_choice('mails.new-payment.body.' . $this->user->getFirstCategory()->fee->value, intval($this->invoice->lines->data[0]->quantity), [
             'user' => $this->user->name,
-            'amount' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), intval($this->invoice->amount_paid . 'e-2'), config('services.stripe.cashier_currency')),
+            'amount' => numfmt_format_currency(numfmt_create(config('app.locale'), \NumberFormatter::CURRENCY), floatval($this->invoice->amount_paid / 100), config('services.stripe.cashier_currency')),
             'program' => $this->user->program->name,
-            'duration' =>  $this->invoice->quantity !== null ? $this->invoice->quantity : 1,
+            'duration' =>  $this->invoice->lines->data[0]->quantity !== null ? $this->invoice->lines->data[0]->quantity : 1,
         ]);
     }
 

@@ -6,11 +6,11 @@
         @slot('header', __('component.header.user.payment-confirmation'))
     @endcomponent
 
-    <main>
+    <main id="payment-confirmation">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">
-                    @include('partials.user._paid')
+                    @include('partials.user._payment-completed')
                 </div>
             </div>
         </div>

@@ -175,6 +175,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Swap\Laravel\SwapServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +234,7 @@ return [
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
         'Str' => Illuminate\Support\Str::class,
+        'Swap' => Swap\Laravel\Facades\Swap::class,
         'Tax' => App\Helpers\Tax::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,

@@ -1,5 +1,6 @@
 /* Base */
 
+
 body,
 body *:not(html):not(style):not(br):not(tr):not(code) {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
@@ -20,7 +21,6 @@ body {
     width: 100% !important;
     -webkit-hyphens: auto;
     -webkit-text-size-adjust: none;
-    word-break: break-all;
     word-break: break-word;
 }
 
@@ -388,7 +388,7 @@ footer {
     -o-box-shadow: 1px 0px 7px -1px;
     -moz-box-shadow: 1px 0px 7px -1px;
     -webkit-box-shadow: 1px 0px 7px -1px;
-    margin: 0 auto;
+    margin: 1.5em auto;
 }
 
 .notification-card__header h2 {
@@ -399,6 +399,10 @@ footer {
 .notification-card__header {
     background: #F44336;
     border-radius: 11px 11px 0px 0px;
+}
+
+.notification-card__body {
+    background: rgb(255, 255, 255);
 }
 
 .notification-card__header, .notification-card__body, .notification-card__action {

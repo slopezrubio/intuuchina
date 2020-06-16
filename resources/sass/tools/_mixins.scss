@@ -333,11 +333,4 @@
   overflow: hidden;
   @include prefixed(transition-duration, $mediumDuration);
   @include prefixed(transition-property, "color, background");
-
-  &:hover,
-  &:focus,
-  &:active {
-    background: $primaryRed;
-    color: $primaryWhite;
-  }
 }

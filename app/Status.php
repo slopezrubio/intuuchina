@@ -37,4 +37,23 @@ class Status extends Model
 
         return null;
     }
+
+    public static function getFilter() {
+        $filter = Status::getSelectorOptions(self::all());
+        $filter['default'] = __('inputs.filter.status.default');
+
+        return $filter;
+    }
+
+    public static function getSelectorOptions($statuses = null) {
+        $options = [];
+
+        $statuses = $statuses !== null ? $statuses : self::all();
+
+        foreach($statuses as $status) {
+            $options[$status->value] =  __('inputs.statuses.'.$status->value.'.name');
+        }
+
+        return $options;
+    }
 }

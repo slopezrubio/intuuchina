@@ -119,13 +119,13 @@ let api = {
     getToken: function() {
         return document.head.querySelector('meta[name="csrf-token"').getAttribute('content');
     },
-    getCourseInfo: function(course, callback) {
+    getCourseInfo: function(category, callback) {
         let data = {
-            'course' : course
+            'category' : category
         };
 
         $.post({
-            url: 'api/course',
+            url: 'category-info',
             cache: false,
             data: data,
             dataType: 'html',

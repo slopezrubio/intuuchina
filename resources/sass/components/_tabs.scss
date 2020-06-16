@@ -21,5 +21,30 @@
 
   & + .tab-content {
     padding: 2em 0;
+
+    .error-message, .success-message {
+      font-size: 0.85em;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      i {
+        margin-right: 0.25em;
+      }
+    }
+
+    .success-message {
+      color: $successColor;
+    }
+
+    .error-message {
+      color: $quaternaryRed;
+    }
+  }
+}
+
+.content-tab {
+  .toolbox {
+    &__tool {
+      margin: 0.5em 0;
+    }
   }
 }

@@ -11,7 +11,7 @@
     </div>
     <div class="notice">
         <div class="notice__title"><strong>{!! __('auth.verify your email address') !!}</strong></div>
-        <div class="notice__message">{!! __('auth.before proceeding, please check your email') !!}</div>
+        <div class="notice__message">{!! __('auth.before proceeding, please check your email', ['email' => $user->email]) !!}</div>
         <div class="notice__action">
             <a href="{{ route('verification.resend') }}" class="shutter-button">{{ __('auth.send it again') }}</a>
             @if (session('resent'))

@@ -52,6 +52,21 @@ class VerificationController extends Controller
     }
 
     /**
+     * Show the email verification notice.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Request $request)
+    {
+        return $request->user()->hasVerifiedEmail()
+            ? redirect($this->redirectPath())
+            : view('auth.verify', [
+                'user' => $request->user(),
+            ]);
+    }
+
+    /**
      * Checks if the user has pressed the payment button when verifying his
      * email.
      *

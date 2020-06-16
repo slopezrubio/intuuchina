@@ -189,6 +189,49 @@
             </div>
         </div>
 
+        <div class="form-group align-items-end row mt-5">
+            <div class="col-12 col-lg-3">
+                @component('components.inputs.label')
+                    @slot('name', 'subtotal')
+
+                    {{ __('Subtotal') }}
+                @endcomponent
+            </div>
+            <div class="col-12 col-lg-9 mb-0">
+                <p id="subtotal" class="form-control d-flex align-items-center border-0 px-0 mb-0">
+                    {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency')) }}
+                </p>
+            </div>
+
+            <div class="col-12 col-lg-3">
+                @component('components.inputs.label')
+                    @slot('name', 'total')
+
+                    {{ __('Total') }}
+                @endcomponent
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <p id="total" class="form-control d-flex align-items-center border-0 px-0 mb-0">
+                    <span class="mr-1">
+                        {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($intent->amount) / 100, 2), Config::get('services.stripe.cashier_currency')) }}
+                    </span>
+
+                    {{ ' = ' . $fee->getTaxRate()['display_name'] . ' ' . number_format($fee->getTaxRate()['percentage'], 0) . '% ' }}
+
+                    <span class="mx-1">
+                        {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($fee->amount * $fee->getTaxRate()['percentage'] / 100, 2), Config::get('services.stripe.cashier_currency')) }}
+                    </span>
+
+                    {{ ' + ' . __('Subtotal') }}
+
+                    <span class="mx-1">
+                        {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency')) }}
+                    </span>
+                </p>
+            </div>
+        </div>
+
         <input type="hidden" name="payment-method" id="payment-method">
 
         <div class="row">
@@ -204,13 +247,14 @@
                 <div id="payment-request-button" class="col-12">
                     <!-- Stripe Payment Request Button -->
                 </div>
-                <div class="col-12" >
+                <div class="col-12 col-sm-6 offset-sm-3">
                     @component('components.inputs.cta-button', ['data' => $intent->amount])
                         @slot('variant', 'primary mr-auto')
                         @slot('name', 'pay')
                         @slot('id', 'checkout-button-sku_GDHDkOPWtjGF2w')
                         @slot('content', __('content.pay', [
-                                'value' => numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($total, 2), Config::get('services.stripe.cashier_currency'))]))
+                                'value' => numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($total, 2), Config::get('services.stripe.cashier_currency'))
+                            ]))
                     @endcomponent
 {{--                    <button class="cta col-12 loading-button" type="submit" data-stripe="{{ $intent->client_secret }}" id="checkout-button-sku_GDHDkOPWtjGF2w">--}}
 {{--                        <span data-value="{{ $intent->amount }}">{{ __('content.pay', ['value' => numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($intent->amount) / 100, 2), Config::get('services.stripe.cashier_currency'))]) }}</span>--}}
@@ -219,11 +263,10 @@
                 </div>
             </div>
             <div class="form-group row justify-content-center">
-                <form action="{{ route('home') }}" method="GET">
-                    @component('components.inputs.alternative-button')
-                        @slot('content', __('Cancel'))
-                    @endcomponent
-                </form>
+                @component('components.inputs.alternative-button')
+                    @slot('href', route('home'))
+                    @slot('content', __('Cancel'))
+                @endcomponent
             </div>
         </div>
     </div>

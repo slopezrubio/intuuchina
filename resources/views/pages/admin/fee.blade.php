@@ -11,8 +11,11 @@
 
     <main id="{{ $view_name }}">
 
-        @component('components.breadcrumb')
-        @endcomponent
+        <section id="toolbar">
+            @component('components.breadcrumb')
+                @slot('links', 'component.breadcrumbs.admin.fee')
+            @endcomponent
+        </section>
 
         <section id="content" class="container">
             <div class="row justify-content-center">

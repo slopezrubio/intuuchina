@@ -1,0 +1,80 @@
+.c-price-box {
+  $breakpoint: 'only screen and (min-width: 550px)';
+  $box: (
+    width: 600px,
+    border: 5px,
+    padding: 15px,
+  );
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-left: map_get($box, 'padding');
+  padding-right: map_get($box, 'padding');
+  padding-top: 3em;
+  padding-bottom: 3em; 
+
+  &__price-tag {
+    @include flexbox();
+    @include flex-direction(column);
+    font-size: 3em;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 0.5em;
+
+    @media #{$breakpoint} {
+      $map: (550: 48, 688: 56, 3875: 56);
+      font-size: minimosCuadrados($map);
+    }
+  }
+
+  &__price-format {
+    display: block;
+    $map: (295: 28, 1875: 48);
+    font-size: minimosCuadrados($map);
+    font-style: normal;
+    position: relative;
+    top: -20px;
+  }
+
+  &__box {
+    margin: 0 auto;
+    color: $primaryWhite;
+    @include prefixed(box-sizing, 'border-box');
+    padding: 2em;
+    max-width: map_get($box, 'width');
+    border-radius: 30px;
+    background-color: $sectionDark;
+    border: map_get($box, 'border') solid $primaryWhite;
+    display: block;
+    @include prefixed(box-shadow, '3px 3px 20px -2px black');
+
+    &-label {
+      margin: 0.5em 0.5em 0 0.5em;
+      @include flexbox();
+      @include flex-direction(column);
+      @include justify-content(center);
+      p {
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+
+    &-table {
+      @include flexbox();
+      @include flex-direction(column);
+
+      @media #{$breakpoint} {
+        @include flex-direction(row);
+        @include justify-content(center);
+
+        & > .c-price-box__price-tag:nth-child(2n+0) {
+          border-left: solid 1px $primaryWhite;
+        }
+      }
+    }
+
+    &-footer {
+
+    }
+  }
+}

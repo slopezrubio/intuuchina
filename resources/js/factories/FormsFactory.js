@@ -6,6 +6,7 @@ import DeleteFeeForm from '../components/forms/DeleteFeeForm';
 import EditFeeForm from '../components/forms/EditFeeForm';
 import EditOfferForm from '../components/forms/EditOfferForm';
 import EditUserForm from '../components/forms/EditUserForm';
+import UpgradeUserForm from "../components/forms/UpgradeUserForm";
 import LoginForm from '../components/forms/LoginForm';
 import ProceedPaymentForm from '../components/forms/ProceedPaymentForm';
 import PaymentForm from '../components/forms/PaymentForm';
@@ -53,6 +54,9 @@ FormFactory.prototype.createForm = function(options) {
             break;
         case 'delete-user':
             this.formClass = DeleteUserForm;
+            break;
+        case 'upgrade-user':
+            this.formClass = UpgradeUserForm;
             break;
         case 'delete-fee':
             this.formClass = DeleteFeeForm;

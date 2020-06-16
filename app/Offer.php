@@ -16,7 +16,7 @@ class Offer extends Model
 
     const THUMBNAILS_FOLDER = 'thumbnails/';
 
-    protected $fillable = ['created_at', 'updated_at','title', 'location', 'industry', 'duration', 'description', 'picture'];
+    protected $fillable = ['created_at', 'updated_at','title', 'location', 'category_id', 'duration', 'description', 'picture'];
 
     public function category() {
         return $this->belongsTo('App\Category');
@@ -74,9 +74,7 @@ class Offer extends Model
             request()->file('picture')->storeAs('public/images/thumbnails/', $filename);
         }
 
-        $this->picture = self::THUMBNAILS_FOLDER . $filename;
-
-        return $this;
+        return self::THUMBNAILS_FOLDER . $filename;
     }
 
     public function removeThumbnail() {
@@ -90,7 +88,20 @@ class Offer extends Model
 
     public function updateThumbnail() {
         $this->destroyThumbnail();
-        $this->saveThumbnail();
+        return $this->saveThumbnail();
+    }
+
+    /**
+     * Update the user with the given attributes and options. Overwrites the ones provided by
+     * the application in @see Illuminate\Database\Eloquent\Model class.
+     *
+     * @param array $attributes
+     * @param array $options
+     * @return bool
+     */
+    public function update(array $attributes = [], array $options = [])
+    {
+        return $this->fill($attributes)->save($options);
     }
 
     public function setChanges(Request $request) {
@@ -116,6 +127,10 @@ class Offer extends Model
             }
         }
 
-        return 'default/generic_' . $this->category->value . '_picture_'. Arr::random([1,2,3]) . '.jpg';
+        return self::getDefaultThumbnailFileName($this->category->value);
+    }
+
+    public static function getDefaultThumbnailFileName(string $category) {
+        return 'default/generic_' . $category . '_picture_' . Arr::random([1,2,3]) . '.jpg';
     }
 }

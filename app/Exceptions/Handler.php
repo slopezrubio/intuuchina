@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -72,6 +75,26 @@ class Handler extends ExceptionHandler
                 ->withErrors($errors);
         }
 
+        if ($exception instanceof MethodNotAllowedHttpException && !$request->expectsJson()) {
+            return redirect('home');
+        }
+
+
         return parent::render($request, $exception);
+    }
+
+    protected function renderHttpException(HttpExceptionInterface $e)
+    {
+        $this->registerErrorViewPaths();
+
+        if (view()->exists($view = "errors::{$e->getStatusCode()}")) {
+            return response()->view($view, [
+                'errors' => new ViewErrorBag,
+                'exception' => $e,
+                'curiosity_card_key' => array_rand(trans('component.curiosity-cards.404'))
+            ], $e->getStatusCode(), $e->getHeaders());
+        }
+
+        return $this->convertExceptionToResponse($e);
     }
 }

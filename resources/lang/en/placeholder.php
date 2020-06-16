@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'filter' => [
-        'indefinite an' => 'Choose an :value...',
-        'indefinite a' => 'Choose a :value ...',
-    ],
     'name' => [
         'default' => 'Numbers are not valid: e.g. Marta99, Tiana23...',
     ],

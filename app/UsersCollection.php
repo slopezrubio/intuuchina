@@ -15,7 +15,7 @@ class UsersCollection extends Collection implements Searchable
 {
     protected $collection;
 
-    public function __construct($items = [], $type = 'admin')
+    public function __construct($items = [], $type = 'admin', $options = [])
     {
         if ($type !== null) {
             $this->$type();
@@ -60,10 +60,28 @@ class UsersCollection extends Collection implements Searchable
         return request()->query('search') !== null;
     }
 
+    public function hasFilter() {
+        return request()->query('filter') !== null;
+    }
+
     public function match() {
         $this->collection = $this->collection->filter(function($value, $key) {
             return Str::contains(strtolower($value->name), $this->getSearchKeys()) || Str::contains(strtolower($value->surnames), $this->getSearchKeys());
         });
+
+        return $this;
+    }
+
+    public function filterBy($field, $fieldValue) {
+        if ($fieldValue !== 'default') {
+            $this->collection = $this->collection->filter(function($value, $key) use ($field, $fieldValue) {
+                return $value->$field === $fieldValue;
+            });
+
+            return $this;
+        }
+
+        $this->admin();
 
         return $this;
     }

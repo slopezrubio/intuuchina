@@ -5,7 +5,7 @@
     @component('components.header')
         @slot('variant', 'primary')
         @slot('header', [
-            'title' => __('content.industries.' .$offer->industry),
+            'title' => $offer->category->name,
             'background' => asset('storage/images/' . $offer->picture),
             'subtitle' => $offer->title,
         ])
@@ -13,10 +13,11 @@
 
     <main id="{{ $view_name }}">
 
-
-        @component('components.breadcrumb')
-        @endcomponent
-
+        <section id="toolbar">
+            @component('components.breadcrumb')
+                @slot('links', 'component.breadcrumbs.admin.'.$view_name)
+            @endcomponent
+        </section>
 
         <section id="content" class="container">
             <div class="row justify-content-center">
@@ -27,9 +28,6 @@
         </section>
 
     </main>
-
-    {{--Formulario de edición de oferta--}}
-{{--    @include('partials._edit-offer')--}}
 
     @include('partials._footer')
 @endsection

@@ -28,23 +28,6 @@ var api = (function() {
 
             return params;
         },
-        setParams: function(url, params = {}) {
-            if (params.length === 0) {
-                return url;
-            }
-
-            Object.keys(params).forEach(function(key, index) {
-                if (params[key] !== null) {
-                    if (index === 0) {
-                        url += '?';
-                    }
-
-                    url = url.concat(key, '=', params[key]);
-                }
-            });
-
-            return url;
-        },
     };
 
     return {
@@ -73,6 +56,23 @@ var api = (function() {
                     return data;
                 }
             });
+        },
+        setParams: function(url, params = {}) {
+            if (params.length === 0) {
+                return url;
+            }
+
+            Object.keys(params).forEach(function(key, index) {
+                if (params[key] !== null) {
+                    if (index === 0) {
+                        url += '?';
+                    }
+
+                    url = url.concat(key, '=', params[key]);
+                }
+            });
+
+            return url;
         },
         validate: async function(validationObject) {
             let validationURL = '/validate/' + validationObject.name;

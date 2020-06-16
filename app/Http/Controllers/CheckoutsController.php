@@ -84,6 +84,7 @@ class CheckoutsController extends Controller
         return view($view, [
             'currencies' => __('currencies'),
             'intent' => $intent,
+            'fee' => $this->fee,
             'total' => $this->total,
             'subtotal' => $this->subtotal,
         ]);
@@ -295,7 +296,6 @@ class CheckoutsController extends Controller
                 'default_tax_rates' => [
                     TaxRate::create($fee->getTaxRate())->id
                 ],
-//                'subtotal' => $fee->amount * $options['quantity'] * intval('1e'. __('currencies.' . config('services.stripe.cashier_currency') . '.decimal_digits')),
             ])->finalizeInvoice();
 
         } catch(ApiErrorException $e) {
@@ -329,6 +329,8 @@ class CheckoutsController extends Controller
 
             try {
                 $invoice = Invoice::retrieve($intent->invoice);
+
+
 
                 if ($invoice->metadata['course'] !== null) {
                     $user->categories()->sync([

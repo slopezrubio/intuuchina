@@ -2,7 +2,11 @@
 
 namespace App;
 
+use App\Notifications\CustomContentNotification;
 use App\Notifications\NewUserNotification;
+use App\Notifications\PaymentReminderNotification;
+use App\Notifications\ResetPasswordNotification;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -30,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-       'id', 'name', 'surnames', 'email','phone_number', 'type', 'cv', 'nationality', 'status_id', 'program_id', /*'industry', 'study', 'university'*/ 'password', 'api_token',
+       'id', 'name', 'surnames', 'email','phone_number', 'type', 'cv', 'nationality', 'status_id', 'program_id', 'password', 'api_token',
     ];
 
     /**
@@ -59,7 +63,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number' => 'array',
     ];
 
-    // Model Events
+    /**
+     * Model Events
+     */
     protected static function boot() {
         parent::boot();
 
@@ -98,12 +104,14 @@ class User extends Authenticatable implements MustVerifyEmail
                     Storage::delete($this->$value);
                 }
 
-                $this->$value = $this->saveFileToProfile(request()->file($value));
+                if ($this->program->value !== 'study') {
+                    $this->$value = $this->saveFileToProfile(request()->file($value));
+                }
             }
 
-            if (request()->file($value) === null && $this->$value === null) {
-                $this->$value = Storage::putFile($this->profilePath(), new UploadedFile(storage_path('app/profiles/default_' . $value . '.docx')));
-            }
+//            if (request()->file($value) === null && $this->$value === null) {
+//                $this->$value = Storage::putFile($this->profilePath(), new UploadedFile(storage_path('app/profiles/default_' . $value . '.docx')));
+//            }
         }
 
         return $this;
@@ -120,6 +128,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this;
     }
 
+    /**
+     * Get all the administrator users
+     *
+     * @return mixed
+     */
     public static function admins() {
         return User::where('type', 'admin')
             ->get();
@@ -129,10 +142,71 @@ class User extends Authenticatable implements MustVerifyEmail
         return '(' . __('prefixes.' . $this->phone_number['prefix'] . '.prefix') . ')' . $this->phone_number['number'];
     }
 
+    /**
+     * Sends the email verification notification.
+     */
     public function sendEmailVerificationNotification() {
         $this->notify(new NewUserNotification($this));
     }
 
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function sendPaymentReminderNotification() {
+        $reminder = '';
+
+        // 2 days ago
+        if ($this->email_verified_at->diffInDays(Carbon::now()->subDays(2)) === 0) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
+        }
+
+        // 1 week ago
+        if ($this->email_verified_at->diffInDays(Carbon::now()->subDays(7)) === 0) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
+        }
+
+        // 2 weeks ago
+        if ($this->email_verified_at->diffInDays(Carbon::now()->subDays(14)) === 0) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
+        }
+
+        // 3 months ago
+        if ($this->email_verified_at->diffInDays(Carbon::now()->subMonths(3)) === 0) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
+        }
+
+        if ($reminder !== '') {
+            $this->notify(new PaymentReminderNotification($reminder));
+        }
+    }
+
+    /**
+     * Send a notification to the user reporting about the changes in his application. This is
+     * usually used by the administrator whenever an upgrade is made it.
+     *
+     * @param $content
+     * @param $attachments
+     */
+    public function sendUserUpgradeNotification($content, $attachments) {
+        $this->notify(new CustomContentNotification($content, $attachments));
+    }
+
+    /**
+     * Update the user with the given attributes and options. Overwrites the ones provided by
+     * the application in @see Illuminate\Database\Eloquent\Model class.
+     *
+     * @param array $attributes
+     * @param array $options
+     * @return bool
+     */
     public function update(array $attributes = [], array $options = []) {
         if (isset($attributes['categories'])) {
             $categories = [];
@@ -148,12 +222,11 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->categories()->sync($categories);
         }
 
-        $this->fill($attributes)->save($options);
+        return $this->fill($attributes)->save($options);
     }
 
     /**
-     * Adds a new preference according to the type
-     * specified (industry, study, or university) by the user.
+     * Add a new preference according to the type specified (industry, study, or university) by the user.
      * If the given preference already exist, nothing gets updated.
      *
      * @param $type
@@ -171,6 +244,11 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    /**
+     * Get the first category chosen by the user.
+     *
+     * @return mixed
+     */
     public function getFirstCategory() {
         if ($this->categories->count() > 0) {
             return $this->categories->first();
@@ -179,16 +257,32 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->program->categories->first();
     }
 
+    /**
+     * Get the last user to be recorded in the database.
+     *
+     * @return mixed
+     */
     public static function getLastUserCreated() {
         return DB::table('users')
             ->orderByDesc('id')
             ->get()->first();
     }
 
+    /**
+     * Get the profile folder of the user.
+     *
+     * @return string
+     */
     public function profilePath() {
         return 'profiles/' . $this->id;
     }
 
+    /**
+     * Save the given file to the user's profile folder.
+     *
+     * @param $file
+     * @return |null
+     */
     public function saveFileToProfile($file) {
         if ($file !== null) {
             return $file->store($this->profilePath());
@@ -197,18 +291,37 @@ class User extends Authenticatable implements MustVerifyEmail
         return null;
     }
 
+
+    /**
+     * Remove the user's profile folder and its content.
+     *
+     * @return $this
+     */
     public function destroyAssociatedFiles() {
-        if (file_exists(Storage::url('profile/' . $this->id))) {
-            File::deleteDirectory(Storage::url('profile/' . $this->id));
+        if (Storage::exists('profiles/' . $this->id)) {
+            Storage::deleteDirectory('profiles/' . $this->id);
         }
 
         return $this;
     }
 
+    /**
+     * Format a phone number provided in the form of an array containing the prefix and the number in
+     * the international standardized E.164 number format.
+     *
+     * @param array $phone_number
+     * @return string
+     */
     public static function e164NumberFormat(array $phone_number) {
         return __('prefixes.' . $phone_number['prefix'] . '.prefix') . $phone_number['number'];
     }
 
+    /**
+     * Get all the user ordered by the provided field.
+     *
+     * @param $field
+     * @param $order
+     */
     public static function allOrderBy($field, $order) {
         User::all()
             ->orderBy($field, $order)

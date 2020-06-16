@@ -5,7 +5,7 @@
         <div class="col-12">
             @component('components.banner')
                 @slot('variant', 'success')
-                @slot('text', __('content.paid user'))
+                @slot('text', trans_choice('content.paid user', intval(isset($receipt_url))))
             @endcomponent
         </div>
     @endslot

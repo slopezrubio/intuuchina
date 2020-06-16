@@ -129,15 +129,40 @@ return [
     */
 
     'custom' => [
+        'admin' => [
+            'required' => 'The :attribute must be provided.'
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
         'alpha' => [
             'contact_form' => 'Do not type a nickname please, use your real name',
         ],
+        'completed' => 'The :item has been updated.',
+        'file' => [
+            'muted' => 'Only .PDF, .DOC, .DOCX, and .ODT documents are allowed',
+        ],
+        'forms' => [
+            'profile' => [
+                'invalid' => 'The changes have not been made. Please check the fields marked.',
+            ],
+            'admin' => [
+                'edit-user' => [
+                    'invalid' => 'The changes have not been made. Please check the fields marked.',
+                    'completed' => 'The profile has been updated',
+                ],
+                'edit-fee' => [
+                    'invalid' => 'The changes have not been made. Please check the fields marked.',
+                    'completed' => 'The fee has been updated',
+                ]
+            ]
+        ],
         'invalid' => 'The :field has an invalid format',
         'minimum' => '{1} A minimum of :value :unit is required.|[2,*] A minimum of :value ' . Str::plural(':unit') . ' is required.',
         'gdpr' => 'You must agree with our terms and conditions and GDPR',
+        'password' => [
+            'not current' => 'This typed password is not your current password'
+        ],
         'required' => 'We need your :attribute to keep you in the process.',
         'subject' => [
             'required' => 'We need to know a description of your issue',

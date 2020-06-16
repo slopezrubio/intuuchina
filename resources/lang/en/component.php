@@ -4,6 +4,79 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Breadcrumbs
+    |--------------------------------------------------------------------------
+    */
+    'breadcrumbs' => [
+        'admin' => [
+            'upgrade' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+                [
+                    'href' => route('admin.users'),
+                    'content' => trans('Users'),
+                ]
+            ],
+            'users' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+            ],
+            'user' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+                [
+                    'href' => route('admin.users'),
+                    'content' => trans('Users'),
+                ]
+            ],
+            'fee' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+                [
+                    'href' => route('admin.fees'),
+                    'content' => trans('Fees'),
+                ]
+            ],
+            'offer' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+                [
+                    'href' => route('admin.offers'),
+                    'content' => trans('Offers'),
+                ]
+            ],
+            'new-offer' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+                [
+                    'href' => route('admin.offers'),
+                    'content' => trans('Offers'),
+                ]
+            ]
+        ],
+        'job-description' => [
+            [
+                'href' => route('internship'),
+                'content' => trans('Internship'),
+            ]
+        ]
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Sliders
     |--------------------------------------------------------------------------
     */
@@ -87,6 +160,44 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Price Boxes
+    |--------------------------------------------------------------------------
+    */
+    'c-price-box' => [
+        'in-person' => [
+            'label' => trans('From'),
+            'currencies' => [
+                'eur' => trans('currencies.eur.symbol') . ' / ' . trans('currencies.eur.code'),
+                'usd' => trans('currencies.usd.symbol') . ' / ' . trans('currencies.usd.code'),
+            ],
+            'footer' => "
+                            <h3>
+                                " . trans('Please Note') . "
+                            </h3>
+                           <p>
+                                " . trans('content.the price above') . " 
+                            </p>
+                        "
+        ],
+        'online' => [
+            'label' => trans('Hourly Price'),
+            'currencies' => [
+                'eur' => trans('currencies.eur.symbol') . ' / h',
+                'usd' => trans('currencies.usd.symbol') . ' / h',
+            ],
+            'footer' => "
+                            <h3>
+                                " . trans('Please Note') . "
+                            </h3>
+                            <p>
+                                " . trans('content.a minimum number') . "
+                            </p>
+                        "
+        ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Info Boxes
     |--------------------------------------------------------------------------
     */
@@ -95,20 +206,118 @@ return [
             'title' => 'Internship',
             'description' => 'Looking for a professional experience in China? We can place you in Startup or Multinational.',
             'href' => url('/internship'),
-            'background' => asset('storage/images/practicass.jpg'),
+            'background' => trans('pictures.internship.url'),
         ],
         'university' => [
             'title' => 'University',
             'description' => 'We have worked with all major business schools in China placing 100% of our applicants. Let us help you!',
             'href' => url('/university'),
-            'background' => asset('storage/images/student.jpg')
+            'background' => trans('pictures.university.url')
         ],
         'learn_chinese' => [
             'title' => 'Learn Chinese',
             'description' => 'Study the most spoken first language in the world. Come to China for a full immersion or join classes on-line',
             'href' => url('/learn'),
-            'background' => asset('storage/images/service-1.jpg')
+            'background' => trans('pictures.study.url')
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Square Grids
+    |--------------------------------------------------------------------------
+    */
+    'square-grids' => [
+        'motifs' => [
+            [
+                'id' => 'awards_honours',
+                'title' => trans('Awards & Honours'),
+                'background-image' => asset('storage/images/content/awards_honours_background.jpeg'),
+                'content' =>    "
+                                    <ul>
+                                        <li>
+                                            <p>
+                                            International Startup RTVE Award
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                Second Prize for best Startup of the year by the Spanish Chamber of Commerce
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                Comprendedor Award finalist, &#34;Empresa & Sociedad&#34; foundation
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                Second prize for best Human Resource IEBS Startup
+                                            </p>
+                                        </li>
+                                    </ul>
+                                ",
+                'picture' => trans('pictures.awards and honours'),
+                'color' => 'black',
+            ],
+            [
+                'id' => 'mission_vision',
+                'title' => trans('Mission & Vision'),
+                'content' =>    "
+                                <p>
+                                    IntuuChina's first priority is to help people and organizations make a successful transition in China. To this end, we will guide you on your own path by making available the most valuable resources. An energetic and experienced team.
+                                </p>
+                                ",
+                'color' => 'white',
+            ],
+            [
+                'id' => 'what_makes_us_different',
+                'title' => trans('What Makes Us Different'),
+                'background-image' => asset('storage/images/content/what_makes_us_different_background.png'),
+                'content' =>    "
+                                <p>
+                                   This team is committed and dedicated to provide a set of personalized services that will add real value and a competitive advantage to the future professional career.
+                                </p>
+                                ",
+                'picture' => trans('pictures.what makes us different'),
+                'color' => 'gray',
+            ],
+            [
+                'id' => 'values',
+                'title' => trans('Values'),
+                'content' =>    "
+                                <p>
+                                    The IntuuChina team has chosen the values it wants to represent, and is strongly committed to the following values: effort, commitment, ambition, perseverance, uniqueness, optimism, open mind and proactivity.
+                                </p>
+                                ",
+                'color' => 'red',
+            ],
+            [
+                'id' => 'what_we_offer',
+                'title' => trans('What We Offer'),
+                'background-image' => asset('storage/images/content/what_we_offer_background.png'),
+                'content' =>    "
+                                <p>
+                                   We offer tailor-made internship and study programs in China to university students, recent graduates and young professionals. 
+                                   We are also acting as a consulting and head-hinting firm for those organizations looking to expand their business or outsource
+                                   their recruitment process in China.
+                                </p>
+                            ",
+                'picture' => trans('pictures.what we offer'),
+                'color' => 'black',
+            ],
+            [
+                'id' => 'meet_intuuchina',
+                'title' => trans('Meet IntuuChina'),
+                'content' =>    "
+                                <p>
+                                   Global minded people who believe in the effort, team-work and the will as the most valuable way to achieve one's own goals make up 
+                                   IntuuChina community, a community that thrives to connect international professionals to China and create links between people from all cultures.
+                                </p>
+                            ",
+                'color' => 'white',
+            ],
+        ]
     ],
 
     /*
@@ -168,6 +377,22 @@ return [
             'not found' => trans('content.no such item has been found', ['item' => 'users'])
         ],
     ],
+    'curiosity-cards' => [
+        '404' => [
+            [
+                'front' => 'The mountain of the right is one of the sacred mountains of Taoism and it raises up 2160m. ',
+                'back' => 'Mount Hua',
+            ],
+            [
+                'front' => 'The dish of the left is originated in the region of Shanxi and it is considered a medicinal soup.',
+                'back' => 'Tounaou Soup',
+            ],
+            [
+                'front' => 'The place where this pillars are located took a big part in one of James Cameron\'s film',
+                'back' => 'Zhangjiajie National Forest Park',
+            ],
+        ]
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -189,16 +414,16 @@ return [
                 }
             ],
             'learn-chinese' => [
-                'heading' => 'Learn Chinese',
+                'heading' => trans('Learn Chinese'),
                 'options' => function() {
                     $options = [];
-                    foreach (__('content.courses') as $key => $value) {
+                    foreach (App\Program::where('value', 'study')->first()->studies as $study) {
                         $option = array(
                             'method' => 'GET',
-                            'text' => $value['text'],
-                            'url' => url('learn?param=' . $key)
+                            'text' => $study->name,
+                            'url' => url('learn?param=' . $study->value)
                         );
-                        $options[$key] = $option;
+                        $options[$study->value] = $option;
                     }
                     return $options;
                 }
@@ -207,19 +432,19 @@ return [
                 'heading' => 'University',
                 'options' => function() {
                     $options = [];
-                    foreach (__('content.universities') as $key => $value) {
+                    foreach (App\Program::where('value', 'university')->first()->degrees as $degree) {
                         $option = array(
                             'method' => 'GET',
-                            'text' => $value['heading'],
-                            'url' => url('university?param=' . $key)
+                            'text' => $degree->name,
+                            'url' => url('university?param=' . $degree->value)
                         );
-                        $options[$key] = $option;
+                        $options[$degree->value] = $option;
                     }
                     return $options;
                 }
             ],
             'why intuuchina' => [
-                'heading' => 'Why Us',
+                'heading' => trans('Why Us'),
                 'options' => function() {
                     return array(
                         'why us' => [
@@ -264,33 +489,33 @@ return [
     'header' => [
         'admin' => [
             'dashboard' => [
-                'title' => trans('content.dashboard'),
+                'title' => trans('Dashboard'),
             ],
             'users' => [
-                'title' => 'Users',
+                'title' => trans('Users'),
             ],
             'new-offer' => [
-                'title' => 'New Job Offer'
+                'title' => trans('New Job Offer')
             ],
         ],
         'home' => [
             'title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',
-            'background' => asset('storage/images/shanghai_internship_skyline.jpg'),
+            'background' => asset('storage/images/headers/home.jpg'),
         ],
         'learn-chinese' => [
-            'title' => 'Learn Chinese',
-            'background' => asset('storage/images/learn1.jpg'),
+            'title' => trans('Learn Chinese'),
+            'background' => asset('storage/images/headers/learn_chinese.jpg'),
         ],
         'offers' => [
-            'title' => 'Job Board',
-            'background' => asset('storage/images/practicass.jpg'),
+            'title' => trans('Job Board'),
+            'background' => asset('storage/images/headers/internship.jpg'),
         ],
         'job-description' => [
             'title' => ':title',
             'background' => ':background'
         ],
         'register' => [
-            'title' => 'Sign Up',
+            'title' => trans('Sign Up'),
         ],
         'university' => [
             'title' => 'University',
@@ -298,7 +523,7 @@ return [
         ],
         'user' => [
             'dashboard' => [
-                'title' => trans('content.dashboard')
+                'title' => trans('Dashboard')
             ],
             'welcome' => [
                 'background' => asset('storage/images/headers/welcome.jpg')
@@ -310,11 +535,7 @@ return [
                 'title' => trans('Payment Completed'),
             ]
         ],
-        '404' => [
-            'error-message' => trans('Page Not Found'),
-            'background' => asset('storage/images/content/errors/404-random-picture_1.jpg')
-        ],
-        'why-us' => [
+        'why-intuuchina' => [
             'background' => asset('images/why-us_header.jpg'),
             'stats' => [
                 "
@@ -334,6 +555,17 @@ return [
             ",
             ]
         ],
+        'password' => [
+            'email' => [
+                'title' => trans('Reset Password'),
+            ],
+            'reset' => [
+                'title' => trans('Password Confirmation'),
+            ],
+            'change' => [
+                'title' => trans('Change Password'),
+            ]
+        ],
     ],
     'dialog' => [
         'user' => [
@@ -350,10 +582,57 @@ return [
     ],
     /*
     |--------------------------------------------------------------------------
-    | Navs
+    | Navbar
     |--------------------------------------------------------------------------
     */
-    'navs' => [
+    'navbar' => [
+        'home' => [
+            'text' => 'Home',
+            'url' => url('/'),
+            'method' => 'GET',
+        ],
+        'internship' => [
+            'text' => 'Internship',
+            'url' => url('internship'),
+            'method' => 'GET',
+        ],
+        'learn-chinese' => [
+            'text' => 'Learn Chinese',
+            'url' => url('/learn'),
+            'method' => 'POST',
+            'options' => function() {
+                $options = [];
+                foreach (App\Program::where('value', 'study')->first()->studies as $study) {
+                    $option = array(
+                        'text' => $study->name,
+                        'url' => url('learn?param=' . $study->value)
+                    );
 
-    ]
+                    $options[$study->value] = $option;
+                }
+                return $options;
+            }
+        ],
+        'university' => [
+            'text' => 'University',
+            'url' => '/university',
+            'method' => 'POST',
+            'options' => function() {
+                $options = [];
+                foreach (App\Program::where('value', 'university')->first()->degrees as $degree) {
+                    $option = array(
+                        'text' => $degree->name,
+                        'url' => url('university?param=' . $degree->value)
+                    );
+
+                    $options[$degree->value] = $option;
+                }
+                return $options;
+            }
+        ],
+        'whyus' => [
+            'url' => url('why'),
+            'text' => 'Why Us',
+        ],
+    ],
 ];

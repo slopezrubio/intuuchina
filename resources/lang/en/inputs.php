@@ -13,8 +13,8 @@
                 'name' => 'Paid',
                 'icon' => '',
             ],
-            'arranged' => [
-                'name' => 'Arranged',
+            'interviewed' => [
+                'name' => 'Interviewed',
                 'icon' => '',
             ],
             'accepted' => [
@@ -44,6 +44,9 @@
         ],
         'filter' => [
             'inter_relocat' => [
+                'default' => 'All',
+            ],
+            'status' => [
                 'default' => 'All',
             ]
         ]

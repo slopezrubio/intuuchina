@@ -1,8 +1,10 @@
 <?php
 
+use App\Category;
 use App\Traits\Archivable;
 use App\Offer;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class OffersTableSeeder extends Seeder
 {
@@ -26,6 +28,7 @@ class OffersTableSeeder extends Seeder
                 'location' => $offer['location'],
                 'duration' => $offer['duration'],
                 'category_id' => $offer['category_id'],
+                'picture' => Offer::THUMBNAILS_FOLDER . Offer::getDefaultThumbnailFileName(Category::find($offer['category_id'])->value),
                 'description' => $offer['description'],
             ]);
         }

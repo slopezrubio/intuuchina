@@ -40,12 +40,17 @@ class IndexController extends Controller
             $slides = $collection->slider($category->programs()->first()->studies, $category);
             if (!empty($slides)) {
                 return view('pages/learn-chinese', [
+                    'category' => $category,
                     'slides' => $slides,
                 ]);
             }
         }
 
-        return view('pages/learn-chinese');
+        $category = Program::where('value', 'study')->first()->studies()->first();
+
+        return view('pages/learn-chinese', [
+            'category' => $category,
+        ]);
     }
 
     public function university(Request $request) {
@@ -62,14 +67,11 @@ class IndexController extends Controller
             }
         }
 
-//        if ($universitySelected !== null) {
-//            $slider = $this->buildSlider('universities', $universitySelected);
-//            if (!empty($slider)) {
-//                return view('pages/university', compact('slider'));
-//            }
-//        }
-
         return view('pages/university');
+    }
+
+    public function why(Request $request) {
+        return view('pages/why-intuuchina');
     }
 
     public function applicationForm(Request $request) {

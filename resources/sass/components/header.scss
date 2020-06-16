@@ -19,13 +19,32 @@ header {
     $map: (328: 480, 577: 480, 1656: 624, 1746: 766, 2500: 766);
     height: minimosCuadrados($map);
     background-position: center;
+    background-position-y: 60px;
 
-    .error-box {
+    .error-found__box {
       width: 100%;
+    }
 
-      &__title {
-        color: $primaryDark;
+    .error-found__box-title {
+      color: $primaryWhite;
+      font-size: 1.5em;
+      @include media-breakpoint-up(sm) {
+        font-size: 2.5em;
       }
+      @include media-breakpoint-up(xs) {
+        font-size: 2em;
+      }
+    }
+
+    .error-found__info {
+      color: $primaryWhite;
+    }
+
+    .curiosity-card {
+        left: calc(100% - #{$curiosity-card-width});
+        @include media-breakpoint-down(md) {
+          display: none;
+        }
     }
   }
 
@@ -114,10 +133,9 @@ header {
     // VARIABLES
     $max_columns_per_row: 3;
     $rows: 1;
-    $height: 207.6px;
     $offset: 20em;
 
-    height: fromPxToEm(207.6px) * $rows + $offset;
+    height: fromPxToEm(100px) * $rows + $offset;
     background-color: $primaryWhite;
     background-position: center;
     text-transform: none;

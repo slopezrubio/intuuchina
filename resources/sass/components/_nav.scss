@@ -1,5 +1,6 @@
-
 @import 'modals';
+
+$extended: 'only screen and (min-width: 992px)';
 
 .navbar {
   background: $primaryWhite;
@@ -7,6 +8,10 @@
   @include align-items(center);
   z-index: 4;
   padding: 0.5em 0;
+
+  &--shadowed {
+    @include prefixed(box-shadow, '0 0 7px -2px');
+  }
 
   &_container {
     padding-left: 0;
@@ -24,8 +29,12 @@
     button.navbar-toggler {
       margin-right: 15px;
       margin-left: 15px;
+      padding: 0.35em;
+      border: 1px solid $primaryDark;
       float: right;
       color: $primaryDark;
+      font-size: 1em;
+
       .fa-bars::before {
         vertical-align: middle;
         font-size: 1.875em;
@@ -120,7 +129,6 @@
                 position: absolute;
                 text-align: right;
                 width: 50%;
-                top: 3px;
                 right: 0;
               }
             }
@@ -175,39 +183,44 @@
     }
   }
 
-  @media only screen and (min-width: 992px) {
+  @media #{$extended} {
     padding: 0.5em 1em;
 
     &_container {
-      @include prefixed(display, flex);
+      @include flexbox();
 
       #navbarToggler {
         @include prefixed(justify-content, center);
         width: auto;
 
-        li {
-          div[data-toggle="dropdown"] {
-            color: $primaryDark;
-            &:hover {
-              color: $primaryWhite;
-            }
-          }
-        }
-
-        a {
-          cursor: pointer;
-          color: $primaryDark;
-        }
-
-        .navbar_items {
+        ul.navbar_items {
           background: $navbarPrimary;
           padding: 0;
-          display: flex;
-          align-items: center;
+          @include flexbox();
+          @include align-items(center);
           width: 100%;
+
+          & > li, & > li.dropdown {
+            padding: 0 0.55em;
+
+            a {
+              & > div.toggleOption {
+                padding: 0.7em 0;
+                span, i {
+                  line-height: initial;
+                }
+              }
+            }
+          }
 
           li {
             float: left;
+
+            a {
+              cursor: pointer;
+              color: $primaryDark;
+            }
+
             & > a > .toggleOption {
               position: relative;
               &::before {
@@ -218,6 +231,13 @@
                 bottom: 1px;
                 content: '';
                 opacity: 0;
+              }
+            }
+
+            div[data-toggle="dropdown"] {
+              color: $primaryDark;
+              &:hover {
+                color: $primaryWhite;
               }
             }
 
@@ -245,17 +265,13 @@
           }
 
           li.dropdown {
-
-            padding-left: 10px;
-            padding-right: 10px;
             a {
               div.toggleOption {
-                padding: 0;
                 i {
                   position: initial;
                   text-align: center;
                   padding-right: 0;
-                  width: 30px;
+                  width: 20px;
                 }
               }
             }
@@ -322,25 +338,6 @@
               i::before {
                 display: block;
                 text-align: center;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 992px) and (max-width: 1085px) {
-    .navbar {
-      &_container {
-        #navbarToggler {
-          .navbar_items {
-            li {
-              padding: 0 0.5em;
-            }
-
-            li.dropdown {
-              .accordion_submenu {
-                left: 8px;
               }
             }
           }

@@ -48,6 +48,7 @@ class InvoicePaid extends Mailable
                         'as' => $this->invoice->id . 'pdf',
                         'mime' => 'application/pdf'
                     ])
+                    ->subject(__('mails.invoice.paid.subject'))
                     ->markdown('emails.invoices.paid')
                     ->with([
                         'user' => $this->user->name,

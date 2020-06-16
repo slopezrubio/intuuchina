@@ -1,5 +1,28 @@
 <form id="edit-user" method="POST" enctype="multipart/form-data" action="{{ route('admin.update-user', ['offer' => $user->id]) }}" class="extended-form">
     @csrf
+
+    @if($errors->profile->any())
+        <div class="row">
+            <div class="error-message col-12">
+                <span>
+                    <i class="fas fa-times"></i>
+                    {{ __('validation.custom.forms.admin.edit-user.invalid') }}
+                </span>
+            </div>
+        </div>
+    @endif
+
+    @if(session()->get('status') === 'completed')
+        <div class="row">
+            <div class="success-message col-12">
+                <span>
+                    <i class="fas fa-check"></i>
+                    {{ __('validation.custom.forms.admin.edit-user.completed') }}
+                </span>
+            </div>
+        </div>
+    @endif
+
     <div class="form-group row">
         @component('components.inputs.radio-chips', [
             'inputs' => App\Status::getOptions(),
@@ -20,6 +43,7 @@
         <div class="col-md-9">
             @component('components.inputs.text')
                 @slot('name', 'name')
+                @slot('bag', 'profile')
                 @slot('value', $user->name)
             @endcomponent
         </div>
@@ -35,6 +59,7 @@
             @component('components.inputs.text')
                 @slot('name', 'surnames')
                 @slot('value', $user->surnames)
+                @slot('bag', 'profile')
             @endcomponent
         </div>
     </div>
@@ -48,6 +73,7 @@
         <div class="col-md-9 d-flex p-0">
             @component('components.inputs.phone')
                 @slot('name', 'phone_number')
+                @slot('bag', 'profile')
                 @slot('prefix', $user->phone_number['prefix'])
                 @slot('value', $user->phone_number['number'])
             @endcomponent
@@ -108,7 +134,7 @@
          style="{{ $user->program->value === 'university' ? '' : 'display: none' }}">
         @component('components.inputs.checkbox-group', [
             'inputs' =>  App\Category::getOptionsFrom('App\Program', 'university'),
-            'checked' =>  $user->program->value === 'study'? array_column(App\Category::getOptionsFrom('App\User', $user->id), 'id') : [],
+            'checked' =>  $user->program->value === 'university'? array_column(App\Category::getOptionsFrom('App\User', $user->id), 'id') : [],
         ])
             @slot('name', 'categories')
             @slot('label',  __('University'))
@@ -129,6 +155,7 @@
         <div class="col-md-9">
             @component('components.inputs.file')
                 @slot('name', 'cv')
+                @slot('bag', 'profile')
                 @slot('muted',  __('auth.allowed cv document formats'))
             @endcomponent
         </div>

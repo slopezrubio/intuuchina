@@ -1,5 +1,5 @@
 <input type="hidden" id="{{ $name }}" name="{{ $name }}">
-<div id="{{ $name }}-editor" {!! isset($placeholder) ? "data-value='" . $placeholder . "'" : '' !!} class="editor" {!! isset($delta) ? "data-html='" . $delta . "'" : '' !!}>
+<div id="{{ $name }}-editor" {!! isset($placeholder) ? "data-value='" . $placeholder . "'" : '' !!} class="editor">
 </div>
 
 @if ($errors->has($name))

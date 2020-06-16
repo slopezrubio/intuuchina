@@ -35,6 +35,7 @@
 
     &__slide {
       max-width: map_get($slider, 'width');
+      margin-bottom: -1em;
       @include flexbox();
       @include justify-content(space-beteween);
       @include align-items(center);

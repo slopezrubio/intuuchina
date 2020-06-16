@@ -15,6 +15,32 @@ return [
                     </p>
                     "
     ],
+    'payment-reminder' => [
+        '5 days' => [
+            'subject' => '2 days',
+            'body' => '2 days',
+        ],
+        '1 week' => [
+            'subject' => '1 week',
+            'body' => '1 week',
+        ],
+        '2 weeks' => [
+            'subject' => '2 weeks',
+            'body' => '2 weeks',
+        ],
+        '1 month' => [
+            'subject' => '1 month',
+            'body' => '1 month',
+        ],
+        '3 months' => [
+            'subject' => '3 months',
+            'body' => '3 months',
+        ],
+        'default' => [
+            'subject' => '1 year',
+            'body' => '1 year',
+        ]
+    ],
     'new-user' => [
         'subject' => 'Welcome :name to our :program Program',
         'title' => 'Welcome to IntuuChina',
@@ -44,7 +70,52 @@ return [
                                 " .
                                 "
                                 <p>
-                                    We get 500 people per month asking for our services and in order to ensure we only proceed with those that are really committed we request an application fee of <b>30 EUR</b>.
+                                    We get 500 people per month asking for our services and in order to ensure we only proceed with those that are really committed we request an application fee of <b>" . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(App\Program::where('value', 'internship')->first()->feeType->fees()->first()->amount, 2), Config::get('services.stripe.cashier_currency')) . "</b>.
+                                    However, we need you to confirm this is the email you use to register in our website. We provide you both links so that
+                                    you can proceed with the payment in case you want to do so. Please, remember we cannot keep the process until
+                                    we effectively receive the payment requested.
+                                </p> 
+                                ",
+                'closing' =>    "
+                                <p>
+                                    Once that is done we will proceed with the call and discuss the matters aforementioned.
+                                    Do not hesitate please if you have any doubts, comments, or quibbles. We are here to be helpful and keep improving our service.
+                                </p>
+                                ",
+                'farewell' =>   "
+                                <p>
+                                    Kindest regards, <br/>Patrick  
+                                </p>
+                                ",
+            ],
+
+
+            'inter_relocat' => [
+                'greeting' =>   "
+                                <p>
+                                    Dear :name,
+                                </p>
+                                ",
+                'message' =>    "
+                                <p>
+                                    We are glad you are interested in our Internship Program. My name is Patrick and my job is to advise and guide you throughout our selection process, hopefully, I will get to meet you in China soon! Please note the first step will be for you to send me your CV to this e-mail for our first career counseling videoconference:
+                                </p>
+                                <p>
+                                    In our first Career Counselling call we will be covering the following:
+                                </p>
+                                <ol>
+                                    <li><b>Sector you'd like to work in</b></li>
+                                    <li><b>Kinds of companies you'd like</b></li>
+                                    <li><b>Interview preparation</b></li>
+                                    <li><b>CV review and recommendations</b></li>
+                                    <li><b>Strengths and weaknesses</b></li>
+                                    <li><b>Spoken languages</b></li>
+                                    <li><b>Your questions and our recommendations for China</li>
+                                </ol>
+                                " .
+                                "
+                                <p>
+                                    We get 500 people per month asking for our services and in order to ensure we only proceed with those that are really committed we request an application fee of <b>" . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(App\Program::where('value', 'inter_relocat')->first()->feeType->fees()->first()->amount, 2), Config::get('services.stripe.cashier_currency')) . "</b>.
                                     However, we need you to confirm this is the email you use to register in our website. We provide you both links so that
                                     you can proceed with the payment in case you want to do so. Please, remember we cannot keep the process until
                                     we effectively receive the payment requested.
@@ -76,10 +147,10 @@ return [
                                 </p>
                                 <ol>
                                     <li>
-                                        <b>Individual Online Courses for a minimun of 40 hours by videoconference: 599 EUR</b>
+                                        <b>Individual Online Courses for a minimun of 40 hours by videoconference: (Exc. Taxes) " . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(App\Category::where('value', 'online')->first()->fee->amount, 2), Config::get('services.stripe.cashier_currency')) . " </b>
                                     </li>
                                     <li>
-                                        <b>Local Chinese group classes in Shanghai for 100 hours (Incl. Visa) 599 EUR</b>
+                                        <b>Local Chinese group classes in Shanghai for 100 hours: (Incl. Visa and Exc. Taxes) " .  numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(App\Category::where('value', 'in-person')->first()->fee->amount, 2), Config::get('services.stripe.cashier_currency')) . "</b>
                                     </li>
                                 </ol>
                                 <p>
@@ -129,7 +200,7 @@ return [
                                         </li>
                                 </ol>
                                 <p>
-                                    We get 500 people per month asking for our services and in order to ensure we only proceed with those that are really committed we request an application fee of 30 EUR.
+                                    We get 500 people per month asking for our services and in order to ensure we only proceed with those that are really committed we request an application fee of <b>" . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(App\Program::where('value', 'university')->first()->feeType->fees()->first()->amount, 2), Config::get('services.stripe.cashier_currency')) . "</b>.
                                     We provide you both links so that you can proceed with the payment in case you want to do so. Please, remember we cannot keep the process until we effectively receive the payment requested.
                                 </p>
                                 ",
@@ -187,7 +258,7 @@ return [
     'invoice' => [
         'paid' => [
             'title' => 'User Invoice Paid',
-            'subject' => 'Payment confirmation for :company',
+            'subject' => 'Payment confirmation for ' . config('app.name'),
             'body' =>   [
                 'chinese_in-person_course' =>   "
                                                 <p>

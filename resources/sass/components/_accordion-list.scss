@@ -1,18 +1,59 @@
 .accordion-list {
 
   $image-width: 100px;
+  $image-height: 100px;
+
+  &__info {
+    p {
+      color: $primaryDark;
+      font-weight: 700;
+      margin: 1em 0;
+    }
+
+    &--empty {
+      p {
+        @include flexbox();
+        @include flex-direction(column);
+
+        & > *:not(:first-child) {
+          margin-top: 1em;
+        }
+
+        i {
+          font-size: 6em;
+          color: $neutralColor;
+          margin: 0 auto;
+        }
+        color: $quaternaryRed;
+        text-align: center !important;
+        font-weight: 700;
+      }
+    }
+  }
+
+  &__card-list {
+    @include media-breakpoint-up(xl) {
+      @include flexbox();
+      @include flex-wrap(wrap);
+      @include flex-direction(row);
+      @include align-items(flex-start);
+    }
+  }
 
   @include media-breakpoint-up(xl) {
-    @include flexbox();
-    @include flex-wrap(wrap);
-    @include flex-direction(row);
-    @include align-items(flex-start);
-
     &__card {
       flex: 0 0 45%;
       &:last-child:not(:nth-child(even)) {
         margin-left: 1.25em;
         margin-right: 1.25em;
+      }
+    }
+
+    &__info {
+      p {
+        color: $primaryDark;
+        font-weight: 700;
+        margin: 1em 2.666%;
       }
     }
   }
@@ -28,6 +69,7 @@
       position: absolute;
       background: $primaryWhite;
       width: $image-width;
+      height: $image-height;
       top: -50px;
       border: 6px solid $white;
       border-radius: 20px;

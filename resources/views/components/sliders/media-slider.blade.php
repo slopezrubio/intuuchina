@@ -8,7 +8,7 @@
                         @foreach($media as $key => $item)
                             <div class="media-slider__slide">
                                 <a href="{{ $item['href'] }}" target="_blank">
-                                    <img src="{{ asset('storage/images/content/' . $key . '.png') }}" alt="">
+                                    <img src="{{ asset('storage/images/content/' . $key . '.png') }}" alt="{{ trans('pictures.media-logo.alt', ['name' => preg_replace('/(_|-)/', ' ', Str::title($key))]) }}">
                                     <div class="media-slider__slide-content">
                                         <p>"{{ $item['quote'] }}"</p>
                                         <p>
@@ -28,7 +28,7 @@
                     @foreach($media as $key => $item)
                         @if(!$loop->first)
                             <li>
-                                <a href="#"><span class="helper"></span><img src="{{ asset('storage/images/content/' . $key . '.png') }}" alt=""></a>
+                                <a href="#"><span class="helper"></span><img src="{{ asset('storage/images/content/' . $key . '.png') }}" alt="{{ trans('pictures.media-logo.alt', ['name' => preg_replace('/(_|-)/', ' ', Str::title($key))]) }}"></a>
                             </li>
                         @endif
                     @endforeach

@@ -3,11 +3,13 @@ import { paymentFormFactory } from '../components/forms/PaymentForm';
 
 (function() {
     window.addEventListener('DOMContentLoaded', function() {
-        var proceedPaymentForm = proceedPaymentFormFactory.createForm({
-            form: document.getElementById('proceed-payment'),
-            type: 'proceed-payment',
-        });
+        if (document.getElementById('proceed-payment') !== null) {
+            var proceedPaymentForm = proceedPaymentFormFactory.createForm({
+                form: document.getElementById('proceed-payment'),
+                type: 'proceed-payment',
+            });
 
-        proceedPaymentForm.init();
+            proceedPaymentForm.init();
+        }
     });
 })();

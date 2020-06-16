@@ -5,7 +5,7 @@
                 @slot('name', 'fees')
             @endcomponent
         </div>
-        <div class="toolbox__tool col-3 offset-1 offset-sm-0 col-sm-3">
+        <div class="toolbox__tool col-4 offset-1 offset-sm-0 col-sm-3">
             @component('components.inputs.cta-button')
                 @slot('variant', 'primary')
                 @slot('href',  route('admin.new-fee'))

@@ -11,8 +11,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar_items">
-                    @if(!empty(__('links.navbar')))
-                        @foreach(__('links.navbar') as $key => $item)
+                    @if(!empty(__('component.navbar')))
+                        @foreach(__('component.navbar') as $key => $item)
                             @if(!isset($item['options']))
                                 <li>
                                     <a href="{{ $item['url'] }}">
@@ -47,13 +47,13 @@
                         </li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="nav-item" data-target="#userMenu" data-toggle="none" aria-haspopup="true" aria-expanded="false">
+                            <a href="{{ route('home') }}" class="nav-item" data-target="#userMenu" data-toggle="none" aria-haspopup="true" aria-expanded="false">
                                 <div class="toggleOption" >{{ Auth::user()->name }}<i class="fas fa-angle-right"></i></div>
                             </a>
 
                             <ul id="userMenu" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="userMenu">
                                 <li>
-                                    <a href="{{ route('password.reset', ['token' => Str::random(30)]) }}" class="dropdown-item">
+                                    <a href="{{ Auth::user()->type !== 'admin' ? route('password.change', ['token' => Str::random(30)]) : route('admin.password.change', ['token' => Str::random(30)])}}" class="dropdown-item">
                                         <div class="toggleOption">{{ trans('auth.change pass') }}</div>
                                     </a>
                                 </li>
@@ -77,7 +77,7 @@
                                 @endif
                                 <li>
                                     @if (Auth::user()->type !== 'admin')
-                                        <a href="{{ route('edit_user', ['user', Auth::id()])}}" class="dropdown-item">
+                                        <a href="{{ route('user.profile')}}" class="dropdown-item">
                                             <div class="toggleOption">{{ __('auth.profile') }}</div>
                                         </a>
                                     @else
@@ -89,27 +89,6 @@
                             </ul>
                         </li>
                     @endguest
-
-{{--                    <li class="dropdown inline-items">--}}
-{{--                        <div class="toggleOption" data-toggle="dropdown">--}}
-{{--                            @foreach(config('app.locales') as $key => $locale)--}}
-{{--                                <a href="#" class="{{ App::isLocale($key) ? 'selected' : '' }}">{{ strtoupper($key) }}</a>--}}
-{{--                            @endforeach--}}
-{{--                        </div>--}}
-{{--                        <a class="nav-item" href="#" data-target="#language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                            <div class="toggleOption" >{{ strtoupper(App::getLocale()) }}<i class="fas fa-angle-right"></i></div>--}}
-{{--                        </a>--}}
-
-{{--                        <ul id="language" class="dropdown-menu accordion_submenu" role="menu" aria-labelledby="language">--}}
-{{--                            @foreach(config('app.locales') as $key => $locale)--}}
-{{--                                <li>--}}
-{{--                                    <a href="#" class="dropdown-item">--}}
-{{--                                        <div class="toggleOption">{{ strtoupper($key) }}</div>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            @endforeach--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
 
                     <li class="social-media-nav">
                         <div class="media" id="media">

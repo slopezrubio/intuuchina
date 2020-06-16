@@ -4,6 +4,23 @@ form {
       margin-bottom: 1.75em;
     }
 
+    .error-message, .success-message {
+      font-size: 0.85em;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      i {
+        margin-right: 0.25em;
+      }
+    }
+
+    .error-message {
+      color: $quaternaryRed;
+    }
+
+    .success-message {
+      color: $successColor;
+    }
+
     a {
       color: $tertiaryRed;
       &:hover,

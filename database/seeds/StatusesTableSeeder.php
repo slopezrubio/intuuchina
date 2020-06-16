@@ -11,7 +11,7 @@ class StatusesTableSeeder extends Seeder
      */
     public function run()
     {
-        $states = ['unverified', 'verified', 'paid', 'arranged', 'accepted', 'dismissed', 'reimbursed', 'placed', 'done', 'unaltered'];
+        $states = ['unverified', 'verified', 'paid', 'interviewed', 'accepted', 'dismissed', 'reimbursed', 'placed', 'done', 'unaltered'];
 
         foreach ($states as $state) {
             factory(App\Status::class, 1)->create([

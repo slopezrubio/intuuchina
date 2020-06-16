@@ -41,6 +41,17 @@
       border-top: 1px solid $neutralColor;
 
       .flex-table__item-action {
+        .row {
+          .col-12 {
+            padding-left: 0;
+            padding-right: 0;
+            @media #{$breakpoint} {
+              padding-left: 15px;
+              padding-right: 15px;
+            }
+          }
+        }
+
         .c-cta-button {
           &--primary {
             width: $c-cta-button-height;

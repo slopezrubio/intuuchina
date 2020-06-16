@@ -1,5 +1,6 @@
 import { arrowSliderFactory } from "../components/ArrowSlider";
-import {bottomNavigationFactory} from "../components/BottomNavigation";
+
+import api from '../main/api';
 
 (function() {
     window.addEventListener('DOMContentLoaded', function() {
@@ -9,10 +10,18 @@ import {bottomNavigationFactory} from "../components/BottomNavigation";
                 sections: ['in-person', 'online'],
                 callbacks:  {
                     controllers: function(slider) {
-                        console.log(slider);
+                        let category = slider.querySelector('input[name=category]').value;
+                        api.getCourseInfo(category, replaceCategoryInfoBox)
                     }
                 }
             });
+
+            var replaceCategoryInfoBox = function(newSection) {
+                let section = $('section#course-info');
+
+                $(section).children('.c-price-box')[0].remove();
+                $(section).append(newSection);
+            }
         }
     });
 })()

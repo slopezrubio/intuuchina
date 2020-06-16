@@ -5,7 +5,6 @@
             @if($loop->index % 3 == 0 || $loop->first)
                 <div class="col-12 col-sm-6">
             @endif
-
                 <div class="c-switch-input">
                     <label class="c-switch-input__label" aria-label="{{ $input['id'] }}">{{ is_string($input) ? $input : $input['name'] }}</label>
                     <label for="{{ $input['id'] }}">

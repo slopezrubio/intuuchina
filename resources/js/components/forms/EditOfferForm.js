@@ -1,21 +1,28 @@
 import { FormFactory } from '../../factories/FormsFactory';
+import api from "../../facades/api";
 
 function EditOfferForm(options) {
     this.fields = {};
 
     this.editor = null;
 
-    this.init = function() {
+    this.init = async function() {
+        this.fields.id = this.el.querySelector('#id');
         this.fields.title = this.el.querySelector('#title');
         this.fields.location = this.el.querySelector('#location');
         this.fields.industry = this.el.querySelector('#industry');
         this.fields.description = this.el.querySelector('#description');
         this.editor = this.el.querySelector('#description-editor');
+
+        this.offer = await api.axiosRequest(api.getResource('offers', this.fields.id.value), 'get');
+
         this.previewUploadedFiles()
             .loadDescription();
 
         this.el.addEventListener('submit', (ev) => {
+            ev.preventDefault()
             this.fields.description.value = JSON.stringify(this.editor.getContents());
+            this.el.submit();
         })
     };
 
@@ -23,7 +30,10 @@ function EditOfferForm(options) {
         let description = this.editor.getAttribute('data-html');
 
         this.editor = this.mountWYSIWYGEditor();
-        this.editor.setContents(JSON.parse(description));
+
+        if (this.offer.data.description !== null) {
+            this.editor.setContents(JSON.parse(this.offer.data.description));
+        }
 
         return this
     };

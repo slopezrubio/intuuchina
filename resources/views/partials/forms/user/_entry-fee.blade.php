@@ -121,6 +121,42 @@
                 @endcomponent
             </div>
         </div>
+        <div class="form-group align-items-end row mt-5">
+            <div class="col-12 col-lg-3">
+                @component('components.inputs.label')
+                    @slot('name', 'subtotal')
+
+                    {{ __('Subtotal') }}
+                @endcomponent
+            </div>
+            <div class="col-12 col-lg-9 pl-0">
+                <span class="form-control border-0">
+                    {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency')) }}
+                </span>
+            </div>
+
+            <div class="col-12 col-lg-3">
+                @component('components.inputs.label')
+                    @slot('name', 'total')
+
+                    {{ __('Total') }}
+                @endcomponent
+            </div>
+
+            <div class="col-12 col-lg-9 pl-0">
+                <span class="form-control border-0">
+                    {{
+                        numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($intent->amount) / 100, 2), Config::get('services.stripe.cashier_currency')) .
+                        ' = ' .
+                        $fee->getTaxRate()['display_name'] . ' ' . number_format($fee->getTaxRate()['percentage'], 0) . '% ' .
+                        numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($fee->amount * $fee->getTaxRate()['percentage'] / 100, 2), Config::get('services.stripe.cashier_currency')) .
+                        ' + ' .
+                        __('Subtotal') . ' ' . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency'))
+                    }}
+                </span>
+            </div>
+        </div>
+
 
         <input type="hidden" name="payment-method" id="payment-method">
 
@@ -137,7 +173,7 @@
                 <div id="payment-request-button" class="col-12">
                     <!-- Stripe Payment Request Button -->
                 </div>
-                <div class="col-12" >
+                <div class="col-12 col-sm-6 offset-sm-3">
                     @component('components.inputs.cta-button', ['data' => $intent->amount])
                         @slot('variant', 'primary mr-auto')
                         @slot('name', 'pay')
@@ -151,11 +187,10 @@
                 </div>
             </div>
             <div class="form-group row justify-content-center">
-                <form action="{{ route('home') }}" method="GET">
-                    @component('components.inputs.alternative-button')
-                        @slot('content', __('Cancel'))
-                    @endcomponent
-                </form>
+                @component('components.inputs.alternative-button')
+                    @slot('href', route('user.profile'))
+                    @slot('content', __('Cancel'))
+                @endcomponent
             </div>
         </div>
     </div>

@@ -24,6 +24,13 @@ var browser = (function() {
                 type: 'min',
                 size: 992,
             },
+            bootstrap: {
+                sm: {
+                    media: null,
+                    type: 'max',
+                    size: 575,
+                }
+            },
             footer: {
                 checkbox: {
                     media: null,
@@ -57,10 +64,13 @@ var browser = (function() {
             return window.matchMedia(_.breakpoints.small.media).matches;
         },
         isMediumDevice: function() {
-            return window.matchMedia(_.breakpoints.small.media).matches;
+            return window.matchMedia(_.breakpoints.medium.media).matches;
         },
         isLargeDevice: function() {
-            return window.matchMedia(_.breakpoints.small.media).matches;
+            return window.matchMedia(_.breakpoints.large.media).matches;
+        },
+        isBootstrapBreakpoint(breakpoint) {
+            return window.matchMedia(_.breakpoints.bootstrap[breakpoint].media).matches;
         },
         matchesGivenBreakpoint: function(breakpoint) {
             if (eval('_.breakpoints.' + breakpoint) === undefined) {
@@ -79,6 +89,21 @@ var browser = (function() {
             properties['scroll' + str.capitalizeFirst(direction)] = position;
 
             $("html").animate(properties, 500, 'swing');
+        },
+        isElementScoped: function(el) {
+            if (dom.isElement(el)) {
+                return (
+                    ($(el).offset().top >= $(window).scrollTop())
+                )
+            }
+
+            let coordinates = typeof el === 'object' ? el : false;
+
+            if (coordinates) {
+                return (
+                    (coordinates.top <= ($(window).scrollTop() + window.innerHeight))
+                )
+            }
         },
         isElementScrolledIntoView: function(el) {
             let viewportBottom = $(window).scrollTop() + $(window).height();

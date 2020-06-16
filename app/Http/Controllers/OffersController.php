@@ -80,7 +80,7 @@ class OffersController extends Controller
         Offer::create([
             'title' => $request->get('title'),
             'location' => $request->get('location'),
-            'industry' => $request->get('industry'),
+            'category_id' => Category::where('value', $request->get('industry'))->first()->id,
             'duration' => $request->get('duration'),
             'description' => $request->get('description'),
         ]);
@@ -107,6 +107,12 @@ class OffersController extends Controller
      */
     public function edit(int $id)
     {
+        $offer = Offer::find($id);
+
+        if ($offer === null) {
+            abort('404');
+        }
+
         return view('pages/admin/offer', [
             'offer' => Offer::find($id)
         ]);
@@ -121,6 +127,8 @@ class OffersController extends Controller
      */
     public function update(Request $request, int $id)
     {
+        $offer = Offer::find($id);
+
         $request->validate([
             'title' => 'required|max:255|string',
             'duration' => 'required|string',
@@ -128,7 +136,17 @@ class OffersController extends Controller
             'picture' => 'mimes:jpg,jpeg,bmp,png',
         ]);
 
-        Offer::find($id)->setChanges($request)->save();
+        $offer->update([
+            'title' => $request->get('title'),
+            'location' => $request->get('location'),
+            'picture' => (function() use ($request, $offer) {
+                return $offer->updateThumbnail();
+            })(),
+            'category_id' => Category::where('value', $request->get('industry'))->first()->id,
+            'description' => $request->get('description'),
+        ]);
+
+        //Offer::find($id)->setChanges($request)->save();
 
         return redirect()->route('admin.offers');
     }
@@ -249,8 +267,14 @@ class OffersController extends Controller
      * @param string $id
      */
     public function single($id) {
+        $offer = Offer::find($id);
+
+        if ($offer === null) {
+            abort('404');
+        }
+
         return view('pages.job-description', [
-            'offer' => Offer::find($id),
+            'offer' => $offer,
             'testimonials' => Testimonial::getFromDistinctUsers(Testimonial::MAX_NUMBER_OF_TESTIMONIALS)
         ]);
     }

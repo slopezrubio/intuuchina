@@ -20,7 +20,20 @@
             </li>
         @endforeach
     </ul>
+
     <div class="tab-content position-relative" style="">
+
+        @if(session('status') !== null)
+            <div class="row">
+                <div class="success-message col-12">
+                <span>
+                    <i class="fas fa-check"></i>
+                    {{ session('status') }}
+                </span>
+                </div>
+            </div>
+        @endif
+
         @foreach($tabs as $key => $tab)
             @if (isset($selected))
                 <div class="tab-pane fade{{ $selected === $key ? ' show active' : '' }}" id="{{ $key . '-content-tab' }}" role="tabpanel" aria-labelledby="{{ $key . '-tab' }}">

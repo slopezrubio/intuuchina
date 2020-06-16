@@ -38,7 +38,7 @@
             @endcomponent
         </div>
         <div class="col-md-9">
-            @component('components.inputs.select', ['options' => __('content.industries')])
+            @component('components.inputs.select', ['options' => App\Category::getSelectorOptions(App\Category::all())])
                 @slot('name', 'industry')
                 @if(old('industry') !== null)
                     @slot('value', old('industry'))

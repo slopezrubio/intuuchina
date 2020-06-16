@@ -1,0 +1,66 @@
+$curiosity-card-width: 300px;
+$curiosity-card-height: 100px;
+
+.curiosity-card {
+  width: $curiosity-card-width;
+  height: $curiosity-card-height;
+  position: relative;
+
+  &:hover {
+    .curiosity-card__card {
+      @include prefixed('transform', 'rotateY(180deg)');
+    }
+
+    .curiosity-card__card-front {
+      display: none;
+      opacity: 0;
+    }
+
+    .curiosity-card__card-back {
+      @include flexbox();
+      @include align-items(center);
+      opacity: 1;
+    }
+  }
+
+  &__card {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    padding: 1em;
+    color: $primaryWhite;
+    @include prefixed('transition', 'transform 1.8s cubic-bezier(0.175, 0.885, 0.62, 1.000)');
+    @include prefixed('transform-style', 'preserve-3d');
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+
+    &-front, &-back {
+      width: 100%;
+      height: 100%;
+      @include prefixed('transition', 'opacity 1s linear 300ms');
+      @include prefixed('backface-visibility', 'hidden');
+      @include prefixed('font-smoothing', 'antialiased');
+    }
+
+    &-front {
+      font-size: 0.75em;
+      opacity: 1;
+      @include flexbox();
+      @include align-items(center);
+      p {
+        font-size: 1.25em;
+        margin-bottom: 0;
+      }
+    }
+
+    &-back {
+      @include prefixed('transform', 'rotateY(180deg)');
+      display: none;
+      opacity: 0;
+
+      h6 {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

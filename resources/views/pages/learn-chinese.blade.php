@@ -17,9 +17,13 @@
                 @slot('visible', $slides)
             @endif
         @endcomponent
-{{--        @include('partials._chinese-courses')--}}
 
-        @include('partials._price-course-info')
+        <section id="course-info">
+            @component('components.c-price-box', ['price_box' => __('component.c-price-box.'.$category->value)])
+                @slot('price', $category->fee->amount)
+            @endcomponent
+        </section>
+
     </main>
     @include('partials._footer')
 @endsection

@@ -28,6 +28,8 @@ function PaymentForm(options) {
         course: document.getElementById('course'),
         lessons: document.getElementById('lessons'),
         months: document.getElementById('months'),
+        total: document.getElementById('total'),
+        subtotal: document.getElementById('subtotal'),
         card: {
             number: document.getElementById('card-number'),
             cvc: document.getElementById('card-cvc'),
@@ -61,7 +63,7 @@ function PaymentForm(options) {
 
     this.price = {};
 
-    this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
+    this.pricePerUnit = null;
 
     this.getCourseDuration = function(obj = null) {
         if (this.fields.course !== null) {
@@ -82,8 +84,9 @@ function PaymentForm(options) {
     this.init = async function() {
         if (this.el !== null) {
             this.dialog = dialogFactory.createDialog();
-
             this.loadStripeElements();
+
+            this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
 
             if (this.fields.course !== null) {
                 this.course = await api.axiosRequest(api.getResource('courses', this.fields.course.value));
@@ -92,6 +95,9 @@ function PaymentForm(options) {
                     .setTotal();
 
                 this.fields.course.addEventListener('change', async (event) => {
+                    this.toggleLoadingState();
+                    this.disableStripeInputs();
+
                     this.toggleInputs([
                         this.fields.months,
                         this.fields.lessons,
@@ -102,27 +108,42 @@ function PaymentForm(options) {
                     this.setSubtotal()
                         .setTotal();
 
-                    this.fields.months.addEventListener('change', async (event) => {
-                        // this.validateField(event.target, [
-                        //     'required',
-                        //     'integer',
-                        //     'InPersonCoursesScope'
-                        // ]);
+                    this.toggleLoadingState();
+                    this.disableStripeInputs(false);
+                });
 
-                        this.setSubtotal()
-                            .setTotal();
-                    });
+                this.fields.months.addEventListener('change', async (event) => {
+                    // this.validateField(event.target, [
+                    //     'required',
+                    //     'integer',
+                    //     'InPersonCoursesScope'
+                    // ]);
+                    this.toggleLoadingState();
+                    this.disableStripeInputs();
 
-                    this.fields.lessons.addEventListener('change', async (event) => {
-                        // this.validateField(event.target, [
-                        //     'required',
-                        //     'integer',
-                        //     'OnlineCoursesScope'
-                        // ]);
+                    this.setSubtotal()
+                        .setTotal();
 
-                        this.setSubtotal()
-                            .setTotal();
-                    });
+                    this.toggleLoadingState();
+                    this.disableStripeInputs(false);
+                });
+
+                this.fields.lessons.addEventListener('change', async (event) => {
+                    // this.validateField(event.target, [
+                    //     'required',
+                    //     'integer',
+                    //     'OnlineCoursesScope'
+                    // ]);
+
+
+                    this.toggleLoadingState();
+                    this.disableStripeInputs();
+
+                    this.setSubtotal()
+                        .setTotal();
+
+                    this.toggleLoadingState();
+                    this.disableStripeInputs(false);
                 });
             }
 
@@ -391,7 +412,6 @@ function PaymentForm(options) {
     };
 
     this.mountStripeFields = function() {
-
         this.stripeElements.forEach((element) => {
             if (this.fields[element] !== null && this.fields[element][Symbol.iterator] !== 'function') {
                 Object.keys(this.fields[element]).map(((key) => {
@@ -459,7 +479,21 @@ function PaymentForm(options) {
             currency: currency
         });
 
+        let subtotal = parseFloat(await money.exchangeCurrency(this.price.subtotal, currency)).toLocaleString(document.documentElement.lang, {
+            style: 'currency',
+            currency: currency
+        });;
+
+        this.fields.subtotal.textContent = subtotal;
+
         $(this.fields.payment).children('span')[0].textContent = verb + total;
+        $(this.fields.total).children('span')[0].textContent = total;
+        $(this.fields.total).children('span')[1].textContent = parseFloat(await money.exchangeCurrency(this.price.total - this.price.subtotal, currency)).toLocaleString(document.documentElement.lang, {
+            style: 'currency',
+            currency: currency
+        });
+        $(this.fields.total).children('span')[2].textContent = subtotal;
+
 
         return this;
     }

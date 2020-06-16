@@ -6,6 +6,7 @@ use App\Observers\OfferObserver;
 use App\Observers\UserObserver;
 use App\Offer;
 use App\User;
+use App\Status;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
@@ -62,6 +63,9 @@ class AppServiceProvider extends ServiceProvider
         /**
          * Directives
          */
+        Blade::if('status', function($provider) {
+            return auth()->user()->status->id === Status::where('value', $provider)->first()->id;
+        });
 
 
         Schema::defaultStringLength(191);

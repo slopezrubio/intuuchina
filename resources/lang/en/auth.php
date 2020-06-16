@@ -51,7 +51,7 @@ return [
     */
     'before proceeding, please check your email' => "
                                                         <p>
-                                                            Before proceeding, please check your inbox and verify your email address with the link we have sent you at :email.
+                                                            Before proceeding, please check your inbox and verify your email address with the link we have sent you at <b>:email</b>.
                                                         </p>
                                                         <p>
                                                             If you have been waiting for longer than 10 minutes, press the button below to resend the verification link again or contact us at <a href='mailto:" .config('mail.from.address'). "'>" .config('mail.from.address'). "</a> to report it

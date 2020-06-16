@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Fee extends Model
 {
     //
+    protected $fillable = [
+        'name', 'heading', 'type', 'unit', 'amount', 'jurisdiction', 'minimum'
+    ];
 
     public function programs() {
         return $this->belongsToMany('App\Program');
@@ -22,5 +25,9 @@ class Fee extends Model
 
     public function getTaxRate() {
         return __('taxes.'.$this->jurisdiction);
+    }
+
+    public function update(array $attributes = [], array $options = []) {
+        $this->fill($attributes)->save($options);
     }
 }

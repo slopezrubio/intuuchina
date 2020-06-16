@@ -32,8 +32,10 @@ function BottomNavigation(options) {
     this.setPosition = function() {
         let previousElement = $(this.el).prev();
 
-        this.position.top = $(previousElement).offset().top + $(previousElement).height();
-        this.position.bottom = this.position.top + this.el.clientHeight;
+        if (previousElement !== null || previousElement.length === 0) {
+            this.position.top = $(previousElement).offset().top + $(previousElement).height();
+            this.position.bottom = this.position.top + this.el.clientHeight;
+        }
 
         return this;
     };
@@ -47,17 +49,20 @@ function BottomNavigation(options) {
     };
 
     this.toggle = function(ev = null) {
-        if (browser.isElementScrolledIntoView(this.position)) {
-            if (this.isFixed()) {
-                $(this.el).removeClass('bottom-navigation--fixed');
-                if (ev !== null && ev.type === 'scroll') {
-                    //console.log($(this.el).offset().top + this.el.clientHeight);
-                    // TODO
-                    // this.scrollTo(window.scrollY + ($(this.el).bottom())
+        if (this.position.length > 0) {
+            if (browser.isElementScoped(this.position)) {
+                if (this.isFixed()) {
+                    $(this.el).removeClass('bottom-navigation--fixed');
+
+                    if (ev !== null && ev.type === 'scroll') {
+                        //console.log($(this.el).offset().top + this.el.clientHeight);
+                        // TODO
+                        // this.scrollTo(window.scrollY + ($(this.el).bottom())
+                    }
                 }
-            }
-            return this;
-        };
+                return this;
+            };
+        }
 
         if (!this.isFixed()) {
             $(this.el).addClass('bottom-navigation--fixed');

@@ -36,10 +36,49 @@
 
     @if(isset($header['error-message']) || key_exists('error-message', $header))
         <section class="wrapper">
-            <div class="error-box col-10 col-md-8">
-                <h1 class="error-box__title">{!! $header['error-message'] !!}</h1>
+            <div class="row">
+                <div class="error-found__box col-12 col-md-8">
+                    <h1 class="error-found__box-title">{!! $header['error-message'] !!}</h1>
+                </div>
             </div>
+            <div class="row">
+                <div class="error-found__info col-12 col-md-8">
+                    <p>{!! __('content.are you in doubt') !!}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="error-found__action col-6 col-md-4 col-lg-2">
+                    @component('components.inputs.cta-button')
+                        @slot('variant', 'secondary')
+                        @slot('content', __('Back'))
+                        @slot('href', url()->previous())
+                    @endcomponent
+                </div>
+            </div>
+
+            @isset($card)
+                @component('components.curiosity-card', ['card' => $card])
+                @endcomponent
+            @endisset
         </section>
+
+
+    @endif
+
+    @if($variant === 'stats')
+        @foreach($header['stats'] as $stat)
+            @if ($loop->index % 3 == 0)
+                <section class="stats__container">
+            @endif
+
+            <article class="stats__item">
+                {!! $stat !!}
+            </article>
+
+            @if ($loop->iteration === 3)
+                </section>
+            @endif
+        @endforeach
     @endif
 
     @if(isset($dialog))

@@ -11,6 +11,7 @@
 
         <section id="toolbar">
             @component('components.breadcrumb')
+                @slot('links', 'component.breadcrumbs.admin.'.$view_name)
             @endcomponent
         </section>
 
@@ -21,6 +22,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 
 @endsection

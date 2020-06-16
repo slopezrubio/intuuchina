@@ -64,6 +64,10 @@ class Category extends Model
         return $options;
     }
 
+    public function getCategoryInfoBox() {
+
+    }
+
     public static function getSelectorOptions($categories) {
         $options = [];
 
