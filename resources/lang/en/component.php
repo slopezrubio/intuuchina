@@ -64,6 +64,16 @@ return [
                     'href' => route('admin.offers'),
                     'content' => trans('Offers'),
                 ]
+            ],
+            'new-fee' => [
+                [
+                    'href' => route('admin'),
+                    'content' => trans('Dashboard'),
+                ],
+                [
+                    'href' => route('admin.fees'),
+                    'content' => trans('Fees'),
+                ]
             ]
         ],
         'job-description' => [
@@ -133,12 +143,12 @@ return [
     ],
     'arrow' => [
         'university' => [
-            'mba' => [
-                'heading' => 'MBA',
-                'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
-            ],
             'mib' => [
                 'heading' => 'M. Intl. Bsns.',
+                'description' => 'The Master in International Business is on of the best ways for students to grasp aspects of managing an international company in various fields such as Marketing, Sales, Operations, Supply Chain, Accounting, Strategy, Human resources, etc. It is a unique opportunity to be exposed to the top of the line academic and real-life material to improve your skills as a future International Business Leader with a strong Chinese edge.',
+            ],
+            'mba' => [
+                'heading' => 'MBA',
                 'description' => 'The MBA is aimed at experienced professionals, middle management or people that want to give that next step in their career to management in a company. The program has a comprehensive and integrated understanding of techniques of management and executive skills that are key in the future business leaders.',
             ],
             'other_degrees' => [
@@ -194,6 +204,38 @@ return [
                             </p>
                         "
         ]
+    ],
+
+    /*
+   |--------------------------------------------------------------------------
+   | Infography
+   |--------------------------------------------------------------------------
+   */
+    'infographies' => [
+        'customer-journey' => [
+            [
+                'title' => trans('Apply / Register'),
+                'icon' => trans('pictures.user-icon'),
+                'href' => route('register'),
+            ],
+            [
+                'title' => trans('Select a program'),
+                'icon' => trans('pictures.user-icon'),
+                'href' => '#services',
+            ],
+            [
+                'title' => trans('Get the Best Counseling'),
+                'icon' => trans('pictures.papers-icon')
+            ],
+            [
+                'title' => trans('We Get to Work'),
+                'icon' => trans('pictures.user-icon')
+            ],
+            [
+                'title' => trans('Start in China!'),
+                'icon' => trans('pictures.rocket-icon')
+            ],
+        ],
     ],
 
     /*
@@ -338,6 +380,11 @@ return [
                     'icon' =>  'fas fa-user',
                     'content' => 'partials.forms.user._profile'
                 ],
+                'billings' => [
+                    'text' => trans('Billings'),
+                    'icon' => 'fas fa-money-bill-alt',
+                    'content' => 'partials.user._billings',
+                ]
             ],
             'admin' => [
                 'users' => [
@@ -497,6 +544,9 @@ return [
             'new-offer' => [
                 'title' => trans('New Job Offer')
             ],
+            'new-fee' => [
+                'title' => trans('New Product Fee')
+            ],
         ],
         'home' => [
             'title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',
@@ -536,7 +586,7 @@ return [
             ]
         ],
         'why-intuuchina' => [
-            'background' => asset('images/why-us_header.jpg'),
+            'background' => asset('storage/images/why-us_header.jpg'),
             'stats' => [
                 "
                 <p>More than</p>

@@ -130,7 +130,10 @@ return [
 
     'custom' => [
         'admin' => [
-            'required' => 'The :attribute must be provided.'
+            'required' => 'The :attribute must be provided.',
+            'minimum' => [
+                'required' => 'The fee type selected requires you to set a minimum units',
+            ]
         ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
@@ -138,7 +141,9 @@ return [
         'alpha' => [
             'contact_form' => 'Do not type a nickname please, use your real name',
         ],
-        'completed' => 'The :item has been updated.',
+        'created' => 'The :item has been created',
+        'upgraded' => 'The :item has been upgraded',
+        'updated' => 'The :item has been updated.',
         'file' => [
             'muted' => 'Only .PDF, .DOC, .DOCX, and .ODT documents are allowed',
         ],
@@ -154,7 +159,11 @@ return [
                 'edit-fee' => [
                     'invalid' => 'The changes have not been made. Please check the fields marked.',
                     'completed' => 'The fee has been updated',
-                ]
+                ],
+                'edit-offer' => [
+                    'invalid' => 'The changes have not been made. Please check the fields marked.',
+                    'completed' => 'The job offer has been updated',
+                ],
             ]
         ],
         'invalid' => 'The :field has an invalid format',

@@ -10,6 +10,9 @@
         <div class="col-md-9">
             @component('components.inputs.text')
                 @slot('name', 'title')
+                @if(old('title') !== null)
+                    @slot('value', old('title'))
+                @endif
                 @slot('placeholder', __('placeholder.offer.title'))
             @endcomponent
         </div>
@@ -38,7 +41,7 @@
             @endcomponent
         </div>
         <div class="col-md-9">
-            @component('components.inputs.select', ['options' => App\Category::getSelectorOptions(App\Category::all())])
+            @component('components.inputs.select', ['options' => App\Category::getSelectorOptions(App\Program::where('value', 'internship')->first()->industries)])
                 @slot('name', 'industry')
                 @if(old('industry') !== null)
                     @slot('value', old('industry'))
@@ -87,7 +90,9 @@
         <div class="col-md-9">
             @component('components.inputs.file')
                 @slot('name', 'picture')
-                @slot('preview', '')
+                @if(old('picture'))
+                    @slot('preview', old('picture'))
+                @endif
                 @slot('muted', __('auth.allowed thumbnail formats'))
             @endcomponent
         </div>

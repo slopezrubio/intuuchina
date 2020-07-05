@@ -25,7 +25,9 @@ class OfferObserver
      * @return void
      */
     public function creating(Offer $offer) {
-        $offer->saveThumbnail();
+        $offer->picture = $offer->saveThumbnail([
+            'category' => $offer->category_id
+        ]);
 
         if (!$offer->hasDescription()) {
             $offer->description = null;

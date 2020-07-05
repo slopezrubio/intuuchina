@@ -28,6 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use VerifyEmail;
     use Billable;
 
+    const YEAR_TO_STOP_REMINDER = 3;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -164,27 +166,46 @@ class User extends Authenticatable implements MustVerifyEmail
         $reminder = '';
 
         // 2 days ago
-        if ($this->email_verified_at->diffInDays(Carbon::now()->subDays(2)) === 0) {
-            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
-        }
+        if ($this->email_verified_at->diffInHours(Carbon::now()->subDays(2), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subDays(2), false) < 24) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === '2 days'
+                ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
+            var_dump($reminder);
+        };
 
         // 1 week ago
-        if ($this->email_verified_at->diffInDays(Carbon::now()->subDays(7)) === 0) {
-            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
-        }
+        if ($this->email_verified_at->diffInHours(Carbon::now()->subDays(7), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subDays(7), false) < 24) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === '1 week'
+                ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
+        };
 
         // 2 weeks ago
-        if ($this->email_verified_at->diffInDays(Carbon::now()->subDays(14)) === 0) {
-            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
-        }
+        if ($this->email_verified_at->diffInHours(Carbon::now()->subDays(14), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subDays(14), false) < 24) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === '2 weeks'
+                ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
+        };
+
+        // 1 months ago
+        if ($this->email_verified_at->diffInHours(Carbon::now()->subMonths(1), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subMonths(1), false) < 24) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === '1 month'
+                ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
+        };
 
         // 3 months ago
-        if ($this->email_verified_at->diffInDays(Carbon::now()->subMonths(3)) === 0) {
-            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE);
-        }
+        if ($this->email_verified_at->diffInHours(Carbon::now()->subMonths(3), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subMonths(3), false) < 24) {
+            $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === '3 months'
+                ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
+        };
+
+        // Every single year
+        for ($y = 1; $y <= self::YEAR_TO_STOP_REMINDER && $reminder === ''; $y++) {
+            if ($this->email_verified_at->diffInHours(Carbon::now()->subYears($y), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subYears($y), false) < 24) {
+                $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === $y .' year' || $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === $y .' years'
+                    ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
+            }
+        };
 
         if ($reminder !== '') {
-            $this->notify(new PaymentReminderNotification($reminder));
+            $this->notify(new PaymentReminderNotification($reminder, $this));
         }
     }
 
@@ -300,6 +321,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function destroyAssociatedFiles() {
         if (Storage::exists('profiles/' . $this->id)) {
             Storage::deleteDirectory('profiles/' . $this->id);
+        }
+
+        if (Storage::exists('public/profiles/' . $this->id)) {
+            Storage::deleteDirectory('public/profiles/' . $this->id);
         }
 
         return $this;

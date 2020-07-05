@@ -4,6 +4,7 @@ use App\Preference;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Faker\Generator as Faker;
@@ -20,6 +21,8 @@ class UsersTableSeeder extends Seeder
     public function run(Faker $faker)
     {
         //
+        $this->deleteProfileFolders();
+
         $admin = factory(User::class, 1)->create([
             'id' => 1,
             'name' => 'Fernando',
@@ -32,9 +35,6 @@ class UsersTableSeeder extends Seeder
                 'number' => '659566062',
              ),
             'status_id' => null,
-//            'program' => null,
-//            'industry' => null,
-//            'university' => null,
             'password' => Hash::make('***********'),
             'api_token' => Str::random(60),
         ]);
@@ -52,5 +52,30 @@ class UsersTableSeeder extends Seeder
                 $user->categories()->attach($categories);
             });
         }
+    }
+
+    protected function deletePublicProfileFolders() {
+        $publicUserProfiles = Storage::directories('public/profiles');
+
+        foreach($publicUserProfiles as $profileFolder) {
+            Storage::deleteDirectory($profileFolder);
+        }
+
+        return $this;
+    }
+
+    protected function deletePrivateProfilesFolders() {
+        $privateUserProfiles = Storage::directories('profiles');
+
+        foreach($privateUserProfiles as $profileFolder) {
+            Storage::deleteDirectory($profileFolder);
+        }
+
+        return $this;
+    }
+
+    protected function deleteProfileFolders() {
+        $this->deletePrivateProfilesFolders()
+            ->deletePublicProfileFolders();
     }
 }

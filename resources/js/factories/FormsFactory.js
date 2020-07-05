@@ -17,6 +17,7 @@ import UI from '../main/UI';
 
 import dom from '../facades/dom';
 import api from '../facades/api';
+import CreateFeeForm from "../components/forms/CreateFeeForm";
 
 
 export function FormFactory() {}
@@ -57,6 +58,9 @@ FormFactory.prototype.createForm = function(options) {
             break;
         case 'upgrade-user':
             this.formClass = UpgradeUserForm;
+            break;
+        case 'create-fee':
+            this.formClass = CreateFeeForm;
             break;
         case 'delete-fee':
             this.formClass = DeleteFeeForm;
@@ -130,21 +134,26 @@ FormFactory.prototype.createForm = function(options) {
         switch (self.getSelectedProgram()) {
             case 'internship':
             case 'inter_relocat':
-                dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+                if (self.fields.cv) {
+                    dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+                }
                 dom.show(self.fieldsets.industry, 'flex');
                 dom.hide(self.fieldsets.university);
                 dom.hide(self.fieldsets.study);
                 break;
             case 'study':
-                console.log(self.fieldsets.study);
                 dom.show(self.fieldsets.study, 'flex');
-                dom.hide(self.fields.cv.parentElement.parentElement);
+                if (self.fields.cv) {
+                    dom.hide(self.fields.cv.parentElement.parentElement);
+                }
                 dom.hide(self.fieldsets.industry);
                 dom.hide(self.fieldsets.university);
                 break;
             case 'university':
                 dom.show(self.fieldsets.university, 'flex');
-                dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+                if (self.fields.cv) {
+                    dom.show(self.fields.cv.parentElement.parentElement, 'flex');
+                }
                 dom.hide(self.fieldsets.study);
                 dom.hide(self.fieldsets.industry);
                 break;
@@ -269,6 +278,11 @@ FormFactory.prototype.createForm = function(options) {
 
             $(input).change(function(ev) {
                 $(previews[i]).attr('src', URL.createObjectURL(ev.target.files.item(0)));
+
+                console.log(previews[i].style.display);
+                if (previews[i].style.display === 'none') {
+                    dom.show(previews[i]);
+                }
             });
         }
 

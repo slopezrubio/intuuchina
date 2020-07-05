@@ -23,6 +23,10 @@
   }
 }
 
+@keyframes enlight {
+  to { box-shadow: 0 0 0 8px #fce8ed; }
+}
+
 @keyframes fadeInDown {
   from {
     opacity: 0;

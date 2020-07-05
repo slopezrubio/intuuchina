@@ -61,29 +61,45 @@ class Offer extends Model
     }
 
     public function destroyThumbnail() {
-        if (!preg_match('/generic/', $this->picture)) {
-            Storage::delete('public/images/thumbnails/' . $this->id . '/' .  $this->picture);
+        if (!$this->hasDefaultThumbnail()) {
+            if (Storage::exists('public/images/thumbnails/' . $this->id . '/' .  $this->picture)) {
+                Storage::delete('public/images/thumbnails/' . $this->id . '/' .  $this->picture);
+            }
         }
     }
 
-    public function saveThumbnail() {
-        $filename = $this->generateThumbnailFileName();;
+    public static function deleteAllThumbnails() {
+        $directories = Storage::directories('public/images/thumbnails');
+        foreach ($directories as $directory) {
+            if ($directory !== 'public/images/' . self::THUMBNAILS_FOLDER . 'default') {
+                Storage::deleteDirectory($directory);
+            }
+        }
+    }
+
+    public function hasDefaultThumbnail() {
+        return preg_match('/generic/', $this->picture);
+    }
+
+    public function existUploadedThumnbnail() {
+        return count(Storage::files('public/images/' . self::THUMBNAILS_FOLDER . $this->id)) > 0;
+    }
+
+    public function saveThumbnail(array $attributes = []) {
+        $filename = isset($attributes['category'])
+            ? $this->generateThumbnailFileName(Category::find($attributes['category'])->value)
+            : $this->generateThumbnailFileName();
 
         if (request()->file('picture') !== null) {
-            $this->removeThumbnail();
+            $this->destroyThumbnail();
             request()->file('picture')->storeAs('public/images/thumbnails/', $filename);
         }
 
-        return self::THUMBNAILS_FOLDER . $filename;
-    }
-
-    public function removeThumbnail() {
-        if (Storage::exists('public/images/' . $this->picture)) {
-            Storage::delete('public/images/' . $this->picture);
-            return $this;
+        if ($filename !== null) {
+            return self::THUMBNAILS_FOLDER . $filename;
         }
 
-        return false;
+        return $filename;
     }
 
     public function updateThumbnail() {
@@ -120,17 +136,27 @@ class Offer extends Model
         return $this;
     }
 
-    public function generateThumbnailFileName() {
-        if (method_exists(request(), 'get') && request()->file('picture')) {
-            if (request()->get('location') && request()->get('industry')) {
-                return $this->id . '/' . request()->get('location') . '_' . request()->get('industry') . '_' . Carbon::now()->micro . '.' . request()->file('picture')->getClientOriginalExtension();
+    public function generateThumbnailFileName(string $category = null) {
+        if (method_exists(request(), 'get')) {
+            if (request()->file('picture')) {
+                if (request()->get('location') && request()->get('industry')) {
+                    return $this->id . '/' . request()->get('location') . '_' . request()->get('industry') . '_' . Carbon::now()->micro . '.' . request()->file('picture')->getClientOriginalExtension();
+                }
+            }
+
+            if (!$this->existUploadedThumnbnail()) {
+                return self::getDefaultThumbnailFileName($category !== null ? $category : request()->get('industry'));
             }
         }
 
-        return self::getDefaultThumbnailFileName($this->category->value);
+        if (!$this->existUploadedThumnbnail()) {
+            return self::getDefaultThumbnailFileName($this->category->value);
+        }
+
+        return null;
     }
 
-    public static function getDefaultThumbnailFileName(string $category) {
+    public static function getDefaultThumbnailFileName($category) {
         return 'default/generic_' . $category . '_picture_' . Arr::random([1,2,3]) . '.jpg';
     }
 }

@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::include('includes.inputs.hidden','hidden');
 
         /**
-         * Directives
+         * If Statements
          */
         Blade::if('status', function($provider) {
             return auth()->user()->status->id === Status::where('value', $provider)->first()->id;

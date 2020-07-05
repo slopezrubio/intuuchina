@@ -94,7 +94,7 @@
                         @endcomponent
                     </div>
                     <div class="col-12 col-lg-9 input-group">
-                        @component('components.inputs.prepended-text')
+                       @component('components.inputs.prepended-text')
                             @slot('name', Str::plural($fee->unit))
 
                             @slot('value',  $fee->minimum)
@@ -176,19 +176,6 @@
             </div>
         </div>
 
-        <div class="form-group align-items-end row">
-            <div class="col-12 col-lg-3">
-                @component('components.inputs.label', ['name' => 'payment-currency'])
-                    {{ __('Currency') }}
-                @endcomponent
-            </div>
-            <div class="col-12 col-lg-9">
-                @component('components.inputs.select', ['options' => array_column(__('currencies'), 'text', key(current(__('currencies'))))])
-                    @slot('name', 'payment-currency')
-                @endcomponent
-            </div>
-        </div>
-
         <div class="form-group align-items-end row mt-5">
             <div class="col-12 col-lg-3">
                 @component('components.inputs.label')
@@ -202,6 +189,8 @@
                     {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency')) }}
                 </p>
             </div>
+        </div>
+        <div class="form-group align-items-start row">
 
             <div class="col-12 col-lg-3">
                 @component('components.inputs.label')
@@ -212,21 +201,21 @@
             </div>
 
             <div class="col-12 col-lg-9">
-                <p id="total" class="form-control d-flex align-items-center border-0 px-0 mb-0">
-                    <span class="mr-1">
-                        {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($intent->amount) / 100, 2), Config::get('services.stripe.cashier_currency')) }}
+                <p id="total">
+                    <span class="d-block border-0 p-0">
+                        {{ $fee->getTaxRate()['display_name'] . ' ' . number_format($fee->getTaxRate()['percentage'], 0) . '% ' . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($fee->amount * $fee->getTaxRate()['percentage'] / 100, 2), Config::get('services.stripe.cashier_currency')) }}
                     </span>
 
-                    {{ ' = ' . $fee->getTaxRate()['display_name'] . ' ' . number_format($fee->getTaxRate()['percentage'], 0) . '% ' }}
-
-                    <span class="mx-1">
-                        {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format($fee->amount * $fee->getTaxRate()['percentage'] / 100, 2), Config::get('services.stripe.cashier_currency')) }}
+                    <span class="d-block border-0 p-0">
+                        {{ ' + ' }}
                     </span>
 
-                    {{ ' + ' . __('Subtotal') }}
+                    <span class="d-block border-0 p-0">
+                        {{ __('Subtotal') . ' ' . numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency')) }}
+                    </span>
 
-                    <span class="mx-1">
-                        {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($subtotal), 2), Config::get('services.stripe.cashier_currency')) }}
+                    <span class="total">
+                         {{ numfmt_format_currency(numfmt_create(Config::get('app.locale'), \NumberFormatter::CURRENCY), number_format(intval($intent->amount) / 100, 2), Config::get('services.stripe.cashier_currency')) }}
                     </span>
                 </p>
             </div>

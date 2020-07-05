@@ -26,8 +26,6 @@ function PaymentForm(options) {
         phone_number: document.getElementById('phone_number'),
         email: document.getElementById('payment-email'),
         course: document.getElementById('course'),
-        lessons: document.getElementById('lessons'),
-        months: document.getElementById('months'),
         total: document.getElementById('total'),
         subtotal: document.getElementById('subtotal'),
         card: {
@@ -35,7 +33,6 @@ function PaymentForm(options) {
             cvc: document.getElementById('card-cvc'),
             expiry: document.getElementById('card-expiry')
         },
-        currency: document.getElementById('payment-currency'),
         payment: document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w'),
         token: document.getElementsByName('_token')[0],
         stripe: {},
@@ -80,16 +77,32 @@ function PaymentForm(options) {
         return 1;
     },
 
+    this.setUnitFields = function() {
+        this.fields[pluralize.plural(this.course.data.fee.unit)] = this.el.querySelector('#' + pluralize.plural(this.course.data.fee.unit));
+
+        this.fields[pluralize.plural(this.course.data.fee.unit)].addEventListener('change', async (event) => {
+            this.toggleLoadingState();
+            this.disableStripeInputs();
+
+            this.setSubtotal()
+                .setTotal();
+
+            this.toggleLoadingState();
+            this.disableStripeInputs(false);
+        });
+    },
 
     this.init = async function() {
         if (this.el !== null) {
             this.dialog = dialogFactory.createDialog();
+
             this.loadStripeElements();
 
             this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
 
             if (this.fields.course !== null) {
                 this.course = await api.axiosRequest(api.getResource('courses', this.fields.course.value));
+                this.setUnitFields();
 
                 this.setSubtotal()
                     .setTotal();
@@ -98,46 +111,16 @@ function PaymentForm(options) {
                     this.toggleLoadingState();
                     this.disableStripeInputs();
 
-                    this.toggleInputs([
-                        this.fields.months,
-                        this.fields.lessons,
-                    ]);
+                    let oldInput = this.fields[pluralize.plural(this.course.data.fee.unit)];
 
                     this.course = await api.axiosRequest(api.getResource('courses', event.target.value));
 
-                    this.setSubtotal()
-                        .setTotal();
+                    this.setUnitFields();
 
-                    this.toggleLoadingState();
-                    this.disableStripeInputs(false);
-                });
-
-                this.fields.months.addEventListener('change', async (event) => {
-                    // this.validateField(event.target, [
-                    //     'required',
-                    //     'integer',
-                    //     'InPersonCoursesScope'
-                    // ]);
-                    this.toggleLoadingState();
-                    this.disableStripeInputs();
-
-                    this.setSubtotal()
-                        .setTotal();
-
-                    this.toggleLoadingState();
-                    this.disableStripeInputs(false);
-                });
-
-                this.fields.lessons.addEventListener('change', async (event) => {
-                    // this.validateField(event.target, [
-                    //     'required',
-                    //     'integer',
-                    //     'OnlineCoursesScope'
-                    // ]);
-
-
-                    this.toggleLoadingState();
-                    this.disableStripeInputs();
+                    this.toggleInputs([
+                        oldInput,
+                        this.fields[pluralize.plural(this.course.data.fee.unit)],
+                    ]);
 
                     this.setSubtotal()
                         .setTotal();
@@ -168,10 +151,6 @@ function PaymentForm(options) {
                 ])
             });
 
-            this.fields.currency.addEventListener('change', async (event) => {
-                this.setPaymentAmount(event.target.value);
-            });
-
             $(this.el).on('submit', async (event) => {
                 event.preventDefault();
 
@@ -185,6 +164,8 @@ function PaymentForm(options) {
                  * details.
                  */
                 const validation = await this.validatePaymentDetails();
+
+                console.log(validation);
 
                 /*
                  * If errors have been encountered display the corresponding
@@ -226,7 +207,6 @@ function PaymentForm(options) {
                     email: paymentMethod.billing_details.email,
                     prefix: this.fields.prefix.value,
                     phone_number: paymentMethod.billing_details.phone,
-                    currency: this.fields.currency !== null ? this.fields.currency.value : null,
                     dialog: this.dialog !== null,
                     quantity: this.course !== null ? this.fields[pluralize.plural(this.course.data.fee.unit)].value : null,
                     course: this.fields.course !== null ? this.fields.course.value : null,
@@ -439,6 +419,7 @@ function PaymentForm(options) {
     };
 
     this.setSubtotal = function() {
+        console.log(this.course);
         if (this.course !== null) {
             this.price.subtotal = this.course.data.fee.amount * this.fields[pluralize.plural(this.course.data.fee.unit)].value;
             return this;
@@ -487,12 +468,17 @@ function PaymentForm(options) {
         this.fields.subtotal.textContent = subtotal;
 
         $(this.fields.payment).children('span')[0].textContent = verb + total;
-        $(this.fields.total).children('span')[0].textContent = total;
-        $(this.fields.total).children('span')[1].textContent = parseFloat(await money.exchangeCurrency(this.price.total - this.price.subtotal, currency)).toLocaleString(document.documentElement.lang, {
+
+        let regexp = /[€|$]((\d{1,3},)*\d{1,3}\.\d*)/g;
+
+        $(this.fields.total).children('span')[0].textContent = $(this.fields.total).children('span')[0].textContent.replace(regexp, parseFloat(await money.exchangeCurrency(this.price.total - this.price.subtotal, currency)).toLocaleString(document.documentElement.lang, {
             style: 'currency',
             currency: currency
-        });
-        $(this.fields.total).children('span')[2].textContent = subtotal;
+        }));
+
+        $(this.fields.total).children('span')[2].textContent = $(this.fields.total).children('span')[2].textContent.replace(regexp, subtotal);
+
+        $(this.fields.total).children('span.total')[0].textContent = total;
 
 
         return this;

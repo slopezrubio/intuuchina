@@ -1,5 +1,6 @@
 <?php
 
+use App\Program;
 use App\User;
 use App\Testimonial;
 use Faker\Generator as Faker;
@@ -23,6 +24,7 @@ class TestimonialsTableSeeder extends Seeder
             [
                 'name' => 'Santiago',
                 'surname' => 'Barba Bullón de Mendoza',
+                'program_id' => 1,
                 'testimonial' => [
                     'quotes' => json_encode([
                         'es' => '',
@@ -35,6 +37,7 @@ class TestimonialsTableSeeder extends Seeder
             [
                 'name' => 'Maria Alejandra',
                 'surname' => 'Sanabria Aguilar',
+                'program_id' => 1,
                 'testimonial' => [
                     'quotes' => json_encode([
                         'es' => '',
@@ -47,6 +50,7 @@ class TestimonialsTableSeeder extends Seeder
             [
                 'name' => 'Mario',
                 'surname' => 'Juárez Camacho',
+                'program_id' => 1,
                 'testimonial' => [
                     'quotes' => json_encode([
                         'es' => '',
@@ -59,6 +63,7 @@ class TestimonialsTableSeeder extends Seeder
             [
                 'name' => 'Cesar',
                 'surname' => 'Vázquez Parra',
+                'program_id' => 1,
                 'testimonial' => [
                     'quotes' => json_encode([
                         'es' => '',
@@ -71,6 +76,7 @@ class TestimonialsTableSeeder extends Seeder
             [
                 'name' => 'Rocco',
                 'surname' => 'Forgione',
+                'program_id' => 1,
                 'testimonial' => [
                     'quotes' => json_encode([
                         'es' => '',
@@ -83,6 +89,7 @@ class TestimonialsTableSeeder extends Seeder
             [
                 'name' => 'Angela',
                 'surname' => 'Blanco',
+                'program_id' => 1,
                 'testimonial' => [
                     'quotes' => json_encode([
                         'es' => '',
@@ -104,7 +111,8 @@ class TestimonialsTableSeeder extends Seeder
                 'id' => $id,
                 'name' => $user['name'],
                 'surnames' => $user['surname'],
-                'avatar' => Storage::putFile('public/profiles/'. $id, new File(public_path('storage/images/test_files/testimonial_' . ($key + $offset) . '.jpg')), 'public'),
+                'avatar' => Storage::putFileAs('public/profiles/'. $id, new File(public_path('storage/images/test_files/testimonial_' . ($key + $offset) . '.jpg')), Program::find($user['program_id'])->value . '_china_' . str_replace(' ', '_', strtolower($user['name'])) . '.jpg', 'public'),
+                'program_id' => $user['program_id']
             ]);
 
             $testimonial = factory(Testimonial::class)->create([

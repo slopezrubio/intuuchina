@@ -9,7 +9,7 @@
                             <div class="people-slider__slide">
                                 @endif
                                 <div class="people-slider__item">
-                                    <img class="people-slider__item-avatar" src="{{ Storage::url($person->avatar) }}" alt="{{ __('pictures.testimonials.alt') }}">
+                                    <img class="people-slider__item-avatar" src="{{ __('pictures.testimonial.url' , ['filepath' => str_replace('public', '', $person->avatar) ]) }}" alt="{{ __('pictures.testimonial.alt') }}">
                                     <h6 class="people-slider__item-name">{{ $person->name .' '. $person->surnames }}</h6>
                                     <strong class="people-slider__item-details">{{ $person->occupation }}</strong>
                                     <p class="people-slider__item-quote">{{ $person->quotes->{(string) App::getLocale()} }}</p>

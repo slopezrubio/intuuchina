@@ -93,7 +93,7 @@ var browser = (function() {
         isElementScoped: function(el) {
             if (dom.isElement(el)) {
                 return (
-                    ($(el).offset().top >= $(window).scrollTop())
+                    ($(el).offset().top <= $(window).scrollTop() + window.innerHeight)
                 )
             }
 

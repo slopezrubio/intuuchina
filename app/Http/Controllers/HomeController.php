@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\State;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 
 class HomeController extends Controller
 {
+
+    const USER_ELEMENTS_PER_PAGE = 9;
+
     /**
      * Create a new controller instance.
      *
@@ -32,6 +36,17 @@ class HomeController extends Controller
             return redirect('/admin');
         }
 
+        if ($user->stripe_id !== null) {
+            $user->asStripeCustomer();
+            $invoices = new LengthAwarePaginator($user->invoices()->toArray(), count($user->invoices()->toArray()),  self::USER_ELEMENTS_PER_PAGE, 1, [
+                'path' => route('user.billings'),
+            ]);
+
+            return view('pages.user.dashboard', ['data' => [
+                'billings' => $invoices
+            ]]);
+        }
+
         return view('pages.user.dashboard');
     }
 
@@ -44,6 +59,12 @@ class HomeController extends Controller
     public function status() {
         return view('pages.user.dashboard', [
             'selected' => 'status',
+        ]);
+    }
+
+    public function billings() {
+        return view('pages.user.dashboard', [
+            'selected' => 'billings',
         ]);
     }
 

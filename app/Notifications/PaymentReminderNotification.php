@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 
 class PaymentReminderNotification extends Notification
@@ -13,14 +14,17 @@ class PaymentReminderNotification extends Notification
     use Queueable;
 
     protected $reminder;
+    protected $user;
 
     /**
      * Create a new notification instance.
      *
      * @param $reminder
+     * @param $user
      */
-    public function __construct($reminder)
+    public function __construct($reminder, $user)
     {
+        $this->user = $user;
         $this->reminder = $this->setReminder($reminder);
     }
 
@@ -37,7 +41,14 @@ class PaymentReminderNotification extends Notification
 
     public function setReminder($reminder) {
         if (Lang::has('mails.payment-reminder.'.$reminder, app()->getLocale(), false)) {
-            return __('mails.payment-reminder.'.$reminder);
+            return __('mails.payment-reminder.'.$reminder, [
+                'name' => $this->user->name,
+                'program' => $this->user->program->name,
+                'fee' => $this->user->categories !== null
+                    ? $this->user->categories->first()->fee->name : $this->user->program->feeType->fees->first()->name,
+                'amount' => $this->user->categories !== null
+                    ? $this->user->categories->first()->fee->displayPriceTag() : $this->user->program->feeType->fees->first()->displayPriceTag()
+            ]);
         };
 
         return __('mails.payment-reminder.default');
@@ -55,6 +66,7 @@ class PaymentReminderNotification extends Notification
                     ->markdown('vendor.notifications.payment-reminder', [
                         'user' => $notifiable,
                         'reminder' => $this->reminder,
+                        'action' => route('user.')
                     ])
                     ->subject($this->reminder['subject']);
     }

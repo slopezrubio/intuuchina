@@ -16,6 +16,8 @@ class OffersTableSeeder extends Seeder
      */
     public function run()
     {
+        Offer::deleteAllThumbnails();
+
         $offers = $this->loadDataFromXMLFile([
             'root' => 'offers',
             'path_file' => storage_path('app/jobs/items.xml')

@@ -1,14 +1,6 @@
 <?php
 
 return [
-    'customer journey horizontal' => [
-        'url' => asset('storage/images/infography_en_horizontal.png'),
-        'alt' => 'Intuuchina\'s horizontal customer journey in english for desktop',
-    ],
-    'customer journey vertical' => [
-        'url' => asset('storage/images/infography_en_vertical.png'),
-        'alt' => 'Intuuchina\'s vertical customer journey in english',
-    ],
     'user_verify_cartoon' => [
         'url' => asset('storage/images/verify-user.png'),
         'alt' => "User Verify Cartoon",
@@ -16,6 +8,10 @@ return [
     'awards and honours' => [
         'url' => asset('storage/images/content/awards_honours.png'),
         'alt' => 'Awarded people during the RTVE Emprende Contest',
+    ],
+    'testimonial' => [
+        'url' => asset('storage/' . ':filepath'),
+        'alt' => 'Portrait of the testimonial',
     ],
     'what we offer' => [
       'url' => asset('storage/images/content/what_we_offer.png'),
@@ -41,8 +37,20 @@ return [
         'alt' => ':name\'s Logo'
     ],
     'corporation logo' => [
-        'url' => asset('images/logo.png'),
+        'url' => asset('storage/images/logo.png'),
         'alt' => 'IntuuChina Limited Corporation Logo'
+    ],
+    'user-icon' => [
+        'url' => asset('storage/images/content/icons/user-icon.svg'),
+        'alt' => 'An icon depicting a user',
+    ],
+    'rocket-icon' => [
+        'url' => asset('storage/images/content/icons/rocket-icon.svg'),
+        'alt' => 'An icon depicting a rocket',
+    ],
+    'papers-icon' => [
+        'url' => asset('storage/images/content/icons/papers-icon.svg'),
+        'alt' => 'An icon depicting papers',
     ],
     'a descriptive image' => "A descriptive picture of the :item",
 ];

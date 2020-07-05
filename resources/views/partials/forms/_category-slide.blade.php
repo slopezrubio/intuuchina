@@ -9,7 +9,7 @@
 
             @component('components.inputs.cta-button')
                 @slot('variant', 'tertiary')
-                @slot('content', __('Change'))
+                @slot('content', __('Apply'))
             @endcomponent
         </form>
     @elseif(Auth::user()->type === 'admin')

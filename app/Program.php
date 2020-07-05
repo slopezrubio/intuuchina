@@ -9,6 +9,8 @@ class Program extends Model
 {
     //
 
+    protected $fillable = ['created_at', 'updated_at','name', 'value', 'fee_type_id'];
+
     public function feeType() {
         return $this->belongsTo('App\FeeType');
     }
@@ -20,6 +22,11 @@ class Program extends Model
     public function studies() {
         return $this->belongsToMany('App\Category')
             ->wherePivot('program_id', Program::where('value', 'study')->first()->id);
+    }
+
+    public function industries() {
+        return $this->belongsToMany('App\Category')
+            ->wherePivot('program_id', Program::where('value', 'internship')->first()->id);
     }
 
     public function degrees() {
@@ -37,9 +44,11 @@ class Program extends Model
         return null;
     }
 
-    public static function getOptions() {
+    public static function getOptions($programs = null) {
         $options = [];
-        $programs = self::all();
+        if ($programs == null) {
+            $programs = self::all();
+        }
 
         foreach($programs as $program) {
             $options[$program->value] = $program->name;

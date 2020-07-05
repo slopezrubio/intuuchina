@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     use ResetsPasswords;
 
-    const ADMIN_ELEMENTS_PER_PAGE = 5;
+    const ADMIN_ELEMENTS_PER_PAGE = 9;
 
     public function index(Request $request) {
         $collections = $this->getCollectables($request);

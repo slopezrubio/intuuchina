@@ -32,14 +32,16 @@ var footer = (function() {
     };
 
     var setListeners = function() {
-        window.addEventListener('load', (e) => {
-            setContactForm();
-            setResponsiveness();
-        });
+        if (el !== null) {
+            window.addEventListener('load', (e) => {
+                setContactForm();
+                setResponsiveness();
+            });
 
-        window.addEventListener('resize', (e) => {
-            setResponsiveness();
-        })
+            window.addEventListener('resize', (e) => {
+                setResponsiveness();
+            })
+        }
     };
 
     init();

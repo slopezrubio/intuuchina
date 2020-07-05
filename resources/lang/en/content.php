@@ -14,6 +14,7 @@ return [
     'no such item has been found' => 'No :item has been found',
     'are you sure you want to remove' => 'Are you sure you want to remove this :item?',
 
+
     /*
     |--------------------------------------------------------------------------
     | Titles
@@ -263,10 +264,7 @@ return [
     'job position' => 'Job Position',
     'months' => '{1} Month|[2,*] Months',
     'pay' => 'Pay :value',
-    'per month' => "<b>:price</b> per month",
-    'per hour' => "<b>:price</b> per hour",
-    'per unit' => "<b>:price</b> per unit",
-    'per lesson' => "<b>:price</b> per :time lesson",
+    'per unit' => "<b>:price</b> per :unit",
     'pay now' => 'Pay Now',
     'see more' => 'See more',
     'open positions' => 'Open Positions',

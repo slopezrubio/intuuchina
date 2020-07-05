@@ -16,29 +16,153 @@ return [
                     "
     ],
     'payment-reminder' => [
-        '5 days' => [
-            'subject' => '2 days',
-            'body' => '2 days',
+        '2 days' => [
+            'subject' => 'The Application for your :program Program is still pending',
+            'body' =>   "
+                        <p>
+                            Hi :name, you have recently joined IntuuChina to apply for our :program Program, however, we remind you
+                            that in order to proceed with the process is strictly necessary to make the corresponding payment.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
+            'closing' =>    "
+                            <p>
+                               " . trans('content.are you in doubt') . "
+                            </p>
+                            "
         ],
         '1 week' => [
-            'subject' => '1 week',
-            'body' => '1 week',
+            'subject' => 'The Application for your :program Program is still pending',
+            'body' =>   "
+                        <p>
+                            Hi :name, last week you joined IntuuChina to apply for our :program Program. We want to let you know that
+                            in order to proceed with the process of your selected program you must make the corresponding payment for it.
+                        </p>
+                        <p>
+                            This would help out during the incipient stage of the management of your chosen program.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
+            'closing' =>    "
+                            <p>
+                                 " . trans('content.are you in doubt') . "
+                            </p>
+                            "
         ],
         '2 weeks' => [
-            'subject' => '2 weeks',
-            'body' => '2 weeks',
+            'subject' => 'The Application for your :program Program is still pending',
+            'body' =>   "
+                        <p>
+                            Hi :name, we have noticed you haven't carry out the corresponding payment for your application in
+                            our :program Program.
+                        <p>
+                            Due to the incipient management costs this application entails it is mandatory to have made this transaction
+                            prior to the starting of the process.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
         ],
         '1 month' => [
-            'subject' => '1 month',
-            'body' => '1 month',
+            'subject' => 'The Application for your :program Program is still pending',
+            'body' =>   "
+                        <p>
+                            Hi :name, we have noticed you haven't carry out the corresponding payment for your application in
+                            our :program Program.
+                        <p>
+                            Due to the incipient management costs this application entails it is mandatory to have made this transaction
+                            prior to the starting of the process.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
         ],
         '3 months' => [
-            'subject' => '3 months',
-            'body' => '3 months',
+            'subject' => 'The Application for your :program Program is still pending',
+            'body' =>   "
+                        <p>
+                            Hi :name, we have noticed you haven't carry out the corresponding payment for your application in
+                            our :program Program.
+                        <p>
+                            Due to the incipient management costs this application entails it is mandatory to have made this transaction
+                            prior to the starting of the process.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
         ],
-        'default' => [
-            'subject' => '1 year',
-            'body' => '1 year',
+        '1 year' => [
+            'subject' => 'Are you still interested in your :program Program?',
+            'body' =>   "
+                        <p>
+                            Hi :name, we have noticed you have been holding a pending application for a long time.
+                            If you are no longer interested in your application, please report us at <a href='mailto:" .config('mail.to.address'). "'>" .config('mail.from.address'). "</a> 
+                            and we will stop sending you more emails.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
+        ],
+        '2 years' => [
+            'subject' => 'Are you still interested in your :program Program?',
+            'body' =>   "
+                        <p>
+                            Hi :name, we have noticed you have been holding a pending application for a long time.
+                            If you are no longer interested in your application, please report us at <a href='mailto:" .config('mail.to.address'). "'>" .config('mail.from.address'). "</a> 
+                            and we will stop sending you more emails.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
+        ],
+        '3 years' => [
+            'subject' => 'Are you still interested in your :program Program?',
+            'body' =>   "
+                        <p>
+                            Hi :name, we have noticed you have been holding a pending application for a long time.
+                            If you are no longer interested in your application, please report us at <a href='mailto:" .config('mail.to.address'). "'>" .config('mail.from.address'). "</a> 
+                            and we will stop sending you more emails.
+                        </p>
+                        <p>
+                            This is your fee according to the selected program:
+                            <ul>
+                                <li>:fee: :amount</li>
+                            </ul>
+                        </p>
+                        ",
+        ],
+        'action' => [
+            0 => 'Pay Now'
         ]
     ],
     'new-user' => [

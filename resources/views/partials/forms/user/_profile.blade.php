@@ -104,6 +104,7 @@
         </div>
 
         @if (!$errors->profile->any())
+
             <div class="form-group row" id="industryFieldset"
                  style="{{ (Auth::user()->program->value === 'inter_relocat' || Auth::user()->program->value === 'internship') ? '' : 'display: none'}}">
                 @component('components.inputs.checkbox-group', [
@@ -156,7 +157,7 @@
                  style="{{ (old('program') === 'study') ? '' : 'display: none'}}">
                 @component('components.inputs.checkbox-group', [
                     'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
-                    'checked' =>  Auth::user()->program->value === 'study'? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
+                    'checked' =>  Auth::user()->program->value === 'study' ? array_column(App\Category::getOptionsFrom('App\User', Auth::user()->id), 'id') : [],
                 ])
                     @slot('name', 'categories')
                     @slot('label', __('Study Chinese Via'))

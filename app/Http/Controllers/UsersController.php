@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Program;
 use App\Rules\CurriculumVitae;
+use App\Rules\PhoneNumber;
 use App\Status;
 use App\User;
 use App\State;
@@ -31,17 +32,12 @@ class UsersController extends Controller
         return view('partials/forms/dialog-box-' . $currentStatus);
     }
 
-    public function single($id) {
-
-    }
-
-    public function update($id, Request $request) {
-        $user = User::find($id);
-
-        $validator = Validator::make($request->all(), [
+    protected function validator($request, $user) {
+        return Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'surnames' => ['required', 'string', 'max:255'],
             'nationality' => ['required', 'max:255'],
+            'phone_number' => ['required', 'numeric', new PhoneNumber()],
             'cv' => [
                 Rule::requiredIf(function() use ($request, $user) {
                     if ($request->get('program') !== 'study') {
@@ -54,9 +50,36 @@ class UsersController extends Controller
             ],
         ], [
             'cv.required' => Auth::user()->type !== 'admin'
-                                ? __('validation.custom.required', ['attribute' => __('CV')])
-                                : __('validation.custom.admin.required', ['attribute' => __('CV')])
+                ? __('validation.custom.required', ['attribute' => __('CV')])
+                : __('validation.custom.admin.required', ['attribute' => __('CV')])
         ]);
+    }
+
+    public function update($id, Request $request) {
+        $user = User::find($id);
+
+        $validator = $this->validator($request, $user);
+
+        $attributes = [
+            'name' => $request->get('name'),
+            'surnames' => $request->get('surnames'),
+            'nationality' => $request->get('nationality'),
+            'program_id' => Program::getByValue($request->get('program')) !== null
+                ? Program::getByValue($request->get('program'))->id
+                : null,
+            'categories' => $request->get('categories'),
+            'status_id' => Status::getByValue($request->get('status')) !== null
+                ? Status::getByValue($request->get('status'))->id
+                : $user->status_id,
+        ];
+
+        if (Auth::user()->type !== 'admin' && Auth::user()->status->value !== 'verified') {
+            $validator = Validator::make($request->all(), [
+                'phone_number' => ['required', 'numeric', new PhoneNumber()],
+            ]);
+
+            $attributes = [];
+        }
 
         if ($validator->errors()->any()) {
             $request->flash();
@@ -68,26 +91,15 @@ class UsersController extends Controller
             return Redirect::back()->withErrors($validator->errors()->getMessages(), 'profile');
         }
 
-        $user->update([
-            'name' => $request->get('name'),
-            'surnames' => $request->get('surnames'),
-            'nationality' => $request->get('nationality'),
-            'program_id' => Program::getByValue($request->get('program')) !== null
-                                ? Program::getByValue($request->get('program'))->id
-                                : null,
-            'categories' => $request->get('categories'),
-            'status_id' => Status::getByValue($request->get('status')) !== null
-                                ? Status::getByValue($request->get('status'))->id
-                                : $user->status_id,
-        ]);
+        $user->update($attributes);
 
         if (Auth::user()->type === 'admin') {
             return redirect()->route('admin')
-                            ->with('status', trans('validation.custom.completed' , ['item' => 'profile']));
+                            ->with('status', trans('validation.custom.updated' , ['item' => 'profile']));
         }
 
         return redirect()->route('user.profile')
-                            ->with('status', trans('validation.custom.completed' , ['item' => 'profile']));
+                            ->with('status', trans('validation.custom.updated' , ['item' => 'profile']));
     }
 
     public function edit($id) {
@@ -125,6 +137,9 @@ class UsersController extends Controller
                     ? Status::getByValue($request->get('status'))->id
                     : null,
             ]);
+
+            return redirect()->route('admin.users')
+                ->with('status', trans('validation.custom.upgraded', ['item' => 'user']));
         }
 
         return view('pages/admin/upgrade', [
@@ -159,11 +174,11 @@ class UsersController extends Controller
 
         if (Auth::user()->type === 'admin') {
             return Redirect::route('admin')
-                ->with('status', trans('validation.custom.completed', ['item' => 'password']));
+                ->with('status', trans('validation.custom.updated', ['item' => 'password']));
         }
 
         return Redirect::route('home')
-                ->with('status', trans('validation.custom.completed', ['item' => 'password']));
+                ->with('status', trans('validation.custom.updated', ['item' => 'password']));
     }
 
     public function destroy($id) {

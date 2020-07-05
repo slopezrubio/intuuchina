@@ -58,6 +58,7 @@ Route::group([
         'middleware' => 'App\Http\Middleware\Admin', 'prefix' => 'admin'
     ], function(){
 
+        Route::post('programs', 'FeeTypesController@getPrograms')->where('fee_type', '[a-z]+_?[a-z]*');
         Route::match(['get', 'post'], '/','AdminController@index')->name('admin');
         Route::get('password/change', 'AdminController@showChangePasswordForm')->name('admin.password.change');
 
@@ -66,7 +67,7 @@ Route::group([
          */
         Route::get('users', 'AdminController@index')->name('admin.users');
         Route::get('users/edit/{user}', 'UsersController@edit')->name('admin.edit-user');
-        Route::get('users/delete/{user}', 'UsersController@destroy')->name('admin.delete-user');
+        Route::get('users/delete/{user}', 'UsersController@destroy')->where('offer', '[0-9]+')->name('admin.delete-user');
         Route::match(['get', 'post'], 'users/upgrade/{user}', 'UsersController@upgrade')->name('admin.upgrade-user');
 //        Route::get('users/upgrade/{user}', 'UsersController@upgrade')->name('admin.upgrade-user');
         Route::post('users/edit/{offer}', 'UsersController@update')->where('offer', '[0-9]+')->name('admin.update-user');
@@ -86,9 +87,10 @@ Route::group([
          * -------  Fees  -------
          */
         Route::get('fees', 'AdminController@index')->name('admin.fees');
-        Route::get('fees/delete/{fee}', 'FeesController@destroy')->where('fee', '[0-9]')->name('admin.delete-fee');
-        Route::get('fee/new', 'FeesController@create')->name('admin.new-fee');
-        Route::get('fees/edit/{user}', 'FeesController@edit')->name('admin.edit-fee');
+        Route::get('fees/delete/{fee}', 'FeesController@destroy')->where('fee', '[0-9]+')->name('admin.delete-fee');
+        Route::get('fees/new', 'FeesController@create')->name('admin.new-fee');
+        Route::post('fees/new', 'FeesController@store')->name('admin.new-fee');
+        Route::get('fees/edit/{fee}', 'FeesController@edit')->where('fee', '[0-9]+')->name('admin.edit-fee');
         Route::post('fees/edit/{fee}', 'FeesController@update')->where('fee', '[0-9]+')->name('admin.update-fee');
 
         /**
@@ -139,11 +141,12 @@ Route::group(['middleware' => 'user'], function() {
     Route::get('password/change/{token}', 'UsersController@showChangePasswordForm')->name('password.change');
     Route::get('welcome', 'WelcomeController@index')->name('welcome');
     Route::get('home', 'HomeController@index')->name('home');
+    Route::get('status', 'HomeController@status')->name('user.status');
     Route::get('profile', 'HomeController@profile')->name('user.profile');
+    Route::get('billings', 'HomeController@billings')->name('user.billings');
     Route::get('paid/{charge}', 'CheckoutsController@showPaymentConfirmation')->name('payment_confirmation');
     Route::post('confirm', 'UsersController@confirm')->name('confirm');
     Route::post('payment-method', 'CheckoutsController@newPaymentIntent')->name('payment_method');
-    Route::get('{user}/profile', 'UsersController@single')->where('user', '[0-9]+')->name('edit_user');
     Route::post('profile/edit/{user}', 'UsersController@update')->where('user', '[0-9]+')->name('user.update-user');
     Route::post('{user}/program', 'UsersController@changeProgram')->name('change.program');
     Route::post('{user}/update/{program}', 'UsersController@updateProgram')->name('update.program');

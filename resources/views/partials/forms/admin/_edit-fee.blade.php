@@ -32,7 +32,7 @@
         <div class="col-md-9">
             @component('components.inputs.text')
                 @slot('name', 'name')
-                @slot('value', $fee->name)
+                @slot('value', old('name') !== null ? old('name') : $fee->name)
             @endcomponent
         </div>
     </div>
@@ -46,40 +46,10 @@
         <div class="col-md-9">
             @component('components.inputs.text')
                 @slot('name', 'heading')
-                @slot('value', $fee->heading)
+                @slot('value', old('heading') !== null ? old('heading') : $fee->heading)
             @endcomponent
         </div>
     </div>
-
-    @if($fee->feeType->value === 'unit_rate')
-        <div class="form-group row">
-            <div class="col-md-3">
-                @component('components.inputs.label', ['name' => 'name'])
-                    {{ __('Unit of Measure') }}
-                @endcomponent
-            </div>
-            <div class="col-md-9">
-                @component('components.inputs.text')
-                    @slot('name', 'unit')
-                    @slot('value', $fee->unit)
-                @endcomponent
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-3">
-                @component('components.inputs.label', ['name' => 'name'])
-                    {{ __('Minimum Qty.') }}
-                @endcomponent
-            </div>
-            <div class="col-md-9">
-                @component('components.inputs.text')
-                    @slot('name', 'minimum')
-                    @slot('value', $fee->minimum)
-                @endcomponent
-            </div>
-        </div>
-    @endif
 
     <div class="form-group row">
         <div class="col-md-3">
@@ -90,24 +60,132 @@
         <div class="col-md-9">
             @component('components.inputs.text')
                 @slot('name', 'amount')
-                @slot('value', $fee->amount)
+                @slot('value', old('amount') !== null ? old('amount') : $fee->amount)
             @endcomponent
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" id="unitFieldset" style="{{ $fee->value === 'unit_rate' || old('fee_type') === 'unit_rate' ? '' : 'display:none' }}">
         <div class="col-md-3">
-            @component('components.inputs.label', ['name' => 'tax'])
-                {{ __('Tax Applied') }}
+            @component('components.inputs.label', ['name' => 'unit'])
+                {{ __('Unit of Measure') }}
             @endcomponent
         </div>
         <div class="col-md-9">
-            @component('components.inputs.select', ['options' =>  Tax::getOptions()])
-                @slot('name', 'tax')
-                @slot('value', $fee->jurisdiction)
+            @component('components.inputs.text')
+                @slot('name', 'unit')
+                @slot('value', old('unit') !== null ? old('unit') : $fee->unit)
             @endcomponent
         </div>
     </div>
+
+    <div class="form-group row" id="minimumFieldset" style="{{ $fee->value === 'unit_rate' || old('fee_type') === 'unit_rate' ? '' : 'display:none' }}">
+        <div class="col-md-3">
+            @component('components.inputs.label', ['name' => 'minimum'])
+                {{ __('Minimum Qty.') }}
+            @endcomponent
+        </div>
+        <div class="col-md-9">
+            @component('components.inputs.text')
+                @slot('name', 'minimum')
+                @slot('value', old('minimum') !== null ? old('minimum') : $fee->minimum)
+            @endcomponent
+        </div>
+    </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                @component('components.inputs.label', ['name' => 'tax'])
+                    {{ __('Tax Applied') }}
+                @endcomponent
+            </div>
+            <div class="col-md-9">
+                @component('components.inputs.select', ['options' =>  Tax::getOptions()])
+                    @slot('name', 'tax')
+                    @slot('value', old('tax') !== null ? old('tax') : $fee->jurisdiction)
+                @endcomponent
+            </div>
+        </div>
+
+    @empty(old())
+
+        <div class="form-group row" id="industryFieldset" style="{{
+            (in_array('internship', array_keys(App\Program::getOptions($fee->feeType->programs))) || in_array('inter_relocat', array_keys(App\Program::getOptions($fee->feeType->programs)))) ? '' : 'display:none'
+         }}">
+            @component('components.inputs.checkbox-group', [
+                'inputs' => App\Category::getOptionsFrom('App\Program', 'inter_relocat'),
+                'checked' => array_column(App\Category::getOptions($fee->categories), 'id'),
+            ])
+                @slot('name', 'categories')
+                @slot('label', __('Industry'))
+            @endcomponent
+        </div>
+
+        <div class="form-group row" id="studyFieldset" style="{{
+            (in_array('study', array_keys(App\Program::getOptions($fee->feeType->programs)))) ? '' : 'display:none'
+        }}">
+            @component('components.inputs.checkbox-group', [
+                'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
+                'checked' => array_column(App\Category::getOptions($fee->categories), 'id'),
+            ])
+                @slot('name', 'categories')
+                @slot('label', __('Study Chinese Via'))
+            @endcomponent
+        </div>
+
+        <div class="form-group row" id="universityFieldset" style="{{
+            (in_array('university', array_keys(App\Program::getOptions($fee->feeType->programs)))) ? '' : 'display:none'
+        }}">
+            @component('components.inputs.checkbox-group', [
+                'inputs' => App\Category::getOptionsFrom('App\Program', 'university'),
+                'checked' => array_column(App\Category::getOptions($fee->categories), 'id'),
+            ])
+                @slot('name', 'categories')
+                @slot('label',  __('University'))
+            @endcomponent
+        </div>
+    @else
+
+        {{ var_dump(old('categories')) }}
+
+        <div class="form-group row" id="industryFieldset" style="{{
+            (in_array('internship', array_keys(App\Program::getOptions($fee->feeType->programs))) || in_array('inter_relocat', array_keys(App\Program::getOptions($fee->feeType->programs)))) ? '' : 'display:none'
+         }}">
+            @component('components.inputs.checkbox-group', [
+                'inputs' => App\Category::getOptionsFrom('App\Program', 'inter_relocat'),
+                'checked' => [],
+            ])
+                @slot('name', 'categories')
+                @slot('label', __('Industry'))
+            @endcomponent
+        </div>
+
+        <div class="form-group row" id="studyFieldset" style="{{
+            (in_array('study', array_keys(App\Program::getOptions($fee->feeType->programs)))) ? '' : 'display:none'
+        }}">
+            @component('components.inputs.checkbox-group', [
+                'inputs' => App\Category::getOptionsFrom('App\Program', 'study'),
+                'checked' =>                          [],
+            ])
+                @slot('name', 'categories')
+                @slot('label', __('Study Chinese Via'))
+            @endcomponent
+        </div>
+
+        <div class="form-group row" id="universityFieldset" style="{{
+            (in_array('university', array_keys(App\Program::getOptions($fee->feeType->programs)))) ? '' : 'display:none'
+        }}">
+            @component('components.inputs.checkbox-group', [
+                'inputs' => App\Category::getOptionsFrom('App\Program', 'university'),
+                'checked' => [],
+            ])
+                @slot('name', 'categories')
+                @slot('label',  __('University'))
+            @endcomponent
+        </div>
+    @endempty
+
+
 
     <div class="form-group row justify-content-center">
         <div class="col-12 col-sm-6 col-md-4">

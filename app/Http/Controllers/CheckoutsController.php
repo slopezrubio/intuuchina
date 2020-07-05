@@ -246,7 +246,9 @@ class CheckoutsController extends Controller
          */
         if ($course !== null) {
             $courseValidationRuleClass = '\\App\\Rules\\' . Str::studly($course) . 'CoursesScope';
-            $rules[Str::plural(Category::where('value', $course)->first()->fee->unit)] = new $courseValidationRuleClass();
+
+            $newFee = Category::where('value', $course)->first()->fee;
+            $rules[Str::plural($newFee->unit)] = new $courseValidationRuleClass($newFee);
         }
 
         // Makes the validators for each field.

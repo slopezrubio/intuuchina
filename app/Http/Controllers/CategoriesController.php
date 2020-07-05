@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Resources\Category as CategoryResource;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -14,5 +15,9 @@ class CategoriesController extends Controller
             'price_box' => __('component.c-price-box.' . $category->value),
             'price' => $category->fee->amount,
         ]);
+    }
+
+    public function getResource($category) {
+        return new CategoryResource(Category::where('value', $category)->first());
     }
 }

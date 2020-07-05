@@ -1,6 +1,17 @@
 <form id="edit-offer" method="POST" enctype="multipart/form-data" action="{{ route('admin.update-offer', ['offer' => $offer->id]) }}" class="extended-form">
     @csrf
 
+    @if($errors->any())
+        <div class="row">
+            <div class="error-message col-12">
+                <span>
+                    <i class="fas fa-times"></i>
+                    {{ __('validation.custom.forms.admin.edit-offer.invalid') }}
+                </span>
+            </div>
+        </div>
+    @endif
+
     @component('components.inputs.hidden')
         @slot('name', 'id')
         @slot('id', 'id')
@@ -42,9 +53,9 @@
             @endcomponent
         </div>
         <div class="col-md-9">
-            @component('components.inputs.select', ['options' => App\Category::getSelectorOptions(App\Category::all())])
+            @component('components.inputs.select', ['options' => App\Category::getSelectorOptions(App\Program::where('value', 'internship')->first()->industries)])
                 @slot('name', 'industry')
-                @slot('value', $offer->industry)
+                @slot('value', $offer->category->value)
             @endcomponent
         </div>
     </div>

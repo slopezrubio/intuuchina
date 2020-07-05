@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Offer;
 use App\Testimonial;
+use App\Http\Resources\Offer as OfferResource;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class OffersController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -85,7 +86,8 @@ class OffersController extends Controller
             'description' => $request->get('description'),
         ]);
 
-        return redirect()->route('admin.offers');
+        return redirect()->route('admin.offers')
+            ->with('status', trans('validation.custom.created', ['item' => 'job offer']));
     }
 
     /**
@@ -140,15 +142,20 @@ class OffersController extends Controller
             'title' => $request->get('title'),
             'location' => $request->get('location'),
             'picture' => (function() use ($request, $offer) {
-                return $offer->updateThumbnail();
+                $filename = $offer->updateThumbnail();
+
+                if ($filename !== null) {
+                    return $filename;
+                }
+
+                return $offer->picture;
             })(),
             'category_id' => Category::where('value', $request->get('industry'))->first()->id,
             'description' => $request->get('description'),
         ]);
 
-        //Offer::find($id)->setChanges($request)->save();
-
-        return redirect()->route('admin.offers');
+        return redirect()->route('admin.offers')
+            ->with('status', trans('validation.custom.updated', ['item' => 'job offer']));
     }
 
     /*
@@ -277,5 +284,9 @@ class OffersController extends Controller
             'offer' => $offer,
             'testimonials' => Testimonial::getFromDistinctUsers(Testimonial::MAX_NUMBER_OF_TESTIMONIALS)
         ]);
+    }
+
+    public function getResource($offer) {
+        return new OfferResource(Offer::find($offer));
     }
 }

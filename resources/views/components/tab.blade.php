@@ -21,7 +21,7 @@
         @endforeach
     </ul>
 
-    <div class="tab-content position-relative" style="">
+    <div class="tab-content position-relative">
 
         @if(session('status') !== null)
             <div class="row">

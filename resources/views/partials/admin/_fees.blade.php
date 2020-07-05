@@ -18,5 +18,8 @@
     @component('components.flex-table', ['items' => $data['fees']])
         @slot('id', 'fees')
         @slot('action', 'partials.forms.admin._fees-list')
+        @slot('pagination')
+            {{ $data['fees']->links('vendor.pagination.semantic-ui') }}
+        @endslot
     @endcomponent
 </section>

@@ -3223,22 +3223,14 @@ function BottomNavigation(options) {
 
   this.toggle = function () {
     var ev = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    this.setPosition();
 
-    if (this.position.length > 0) {
-      if (_facades_browser__WEBPACK_IMPORTED_MODULE_1__["default"].isElementScoped(this.position)) {
-        if (this.isFixed()) {
-          $(this.el).removeClass('bottom-navigation--fixed');
-
-          if (ev !== null && ev.type === 'scroll') {//console.log($(this.el).offset().top + this.el.clientHeight);
-            // TODO
-            // this.scrollTo(window.scrollY + ($(this.el).bottom())
-          }
-        }
-
-        return this;
+    if (_facades_browser__WEBPACK_IMPORTED_MODULE_1__["default"].isElementScoped(this.position)) {
+      if (this.isFixed()) {
+        $(this.el).removeClass('bottom-navigation--fixed');
       }
 
-      ;
+      return this;
     }
 
     if (!this.isFixed()) {
@@ -3381,6 +3373,55 @@ function FlexTable(options) {
 
 var flexTableFactory = new _factories_TableFactory__WEBPACK_IMPORTED_MODULE_0__["TableFactory"]();
 /* harmony default export */ __webpack_exports__["default"] = (FlexTable);
+
+/***/ }),
+
+/***/ "./resources/js/components/Infography.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Infography.js ***!
+  \***********************************************/
+/*! exports provided: infographyFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "infographyFactory", function() { return infographyFactory; });
+/* harmony import */ var _factories_InfographyFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../factories/InfographyFactory */ "./resources/js/factories/InfographyFactory.js");
+/* harmony import */ var _facades_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../facades/browser */ "./resources/js/facades/browser.js");
+
+
+
+function Infography(options) {
+  this.items = [];
+
+  this.init = function () {
+    var _this = this;
+
+    this.items = this.el.getElementsByClassName('step-list__item');
+    window.addEventListener('load', function (ev) {
+      _this.showItems(ev);
+    });
+    window.addEventListener('scroll', function (ev) {
+      _this.showItems(ev);
+    });
+    window.addEventListener('resize', function (ev) {
+      _this.showItems(ev);
+    });
+  };
+
+  this.showItems = function (ev) {
+    for (var i = 0; i < this.items.length; i++) {
+      if (!$(this.items[i]).hasClass('show') && _facades_browser__WEBPACK_IMPORTED_MODULE_1__["default"].isElementScoped(this.items[i])) {
+        $(this.items[i]).addClass('show');
+      }
+    }
+
+    ;
+  };
+}
+
+var infographyFactory = new _factories_InfographyFactory__WEBPACK_IMPORTED_MODULE_0__["InfographyFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (Infography);
 
 /***/ }),
 
@@ -3763,68 +3804,6 @@ var squareGridFactory = new _factories_GridsFactory__WEBPACK_IMPORTED_MODULE_0__
 
 /***/ }),
 
-/***/ "./resources/js/components/_customer-journey.js":
-/*!******************************************************!*\
-  !*** ./resources/js/components/_customer-journey.js ***!
-  \******************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_breakpoints__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main/breakpoints */ "./resources/js/main/breakpoints.js");
-/* harmony import */ var _main_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/dom */ "./resources/js/main/dom.js");
-/* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
-
-
-
-var customerJourney = {
-  init: function init() {
-    var _this = this;
-
-    if (document.querySelector('.customer-journey')) {
-      window.addEventListener('load', function (e) {
-        _this.setPictures();
-      });
-      window.addEventListener('resize', function (e) {
-        _this.setPictures();
-      });
-    }
-  },
-  el: document.querySelector('.customer-journey') !== undefined ? document.querySelector('.customer-journey') : null,
-  currentPicture: null,
-  pictures: {
-    horizontal: null,
-    vertical: null
-  },
-  setPictures: function setPictures() {
-    this.currentPicture = this.el.querySelector('img');
-
-    if (this.pictures.horizontal === null) {
-      this.pictures.horizontal = this.currentPicture.getAttribute('src').match(_main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getPattern('horizontalCustomerJourney')) ? this.currentPicture.getAttribute('src') : this.currentPicture.getAttribute('src').replace(/vertical/, 'horizontal');
-    }
-
-    if (this.pictures.vertical === null) {
-      this.pictures.vertical = this.currentPicture.getAttribute('src').match(_main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getPattern('verticalCustomerJourney')) ? this.currentPicture.getAttribute('src') : this.currentPicture.getAttribute('src').replace(/horizontal/, 'vertical');
-    }
-
-    this.loadPicture();
-  },
-  loadPicture: function loadPicture() {
-    var newCustomerJourneyPicture = _main_UI__WEBPACK_IMPORTED_MODULE_2__["default"].getCustomerJourneyPicture(this.el);
-
-    if (newCustomerJourneyPicture !== null) {
-      _main_dom__WEBPACK_IMPORTED_MODULE_1__["default"].toggleSingleClass(this.el, newCustomerJourneyPicture.className);
-      this.currentPicture.setAttribute('src', this.pictures[newCustomerJourneyPicture.src]);
-    }
-
-    ;
-  }
-};
-customerJourney.init();
-
-/***/ }),
-
 /***/ "./resources/js/components/_edit-offer.js":
 /*!************************************************!*\
   !*** ./resources/js/components/_edit-offer.js ***!
@@ -3937,13 +3916,15 @@ var footer = function () {
   };
 
   var setListeners = function setListeners() {
-    window.addEventListener('load', function (e) {
-      setContactForm();
-      setResponsiveness();
-    });
-    window.addEventListener('resize', function (e) {
-      setResponsiveness();
-    });
+    if (el !== null) {
+      window.addEventListener('load', function (e) {
+        setContactForm();
+        setResponsiveness();
+      });
+      window.addEventListener('resize', function (e) {
+        setResponsiveness();
+      });
+    }
   };
 
   init();
@@ -5245,6 +5226,144 @@ var contactFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_0_
 
 /***/ }),
 
+/***/ "./resources/js/components/forms/CreateFeeForm.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/forms/CreateFeeForm.js ***!
+  \********************************************************/
+/*! exports provided: createFeeFormFactory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFeeFormFactory", function() { return createFeeFormFactory; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../factories/FormsFactory */ "./resources/js/factories/FormsFactory.js");
+/* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../facades/api */ "./resources/js/facades/api.js");
+/* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../facades/dom */ "./resources/js/facades/dom.js");
+/* harmony import */ var _facades_object__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../facades/object */ "./resources/js/facades/object.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+function CreateFeeForm() {
+  this.fields = {};
+  this.init =
+  /*#__PURE__*/
+  _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    var _this = this;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            this.fields.name = this.el.querySelector('#name');
+            this.fields.heading = this.el.querySelector('#heading');
+            this.fields.fee_type = this.el.querySelector('#fee_type');
+            this.fields.amount = this.el.querySelector('#amount');
+            this.setFieldsets();
+            this.setInputFilter(this.fields.amount, function (value) {
+              return _this.filters["float"].test(value);
+            });
+            this.setInputFilter(this.fieldsets.minimum, function (value) {
+              return _this.filters.integer.test(value);
+            });
+            this.fields.fee_type.addEventListener('change',
+            /*#__PURE__*/
+            function () {
+              var _ref2 = _asyncToGenerator(
+              /*#__PURE__*/
+              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(ev) {
+                var programs;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        _this.toggleLoadingState();
+
+                        _context.next = 3;
+                        return _facades_api__WEBPACK_IMPORTED_MODULE_2__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_2__["default"].getRoute('hostname') + '/admin/programs', 'post', {
+                          fee_type: ev.target.value
+                        });
+
+                      case 3:
+                        programs = _context.sent;
+
+                        _this.updateFeeFieldset(programs);
+
+                        _this.toggleLoadingState();
+
+                      case 6:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+
+              return function (_x) {
+                return _ref2.apply(this, arguments);
+              };
+            }());
+
+          case 8:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this);
+  }));
+
+  this.updateFeeFieldset = function (programs) {
+    if (typeof this.fields.fee_type === 'undefined') {
+      return null;
+    }
+
+    ;
+
+    switch (this.fields.fee_type.value) {
+      case 'unit_rate':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].show(this.fieldsets.minimum);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].show(this.fieldsets.unit);
+        break;
+
+      case 'entry_fee':
+        _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].hide(this.fieldsets.minimum);
+        _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].hide(this.fieldsets.unit);
+        break;
+    }
+
+    programs = _facades_object__WEBPACK_IMPORTED_MODULE_4__["default"].arrayValues(programs, 'value');
+    programs.indexOf('internship') !== -1 || programs.indexOf('inter_relocat') !== -1 ? _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].show(this.fieldsets.industry) : _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].hide(this.fieldsets.industry);
+    programs.indexOf('study') !== -1 ? _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].show(this.fieldsets.study) : _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].hide(this.fieldsets.study);
+    programs.indexOf('university') !== -1 ? _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].show(this.fieldsets.university) : _facades_dom__WEBPACK_IMPORTED_MODULE_3__["default"].hide(this.fieldsets.university);
+  };
+
+  this.setFieldsets = function () {
+    this.fieldsets = {
+      industry: document.getElementById('industryFieldset'),
+      study: document.getElementById('studyFieldset'),
+      university: document.getElementById('universityFieldset'),
+      minimum: document.getElementById('minimumFieldset'),
+      unit: document.getElementById('unitFieldset')
+    };
+  };
+}
+
+var createFeeFormFactory = new _factories_FormsFactory__WEBPACK_IMPORTED_MODULE_1__["FormFactory"]();
+/* harmony default export */ __webpack_exports__["default"] = (CreateFeeForm);
+
+/***/ }),
+
 /***/ "./resources/js/components/forms/CreateOfferForm.js":
 /*!**********************************************************!*\
   !*** ./resources/js/components/forms/CreateOfferForm.js ***!
@@ -5631,7 +5750,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 function PaymentForm(options) {
-  var _this2 = this;
+  var _this3 = this;
 
   this.stripeElements = ['card'];
   this.stripeElementsStyles = {
@@ -5651,8 +5770,6 @@ function PaymentForm(options) {
     phone_number: document.getElementById('phone_number'),
     email: document.getElementById('payment-email'),
     course: document.getElementById('course'),
-    lessons: document.getElementById('lessons'),
-    months: document.getElementById('months'),
     total: document.getElementById('total'),
     subtotal: document.getElementById('subtotal'),
     card: {
@@ -5660,7 +5777,6 @@ function PaymentForm(options) {
       cvc: document.getElementById('card-cvc'),
       expiry: document.getElementById('card-expiry')
     },
-    currency: document.getElementById('payment-currency'),
     payment: document.getElementById('checkout-button-sku_GDHDkOPWtjGF2w'),
     token: document.getElementsByName('_token')[0],
     stripe: {}
@@ -5693,19 +5809,55 @@ function PaymentForm(options) {
     }
 
     return 1;
+  }, this.setUnitFields = function () {
+    var _this = this;
+
+    this.fields[pluralize.plural(this.course.data.fee.unit)] = this.el.querySelector('#' + pluralize.plural(this.course.data.fee.unit));
+    this.fields[pluralize.plural(this.course.data.fee.unit)].addEventListener('change',
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.toggleLoadingState();
+
+                _this.disableStripeInputs();
+
+                _this.setSubtotal().setTotal();
+
+                _this.toggleLoadingState();
+
+                _this.disableStripeInputs(false);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
   }, this.init =
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-    var _this = this;
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+    var _this2 = this;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             if (!(this.el !== null)) {
-              _context6.next = 17;
+              _context4.next = 15;
               break;
             }
 
@@ -5714,82 +5866,50 @@ function PaymentForm(options) {
             this.pricePerUnit = this.fields.payment.querySelector('span').getAttribute('data-value') / 100;
 
             if (!(this.fields.course !== null)) {
-              _context6.next = 12;
+              _context4.next = 11;
               break;
             }
 
-            _context6.next = 7;
+            _context4.next = 7;
             return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', this.fields.course.value));
 
           case 7:
-            this.course = _context6.sent;
+            this.course = _context4.sent;
+            this.setUnitFields();
             this.setSubtotal().setTotal();
             this.fields.course.addEventListener('change',
-            /*#__PURE__*/
-            function () {
-              var _ref2 = _asyncToGenerator(
-              /*#__PURE__*/
-              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event) {
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        _this.toggleLoadingState();
-
-                        _this.disableStripeInputs();
-
-                        _this.toggleInputs([_this.fields.months, _this.fields.lessons]);
-
-                        _context.next = 5;
-                        return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', event.target.value));
-
-                      case 5:
-                        _this.course = _context.sent;
-
-                        _this.setSubtotal().setTotal();
-
-                        _this.toggleLoadingState();
-
-                        _this.disableStripeInputs(false);
-
-                      case 9:
-                      case "end":
-                        return _context.stop();
-                    }
-                  }
-                }, _callee);
-              }));
-
-              return function (_x) {
-                return _ref2.apply(this, arguments);
-              };
-            }());
-            this.fields.months.addEventListener('change',
             /*#__PURE__*/
             function () {
               var _ref3 = _asyncToGenerator(
               /*#__PURE__*/
               _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event) {
+                var oldInput;
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
                   while (1) {
                     switch (_context2.prev = _context2.next) {
                       case 0:
-                        // this.validateField(event.target, [
-                        //     'required',
-                        //     'integer',
-                        //     'InPersonCoursesScope'
-                        // ]);
-                        _this.toggleLoadingState();
+                        _this2.toggleLoadingState();
 
-                        _this.disableStripeInputs();
+                        _this2.disableStripeInputs();
 
-                        _this.setSubtotal().setTotal();
-
-                        _this.toggleLoadingState();
-
-                        _this.disableStripeInputs(false);
+                        oldInput = _this2.fields[pluralize.plural(_this2.course.data.fee.unit)];
+                        _context2.next = 5;
+                        return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getResource('courses', event.target.value));
 
                       case 5:
+                        _this2.course = _context2.sent;
+
+                        _this2.setUnitFields();
+
+                        _this2.toggleInputs([oldInput, _this2.fields[pluralize.plural(_this2.course.data.fee.unit)]]);
+
+                        _this2.setSubtotal().setTotal();
+
+                        _this2.toggleLoadingState();
+
+                        _this2.disableStripeInputs(false);
+
+                      case 11:
                       case "end":
                         return _context2.stop();
                     }
@@ -5801,32 +5921,111 @@ function PaymentForm(options) {
                 return _ref3.apply(this, arguments);
               };
             }());
-            this.fields.lessons.addEventListener('change',
+
+          case 11:
+            this.fields.card_holder.addEventListener('change', function (event) {
+              _this2.validateField(event.target, ['ValidName']);
+            });
+            this.fields.phone_number.addEventListener('change', function (event) {
+              _this2.validateField(event.target, ['required', 'numeric', 'PhoneNumber']);
+            });
+            this.fields.email.addEventListener('change', function (event) {
+              _this2.validateField(event.target, ['required', 'email']);
+            });
+            $(this.el).on('submit',
             /*#__PURE__*/
             function () {
               var _ref4 = _asyncToGenerator(
               /*#__PURE__*/
               _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(event) {
+                var validation, _ref5, paymentMethod, error, paymentInformation;
+
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                   while (1) {
                     switch (_context3.prev = _context3.next) {
                       case 0:
-                        // this.validateField(event.target, [
-                        //     'required',
-                        //     'integer',
-                        //     'OnlineCoursesScope'
-                        // ]);
-                        _this.toggleLoadingState();
+                        event.preventDefault();
 
-                        _this.disableStripeInputs();
+                        _this2.toggleLoadingState();
 
-                        _this.setSubtotal().setTotal();
+                        _this2.disableStripeInputs();
 
-                        _this.toggleLoadingState();
+                        _this2.paymentDetails = _this2.createPaymentDetails();
+                        /*
+                         * If the validation succeeds returns an object with the billing
+                         * details.
+                         */
 
-                        _this.disableStripeInputs(false);
+                        _context3.next = 6;
+                        return _this2.validatePaymentDetails();
 
-                      case 5:
+                      case 6:
+                        validation = _context3.sent;
+                        console.log(validation);
+                        /*
+                         * If errors have been encountered display the corresponding
+                         * messages.
+                         */
+
+                        if (!validation.errors) {
+                          _context3.next = 13;
+                          break;
+                        }
+
+                        Object.keys(_this2.paymentDetails).forEach(function (fieldName) {
+                          if (validation.errors[fieldName] !== undefined) {
+                            _this2.displayFieldError(_this2.fields[fieldName], validation.errors[fieldName][0]);
+                          } else {
+                            _this2.removeFieldError(_this2.fields[fieldName]);
+                          }
+                        });
+
+                        _this2.toggleLoadingState();
+
+                        _this2.disableStripeInputs(false);
+
+                        return _context3.abrupt("return", false);
+
+                      case 13:
+                        _context3.next = 15;
+                        return stripe.createPaymentMethod('card', _this2.fields.stripe['card-number'], {
+                          billing_details: validation
+                        });
+
+                      case 15:
+                        _ref5 = _context3.sent;
+                        paymentMethod = _ref5.paymentMethod;
+                        error = _ref5.error;
+
+                        if (!error) {
+                          _context3.next = 22;
+                          break;
+                        }
+
+                        _this2.toggleLoadingState();
+
+                        _this2.disableStripeInputs(false);
+
+                        return _context3.abrupt("return", false);
+
+                      case 22:
+                        paymentInformation = {
+                          _token: _this2.fields.token !== null ? _this2.fields.token.value : null,
+                          card_holder: _this2.fields.card_holder !== null ? _this2.fields.card_holder.value : null,
+                          email: paymentMethod.billing_details.email,
+                          prefix: _this2.fields.prefix.value,
+                          phone_number: paymentMethod.billing_details.phone,
+                          dialog: _this2.dialog !== null,
+                          quantity: _this2.course !== null ? _this2.fields[pluralize.plural(_this2.course.data.fee.unit)].value : null,
+                          course: _this2.fields.course !== null ? _this2.fields.course.value : null,
+                          payment_method: paymentMethod.id
+                        };
+
+                        _this2.getCourseDuration(paymentInformation);
+
+                        _this2.sendPaymentInformation(paymentInformation);
+
+                      case 25:
                       case "end":
                         return _context3.stop();
                     }
@@ -5839,190 +6038,54 @@ function PaymentForm(options) {
               };
             }());
 
-          case 12:
-            this.fields.card_holder.addEventListener('change', function (event) {
-              _this.validateField(event.target, ['ValidName']);
-            });
-            this.fields.phone_number.addEventListener('change', function (event) {
-              _this.validateField(event.target, ['required', 'numeric', 'PhoneNumber']);
-            });
-            this.fields.email.addEventListener('change', function (event) {
-              _this.validateField(event.target, ['required', 'email']);
-            });
-            this.fields.currency.addEventListener('change',
-            /*#__PURE__*/
-            function () {
-              var _ref5 = _asyncToGenerator(
-              /*#__PURE__*/
-              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(event) {
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-                  while (1) {
-                    switch (_context4.prev = _context4.next) {
-                      case 0:
-                        _this.setPaymentAmount(event.target.value);
-
-                      case 1:
-                      case "end":
-                        return _context4.stop();
-                    }
-                  }
-                }, _callee4);
-              }));
-
-              return function (_x4) {
-                return _ref5.apply(this, arguments);
-              };
-            }());
-            $(this.el).on('submit',
-            /*#__PURE__*/
-            function () {
-              var _ref6 = _asyncToGenerator(
-              /*#__PURE__*/
-              _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(event) {
-                var validation, _ref7, paymentMethod, error, paymentInformation;
-
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-                  while (1) {
-                    switch (_context5.prev = _context5.next) {
-                      case 0:
-                        event.preventDefault();
-
-                        _this.toggleLoadingState();
-
-                        _this.disableStripeInputs();
-
-                        _this.paymentDetails = _this.createPaymentDetails();
-                        /*
-                         * If the validation succeeds returns an object with the billing
-                         * details.
-                         */
-
-                        _context5.next = 6;
-                        return _this.validatePaymentDetails();
-
-                      case 6:
-                        validation = _context5.sent;
-
-                        if (!validation.errors) {
-                          _context5.next = 12;
-                          break;
-                        }
-
-                        Object.keys(_this.paymentDetails).forEach(function (fieldName) {
-                          if (validation.errors[fieldName] !== undefined) {
-                            _this.displayFieldError(_this.fields[fieldName], validation.errors[fieldName][0]);
-                          } else {
-                            _this.removeFieldError(_this.fields[fieldName]);
-                          }
-                        });
-
-                        _this.toggleLoadingState();
-
-                        _this.disableStripeInputs(false);
-
-                        return _context5.abrupt("return", false);
-
-                      case 12:
-                        _context5.next = 14;
-                        return stripe.createPaymentMethod('card', _this.fields.stripe['card-number'], {
-                          billing_details: validation
-                        });
-
-                      case 14:
-                        _ref7 = _context5.sent;
-                        paymentMethod = _ref7.paymentMethod;
-                        error = _ref7.error;
-
-                        if (!error) {
-                          _context5.next = 21;
-                          break;
-                        }
-
-                        _this.toggleLoadingState();
-
-                        _this.disableStripeInputs(false);
-
-                        return _context5.abrupt("return", false);
-
-                      case 21:
-                        paymentInformation = {
-                          _token: _this.fields.token !== null ? _this.fields.token.value : null,
-                          card_holder: _this.fields.card_holder !== null ? _this.fields.card_holder.value : null,
-                          email: paymentMethod.billing_details.email,
-                          prefix: _this.fields.prefix.value,
-                          phone_number: paymentMethod.billing_details.phone,
-                          currency: _this.fields.currency !== null ? _this.fields.currency.value : null,
-                          dialog: _this.dialog !== null,
-                          quantity: _this.course !== null ? _this.fields[pluralize.plural(_this.course.data.fee.unit)].value : null,
-                          course: _this.fields.course !== null ? _this.fields.course.value : null,
-                          payment_method: paymentMethod.id
-                        };
-
-                        _this.getCourseDuration(paymentInformation);
-
-                        _this.sendPaymentInformation(paymentInformation);
-
-                      case 24:
-                      case "end":
-                        return _context5.stop();
-                    }
-                  }
-                }, _callee5);
-              }));
-
-              return function (_x5) {
-                return _ref6.apply(this, arguments);
-              };
-            }());
-
-          case 17:
+          case 15:
           case "end":
-            return _context6.stop();
+            return _context4.stop();
         }
       }
-    }, _callee6, this);
+    }, _callee4, this);
   }));
 
   this.sendPaymentInformation =
   /*#__PURE__*/
   function () {
-    var _ref8 = _asyncToGenerator(
+    var _ref6 = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(paymentInformation) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(paymentInformation) {
       var result;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _context7.next = 2;
+              _context5.next = 2;
               return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].axiosRequest(_facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].getRoute('payment_method'), 'post', paymentInformation);
 
             case 2:
-              result = _context7.sent;
+              result = _context5.sent;
 
               if (!result.error) {
-                _context7.next = 8;
+                _context5.next = 8;
                 break;
               }
 
               this.displayStripeErrors('submit', result.error.message);
               this.toggleLoadingState();
               this.disableStripeInputs(false);
-              return _context7.abrupt("return", this);
+              return _context5.abrupt("return", this);
 
             case 8:
               this.handlePaymentResponse(result);
 
             case 9:
             case "end":
-              return _context7.stop();
+              return _context5.stop();
           }
         }
-      }, _callee7, this);
+      }, _callee5, this);
     }));
 
-    return function (_x6) {
-      return _ref8.apply(this, arguments);
+    return function (_x4) {
+      return _ref6.apply(this, arguments);
     };
   }();
   /**
@@ -6037,15 +6100,15 @@ function PaymentForm(options) {
 
   this.handleStripeJsResult = function (result) {
     if (result.error) {
-      _this2.displayStripeErrors('submit', result.error.message);
+      _this3.displayStripeErrors('submit', result.error.message);
 
       return result;
     }
 
-    _this2.paymentIntent = result.paymentIntent;
+    _this3.paymentIntent = result.paymentIntent;
 
-    _this2.sendPaymentInformation({
-      token: _this2.fields.token.value,
+    _this3.sendPaymentInformation({
+      token: _this3.fields.token.value,
       payment_intent_id: result.paymentIntent.id
     });
   };
@@ -6053,12 +6116,12 @@ function PaymentForm(options) {
   this.handlePaymentResponse =
   /*#__PURE__*/
   function () {
-    var _ref9 = _asyncToGenerator(
+    var _ref7 = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(response) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(response) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context8.prev = _context8.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
               console.log(response);
               /*
@@ -6066,16 +6129,16 @@ function PaymentForm(options) {
                */
 
               if (!response.error) {
-                _context8.next = 4;
+                _context6.next = 4;
                 break;
               }
 
               this.displayStripeErrors('submit', response.error.message);
-              return _context8.abrupt("return", this);
+              return _context6.abrupt("return", this);
 
             case 4:
               if (!response.requires_action) {
-                _context8.next = 7;
+                _context6.next = 7;
                 break;
               }
 
@@ -6089,16 +6152,16 @@ function PaymentForm(options) {
               //        console.log(result);
               //    });
 
-              return _context8.abrupt("return", this);
+              return _context6.abrupt("return", this);
 
             case 7:
               if (!(this.dialog !== null)) {
-                _context8.next = 10;
+                _context6.next = 10;
                 break;
               }
 
               this.dialog.replace(response);
-              return _context8.abrupt("return", this);
+              return _context6.abrupt("return", this);
 
             case 10:
               this.paymentIntent = response;
@@ -6110,14 +6173,14 @@ function PaymentForm(options) {
 
             case 13:
             case "end":
-              return _context8.stop();
+              return _context6.stop();
           }
         }
-      }, _callee8, this);
+      }, _callee6, this);
     }));
 
-    return function (_x7) {
-      return _ref9.apply(this, arguments);
+    return function (_x5) {
+      return _ref7.apply(this, arguments);
     };
   }();
 
@@ -6146,23 +6209,23 @@ function PaymentForm(options) {
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
-            _context9.next = 2;
+            _context7.next = 2;
             return _facades_api__WEBPACK_IMPORTED_MODULE_5__["default"].validate(this.paymentDetails);
 
           case 2:
-            return _context9.abrupt("return", _context9.sent);
+            return _context7.abrupt("return", _context7.sent);
 
           case 3:
           case "end":
-            return _context9.stop();
+            return _context7.stop();
         }
       }
-    }, _callee9, this);
+    }, _callee7, this);
   }));
 
   this.setMinimumDuration = function (unit) {
@@ -6180,11 +6243,11 @@ function PaymentForm(options) {
   };
 
   this.disableStripeInputs = function () {
-    var _this3 = this;
+    var _this4 = this;
 
     var disabled = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     Object.keys(this.fields.stripe).forEach(function (key) {
-      _this3.fields.stripe[key].update({
+      _this4.fields.stripe[key].update({
         disabled: disabled
       });
     });
@@ -6216,25 +6279,25 @@ function PaymentForm(options) {
   };
 
   this.mountStripeFields = function () {
-    var _this4 = this;
+    var _this5 = this;
 
     this.stripeElements.forEach(function (element) {
-      if (_this4.fields[element] !== null && _this4.fields[element][Symbol.iterator] !== 'function') {
-        Object.keys(_this4.fields[element]).map(function (key) {
+      if (_this5.fields[element] !== null && _this5.fields[element][Symbol.iterator] !== 'function') {
+        Object.keys(_this5.fields[element]).map(function (key) {
           var fieldName = _facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].kebabCase(element + ' ' + key);
-          _this4.fields.stripe[fieldName] = _this4.stripe.create(_facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(element + ' ' + key), {
-            style: _this4.stripeElementsStyles.generic
+          _this5.fields.stripe[fieldName] = _this5.stripe.create(_facades_str__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(element + ' ' + key), {
+            style: _this5.stripeElementsStyles.generic
           });
 
-          _this4.fields.stripe[fieldName].mount('#' + _this4.fields[element][key].getAttribute('id'));
+          _this5.fields.stripe[fieldName].mount('#' + _this5.fields[element][key].getAttribute('id'));
 
-          _this4.fields.stripe[fieldName].addEventListener('change', function (_ref11) {
-            var error = _ref11.error;
+          _this5.fields.stripe[fieldName].addEventListener('change', function (_ref9) {
+            var error = _ref9.error;
 
             if (error !== undefined) {
-              _this4.displayStripeErrors(fieldName, error.message);
+              _this5.displayStripeErrors(fieldName, error.message);
             } else {
-              _this4.removeStripeErrors(fieldName);
+              _this5.removeStripeErrors(fieldName);
             }
           });
         });
@@ -6243,13 +6306,15 @@ function PaymentForm(options) {
 
       ;
 
-      _this4.fields.stripe.create(element, {
-        style: _this4.stripeElementsStyles.generic
+      _this5.fields.stripe.create(element, {
+        style: _this5.stripeElementsStyles.generic
       });
     });
   };
 
   this.setSubtotal = function () {
+    console.log(this.course);
+
     if (this.course !== null) {
       this.price.subtotal = this.course.data.fee.amount * this.fields[pluralize.plural(this.course.data.fee.unit)].value;
       return this;
@@ -6281,67 +6346,72 @@ function PaymentForm(options) {
   /*#__PURE__*/
   _asyncToGenerator(
   /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
     var currency,
         verb,
         total,
         subtotal,
-        _args10 = arguments;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        regexp,
+        _args8 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context10.prev = _context10.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
-            currency = _args10.length > 0 && _args10[0] !== undefined ? _args10[0] : 'eur';
+            currency = _args8.length > 0 && _args8[0] !== undefined ? _args8[0] : 'eur';
             verb = $(this.fields.payment).children('span')[0].textContent.match(this.patterns.getActionText)[0];
-            _context10.t0 = parseFloat;
-            _context10.next = 5;
+            _context8.t0 = parseFloat;
+            _context8.next = 5;
             return _facades_money__WEBPACK_IMPORTED_MODULE_4__["default"].exchangeCurrency(this.price.total, currency);
 
           case 5:
-            _context10.t1 = _context10.sent;
-            _context10.t2 = document.documentElement.lang;
-            _context10.t3 = {
+            _context8.t1 = _context8.sent;
+            _context8.t2 = document.documentElement.lang;
+            _context8.t3 = {
               style: 'currency',
               currency: currency
             };
-            total = (0, _context10.t0)(_context10.t1).toLocaleString(_context10.t2, _context10.t3);
-            _context10.t4 = parseFloat;
-            _context10.next = 12;
+            total = (0, _context8.t0)(_context8.t1).toLocaleString(_context8.t2, _context8.t3);
+            _context8.t4 = parseFloat;
+            _context8.next = 12;
             return _facades_money__WEBPACK_IMPORTED_MODULE_4__["default"].exchangeCurrency(this.price.subtotal, currency);
 
           case 12:
-            _context10.t5 = _context10.sent;
-            _context10.t6 = document.documentElement.lang;
-            _context10.t7 = {
+            _context8.t5 = _context8.sent;
+            _context8.t6 = document.documentElement.lang;
+            _context8.t7 = {
               style: 'currency',
               currency: currency
             };
-            subtotal = (0, _context10.t4)(_context10.t5).toLocaleString(_context10.t6, _context10.t7);
+            subtotal = (0, _context8.t4)(_context8.t5).toLocaleString(_context8.t6, _context8.t7);
             ;
             this.fields.subtotal.textContent = subtotal;
             $(this.fields.payment).children('span')[0].textContent = verb + total;
-            $(this.fields.total).children('span')[0].textContent = total;
-            _context10.t8 = parseFloat;
-            _context10.next = 23;
+            regexp = /[€|$]((\d{1,3},)*\d{1,3}\.\d*)/g;
+            _context8.t8 = $(this.fields.total).children('span')[0].textContent;
+            _context8.t9 = regexp;
+            _context8.t10 = parseFloat;
+            _context8.next = 25;
             return _facades_money__WEBPACK_IMPORTED_MODULE_4__["default"].exchangeCurrency(this.price.total - this.price.subtotal, currency);
 
-          case 23:
-            _context10.t9 = _context10.sent;
-            _context10.t10 = document.documentElement.lang;
-            _context10.t11 = {
+          case 25:
+            _context8.t11 = _context8.sent;
+            _context8.t12 = document.documentElement.lang;
+            _context8.t13 = {
               style: 'currency',
               currency: currency
             };
-            $(this.fields.total).children('span')[1].textContent = (0, _context10.t8)(_context10.t9).toLocaleString(_context10.t10, _context10.t11);
-            $(this.fields.total).children('span')[2].textContent = subtotal;
-            return _context10.abrupt("return", this);
+            _context8.t14 = (0, _context8.t10)(_context8.t11).toLocaleString(_context8.t12, _context8.t13);
+            $(this.fields.total).children('span')[0].textContent = _context8.t8.replace.call(_context8.t8, _context8.t9, _context8.t14);
+            $(this.fields.total).children('span')[2].textContent = $(this.fields.total).children('span')[2].textContent.replace(regexp, subtotal);
+            $(this.fields.total).children('span.total')[0].textContent = total;
+            return _context8.abrupt("return", this);
 
-          case 29:
+          case 33:
           case "end":
-            return _context10.stop();
+            return _context8.stop();
         }
       }
-    }, _callee10, this);
+    }, _callee8, this);
   }));
 }
 
@@ -6511,34 +6581,7 @@ function SignUpForm(options) {
     this.fields.program.addEventListener('change', function () {
       _this.updateFieldset(_this);
     }, this);
-  }; // this.getSelectedProgram = function() {
-  //     return this.fields.program.options[this.fields.program.selectedIndex].value;
-  // };
-  //
-  // this.updateFieldset = function(self = this) {
-  //     switch (self.getSelectedProgram()) {
-  //         case 'internship':
-  //         case 'inter_relocat':
-  //             dom.show(self.fields.cv.parentElement.parentElement, 'flex');
-  //             dom.show(self.fieldsets.industry, 'flex');
-  //             dom.hide(self.fieldsets.university);
-  //             dom.hide(self.fieldsets.study);
-  //             break;
-  //         case 'study':
-  //             dom.show(self.fieldsets.study, 'flex');
-  //             dom.hide(self.fields.cv.parentElement.parentElement);
-  //             dom.hide(self.fieldsets.industry);
-  //             dom.hide(self.fieldsets.university);
-  //             break;
-  //         case 'university':
-  //             dom.show(self.fieldsets.university, 'flex');
-  //             dom.show(self.fields.cv.parentElement.parentElement, 'flex');
-  //             dom.hide(self.fieldsets.study);
-  //             dom.hide(self.fieldsets.industry);
-  //             break;
-  //     }
-  // }
-
+  };
 
   this.init();
 }
@@ -7078,7 +7121,7 @@ var browser = function () {
     },
     isElementScoped: function isElementScoped(el) {
       if (_facades_dom__WEBPACK_IMPORTED_MODULE_0__["default"].isElement(el)) {
-        return $(el).offset().top >= $(window).scrollTop();
+        return $(el).offset().top <= $(window).scrollTop() + window.innerHeight;
       }
 
       var coordinates = _typeof(el) === 'object' ? el : false;
@@ -7335,6 +7378,33 @@ var money = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (money);
+
+/***/ }),
+
+/***/ "./resources/js/facades/object.js":
+/*!****************************************!*\
+  !*** ./resources/js/facades/object.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var object = function () {
+  return {
+    arrayValues: function arrayValues(obj, value) {
+      var objArray = [];
+
+      for (var i = 0; i < obj.length; i++) {
+        objArray.push(obj[i][value]);
+      }
+
+      return objArray;
+    }
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (object);
 
 /***/ }),
 
@@ -7672,11 +7742,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_UI__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../main/UI */ "./resources/js/main/UI.js");
 /* harmony import */ var _facades_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../facades/dom */ "./resources/js/facades/dom.js");
 /* harmony import */ var _facades_api__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../facades/api */ "./resources/js/facades/api.js");
+/* harmony import */ var _components_forms_CreateFeeForm__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/forms/CreateFeeForm */ "./resources/js/components/forms/CreateFeeForm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -7741,6 +7813,10 @@ FormFactory.prototype.createForm = function (options) {
 
     case 'upgrade-user':
       this.formClass = _components_forms_UpgradeUserForm__WEBPACK_IMPORTED_MODULE_9__["default"];
+      break;
+
+    case 'create-fee':
+      this.formClass = _components_forms_CreateFeeForm__WEBPACK_IMPORTED_MODULE_17__["default"];
       break;
 
     case 'delete-fee':
@@ -7810,23 +7886,33 @@ FormFactory.prototype.createForm = function (options) {
     switch (self.getSelectedProgram()) {
       case 'internship':
       case 'inter_relocat':
-        _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        if (self.fields.cv) {
+          _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        }
+
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fieldsets.industry, 'flex');
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fieldsets.university);
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fieldsets.study);
         break;
 
       case 'study':
-        console.log(self.fieldsets.study);
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fieldsets.study, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fields.cv.parentElement.parentElement);
+
+        if (self.fields.cv) {
+          _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fields.cv.parentElement.parentElement);
+        }
+
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fieldsets.industry);
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fieldsets.university);
         break;
 
       case 'university':
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fieldsets.university, 'flex');
-        _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+
+        if (self.fields.cv) {
+          _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(self.fields.cv.parentElement.parentElement, 'flex');
+        }
+
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fieldsets.study);
         _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].hide(self.fieldsets.industry);
         break;
@@ -7983,6 +8069,11 @@ FormFactory.prototype.createForm = function (options) {
       });
       $(input).change(function (ev) {
         $(previews[i]).attr('src', URL.createObjectURL(ev.target.files.item(0)));
+        console.log(previews[i].style.display);
+
+        if (previews[i].style.display === 'none') {
+          _facades_dom__WEBPACK_IMPORTED_MODULE_15__["default"].show(previews[i]);
+        }
       });
     };
 
@@ -8021,6 +8112,31 @@ GridFactory.prototype.createGrid = function (options) {
   var gridClass = new this.gridClass(options);
   gridClass.el = options.el;
   return gridClass;
+};
+
+/***/ }),
+
+/***/ "./resources/js/factories/InfographyFactory.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/factories/InfographyFactory.js ***!
+  \*****************************************************/
+/*! exports provided: InfographyFactory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InfographyFactory", function() { return InfographyFactory; });
+/* harmony import */ var _components_Infography__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Infography */ "./resources/js/components/Infography.js");
+
+function InfographyFactory() {}
+;
+InfographyFactory.prototype.infographyClass = _components_Infography__WEBPACK_IMPORTED_MODULE_0__["default"];
+
+InfographyFactory.prototype.createInfography = function (options) {
+  this.infographyClass = _components_Infography__WEBPACK_IMPORTED_MODULE_0__["default"];
+  var infographyClass = new this.infographyClass(options);
+  infographyClass.el = options.el;
+  return infographyClass;
 };
 
 /***/ }),
@@ -9234,6 +9350,31 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/admin/new-fee.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/admin/new-fee.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_forms_CreateFeeForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/forms/CreateFeeForm */ "./resources/js/components/forms/CreateFeeForm.js");
+
+
+(function () {
+  window.addEventListener('DOMContentLoaded', function () {
+    if (document.getElementById('new-fee') !== null) {
+      var createOfferForm = _components_forms_CreateFeeForm__WEBPACK_IMPORTED_MODULE_0__["createFeeFormFactory"].createForm({
+        form: document.getElementById('create-fee'),
+        type: 'create-fee'
+      }).init();
+    }
+  });
+})();
+
+/***/ }),
+
 /***/ "./resources/js/pages/admin/new-offer.js":
 /*!***********************************************!*\
   !*** ./resources/js/pages/admin/new-offer.js ***!
@@ -9249,7 +9390,6 @@ __webpack_require__.r(__webpack_exports__);
 (function () {
   window.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('new-offer') !== null) {
-      console.log("hola");
       var createOfferForm = _components_forms_CreateOfferForm__WEBPACK_IMPORTED_MODULE_0__["createOfferFormFactory"].createForm({
         form: document.getElementById('create-offer'),
         type: 'create-offer'
@@ -9343,6 +9483,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_forms_LoginForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/forms/LoginForm */ "./resources/js/components/forms/LoginForm.js");
+/* harmony import */ var _components_Infography__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Infography */ "./resources/js/components/Infography.js");
+
 
 
 (function () {
@@ -9352,6 +9494,12 @@ __webpack_require__.r(__webpack_exports__);
       type: 'login',
       modal: document.getElementById('loginModal')
     }).init();
+
+    if (document.getElementById('customer-journey') !== null) {
+      var customerJourneyInfography = _components_Infography__WEBPACK_IMPORTED_MODULE_1__["infographyFactory"].createInfography({
+        el: document.getElementById('customer-journey').querySelector('.infography')
+      }).init();
+    }
   });
 })();
 
@@ -9741,9 +9889,9 @@ if (document.getElementsByTagName('nav') !== null) {
 /***/ }),
 
 /***/ 1:
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/learn-chinese.js ./resources/js/pages/welcome.js ./resources/js/pages/why-intuuchina.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/admin/dashboard.js ./resources/js/pages/user/dashboard.js ./resources/js/pages/admin/fee.js ./resources/js/pages/admin/offer.js ./resources/js/pages/admin/user.js ./resources/js/pages/admin/upgrade.js ./resources/js/pages/user/payment.js ./resources/js/partials/_nav.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_edit-offer.js ./resources/js/components/_customer-journey.js ./resources/js/components/_welcome-card.js ./resources/js/components/_footer.js ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/pages/home.js ./resources/js/pages/job-description.js ./resources/js/pages/learn-chinese.js ./resources/js/pages/welcome.js ./resources/js/pages/why-intuuchina.js ./resources/js/pages/admin/new-offer.js ./resources/js/pages/admin/new-fee.js ./resources/js/pages/admin/dashboard.js ./resources/js/pages/user/dashboard.js ./resources/js/pages/admin/fee.js ./resources/js/pages/admin/offer.js ./resources/js/pages/admin/user.js ./resources/js/pages/admin/upgrade.js ./resources/js/pages/user/payment.js ./resources/js/partials/_nav.js ./resources/js/components/sliders.js ./resources/js/components/register.js ./resources/js/components/_offers.js ./resources/js/components/_offers-list.js ./resources/js/components/_edit-offer.js ./resources/js/components/_welcome-card.js ./resources/js/components/_footer.js ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9753,6 +9901,7 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\l
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\welcome.js */"./resources/js/pages/welcome.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\why-intuuchina.js */"./resources/js/pages/why-intuuchina.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\new-offer.js */"./resources/js/pages/admin/new-offer.js");
+__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\new-fee.js */"./resources/js/pages/admin/new-fee.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\dashboard.js */"./resources/js/pages/admin/dashboard.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\user\dashboard.js */"./resources/js/pages/user/dashboard.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\pages\admin\fee.js */"./resources/js/pages/admin/fee.js");
@@ -9766,7 +9915,6 @@ __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\compone
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers.js */"./resources/js/components/_offers.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_offers-list.js */"./resources/js/components/_offers-list.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_edit-offer.js */"./resources/js/components/_edit-offer.js");
-__webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_customer-journey.js */"./resources/js/components/_customer-journey.js");
 __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_welcome-card.js */"./resources/js/components/_welcome-card.js");
 module.exports = __webpack_require__(/*! E:\Salva\Proyectos\XAMPP\intuuchina\resources\js\components\_footer.js */"./resources/js/components/_footer.js");
 

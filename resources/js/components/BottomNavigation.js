@@ -49,19 +49,13 @@ function BottomNavigation(options) {
     };
 
     this.toggle = function(ev = null) {
-        if (this.position.length > 0) {
-            if (browser.isElementScoped(this.position)) {
-                if (this.isFixed()) {
-                    $(this.el).removeClass('bottom-navigation--fixed');
+        this.setPosition();
 
-                    if (ev !== null && ev.type === 'scroll') {
-                        //console.log($(this.el).offset().top + this.el.clientHeight);
-                        // TODO
-                        // this.scrollTo(window.scrollY + ($(this.el).bottom())
-                    }
-                }
-                return this;
-            };
+        if (browser.isElementScoped(this.position)) {
+            if (this.isFixed()) {
+                $(this.el).removeClass('bottom-navigation--fixed');
+            }
+            return this;
         }
 
         if (!this.isFixed()) {

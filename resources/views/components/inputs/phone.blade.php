@@ -10,6 +10,9 @@
     @component('components.inputs.text')
         @slot('name', $name)
         @slot('type', 'tel')
+        @if(isset($bag))
+            @slot('bag', $bag)
+        @endif
         @if(isset($value))
             @slot('value', $value)
         @endif

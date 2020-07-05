@@ -4,7 +4,7 @@
             @csrf
             @component('components.inputs.cta-button')
                 @slot('variant', 'primary')
-                @slot('content', __('Change Preference'))
+                @slot('content', __('Apply For'))
             @endcomponent
         </form>
     @endslot

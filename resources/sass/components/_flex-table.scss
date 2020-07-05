@@ -1,4 +1,8 @@
-.flex-table {
+div.flex-table {
+  margin: 2em auto;
+}
+
+table.flex-table {
   $breakpoint: 'screen and (max-width: 600px)';
 
   $grid-fix: 'screen and (min-width: 380px) and (max-width: 576px)';

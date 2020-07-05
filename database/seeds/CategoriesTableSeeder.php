@@ -78,16 +78,16 @@ class CategoriesTableSeeder extends Seeder
 
         $degrees = [
             [
-                'name' => 'MBA',
-                'acronym' => 'MBA',
-                'value' => 'mba',
+                'name' => 'M. Intl. Bsns.',
+                'acronym' => 'MIB',
+                'value' => 'mib',
                 'fee_id' => DB::table('fees')
                     ->where('value', 'application_fee')->first()->id,
             ],
             [
-                'name' => 'M. Intl. Bsns.',
-                'acronym' => 'MIB',
-                'value' => 'mib',
+                'name' => 'MBA',
+                'acronym' => 'MBA',
+                'value' => 'mba',
                 'fee_id' => DB::table('fees')
                     ->where('value', 'application_fee')->first()->id,
             ],

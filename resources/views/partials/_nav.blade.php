@@ -5,7 +5,7 @@
 <nav>
     <div class="navbar">
         <div class="col-12 navbar-expand-lg navbar_container">
-            <a class="logo" href="{{ url('/') }}"><img src="{{ asset('storage/images/logo.png') }}"></a>
+            <a class="logo" href="{{ url('/') }}"><img src="{{ __('pictures.corporation logo.url') }}" alt="{{ __('pictures.corporation logo.alt') }}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>

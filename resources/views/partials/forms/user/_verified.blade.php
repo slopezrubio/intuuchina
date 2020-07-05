@@ -13,8 +13,8 @@
                         @if($fee->unit !== null)
                             {!!
                                 $fee->unit !== 'lesson'
-                                ? __('content.per ' . $fee->unit, ['price' =>  Money::currencyFormat($fee->amount)])
-                                : __('content.per ' . $fee->unit, ['price' =>  Money::currencyFormat($fee->amount), 'time' => '1 hour'])
+                                ? __('content.per unit', ['price' =>  Money::currencyFormat($fee->amount), 'unit' => $fee->unit])
+                                : __('content.per unit', ['price' =>  Money::currencyFormat($fee->amount), 'unit' => '1 hour lesson'])
                             !!}
                         @else
                             <b>{!! Money::currencyFormat($fee->amount) !!}</b>

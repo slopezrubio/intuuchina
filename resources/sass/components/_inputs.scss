@@ -240,6 +240,7 @@ input.c-text-input {
 
   select {
     @extend %input-margins;
+    padding-left: 0.75em;
     z-index: -1;
     cursor: pointer;
     &::-ms-expand {
@@ -488,6 +489,44 @@ input.c-text-input {
     i {
       padding-left: 1em;
     }
+  }
+}
+
+.download-button {
+  display: inline-block;
+  padding: 20px 28px 20px 66px;
+  margin: 20px 10px 0 10px;
+  border: 1px solid $neutralColor;
+  @include prefixed(transition, 0.15);
+  position: relative;
+  text-decoration: none;
+  color: $primaryDark;
+
+  &:before {
+    content: '';
+    background: url('/../../storage/images/content/icons/download-icon.svg') no-repeat center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+  }
+
+  &:focus,
+  &:hover{
+    border-color: $primaryRed;
+    color: initial;
+    outline: none;
+  }
+
+  &:active {
+    animation: enlight 0.5s;
+  }
+
+  &[data-info]:after {
+    content: '(' attr(data-info) ')';
+    color: $primaryDark;
+    font-weight: 500;
   }
 }
 

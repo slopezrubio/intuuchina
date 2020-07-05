@@ -53,7 +53,7 @@ class FeesCollection extends Collection implements Searchable
     public function match() {
 
         $this->collection = $this->collection->filter(function($value, $key) {
-            return Str::contains(strtolower($value->title), $this->getSearchKeys()) || Str::contains(strtolower($value->location), $this->getSearchKeys());
+            return Str::contains(strtolower($value->title), $this->getSearchKeys()) || Str::contains(strtolower($value->fee_type), $this->getSearchKeys());
         });
 
         return $this;

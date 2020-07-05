@@ -22,6 +22,7 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/pages/welcome.js',
         'resources/js/pages/why-intuuchina.js',
         'resources/js/pages/admin/new-offer.js',
+        'resources/js/pages/admin/new-fee.js',
         'resources/js/pages/admin/dashboard.js',
         'resources/js/pages/user/dashboard.js',
         'resources/js/pages/admin/fee.js',
@@ -35,7 +36,6 @@ mix.sass('resources/sass/main.scss', 'css/lib/style.css')
         'resources/js/components/_offers.js',
         'resources/js/components/_offers-list.js',
         'resources/js/components/_edit-offer.js',
-        'resources/js/components/_customer-journey.js',
         'resources/js/components/_welcome-card.js',
         'resources/js/components/_footer.js',
     ], 'js/app.js');

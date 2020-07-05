@@ -6,17 +6,27 @@
         @slot('header', __('component.header.user.dashboard'))
     @endcomponent
 
-    <main id="dashboard">
+   <main id="dashboard">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-8">
-                    @component('components.tab', ['tabs' =>  __('component.tabs.dashboard.user')])
-                        @slot('id', $view_name)
+                    @isset($data)
+                        @component('components.tab', ['tabs' =>  __('component.tabs.dashboard.user'), 'data' => $data])
+                            @slot('id', $view_name)
 
-                        @if(isset($selected))
-                            @slot('selected', $selected)
-                        @endif
-                    @endcomponent
+                            @if(isset($selected))
+                                @slot('selected', $selected)
+                            @endif
+                        @endcomponent
+                    @else
+                        @component('components.tab', ['tabs' =>  __('component.tabs.dashboard.user')])
+                            @slot('id', $view_name)
+
+                            @if(isset($selected))
+                                @slot('selected', $selected)
+                            @endif
+                        @endcomponent
+                    @endisset
                 </div>
             </div>
         </div>

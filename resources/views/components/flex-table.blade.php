@@ -32,4 +32,15 @@
             </tbody>
 
     </table>
+
+    @if (isset($pagination))
+        {!! $pagination !!}
+    @endif
+@else
+    <div class="flex-table">
+        <p class="alert-message alert-message--empty-list">
+            <i class="fas fa-wind"></i>
+            <span>{{ __('content.no such item has been found', ['item' => $id]) }}</span>
+        </p>
+    </div>
 @endif

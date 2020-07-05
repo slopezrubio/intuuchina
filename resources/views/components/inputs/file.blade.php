@@ -1,5 +1,7 @@
 @if(isset($preview))
     <img src="{{ $preview }}" alt="{{ __('Current uploaded picture') }}" class="c-file-input__img-preview">
+@else
+    <img src="" alt="{{ __('Current uploaded picture') }}" class="c-file-input__img-preview" style="display:none;">
 @endif
 
 @isset($bag)

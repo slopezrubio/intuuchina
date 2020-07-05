@@ -17,7 +17,7 @@ class CreateProgramsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('value');
-            $table->unsignedBigInteger('fee_type_id');
+            $table->unsignedBigInteger('fee_type_id')->nullable()->unsigned();
             $table->foreign('fee_type_id')->references('id')->on('fee_types');
             $table->timestamps();
         });

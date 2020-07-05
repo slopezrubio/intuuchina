@@ -7,14 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class OnlineCoursesScope implements Rule
 {
+    protected $fee;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Fee $fee)
     {
-        //
+        $this->fee = $fee;
     }
 
     /**
@@ -26,7 +28,7 @@ class OnlineCoursesScope implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value >= intval(Fee::where('value', 'chinese_online_course')->first()->minimum);
+        return $value >= intval($this->fee->minimum);;
     }
 
     /**
@@ -36,11 +38,9 @@ class OnlineCoursesScope implements Rule
      */
     public function message()
     {
-        $course = Fee::where('value', 'chinese_online_course')->first();
-
-        return trans_choice('validation.custom.minimum', $course->minimum ,[
-            'value' => $course->minimum,
-            'unit' => $course->unit
+        return trans_choice('validation.custom.minimum', $this->fee->minimum ,[
+            'value' => $this->fee->minimum,
+            'unit' => $this->fee->unit
         ]);
     }
 }
