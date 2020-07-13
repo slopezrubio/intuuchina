@@ -4,6 +4,10 @@
     {{ __('meta.title.' . $view_name, ['job' => $offer->title]) }}
 @endsection
 
+@section('description')
+    <meta name="description" content="{{ $offer->title . ' • ' . Illuminate\Support\Str::words(json_decode($offer->description)->ops[0]->insert) }}">
+@endsection
+
 @section('content')
 
     @component('components.header')

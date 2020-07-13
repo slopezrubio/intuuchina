@@ -25,6 +25,8 @@
 @auth
     @if(Auth::user()->type !== 'admin')
         @include('partials.forms.user._single-offer')
+    @else
+        @include('partials.forms.admin._single-offer')
     @endif
 @else
     @include('partials.forms._single-offer')

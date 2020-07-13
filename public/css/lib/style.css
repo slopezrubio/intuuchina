@@ -14805,7 +14805,7 @@ table.flex-table td {
 }
 
 .media-card__card .c-cta-button {
-  margin-top: 0.5em;
+  margin-top: 1em;
 }
 
 @media (min-width: 768px) {

@@ -4,6 +4,10 @@
     {{ __('meta.title.index') }}
 @endsection
 
+@section('description')
+    <meta name="description" content="{{ __('meta.description.index') }}">
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'secondary')

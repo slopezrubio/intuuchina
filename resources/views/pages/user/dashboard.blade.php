@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.user.' . str_replace('/', '', request()->getRequestUri())) }}
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'tertiary')

@@ -16,8 +16,12 @@
 
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
 
-    <!-- Título de la aplicación -->
+    <!-- Page Title -->
     <title>@yield('title')</title>
+
+    <!-- Page Description -->
+    @yield('description')
+
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- reCAPCTCHA v2.0 de Google -->

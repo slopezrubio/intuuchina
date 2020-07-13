@@ -1,5 +1,13 @@
 @extends('layouts.master')
 
+@section('title')
+    @isset(request()->segments()[1])
+        {{ __('meta.title.admin.' . request()->segment(2)) }}
+    @else
+        {{ __('meta.title.admin.default') }}
+    @endisset
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'tertiary')

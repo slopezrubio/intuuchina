@@ -11,15 +11,14 @@
 |
 */
 
+use Illuminate\Support\Facades\Artisan;
+
 
 /**
  * |--------------------------------------------------------------------------
  * | Cron Jobs
  * |--------------------------------------------------------------------------
  */
-
-use Illuminate\Support\Facades\Artisan;
-
 Route::get('/m42Kis2G8Ve224A', function() {
     Artisan::call('users:remind');
     return 'Finished';

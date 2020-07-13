@@ -8,6 +8,14 @@
     @endif
 @endsection
 
+@section('description')
+    @if(request()->query('page') !== null)
+        <meta name="description" content="{{ __('meta.description.' . $view_name, ['current' => $offers->currentPage()]) }}">
+    @else
+        <meta name="description" content="{{ __('meta.description.' . $view_name . '.default') }}">
+    @endif
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'primary')

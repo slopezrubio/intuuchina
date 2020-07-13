@@ -4,6 +4,10 @@
     {{ __('meta.title.' . $view_name) }}
 @endsection
 
+@section('description')
+    <meta name="description" content="{{ __('meta.description.' . $view_name) }}">
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'primary')
