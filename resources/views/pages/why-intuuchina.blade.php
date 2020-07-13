@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.' . $view_name) }}
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'stats')
@@ -11,9 +15,6 @@
             @slot('items', __('component.square-grids.motifs'))
         @endcomponent
     </main>
-
-    {{--Elemento que muetra información extra sobre los motivos de elegir Intuuchina--}}
-{{--    @include('partials._motifs')--}}
 
     {{--Elemento FOOTER--}}
     @include('partials._footer')

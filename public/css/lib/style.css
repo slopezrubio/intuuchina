@@ -15423,10 +15423,10 @@ header.stats .stats__item p:first-of-type {
 .c-file-input,
 .c-select-input select,
 input.c-text-input {
-  border-radius: 0px;
-  border-width: 0px 0px 2px 0px;
+  border-radius: 0;
+  border-width: 0 0 2px 0;
   background: transparent;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 .form input:focus,
@@ -16035,6 +16035,7 @@ input.c-text-input.is-invalid:-ms-input-placeholder {
   height: 100%;
   width: 100%;
   font-weight: 500;
+  text-align: center;
 }
 
 .c-cta-button a:hover,
@@ -18173,6 +18174,10 @@ div.editor {
 .letter-spacing--location {
   font-size: 0.85em;
   letter-spacing: 0.3em;
+}
+
+p a {
+  color: #C80B0B;
 }
 
 .alert-message--empty-list {

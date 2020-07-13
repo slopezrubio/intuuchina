@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('offers:renew')->dailyAt('13:06')->timezone(config('app.timezone'));
+        $schedule->command('offers:renew')->dailyAt('15:11')->timezone(config('app.timezone'));
+        $schedule->command('users:remind')->dailyAt('15:11')->timezone(config('app.timezone'));
     }
 
     /**

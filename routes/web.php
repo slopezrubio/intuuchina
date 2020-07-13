@@ -11,6 +11,25 @@
 |
 */
 
+
+/**
+ * |--------------------------------------------------------------------------
+ * | Cron Jobs
+ * |--------------------------------------------------------------------------
+ */
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/m42Kis2G8Ve224A', function() {
+    Artisan::call('users:remind');
+    return 'Finished';
+});
+
+Route::get('/ih6BMGfMIVilxnt', function() {
+    Artisan::call('offers:renew');
+    return 'Finished';
+});
+
 /**
  * |--------------------------------------------------------------------------
  * | Index

@@ -2,7 +2,7 @@
     @csrf
     <div class="form-group row">
         <div class="col-12 col-md-3">
-            @component('components.inputs.label', ['name' => 'name', 'bag' => 'register'])
+            @component('components.inputs.label', ['name' => 'name', 'bag' => 'contact'])
                 {{ __('Name') }}
             @endcomponent
         </div>

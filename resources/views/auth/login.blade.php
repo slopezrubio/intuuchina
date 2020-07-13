@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.' . $view_name) }}
+@endsection
+
 @section('content')
     <main class="full-viewport" id="login">
         <div class="container">

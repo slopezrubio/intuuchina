@@ -1,5 +1,13 @@
 @extends('layouts.master')
 
+@section('title')
+    @if(request()->query('page') !== null)
+        {{ __('meta.title.' . $view_name . '.paginator', ['current' => $offers->currentPage(), 'last' => $offers->lastPage()]) }}
+    @else
+        {{ __('meta.title.' . $view_name . '.default') }}
+    @endif
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'primary')

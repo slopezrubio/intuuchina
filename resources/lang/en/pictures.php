@@ -52,5 +52,13 @@ return [
         'url' => asset('storage/images/content/icons/papers-icon.svg'),
         'alt' => 'An icon depicting papers',
     ],
+    'search-icon' => [
+        'url' => asset('storage/images/content/icons/search-icon.svg'),
+        'alt' => 'An icon depicting a lens',
+    ],
+    'settings-icon' => [
+        'url' => asset('storage/images/content/icons/settings-icon.svg'),
+        'alt' => 'An icon depicting a couple of gears',
+    ],
     'a descriptive image' => "A descriptive picture of the :item",
 ];

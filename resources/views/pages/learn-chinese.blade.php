@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.' . $view_name) }}
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'primary')

@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.passwords.' . $view_name) }}
+@endsection
+
 @section('content')
     @component('components.header', ['header' => __('component.header.password.email')])
         @slot('variant', 'tertiary')

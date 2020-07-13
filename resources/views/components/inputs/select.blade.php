@@ -1,6 +1,6 @@
 
 <div class="c-select-input{{ isset($variant) ? ' c-select-input--' . $variant : '' }}">
-    <select autocomplete="off" id="{{ isset($id) ? $id : $name }}" class="form-control{{ $errors->has($name) ? ' is-invalid' : '' }}" name="{{ $name }}" required>
+    <select size="1" autocomplete="off" id="{{ isset($id) ? $id : $name }}" class="form-control{{ $errors->has($name) ? ' is-invalid' : '' }}" name="{{ $name }}" required>
         @foreach ($options as $k => $op)
             <option value="{{ strtolower($k) }}"{{
                 old($name)

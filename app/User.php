@@ -169,7 +169,6 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->email_verified_at->diffInHours(Carbon::now()->subDays(2), false) >= 0 && $this->email_verified_at->diffInHours(Carbon::now()->subDays(2), false) < 24) {
             $reminder = $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) === '2 days'
                 ? $this->email_verified_at->diffForHumans(null, CarbonInterface::DIFF_ABSOLUTE) : '';
-            var_dump($reminder);
         };
 
         // 1 week ago

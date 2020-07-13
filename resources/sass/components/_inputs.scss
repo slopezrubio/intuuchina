@@ -2,10 +2,10 @@
  * Text
  */
 %input-margins {
-  border-radius: 0px;
-  border-width: 0px 0px 2px 0px;
+  border-radius: 0;
+  border-width: 0 0 2px 0;
   background: transparent;
-  padding-left: 0px;
+  padding-left: 0;
   &:focus,
   &:invalid {
     box-shadow: none;
@@ -481,6 +481,7 @@ input.c-text-input {
     height: 100%;
     width: 100%;
     font-weight: 500;
+    text-align: center;
     &:hover,
     &:focus,
     &:active {

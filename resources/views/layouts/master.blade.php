@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @include('partials._analytics')
+
     <meta charset="utf-8">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Canonical Links -->
+    <link rel="canonical" href="{{ __('meta.canonical.home') }}">
 
     <!-- Permite la visualización en dispositivos móviles -->
     <meta name="viewport" content="width=device-width, user-scalable=no">
@@ -12,7 +17,7 @@
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
 
     <!-- Título de la aplicación -->
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- reCAPCTCHA v2.0 de Google -->

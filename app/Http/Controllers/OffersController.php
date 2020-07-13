@@ -223,7 +223,7 @@ class OffersController extends Controller
 
             if (Auth::check()) {
                 if (Auth::user()->type !== 'admin') {
-                    $action = 'partials.forms.user._card.offer';
+                    $action = 'partials.forms.user._card-offer';
                 }
             }
 

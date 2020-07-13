@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.index') }}
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'secondary')

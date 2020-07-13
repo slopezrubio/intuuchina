@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.' . $view_name, ['job' => $offer->title]) }}
+@endsection
+
 @section('content')
 
     @component('components.header')

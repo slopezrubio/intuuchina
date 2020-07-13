@@ -66,7 +66,7 @@ class PaymentReminderNotification extends Notification
                     ->markdown('vendor.notifications.payment-reminder', [
                         'user' => $notifiable,
                         'reminder' => $this->reminder,
-                        'action' => route('user.')
+                        'action' => route('user.status')
                     ])
                     ->subject($this->reminder['subject']);
     }

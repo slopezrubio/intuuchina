@@ -220,7 +220,7 @@ return [
             ],
             [
                 'title' => trans('Select a program'),
-                'icon' => trans('pictures.user-icon'),
+                'icon' => trans('pictures.search-icon'),
                 'href' => '#services',
             ],
             [
@@ -229,7 +229,7 @@ return [
             ],
             [
                 'title' => trans('We Get to Work'),
-                'icon' => trans('pictures.user-icon')
+                'icon' => trans('pictures.settings-icon')
             ],
             [
                 'title' => trans('Start in China!'),
@@ -549,7 +549,7 @@ return [
             ],
         ],
         'home' => [
-            'title' => 'Internships in a Startup <br>or</br> Study Chinese or an MBA',
+            'title' => 'Internships in a Startup <br>or<br> Study Chinese or an MBA',
             'background' => asset('storage/images/headers/home.jpg'),
         ],
         'learn-chinese' => [
@@ -646,7 +646,7 @@ return [
             'url' => url('internship'),
             'method' => 'GET',
         ],
-        'learn-chinese' => [
+        'learn' => [
             'text' => 'Learn Chinese',
             'url' => url('/learn'),
             'method' => 'POST',
@@ -663,7 +663,7 @@ return [
                 return $options;
             }
         ],
-        'university' => [
+        'degrees' => [
             'text' => 'University',
             'url' => '/university',
             'method' => 'POST',

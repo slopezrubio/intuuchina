@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    {{ __('meta.title.' . $view_name) }}
+@endsection
+
 @section('content')
     @component('components.header')
         @slot('variant', 'primary')
@@ -7,6 +11,7 @@
     @endcomponent
 
     <main id="university">
+
         @component('components.sliders.arrow-slider', ['slides' => App\Program::where('value', 'university')->first()->degrees])
             @slot('name', 'university')
             @slot('id', 'university')
@@ -17,7 +22,6 @@
             @endif
         @endcomponent
 
-{{--        @include('partials._university-slider')--}}
     </main>
 
     @include('partials._footer')

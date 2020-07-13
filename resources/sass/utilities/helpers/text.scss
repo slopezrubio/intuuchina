@@ -5,6 +5,12 @@
   }
 }
 
+p {
+  a {
+    color: $primaryRed;
+  }
+}
+
 .alert-message {
   &--empty-list {
     @include flexbox();
