@@ -33,6 +33,7 @@ return [
         ],
     ],
     'description' => [
+        'index' => 'IntuuChina is the leading internship & academic placement agency in China. Find internships in China. Study an MBA. Study a Master. Study your Bacherlor degree. All the cities in China: Hong Kong, Beijing, Shenzhen and Shanghai.',
         'internship' => 'Looking for an internship in China? Check out the alternatives by sector and city. From Shanghai to Shenzhen, from Beijing to Honk Kong. We will help you find the right company to intern in but also help you with the visa, apartment search, etc.',
         'learn' => 'We are in touch with some of the best language schools in Honk Kong, Shanghai and Beijing and all over China! Learn Chinese with us and let us help you with Visa and other administrative procedures.',
         'university' => 'China has great Universities. Looking to study your bachelor/undergrad in China? Maybe your Master Degree in China? We can help and will guarantee your entry!',
