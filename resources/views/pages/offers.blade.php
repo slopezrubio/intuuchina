@@ -10,7 +10,7 @@
 
 @section('description')
     @if(request()->query('page') !== null)
-        <meta name="description" content="{{ __('meta.description.' . $view_name . '.description', ['current' => $offers->currentPage()]) }}">
+        <meta name="description" content="{{ __('meta.description.' . $view_name . '.paginator', ['current' => $offers->currentPage()]) }}">
     @else
         <meta name="description" content="{{ __('meta.description.' . $view_name . '.default') }}">
     @endif
