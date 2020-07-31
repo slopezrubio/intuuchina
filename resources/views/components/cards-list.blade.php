@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans(Carbon\Carbon::now()) }}</small>
+                        <small class="text-muted">{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}</small>
                     </div>
                 </div>
             @endforeach

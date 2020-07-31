@@ -1,7 +1,7 @@
 @extends('layouts.blank')
 
 @section('title')
-    {{ __('meta.titles.user_verification') }}
+    {{ __('meta.title.user_verification') }}
 @endsection
 
 @section('content')
@@ -31,4 +31,5 @@
             @endif
         </div>
     </div>
+</div>
 @endsection

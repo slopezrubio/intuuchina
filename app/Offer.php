@@ -42,8 +42,9 @@ class Offer extends Model
      */
     public static function getCardList($category = null, $num_pages = null) {
         $cardList = DB::table('offers')
-            ->select('offers.id', 'category_id', 'categories.name as category', 'picture as thumbnail', 'title', 'location as subtitle', 'duration as time', 'offers.created_at')
-            ->join('categories', 'offers.category_id', '=','categories.id');
+            ->select('offers.id', 'category_id', 'categories.name as category', 'picture as thumbnail', 'title', 'location as subtitle', 'duration as time', 'offers.created_at', 'offers.updated_at')
+            ->join('categories', 'offers.category_id', '=','categories.id')
+            ->orderBy('updated_at', 'desc');
 
         if ($category !== null) {
             $cardList->where('category_id', Category::where('value', $category)->first()->id);
