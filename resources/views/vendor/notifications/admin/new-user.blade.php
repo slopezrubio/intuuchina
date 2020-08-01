@@ -11,7 +11,7 @@
 @component('mail::card', ['fields' => [
     __('First Name') => $user->name,
     __('Surnames') => $user->surnames,
-    __('E-Mail Adress') => $user->email,
+    __('E-Mail Address') => $user->email,
     __('Nationality') => $user->nationality,
     __('Phone Number') => App\User::e164NumberFormat($user->phone_number),
     __('Program Interested') => $user->program->name,
