@@ -2,7 +2,7 @@
     @csrf
     @component('components.inputs.cta-button')
         @slot('variant', 'primary')
-        @slot('content', __('Apply For'))
+        @slot('content', __('Apply'))
     @endcomponent
 
     @component('components.inputs.cta-button')

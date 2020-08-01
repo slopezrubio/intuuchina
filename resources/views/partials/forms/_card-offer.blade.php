@@ -14,7 +14,7 @@
         @slot('name', 'category')
         @slot('variant', 'primary')
         @slot('value', App\Category::find($item->category_id)->value)
-        @slot('content', __('Apply For'))
+        @slot('content', __('Apply'))
     @endcomponent
 
     @component('components.inputs.cta-button')

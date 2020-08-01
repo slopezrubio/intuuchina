@@ -19,6 +19,10 @@
 <td><p>{{ $user->name }} {{ $user->surnames }}</p></td>
 </tr>
 <tr>
+<th><p>{{ __('E-Mail Adress') }}</p></th>
+<td><p>{{ $user->email }}</p></td>
+</tr>
+<tr>
 <th><p>{{ __('Program') }}</th>
 <td><p>{{ $user->program->name }}</p></td>
 </tr>
