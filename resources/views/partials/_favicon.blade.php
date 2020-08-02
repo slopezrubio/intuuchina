@@ -12,4 +12,3 @@
 <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('storage/images/favicon/favicon-96x96.png') }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/images/favicon/favicon-16x16.png') }}">
 <link rel="icon" href="{{ asset('storage/images/favicon/favicon.ico') }}">
-<link rel="manifest" href="/manifest.json">
