@@ -27,6 +27,10 @@
 <td><p>{{ $user->program->name }}</p></td>
 </tr>
 <tr>
+<th><p>{{ __('Phone Number') }}</p></th>
+<td><p>{{ App\User::e164NumberFormat($user->phone_number) }}</p></td>
+</tr>
+<tr>
 <th><p>{{ __('Issue') }}</p></th>
 <td><p>{{ $user->getFirstCategory()->fee->name }}</td>
 </tr>

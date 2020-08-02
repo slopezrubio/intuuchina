@@ -550,7 +550,7 @@ return [
         ],
         'home' => [
             'title' => 'Internships in a Startup <br>or<br> Study Chinese or an MBA',
-            'background' => asset('storage/images/headers/home.jpg'),
+            'background' => asset('storage/images/headers/home-low-resolution.jpg'),
         ],
         'learn-chinese' => [
             'title' => trans('Learn Chinese'),
