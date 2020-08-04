@@ -28,7 +28,7 @@
 
         @component('components.inputs.cta-button')
             @slot('variant', 'tertiary')
-            @slot('content', __('Apply For'))
+            @slot('content', __('Apply'))
         @endcomponent
     </form>
 @endauth

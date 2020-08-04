@@ -12,7 +12,7 @@
                 @slot('name', 'category')
                 @slot('variant', 'primary')
                 @slot('value', $offer->category->value)
-                @slot('content', __('Apply For'))
+                @slot('content', __('Apply'))
             @endcomponent
         </form>
     @endslot
