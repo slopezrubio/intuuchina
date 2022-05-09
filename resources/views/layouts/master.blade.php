@@ -24,15 +24,23 @@
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- reCAPCTCHA v2.0 de Google -->
+    <!-- reCAPCTCHA v3.0 de Google -->
     <script src='https://www.google.com/recaptcha/api.js?hl={{ app()->getLocale() }}' async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptcha.captcha_key') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('recaptcha.captcha_key')  }}').then(function(token) {
+                document.getElementById("recaptcha_token").value = token;
+            });
+        });
+    </script>
 
     <!-- Favicon -->
     @include('partials/_favicon')
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-{{--    <script src="https://code.jquery.com/jquery-3.4.1.min.js"crossorigin="anonymous"></script>--}}
+    {{--    <script src="https://code.jquery.com/jquery-3.4.1.min.js"crossorigin="anonymous"></script>--}}
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -50,11 +58,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/lib/style.css') }}">
 </head>
 <body>
-    <div id="app">
-        @yield('content')
-    </div>
+<div id="app">
+    @yield('content')
+</div>
 
-    <script src="{{ asset('/js/vendor.js') }}"></script>
-    <script src="{{ asset('/js/app.js') }}"></script>
+<script src="{{ asset('/js/vendor.js') }}"></script>
+<script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

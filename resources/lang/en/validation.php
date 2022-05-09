@@ -141,6 +141,9 @@ return [
         'alpha' => [
             'contact_form' => 'Do not type a nickname please, use your real name',
         ],
+        'captcha' => [
+            'failed' => 'Failed to validate Captcha'
+        ],
         'created' => 'The :item has been created',
         'upgraded' => 'The :item has been upgraded',
         'updated' => 'The :item has been updated.',

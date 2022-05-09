@@ -20,7 +20,8 @@ class MailMessagesController extends Controller
             'subject' => 'required|string',
 //            'message' => 'required|max:355',
             'terms' => 'required',
-            'g-recaptcha-response' => new Captcha(),
+//            'g-recaptcha-response' => new Captcha(),
+            'recaptcha-response' => new Captcha(),
         ], [
             'name.required' => 'I need your name',
             'name.alpha' => __('validation.custom.alpha.contact_form'),

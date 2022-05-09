@@ -26,8 +26,29 @@ class Captcha implements Rule
      */
     public function passes($attribute, $value)
     {
+        if (empty($value)) {
+            $this->error_msg = __('validation.required', 'Captcha');
+            return false;
+        }
+
         $recaptcha = new ReCaptcha(config('recaptcha.secret_key'));
-        $response = $recaptcha->verify($value, $_SERVER['REMOTE_ADDR']);
+
+        $response = $recaptcha->setExpectedHostName($_SERVER['SERVER_NAME'])
+            ->setScoreThreshold(0.5)
+            ->verify($value, $_SERVER['REMOTE_ADDR']);
+
+        if (!$response->isSuccess()) {
+            $this->error_msg = __('validation.custom.captcha.failed');
+
+            return false;
+        }
+
+        if ($response->getScore() < 0.5) {
+            $this->error_msg = __('validation.custom.captcha.failed');
+
+            return false;
+        }
+
         return $response->isSuccess();
     }
 

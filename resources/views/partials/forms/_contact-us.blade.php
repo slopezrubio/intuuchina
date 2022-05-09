@@ -60,8 +60,12 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="g-recaptcha {{ $errors->contact->has('g-recaptcha-response') ? ' is-invalid' : '' }}" data-sitekey="{{ config('recaptcha.captcha_key') }}"></div>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+            {!! __('misc.recaptcha-branding', ['font_size' => '10px']) !!}
+        </div>
+
         @if ($errors->contact->has('g-recaptcha-response'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->contact->first('g-recaptcha-response') }}</strong>

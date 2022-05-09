@@ -71,7 +71,7 @@ return [
     'done user' =>  [
         'online' => "
                         <p>
-                            The process is done. We hope you enjoy your Mandarin Chinese online classes. 
+                            The process is done. We hope you enjoy your Mandarin Chinese online classes.
                         </p>
                         <p>
                             In the event that you have any doubts or issues you would like to deal with we remind you have available <a href='mailto:".config('mail.to.address')."'>".config('mail.from.address')."</a> to let us know them.
@@ -86,12 +86,12 @@ return [
     'placed user' =>    [
         'online' =>     "
                             <p>
-                                
+
                             </p>
                         ",
         'default' =>    "
                             <p>
-                                You have already been placed in the location wherein you are going to carry out you :program Program. 
+                                You have already been placed in the location wherein you are going to carry out you :program Program.
                                 Check your inbox for more details about it.
                             </p>
                             <p>
@@ -101,7 +101,7 @@ return [
     ],
     'dismissed user' =>  "
                             <p>
-                                Unfortunately, we have decided not to keep with you application, since we cannot warranty the success thereof. Thus, we have proceed to the dismissal of your application. 
+                                Unfortunately, we have decided not to keep with you application, since we cannot warranty the success thereof. Thus, we have proceed to the dismissal of your application.
                                 In the next few days you will be reimbursed integrally with the same amount as the application has been invested so far.
                             </p>
                             <p>
@@ -126,7 +126,7 @@ return [
                               </p>
                               <p>
                                   If you have any doubts about the process, please don't hesitate to contact us at <a href='mailto:".config('mail.to.address')."'>".config('mail.from.address')."</a>. We are to keep improving our services.
-                              </p>  
+                              </p>
                             ",
     'paid user' =>  "{1}
                         <p>
@@ -141,16 +141,16 @@ return [
                         </p>
                         |{0}
                         <p>
-                            You should have an email with the corresponding billing attached. 
+                            You should have an email with the corresponding billing attached.
                         </p>
                         <p>
                             In the next few hours we are going to get you in touch to arrange our first meeting with you, so we recommend you to check assiduously your inbox.
                         </p>
                         <p>
                            However, if none of those emails have been reached out your inbox in the next few days, please report it at <a href='mailto:".config('mail.to.address')."'>".config('mail.from.address')."</a>.
-                           Use the given email to let us know whether if <b>you would be available to do an in-person meeting with us ASAP.</b>                                          
+                           Use the given email to let us know whether if <b>you would be available to do an in-person meeting with us ASAP.</b>
                         </p>
-                        
+
                     ",
     'verified user' =>   "
                         <p>
@@ -161,7 +161,7 @@ return [
     'gdpr' =>   "
                 <p>
                     First of all we thank you for the interest you have shown in addressing IntuuChina Ltd. by providing us with your data and information.
-                </p>    
+                </p>
                 <p>
                     We inform you that, in accordance with the data protection regulations, your data will be subject to treatment by IntuuChina Ltd. as Responsible for it with the purpose of managing your resume for the selection of personnel. If your profile is not conform to the relevant requirements in the current selection processes we will proceed to keep your data for future processes that do fit your profile, unless you. Tell us otherwise. We have your consent for the processing of the data you have provided us with voluntary, free and informed form in order to participate in the selection processes of the organization.
                 </p>
@@ -189,9 +189,9 @@ return [
                                 For more information about our Privacy Policy, you can consult the following link: www.intuuchina.com
                             </p>
                             <p>
-                                Without further ado, we take this opportunity to send you our warmest regards. 
+                                Without further ado, we take this opportunity to send you our warmest regards.
                                 <br/>
-                                Yours sincerely, 
+                                Yours sincerely,
                                 <br/>
                                 INTUUCHINA Ltd
                             </p>
@@ -289,20 +289,10 @@ return [
     'staying' => 'Staying of :time month|Staying of :time months',
     'study chinese via' => 'Study Chinese via',
     'sign in' => 'Sign In',
-    'edit' => 'Editar',
+    'edit' => 'Edit',
     'title' => 'Title',
     'offer location label' => 'Location',
     'save' => 'Save',
     'testimonials' => 'Testimonials',
     'program' => 'Program',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Signatures
-    |--------------------------------------------------------------------------
-    */
-
-    'made with love by ' => 'Made with love ❤ by ',
-    'copyright' => 'IntuuChina Copyright © 2019 <br/>All rights reserved',
 ];
